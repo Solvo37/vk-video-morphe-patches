@@ -9,7 +9,6 @@ on:
       - 'gradle/**'
       - 'settings.gradle.kts'
       - 'gradle.properties'
-      - 'patches-bundle.json'
       - '.github/workflows/release-patches.yml'
 
 permissions:
