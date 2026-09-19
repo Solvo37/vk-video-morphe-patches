@@ -7,7 +7,6 @@ import app.morphe.patcher.extensions.InstructionExtensions.getInstruction
 import app.morphe.patcher.patch.bytecodePatch
 import app.morphe.patcher.util.smali.ExternalLabel
 import dev.solvo37.vkvideopatches.Constants.VK_VIDEO
-import app.morphe.util.getFreeRegisterProvider
 
 private const val VIDEO_FEATURES = "Lcom/vk/toggle/features/VideoFeatures;"
 private const val EMPTY_DISPOSABLE = "Lio/reactivex/rxjava3/internal/disposables/EmptyDisposable;"
@@ -35,32 +34,33 @@ val removeVideoAdsPatch = bytecodePatch(
 
     execute {
         VideoFeaturesEnabledFingerprint.method.apply {
-            // Do not hard-code v0 here. In a tiny instance method with no locals,
-            // v0 aliases p0 (this), which corrupts the enum receiver and can make
-            // every feature evaluate incorrectly during app startup.
-            val tempRegister = getFreeRegisterProvider(0, 1).getFreeRegister()
+            // VK Video 1.163 has one local register (v0) plus p0.
+            // Refuse to patch a future build if that invariant changes.
+            check(implementation!!.registerCount >= 2) {
+                "VideoFeatures.a() has no free local register; fingerprint needs updating"
+            }
 
             addInstructionsWithLabels(
                 0,
                 """
-                    sget-object v$tempRegister, $VIDEO_FEATURES->VIDEO_INSTREAM_ADS_OFF:$VIDEO_FEATURES
-                    if-eq p0, v$tempRegister, :force_enabled
+                    sget-object v0, $VIDEO_FEATURES->VIDEO_INSTREAM_ADS_OFF:$VIDEO_FEATURES
+                    if-eq p0, v0, :force_enabled
 
-                    sget-object v$tempRegister, $VIDEO_FEATURES->VIDEO_OVERLAY_AD:$VIDEO_FEATURES
-                    if-eq p0, v$tempRegister, :force_disabled
+                    sget-object v0, $VIDEO_FEATURES->VIDEO_OVERLAY_AD:$VIDEO_FEATURES
+                    if-eq p0, v0, :force_disabled
 
-                    sget-object v$tempRegister, $VIDEO_FEATURES->VIDEO_MOTION_AD_ENABLED:$VIDEO_FEATURES
-                    if-eq p0, v$tempRegister, :force_disabled
+                    sget-object v0, $VIDEO_FEATURES->VIDEO_MOTION_AD_ENABLED:$VIDEO_FEATURES
+                    if-eq p0, v0, :force_disabled
 
                     goto :original
 
                     :force_enabled
-                    const/4 v$tempRegister, 0x1
-                    return v$tempRegister
+                    const/4 v0, 0x1
+                    return v0
 
                     :force_disabled
-                    const/4 v$tempRegister, 0x0
-                    return v$tempRegister
+                    const/4 v0, 0x0
+                    return v0
                 """,
                 ExternalLabel("original", getInstruction(0))
             )
