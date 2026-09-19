@@ -1,85 +1,129 @@
-# VK Video Morphe patches
+# VK Video Morphe Patches
+
+[Русский](./README.md) · [English](./README_EN.md)
 
 [![CI](https://github.com/Solvo37/vk-video-morphe-patches/actions/workflows/ci.yml/badge.svg)](https://github.com/Solvo37/vk-video-morphe-patches/actions/workflows/ci.yml)
 [![VK Video upstream](https://github.com/Solvo37/vk-video-morphe-patches/actions/workflows/auto-update.yml/badge.svg)](https://github.com/Solvo37/vk-video-morphe-patches/actions/workflows/auto-update.yml)
+[![Publish patches](https://github.com/Solvo37/vk-video-morphe-patches/actions/workflows/release-patches.yml/badge.svg)](https://github.com/Solvo37/vk-video-morphe-patches/actions/workflows/release-patches.yml)
+[![License: GPL-3.0](https://img.shields.io/badge/license-GPL--3.0-blue.svg)](./LICENSE)
 
-Morphe patches for **VK Video** (`com.vk.vkvideo`).
+Публичные патчи **Morphe** для Android-приложения **VK Видео** (`com.vk.vkvideo`).
 
-Developed against VK Video **1.163 (51920)**. New upstream versions are checked automatically in GitHub Actions before a patched APK can be released.
+Проект делает четыре вещи независимо друг от друга:
 
-## Patches
+| Патч | Что делает |
+|---|---|
+| **Disable in-app update** | отключает встроенную проверку/предложение обновить VK Видео |
+| **Remove video ads** | отключает клиентские instream / overlay / motion ad-фичи плеера |
+| **Hide promoted banner content** | скрывает рекламный баннер в Discover |
+| **Disable ad pixel tracking** | отключает отдельный рекламный pixel tracker, не выключая авторизацию и общую рекомендательную аналитику |
 
-- **Disable in-app update** — disables VK Video's own in-app update coordinator.
-- **Remove video ads** — uses VK Video's own video feature toggles to disable instream/overlay/motion ads.
-- **Hide promoted banner content** — forces the Discover ad-banner gate off.
-- **Disable ad pixel tracking** — disables the dedicated ad pixel tracker without disabling general auth/recommendation analytics.
+> **Текущая подтверждённая версия:** VK Видео **1.163 (51920)**.  
+> Новые версии сначала проходят реальный автоматический patch-test. Если fingerprint сломался, релиз не публикуется.
 
-## Automatic update pipeline
+## Быстрый старт
 
-The `VK Video upstream` workflow:
+### Вариант 1 — готовый APK + Obtainium
 
-1. Queries **RuStore** for the latest `com.vk.vkvideo` version.
-2. Downloads the official upstream APK using a pinned RuStore downloader.
-3. Verifies the upstream APK is signed with the expected VK certificate.
-4. Builds this Morphe `.mpp` bundle.
-5. Applies the patches to the new APK with Morphe Desktop in `FULL` bytecode mode.
-6. If patching fails, the workflow turns red and opens/updates a compatibility issue.
-7. If patching succeeds and signing secrets are configured, it publishes the patched APK plus the `.mpp` bundle in a GitHub Release whose tag is the VK Video version.
+Если в [Releases](https://github.com/Solvo37/vk-video-morphe-patches/releases) есть файл вида:
 
-The scheduled check runs every six hours. It exits early when that upstream version already has a release.
+```text
+VK-Video-1.xxx-patched.apk
+```
 
-### Why RuStore first?
+его можно установить напрямую и дальше получать обновления через **Obtainium**.
 
-APK mirrors can lag behind the official Russian distribution channel. RuStore is used as the primary feed; APKMirror is useful as a secondary human cross-check, not as the automation download source.
+Для Obtainium:
 
-## Morphe
+- URL: `https://github.com/Solvo37/vk-video-morphe-patches`
+- фильтр названия релиза: `^VK Video`
+- фильтр APK: `^VK-Video-.*-patched\.apk$`
 
-Add this repository as a custom Morphe source:
+Подробно: [docs/INSTALL.md](./docs/INSTALL.md).
+
+> Первый patched APK нельзя поставить обновлением поверх официального VK APK: подпись другая. Официальный VK Видео нужно удалить один раз, установить patched build, а дальше обновления этого проекта ставятся поверх него — при условии, что релизы подписаны одним и тем же ключом.
+
+### Вариант 2 — патчить самому через Morphe
+
+Добавьте этот репозиторий как custom source:
 
 ```text
 https://github.com/Solvo37/vk-video-morphe-patches
 ```
 
-The exact 1.163 target is marked stable. Other app versions are exposed as experimental so the fingerprints can be compatibility-tested without pretending every future build is already verified.
+В Releases публикуется `.mpp` bundle. Можно взять официальный APK VK Видео и применить нужные патчи самостоятельно.
 
-## Obtainium
+## Как работает автоматика
 
-After the first signed APK release exists, add:
+GitHub Actions периодически:
+
+1. проверяет доступную официальную сборку VK Видео;
+2. сверяет package name, versionCode и сертификат исходного APK;
+3. **не допускает downgrade ниже подтверждённой baseline-версии**;
+4. собирает наш Morphe `.mpp`;
+5. реально применяет все обязательные патчи к APK;
+6. при несовместимости останавливается и создаёт issue;
+7. при успешной проверке и наличии signing secrets собирает подписанный APK;
+8. публикует APK + `.mpp` + upstream metadata в GitHub Release.
+
+Текущий основной автоматический источник APK — **RuStore**. Если он отстаёт от baseline (сейчас baseline 1.163), workflow завершится успешно, но **не выпустит старую версию**.
+
+## Проверка доверия
+
+Официальный upstream APK принимается только с ожидаемым сертификатом VK:
 
 ```text
-https://github.com/Solvo37/vk-video-morphe-patches
+SHA-256: 057d974412032066f1b5edb1fdb550f71854189815c806b27c4d486fb4f1ef32
 ```
 
-as a GitHub source in Obtainium.
+Публичные APK этого проекта должны быть подписаны постоянным release-ключом проекта:
 
-Recommended APK asset filter:
-
-```regex
-^VK-Video-.*-patched\.apk$
+```text
+SHA-256: D4:1F:49:2F:0E:2A:2E:39:90:AC:7F:8E:75:CC:5D:4B:
+         14:89:5F:7B:46:C0:B6:11:3B:78:82:C4:8A:A5:D4:0A
 ```
 
-Release tags are the upstream VK Video version (for example `1.163`), so Obtainium can reconcile the release version with the installed app's `versionName`.
+**Приватный signing key намеренно не публикуется.** Это не «жадность»: если приватный ключ выложить, любой сможет подписать вредоносный APK тем же сертификатом, и Android будет считать его допустимым обновлением.
 
-> The first patched install cannot update the stock VK-signed APK because the patched build is signed with your own key. Uninstall the stock VK Video once, install your signed patched build, and future releases can update it as long as the same signing key is retained.
+Подробнее: [docs/TRUST.md](./docs/TRUST.md).
 
-## One-time signing setup
+## Совместимость
 
-Do **not** commit a private keystore to this repository. Generate one locally and add it to GitHub Actions secrets.
+- ✅ VK Видео **1.163 / 51920** — версия, на которой разрабатывались fingerprints.
+- 🧪 будущие версии — допускаются только после автоматического patch-test.
+- ❌ если обязательный fingerprint не найден — APK-релиз не создаётся.
 
-Required repository secrets:
+## Для разработчиков
 
-- `ANDROID_KEYSTORE_B64`
-- `ANDROID_KEYSTORE_PASSWORD`
-- `ANDROID_KEY_ALIAS`
-- `ANDROID_KEY_PASSWORD`
+См. [CONTRIBUTING.md](./CONTRIBUTING.md) и [docs/reverse-engineering-1.163.md](./docs/reverse-engineering-1.163.md).
 
-Until these exist, Actions still performs the full upstream download + compatibility patch check and uploads a workflow artifact, but it deliberately does **not** publish an Obtainium release.
+Сборка:
 
-## Development target
+```bash
+gradle :patches:buildAndroid
+```
 
-- package: `com.vk.vkvideo`
-- versionName: `1.163`
-- versionCode: `51920`
-- APK SHA-256 used for reverse engineering: `61d8c2b0837704d2d197a35b75f5c07872927e77d8861b61ce78ba0c5626c1c8`
+Результат:
 
-See `docs/reverse-engineering-1.163.md` for the matching points.
+```text
+patches/build/libs/*.mpp
+```
+
+## Сообщить о проблеме
+
+Используйте [Issues](https://github.com/Solvo37/vk-video-morphe-patches/issues):
+
+- **Bug report** — приложение запускается, но патч работает неправильно;
+- **New VK Video version** — вышла новая версия и fingerprint больше не подходит;
+- **Feature request** — предложение нового патча.
+
+Не прикладывайте к issue чужие APK-файлы. Достаточно версии, versionCode и логов Morphe.
+
+## Правовой статус
+
+Проект не связан с VK, VK Видео, Morphe или Obtainium и не одобрен ими.  
+Репозиторий содержит **патчи и инструменты автоматизации**, а не исходный код VK Видео. Пользователь самостоятельно отвечает за соблюдение правил сервисов и законодательства своей юрисдикции.
+
+## License
+
+Код патчей распространяется по лицензии [GPL-3.0](./LICENSE).
