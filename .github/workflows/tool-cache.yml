@@ -1,0 +1,28 @@
+name: Tool cache
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/tool-cache.yml'
+
+permissions:
+  contents: read
+
+jobs:
+  morphe:
+    if: github.repository == 'Solvo37/vk-video-morphe-patches'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Download Morphe Desktop
+        run: |
+          set -euo pipefail
+          curl -fL --retry 4             -o morphe.jar             "https://github.com/MorpheApp/morphe-desktop/releases/download/v1.16.0/morphe-desktop-1.16.0-all.jar"
+          echo "82a0df2ff881d83d5ca8b4f9a6ce196bd4ac3b87ff147fe37845c296b436806c  morphe.jar" | sha256sum -c -
+      - name: Upload
+        uses: actions/upload-artifact@v7
+        with:
+          name: morphe-desktop-1.16.0
+          path: morphe.jar
+          if-no-files-found: error
