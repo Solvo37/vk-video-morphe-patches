@@ -17,6 +17,7 @@ on:
       - 'gradle/**'
       - 'settings.gradle.kts'
       - 'gradle.properties'
+      - 'ci/gplaydl-api-key.enc'
       - '.github/workflows/auto-update.yml'
 
 permissions:
