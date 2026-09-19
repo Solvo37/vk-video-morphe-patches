@@ -102,6 +102,7 @@ jobs:
             exit 1
           fi
 
+          echo "::add-mask::$KEY"
           echo "GPLAYDL_API_KEY=$KEY" >> "$GITHUB_ENV"
           unset KEY
           echo "Loaded encrypted Google Play credential."
