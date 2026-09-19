@@ -72,7 +72,7 @@ GitHub Actions периодически:
 7. при успешной проверке и наличии signing secrets собирает подписанный APK;
 8. публикует APK + `.mpp` + upstream metadata в GitHub Release.
 
-Автоматика теперь использует **Google Play через gplaydl как основной источник**, **APKPure** как первый fallback и **RuStore** как второй fallback. Любой скачанный APK проверяется по package name и оригинальному сертификату VK; версия ниже baseline 1.163 никогда не публикуется.
+Автоматика теперь использует **RuStore как основной источник VK Видео**, **Google Play** как первый fallback и **APKPure** как второй fallback. Любой скачанный APK проверяется по package name и оригинальному сертификату VK; версия ниже baseline 1.163 никогда не публикуется.
 
 ## Проверка доверия
 
@@ -108,7 +108,7 @@ SHA-256: D4:1F:49:2F:0E:2A:2E:39:90:AC:7F:8E:75:CC:5D:4B:
 3. В GitHub открыть **Actions → Link Google Play → Run workflow**, вставить код и запустить.
 4. Workflow сам получает API key и сохраняет в репозитории только его AES-зашифрованную форму. Пароль шифрования берётся из уже существующего `ANDROID_KEY_PASSWORD` secret.
 
-После этого `VK Video auto build` сам использует Google Play. Если Google Play недоступен, остаются APKPure и RuStore fallback.
+После этого `VK Video auto build` сможет использовать Google Play как fallback. Основной источник VK Видео — RuStore.
 
 Альтернативно можно вручную создать repository secret `GPLAYDL_API_KEY`; он имеет приоритет над зашифрованным ключом.
 
