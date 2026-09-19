@@ -1,0 +1,42 @@
+name: Google Play probe
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/google-play-probe.yml'
+
+permissions:
+  contents: read
+
+jobs:
+  probe:
+    if: github.repository == 'Solvo37/vk-video-morphe-patches'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v7
+
+      - name: Setup Python
+        uses: actions/setup-python@v6
+        with:
+          python-version: '3.12'
+
+      - name: Install goopdl
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install "git+https://github.com/Villoh/goopdl.git@v1.2.1"
+          goopdl --help >/dev/null
+
+      - name: Probe latest VK Video
+        run: |
+          set -euo pipefail
+          goopdl latest com.vk.vkvideo --stable 4 --arch arm64 --country RU | tee google-play-latest.txt
+
+      - name: Upload probe log
+        uses: actions/upload-artifact@v7
+        with:
+          name: google-play-latest
+          path: google-play-latest.txt
+          if-no-files-found: error
