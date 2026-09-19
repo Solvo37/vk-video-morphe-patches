@@ -4,11 +4,11 @@
 
 The automatic release workflow uses this order:
 
-1. **Google Play via gplaydl** — preferred official source.
-2. **APKPure via apkeep** — public fallback when Google Play CI authentication is unavailable or fails.
-3. **RuStore** — final fallback.
+1. **RuStore** — primary source for VK Video.
+2. **Google Play via gplaydl** — first fallback.
+3. **APKPure via apkeep** — final fallback.
 
-Google Play access is optional in CI. Configure the repository secret `GPLAYDL_API_KEY` to enable it. Without that secret, the workflow starts at APKPure and still falls back to RuStore.
+Google Play access is optional in CI. Configure the linked gplaydl credential to enable the fallback. RuStore is always checked first.
 
 Every candidate actually used for a build is verified locally before patching.
 
