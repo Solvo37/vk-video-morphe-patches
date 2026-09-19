@@ -1,54 +1,67 @@
 # Upstream version strategy
 
-## Current source
+## Source priority
 
-The scheduled workflow queries RuStore for `com.vk.vkvideo`.
+The automatic release workflow uses this order:
 
-The returned metadata includes:
+1. **Google Play via gplaydl** — preferred official source.
+2. **APKPure via apkeep** — public fallback when Google Play CI authentication is unavailable or fails.
+3. **RuStore** — final fallback.
 
-- versionName;
-- versionCode;
-- direct download URL;
-- upstream signing certificate hash.
+Google Play access is optional in CI. Configure the repository secret `GPLAYDL_API_KEY` to enable it. Without that secret, the workflow starts at APKPure and still falls back to RuStore.
 
-The downloaded APK is verified again locally before patching.
+Every candidate actually used for a build is verified locally before patching.
+
+## Required verification
+
+Before any release can be produced:
+
+1. package must be `com.vk.vkvideo`;
+2. `versionName` and `versionCode` must be readable from the base APK;
+3. source APK certificate SHA-256 must equal the expected VK certificate;
+4. version must not be below the project baseline;
+5. every mandatory Morphe patch must apply successfully.
+
+Expected upstream VK certificate:
+
+```text
+057d974412032066f1b5edb1fdb550f71854189815c806b27c4d486fb4f1ef32
+```
+
+## Split APKs
+
+Google Play may return a base APK plus configuration splits.
+
+The workflow:
+
+1. locates and verifies the base APK;
+2. patches the base with Morphe;
+3. copies all original configuration splits;
+4. merges the patched base + splits into one universal APK with APKEditor;
+5. signs the resulting universal APK with the project's persistent key;
+6. verifies the signed APK before publishing it.
 
 ## Baseline protection
 
-The project baseline is currently:
+Current baseline:
 
 ```text
 VK Video 1.163
 versionCode 51920
 ```
 
-If an automated source offers an older version, the workflow reports it but refuses to publish a downgrade.
+A source that only exposes an older version is reported but never published as a downgrade.
 
-This matters because app stores and mirrors can expose different staged versions at the same time.
+## Compatibility gate
 
-## Newer builds
+A newer APK is not considered supported merely because it downloads.
 
-A new version is not considered supported merely because it downloads successfully.
+All mandatory patches must apply:
 
-Before an APK release is published, Morphe must successfully apply all required patches:
-
+- Fix install conflict with stock VK
 - Disable in-app update
 - Remove video ads
 - Hide promoted banner content
 - Disable ad pixel tracking
 
-If any required fingerprint fails, the workflow stops and creates/updates a compatibility issue.
-
-## Adding another source
-
-A future source should be treated as a version candidate, not blindly trusted.
-
-Required checks before it may replace the current candidate:
-
-1. package is `com.vk.vkvideo`;
-2. version/versionCode are internally consistent;
-3. upstream VK signing certificate matches the expected fingerprint;
-4. version is not lower than the current baseline;
-5. full Morphe patch test succeeds.
-
-Do not make third-party mirrors authoritative solely because they expose a numerically higher version.
+A fingerprint failure stops the release and opens/updates a compatibility issue.
