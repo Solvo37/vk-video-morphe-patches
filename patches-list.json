@@ -1,0 +1,9 @@
+{
+  "version": "0.1.0",
+  "patches": [
+    "Disable in-app update",
+    "Remove video ads",
+    "Hide promoted banner content",
+    "Disable ad pixel tracking"
+  ]
+}
