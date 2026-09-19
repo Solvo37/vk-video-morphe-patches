@@ -7,7 +7,7 @@
 [![Publish patches](https://github.com/Solvo37/vk-video-morphe-patches/actions/workflows/release-patches.yml/badge.svg)](https://github.com/Solvo37/vk-video-morphe-patches/actions/workflows/release-patches.yml)
 [![License: GPL-3.0](https://img.shields.io/badge/license-GPL--3.0-blue.svg)](./LICENSE)
 
-Публичные патчи **Morphe** для Android-приложения **VK Видео** (`com.vk.vkvideo`).
+Публичные патчи **Morphe** для Android-приложения **VK Видео** (`com.vk.vkvideo`).\n\n> ⚠️ Текущий APK-релиз 1.163 временно считается тестовым: предыдущая FULL-сборка может падать при запуске. Идёт проверка STRIP_FAST-сборки.
 
 ### Статус готового APK
 
