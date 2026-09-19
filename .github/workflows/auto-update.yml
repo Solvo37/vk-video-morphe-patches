@@ -71,6 +71,34 @@ jobs:
           sudo apt-get update
           sudo apt-get install -y apksigner aapt jq unzip zip
 
+      - name: Load linked Google Play credential
+        env:
+          ENC_PASSWORD: ${{ secrets.ANDROID_KEY_PASSWORD }}
+        run: |
+          set -euo pipefail
+
+          # A manually configured repository secret wins.
+          if [[ -n "${GPLAYDL_API_KEY:-}" ]]; then
+            echo "Using GPLAYDL_API_KEY repository secret."
+            exit 0
+          fi
+
+          if [[ ! -s ci/gplaydl-api-key.enc ]]; then
+            echo "No linked Google Play credential found; public fallbacks will be used."
+            exit 0
+          fi
+
+          KEY="$(openssl enc -d -aes-256-cbc -pbkdf2 -a -A             -in ci/gplaydl-api-key.enc             -pass env:ENC_PASSWORD)"
+
+          if [[ -z "$KEY" ]]; then
+            echo "Could not decrypt linked Google Play credential." >&2
+            exit 1
+          fi
+
+          echo "GPLAYDL_API_KEY=$KEY" >> "$GITHUB_ENV"
+          unset KEY
+          echo "Loaded encrypted Google Play credential."
+
       - name: Install download tools
         run: |
           set -euo pipefail
