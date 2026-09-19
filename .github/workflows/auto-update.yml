@@ -32,6 +32,7 @@ concurrency:
 env:
   PACKAGE_NAME: com.vk.vkvideo
   BASELINE_VERSION: '1.163'
+  BASELINE_VERSION_CODE: '51920'
   EXPECTED_CERT_SHA256: 057d974412032066f1b5edb1fdb550f71854189815c806b27c4d486fb4f1ef32
 
   GPLAYDL_VERSION: '4.2.1'
@@ -132,38 +133,64 @@ jobs:
 
           SOURCE=""
 
-          # Primary: Google Play. Current gplaydl supports CI auth via GPLAYDL_API_KEY.
-          if [[ -n "${GPLAYDL_API_KEY:-}" ]]; then
+          # Primary: RuStore. VK Video releases are expected to appear here first.
+          # Query metadata before downloading so an unexpectedly stale RuStore build
+          # can still fall through to the secondary sources instead of downgrading.
+          echo "Checking RuStore first..."
+          if tools/rustore/rustore_apk_downloader -j "${PACKAGE_NAME}" > rustore-meta.json 2>/dev/null; then
+            RUSTORE_VERSION="$(jq -r '.version_name // empty' rustore-meta.json)"
+            RUSTORE_VERSION_CODE="$(jq -r '.version_code // empty' rustore-meta.json)"
+            RUSTORE_CERT="$(jq -r '.signature // empty' rustore-meta.json | tr '[:upper:]' '[:lower:]')"
+
+            echo "RuStore reports: ${RUSTORE_VERSION:-unknown} (${RUSTORE_VERSION_CODE:-unknown})"
+
+            if [[ -n "$RUSTORE_VERSION_CODE" ]] \
+              && [[ "$RUSTORE_VERSION_CODE" =~ ^[0-9]+$ ]] \
+              && (( RUSTORE_VERSION_CODE >= BASELINE_VERSION_CODE )) \
+              && [[ "$RUSTORE_CERT" == "${EXPECTED_CERT_SHA256}" ]]; then
+              echo "Using RuStore as upstream."
+              mkdir -p upstream/rustore
+              if tools/rustore/rustore_apk_downloader "${PACKAGE_NAME}" upstream/rustore; then
+                SOURCE="rustore"
+              else
+                echo "::warning::RuStore metadata was valid but APK download failed; trying Google Play."
+                rm -rf upstream/rustore
+              fi
+            else
+              echo "::warning::RuStore build is below baseline or metadata/signature is invalid; trying secondary sources."
+            fi
+          else
+            echo "::warning::RuStore metadata query failed; trying secondary sources."
+          fi
+
+          # Fallback 1: Google Play.
+          if [[ -z "$SOURCE" && -n "${GPLAYDL_API_KEY:-}" ]]; then
             echo "Trying Google Play via gplaydl..."
             mkdir -p upstream/google-play
-            if gplaydl download "${PACKAGE_NAME}"                 --arch arm64                 --no-extras                 -o upstream/google-play; then
+            if gplaydl download "${PACKAGE_NAME}" \
+                --arch arm64 \
+                --no-extras \
+                -o upstream/google-play; then
               SOURCE="google-play"
             else
               echo "::warning::Google Play download failed; trying APKPure."
               rm -rf upstream/google-play
             fi
-          else
-            echo "::notice::GPLAYDL_API_KEY is not configured; skipping Google Play and using public fallbacks."
+          elif [[ -z "$SOURCE" ]]; then
+            echo "::notice::Google Play credential is not configured; trying APKPure."
           fi
 
-          # Fallback 1: APKPure through apkeep, same idea used by public auto-patch projects.
+          # Fallback 2: APKPure.
           if [[ -z "$SOURCE" ]]; then
             echo "Trying APKPure via apkeep..."
             mkdir -p upstream/apkpure
             if ./apkeep -a "${PACKAGE_NAME}" -d apk-pure upstream/apkpure; then
               SOURCE="apkpure"
             else
-              echo "::warning::APKPure download failed; trying RuStore."
+              echo "::error::All upstream sources failed."
               rm -rf upstream/apkpure
+              exit 1
             fi
-          fi
-
-          # Fallback 2: RuStore.
-          if [[ -z "$SOURCE" ]]; then
-            echo "Trying RuStore..."
-            mkdir -p upstream/rustore
-            tools/rustore/rustore_apk_downloader "${PACKAGE_NAME}" upstream/rustore
-            SOURCE="rustore"
           fi
 
           SOURCE_DIR="upstream/$SOURCE"
@@ -179,7 +206,7 @@ jobs:
             rm -rf "$tmp" "$archive"
           done < <(find "$SOURCE_DIR" -maxdepth 1 -type f \( -name '*.xapk' -o -name '*.apks' -o -name '*.apkm' \) -print)
 
-          echo "Source: $SOURCE"
+          echo "Selected upstream source: $SOURCE"
           find "$SOURCE_DIR" -maxdepth 1 -type f -printf '%f\n' | sort
 
           echo "source=$SOURCE" >> "$GITHUB_OUTPUT"
@@ -262,9 +289,9 @@ jobs:
           fi
 
           if gh release view "$VERSION" --repo "$GITHUB_REPOSITORY" >/dev/null 2>&1; then
-            if [[ "$FORCE_REBUILD" == "true" || "$GITHUB_EVENT_NAME" == "push" ]]; then
+            if [[ "$FORCE_REBUILD" == "true" ]]; then
               echo "build=true" >> "$GITHUB_OUTPUT"
-              echo "Release $VERSION exists, but a rebuild was requested."
+              echo "Release $VERSION exists, but force_rebuild=true."
               exit 0
             fi
 
@@ -420,12 +447,35 @@ jobs:
           APK="dist/VK-Video-${VERSION}-patched.apk"
           SHA="dist/VK-Video-${VERSION}-patched.sha256"
 
-          gh release create "$VERSION"             "$APK#VK Video $VERSION patched APK"             "$SHA#SHA-256"             "$MPP#Morphe patch bundle"             "upstream.json#Upstream build metadata"             --repo "$GITHUB_REPOSITORY"             --title "VK Video $VERSION patched"             --notes "Automated VK Video build.
+          NOTES="Automated VK Video build.
 
           Upstream: $SOURCE
           VK Video: $VERSION ($VERSION_CODE)
           Upstream package and VK signing certificate were verified before patching.
           The final APK was patched by Morphe, merged to a universal APK when splits were present, and signed with the project's persistent release key."
+
+          if gh release view "$VERSION" --repo "$GITHUB_REPOSITORY" >/dev/null 2>&1; then
+            echo "Updating existing release $VERSION..."
+            gh release upload "$VERSION" \
+              "$APK" "$SHA" "$MPP" "upstream.json" \
+              --clobber \
+              --repo "$GITHUB_REPOSITORY"
+
+            gh release edit "$VERSION" \
+              --repo "$GITHUB_REPOSITORY" \
+              --title "VK Video $VERSION patched" \
+              --notes "$NOTES"
+          else
+            echo "Creating release $VERSION..."
+            gh release create "$VERSION" \
+              "$APK#VK Video $VERSION patched APK" \
+              "$SHA#SHA-256" \
+              "$MPP#Morphe patch bundle" \
+              "upstream.json#Upstream build metadata" \
+              --repo "$GITHUB_REPOSITORY" \
+              --title "VK Video $VERSION patched" \
+              --notes "$NOTES"
+          fi
 
       - name: Signing setup reminder
         if: steps.decision.outputs.build == 'true' && steps.patch.outcome == 'success' && env.HAS_SIGNING != 'true'
