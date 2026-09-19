@@ -335,7 +335,7 @@ jobs:
           set -euo pipefail
           mkdir -p dist
 
-          java -jar morphe.jar patch             -p "$MPP"             --force             --exclusive             -e "Fix install conflict with stock VK"             -e "Disable in-app update"             -e "Remove video ads"             -e "Hide promoted banner content"             -e "Disable ad pixel tracking"             --bytecode-mode FULL             --unsigned             -r dist/patch-result.json             -o dist/patched-base.apk             "$BASE_APK"
+          "$JAVA_HOME/bin/java" -jar morphe.jar patch             -p "$MPP"             --force             --exclusive             -e "Fix install conflict with stock VK"             -e "Disable in-app update"             -e "Remove video ads"             -e "Hide promoted banner content"             -e "Disable ad pixel tracking"             --bytecode-mode FULL             --unsigned             -r dist/patch-result.json             -o dist/patched-base.apk             "$BASE_APK"
 
       - name: Open compatibility issue on patch failure
         if: steps.decision.outputs.build == 'true' && steps.patch.outcome == 'failure'
