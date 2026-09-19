@@ -173,7 +173,7 @@ jobs:
         run: |
           set -euo pipefail
           mkdir -p dist
-          java -jar morphe.jar patch             -p "$MPP"             --force             --exclusive             -e "Disable in-app update"             -e "Remove video ads"             -e "Hide promoted banner content"             -e "Disable ad pixel tracking"             --bytecode-mode FULL             --unsigned             -r dist/patch-result.json             -o "dist/VK-Video-${VERSION}-compatibility-test.apk"             "$APK"
+          java -jar morphe.jar patch             -p "$MPP"             --force             --exclusive             -e "Fix install conflict with stock VK"             -e "Disable in-app update"             -e "Remove video ads"             -e "Hide promoted banner content"             -e "Disable ad pixel tracking"             --bytecode-mode FULL             --unsigned             -r dist/patch-result.json             -o "dist/VK-Video-${VERSION}-compatibility-test.apk"             "$APK"
 
       - name: Open compatibility issue on failure
         if: steps.existing.outputs.skip != 'true' && steps.patch_test.outcome == 'failure'
@@ -220,7 +220,7 @@ jobs:
           KEY_PASSWORD: ${{ secrets.ANDROID_KEY_PASSWORD }}
         run: |
           set -euo pipefail
-          java -jar morphe.jar patch             -p "$MPP"             --force             --exclusive             -e "Disable in-app update"             -e "Remove video ads"             -e "Hide promoted banner content"             -e "Disable ad pixel tracking"             --bytecode-mode FULL             --keystore "$PWD/signing.jks"             --keystore-password "$STORE_PASSWORD"             --keystore-entry-alias "$KEY_ALIAS"             --keystore-entry-password "$KEY_PASSWORD"             --signer "Solvo37 VK Video"             -o "dist/VK-Video-${VERSION}-patched.apk"             "$APK"
+          java -jar morphe.jar patch             -p "$MPP"             --force             --exclusive             -e "Fix install conflict with stock VK"             -e "Disable in-app update"             -e "Remove video ads"             -e "Hide promoted banner content"             -e "Disable ad pixel tracking"             --bytecode-mode FULL             --keystore "$PWD/signing.jks"             --keystore-password "$STORE_PASSWORD"             --keystore-entry-alias "$KEY_ALIAS"             --keystore-entry-password "$KEY_PASSWORD"             --signer "Solvo37 VK Video"             -o "dist/VK-Video-${VERSION}-patched.apk"             "$APK"
           apksigner verify --verbose "dist/VK-Video-${VERSION}-patched.apk"
 
       - name: Upload compatibility artifacts
