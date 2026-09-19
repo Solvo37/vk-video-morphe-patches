@@ -24,6 +24,7 @@ concurrency:
 
 env:
   PACKAGE_NAME: com.vk.vkvideo
+  BASELINE_VERSION: '1.163'
   EXPECTED_CERT_SHA256: 057d974412032066f1b5edb1fdb550f71854189815c806b27c4d486fb4f1ef32
   RUSTORE_DOWNLOADER_VERSION: v1.4.0
   RUSTORE_DOWNLOADER_SHA256: 8ba94847a616b7b5d032285141253b8e3e2cb79d1119b827f558d48b6a157ca0
@@ -82,6 +83,8 @@ jobs:
             echo "RuStore reports no direct APK download for ${PACKAGE_NAME}" >&2
             exit 1
           fi
+          META_CERT="$(jq -r '.signature // empty' upstream.json | tr '[:upper:]' '[:lower:]')"
+          [[ "$META_CERT" == "${EXPECTED_CERT_SHA256}" ]]
           echo "version=$VERSION" >> "$GITHUB_OUTPUT"
           echo "version_code=$VERSION_CODE" >> "$GITHUB_OUTPUT"
 
@@ -92,7 +95,11 @@ jobs:
           VERSION: ${{ steps.upstream.outputs.version }}
         run: |
           set -euo pipefail
-          if gh release view "$VERSION" --repo "$GITHUB_REPOSITORY" >/dev/null 2>&1; then
+          LOWEST="$(printf '%s\n%s\n' "${BASELINE_VERSION}" "$VERSION" | sort -V | head -n1)"
+          if [[ "$LOWEST" == "$VERSION" && "$VERSION" != "${BASELINE_VERSION}" ]]; then
+            echo "skip=true" >> "$GITHUB_OUTPUT"
+            echo "::warning::RuStore currently serves VK Video $VERSION, older than baseline ${BASELINE_VERSION}; refusing to publish a downgrade."
+          elif gh release view "$VERSION" --repo "$GITHUB_REPOSITORY" >/dev/null 2>&1; then
             echo "skip=true" >> "$GITHUB_OUTPUT"
             echo "Release $VERSION already exists."
           else
@@ -121,9 +128,9 @@ jobs:
           set -euo pipefail
           BADGING="$(aapt dump badging "$APK" | head -n 1)"
           echo "$BADGING"
-          PKG="$(sed -n "s/.*name='\([^']*\)'.*/\1/p" <<< "$BADGING")"
-          VN="$(sed -n "s/.*versionName='\([^']*\)'.*/\1/p" <<< "$BADGING")"
-          VC="$(sed -n "s/.*versionCode='\([^']*\)'.*/\1/p" <<< "$BADGING")"
+          PKG="$(sed -n "s/^package: name='\([^']*\)'.*/\1/p" <<< "$BADGING")"
+          VN="$(grep -o "versionName='[^']*'" <<< "$BADGING" | head -n1 | cut -d"'" -f2)"
+          VC="$(grep -o "versionCode='[^']*'" <<< "$BADGING" | head -n1 | cut -d"'" -f2)"
           [[ "$PKG" == "${PACKAGE_NAME}" ]]
           [[ "$VN" == "$VERSION" ]]
           [[ "$VC" == "$VERSION_CODE" ]]
