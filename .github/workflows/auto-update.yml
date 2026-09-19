@@ -2,6 +2,12 @@ name: VK Video auto build
 
 on:
   workflow_dispatch:
+    inputs:
+      force_rebuild:
+        description: 'Rebuild and replace the current release even if this VK Video version already exists'
+        required: false
+        default: false
+        type: boolean
   schedule:
     - cron: '17 */6 * * *'
   push:
@@ -242,6 +248,7 @@ jobs:
         env:
           GH_TOKEN: ${{ github.token }}
           VERSION: ${{ steps.upstream.outputs.version }}
+          FORCE_REBUILD: ${{ inputs.force_rebuild || false }}
         run: |
           set -euo pipefail
 
@@ -253,6 +260,12 @@ jobs:
           fi
 
           if gh release view "$VERSION" --repo "$GITHUB_REPOSITORY" >/dev/null 2>&1; then
+            if [[ "$FORCE_REBUILD" == "true" || "$GITHUB_EVENT_NAME" == "push" ]]; then
+              echo "build=true" >> "$GITHUB_OUTPUT"
+              echo "Release $VERSION exists, but a rebuild was requested."
+              exit 0
+            fi
+
             echo "build=false" >> "$GITHUB_OUTPUT"
             echo "Release $VERSION already exists."
             exit 0
