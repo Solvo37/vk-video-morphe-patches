@@ -101,13 +101,16 @@ SHA-256: D4:1F:49:2F:0E:2A:2E:39:90:AC:7F:8E:75:CC:5D:4B:
 
 ## Google Play в CI
 
-Для максимально свежих официальных сборок можно добавить ещё один repository secret:
+Самый простой способ — без ПК и Termux:
 
-```text
-GPLAYDL_API_KEY
-```
+1. Установить **gplaydl Authenticator** на Android и добавить отдельный Google-аккаунт.
+2. В Authenticator открыть **Link gplaydl** и получить одноразовый код.
+3. В GitHub открыть **Actions → Link Google Play → Run workflow**, вставить код и запустить.
+4. Workflow сам получает API key и сохраняет в репозитории только его AES-зашифрованную форму. Пароль шифрования берётся из уже существующего `ANDROID_KEY_PASSWORD` secret.
 
-Это API key от `gplaydl` Authenticator/dispenser. Без него workflow не ломается: он автоматически переходит на APKPure, затем на RuStore. Сам ключ Google-аккаунта в репозиторий не коммитится.
+После этого `VK Video auto build` сам использует Google Play. Если Google Play недоступен, остаются APKPure и RuStore fallback.
+
+Альтернативно можно вручную создать repository secret `GPLAYDL_API_KEY`; он имеет приоритет над зашифрованным ключом.
 
 ## Для разработчиков
 
