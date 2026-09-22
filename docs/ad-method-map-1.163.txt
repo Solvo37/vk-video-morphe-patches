@@ -1,0 +1,2251 @@
+===== Lcom/vk/api/generated/video/dto/VideoVideoAdsInstreamSectionsDto; =====
+  Static fields     -
+    #0              : (in Lcom/vk/api/generated/video/dto/VideoVideoAdsInstreamSectionsDto;)
+      name          : 'CREATOR'
+      type          : 'Landroid/os/Parcelable$Creator;'
+      access        : 0x0019 (PUBLIC STATIC FINAL)
+  Instance fields   -
+    #0              : (in Lcom/vk/api/generated/video/dto/VideoVideoAdsInstreamSectionsDto;)
+      name          : 'midroll'
+      type          : 'Ljava/util/List;'
+      access        : 0x0012 (PRIVATE FINAL)
+    #1              : (in Lcom/vk/api/generated/video/dto/VideoVideoAdsInstreamSectionsDto;)
+      name          : 'postroll'
+      type          : 'Ljava/util/List;'
+      access        : 0x0012 (PRIVATE FINAL)
+    #2              : (in Lcom/vk/api/generated/video/dto/VideoVideoAdsInstreamSectionsDto;)
+      name          : 'preroll'
+      type          : 'Ljava/util/List;'
+      access        : 0x0012 (PRIVATE FINAL)
+  Direct methods    -
+
+    #0              : (in Lcom/vk/api/generated/video/dto/VideoVideoAdsInstreamSectionsDto;)
+      name          : '<clinit>'
+      type          : '()V'
+      access        : 0x10008 (STATIC CONSTRUCTOR)
+      registers     : 1
+      ins           : 0
+      outs          : 1
+      insns size    : 8 16-bit code units
+8b99f8:                                        |[8b99f8] com.vk.api.generated.video.dto.VideoVideoAdsInstreamSectionsDto.<clinit>:()V
+8b9a08: 2200 5929                              |0000: new-instance v0, Lcom/vk/api/generated/video/dto/VideoVideoAdsInstreamSectionsDto$a; // type@2959
+8b9a0c: 7010 fecc 0000                         |0002: invoke-direct {v0}, Ljava/lang/Object;.<init>:()V // method@ccfe
+8b9a12: 6900 1f75                              |0005: sput-object v0, Lcom/vk/api/generated/video/dto/VideoVideoAdsInstreamSectionsDto;.CREATOR:Landroid/os/Parcelable$Creator; // field@751f
+8b9a16: 0e00                                   |0007: return-void
+
+    #1              : (in Lcom/vk/api/generated/video/dto/VideoVideoAdsInstreamSectionsDto;)
+      name          : '<init>'
+      type          : '()V'
+      access        : 0x10001 (PUBLIC CONSTRUCTOR)
+      registers     : 7
+      ins           : 1
+      outs          : 6
+      insns size    : 10 16-bit code units
+8b9a18:                                        |[8b9a18] com.vk.api.generated.video.dto.VideoVideoAdsInstreamSectionsDto.<init>:()V
+8b9a28: 1274                                   |0000: const/4 v4, #int 7 // #7
+8b9a2a: 1205                                   |0001: const/4 v5, #int 0 // #0
+8b9a2c: 1201                                   |0002: const/4 v1, #int 0 // #0
+8b9a2e: 1202                                   |0003: const/4 v2, #int 0 // #0
+8b9a30: 1203                                   |0004: const/4 v3, #int 0 // #0
+8b9a32: 0760                                   |0005: move-object v0, v6
+8b9a34: 7606 84a5 0000                         |0006: invoke-direct/range {v0, v1, v2, v3, v4, v5}, Lcom/vk/api/generated/video/dto/VideoVideoAdsInstreamSectionsDto;.<init>:(Ljava/util/List;Ljava/util/List;Ljava/util/List;ILkotlin/jvm/internal/DefaultConstructorMarker;)V // method@a584
+8b9a3a: 0e00                                   |0009: return-void
+
+    #2              : (in Lcom/vk/api/generated/video/dto/VideoVideoAdsInstreamSectionsDto;)
+      name          : '<init>'
+      type          : '(Ljava/util/List;Ljava/util/List;Ljava/util/List;)V'
+      access        : 0x10001 (PUBLIC CONSTRUCTOR)
+      registers     : 4
+      ins           : 4
+      outs          : 1
+      insns size    : 10 16-bit code units
+8b9a3c:                                        |[8b9a3c] com.vk.api.generated.video.dto.VideoVideoAdsInstreamSectionsDto.<init>:(Ljava/util/List;Ljava/util/List;Ljava/util/List;)V
+8b9a4c: 7010 fecc 0000                         |0000: invoke-direct {v0}, Ljava/lang/Object;.<init>:()V // method@ccfe
+8b9a52: 5b01 2275                              |0003: iput-object v1, v0, Lcom/vk/api/generated/video/dto/VideoVideoAdsInstreamSectionsDto;.preroll:Ljava/util/List; // field@7522
+8b9a56: 5b02 2075                              |0005: iput-object v2, v0, Lcom/vk/api/generated/video/dto/VideoVideoAdsInstreamSectionsDto;.midroll:Ljava/util/List; // field@7520
+8b9a5a: 5b03 2175                              |0007: iput-object v3, v0, Lcom/vk/api/generated/video/dto/VideoVideoAdsInstreamSectionsDto;.postroll:Ljava/util/List; // field@7521
+8b9a5e: 0e00                                   |0009: return-void
+
+    #3              : (in Lcom/vk/api/generated/video/dto/VideoVideoAdsInstreamSectionsDto;)
+      name          : '<init>'
+      type          : '(Ljava/util/List;Ljava/util/List;Ljava/util/List;ILkotlin/jvm/internal/DefaultConstructorMarker;)V'
+      access        : 0x11001 (PUBLIC SYNTHETIC CONSTRUCTOR)
+      registers     : 7
+      ins           : 6
+      outs          : 4
+      insns size    : 20 16-bit code units
+8b9a60:                                        |[8b9a60] com.vk.api.generated.video.dto.VideoVideoAdsInstreamSectionsDto.<init>:(Ljava/util/List;Ljava/util/List;Ljava/util/List;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+8b9a70: dd06 0501                              |0000: and-int/lit8 v6, v5, #int 1 // #01
+8b9a74: 1200                                   |0002: const/4 v0, #int 0 // #0
+8b9a76: 3806 0300                              |0003: if-eqz v6, 0006 // +0003
+8b9a7a: 0702                                   |0005: move-object v2, v0
+8b9a7c: dd06 0502                              |0006: and-int/lit8 v6, v5, #int 2 // #02
+8b9a80: 3806 0300                              |0008: if-eqz v6, 000b // +0003
+8b9a84: 0703                                   |000a: move-object v3, v0
+8b9a86: dd05 0504                              |000b: and-int/lit8 v5, v5, #int 4 // #04
+8b9a8a: 3805 0300                              |000d: if-eqz v5, 0010 // +0003
+8b9a8e: 0704                                   |000f: move-object v4, v0
+8b9a90: 7040 83a5 2143                         |0010: invoke-direct {v1, v2, v3, v4}, Lcom/vk/api/generated/video/dto/VideoVideoAdsInstreamSectionsDto;.<init>:(Ljava/util/List;Ljava/util/List;Ljava/util/List;)V // method@a583
+8b9a96: 0e00                                   |0013: return-void
+  Virtual methods   -
+
+    #0              : (in Lcom/vk/api/generated/video/dto/VideoVideoAdsInstreamSectionsDto;)
+      name          : 'describeContents'
+      type          : '()I'
+      access        : 0x0011 (PUBLIC FINAL)
+      registers     : 2
+      ins           : 1
+      outs          : 0
+      insns size    : 2 16-bit code units
+8b9a98:                                        |[8b9a98] com.vk.api.generated.video.dto.VideoVideoAdsInstreamSectionsDto.describeContents:()I
+8b9aa8: 1200                                   |0000: const/4 v0, #int 0 // #0
+8b9aaa: 0f00                                   |0001: return v0
+
+    #1              : (in Lcom/vk/api/generated/video/dto/VideoVideoAdsInstreamSectionsDto;)
+      name          : 'equals'
+      type          : '(Ljava/lang/Object;)Z'
+      access        : 0x0011 (PUBLIC FINAL)
+      registers     : 6
+      ins           : 2
+      outs          : 2
+      insns size    : 46 16-bit code units
+8b9aac:                                        |[8b9aac] com.vk.api.generated.video.dto.VideoVideoAdsInstreamSectionsDto.equals:(Ljava/lang/Object;)Z
+8b9abc: 1210                                   |0000: const/4 v0, #int 1 // #1
+8b9abe: 3354 0300                              |0001: if-ne v4, v5, 0004 // +0003
+8b9ac2: 0f00                                   |0003: return v0
+8b9ac4: 2051 5a29                              |0004: instance-of v1, v5, Lcom/vk/api/generated/video/dto/VideoVideoAdsInstreamSectionsDto; // type@295a
+8b9ac8: 1202                                   |0006: const/4 v2, #int 0 // #0
+8b9aca: 3901 0300                              |0007: if-nez v1, 000a // +0003
+8b9ace: 0f02                                   |0009: return v2
+8b9ad0: 1f05 5a29                              |000a: check-cast v5, Lcom/vk/api/generated/video/dto/VideoVideoAdsInstreamSectionsDto; // type@295a
+8b9ad4: 5441 2275                              |000c: iget-object v1, v4, Lcom/vk/api/generated/video/dto/VideoVideoAdsInstreamSectionsDto;.preroll:Ljava/util/List; // field@7522
+8b9ad8: 5453 2275                              |000e: iget-object v3, v5, Lcom/vk/api/generated/video/dto/VideoVideoAdsInstreamSectionsDto;.preroll:Ljava/util/List; // field@7522
+8b9adc: 7120 54d5 3100                         |0010: invoke-static {v1, v3}, Lkotlin/jvm/internal/h;.d:(Ljava/lang/Object;Ljava/lang/Object;)Z // method@d554
+8b9ae2: 0a01                                   |0013: move-result v1
+8b9ae4: 3901 0300                              |0014: if-nez v1, 0017 // +0003
+8b9ae8: 0f02                                   |0016: return v2
+8b9aea: 5441 2075                              |0017: iget-object v1, v4, Lcom/vk/api/generated/video/dto/VideoVideoAdsInstreamSectionsDto;.midroll:Ljava/util/List; // field@7520
+8b9aee: 5453 2075                              |0019: iget-object v3, v5, Lcom/vk/api/generated/video/dto/VideoVideoAdsInstreamSectionsDto;.midroll:Ljava/util/List; // field@7520
+8b9af2: 7120 54d5 3100                         |001b: invoke-static {v1, v3}, Lkotlin/jvm/internal/h;.d:(Ljava/lang/Object;Ljava/lang/Object;)Z // method@d554
+8b9af8: 0a01                                   |001e: move-result v1
+8b9afa: 3901 0300                              |001f: if-nez v1, 0022 // +0003
+8b9afe: 0f02                                   |0021: return v2
+8b9b00: 5441 2175                              |0022: iget-object v1, v4, Lcom/vk/api/generated/video/dto/VideoVideoAdsInstreamSectionsDto;.postroll:Ljava/util/List; // field@7521
+8b9b04: 5455 2175                              |0024: iget-object v5, v5, Lcom/vk/api/generated/video/dto/VideoVideoAdsInstreamSectionsDto;.postroll:Ljava/util/List; // field@7521
+8b9b08: 7120 54d5 5100                         |0026: invoke-static {v1, v5}, Lkotlin/jvm/internal/h;.d:(Ljava/lang/Object;Ljava/lang/Object;)Z // method@d554
+8b9b0e: 0a05                                   |0029: move-result v5
+8b9b10: 3905 0300                              |002a: if-nez v5, 002d // +0003
+8b9b14: 0f02                                   |002c: return v2
+8b9b16: 0f00                                   |002d: return v0
+
+    #2              : (in Lcom/vk/api/generated/video/dto/VideoVideoAdsInstreamSectionsDto;)
+      name          : 'hashCode'
+      type          : '()I'
+      access        : 0x0011 (PUBLIC FINAL)
+      registers     : 4
+      ins           : 1
+      outs          : 1
+      insns size    : 37 16-bit code units
+8b9b18:                                        |[8b9b18] com.vk.api.generated.video.dto.VideoVideoAdsInstreamSectionsDto.hashCode:()I
+8b9b28: 5430 2275                              |0000: iget-object v0, v3, Lcom/vk/api/generated/video/dto/VideoVideoAdsInstreamSectionsDto;.preroll:Ljava/util/List; // field@7522
+8b9b2c: 1201                                   |0002: const/4 v1, #int 0 // #0
+8b9b2e: 3900 0400                              |0003: if-nez v0, 0007 // +0004
+8b9b32: 0110                                   |0005: move v0, v1
+8b9b34: 2805                                   |0006: goto 000b // +0005
+8b9b36: 6e10 03cd 0000                         |0007: invoke-virtual {v0}, Ljava/lang/Object;.hashCode:()I // method@cd03
+8b9b3c: 0a00                                   |000a: move-result v0
+8b9b3e: da00 001f                              |000b: mul-int/lit8 v0, v0, #int 31 // #1f
+8b9b42: 5432 2075                              |000d: iget-object v2, v3, Lcom/vk/api/generated/video/dto/VideoVideoAdsInstreamSectionsDto;.midroll:Ljava/util/List; // field@7520
+8b9b46: 3902 0400                              |000f: if-nez v2, 0013 // +0004
+8b9b4a: 0112                                   |0011: move v2, v1
+8b9b4c: 2805                                   |0012: goto 0017 // +0005
+8b9b4e: 6e10 03cd 0200                         |0013: invoke-virtual {v2}, Ljava/lang/Object;.hashCode:()I // method@cd03
+8b9b54: 0a02                                   |0016: move-result v2
+8b9b56: b020                                   |0017: add-int/2addr v0, v2
+8b9b58: da00 001f                              |0018: mul-int/lit8 v0, v0, #int 31 // #1f
+8b9b5c: 5432 2175                              |001a: iget-object v2, v3, Lcom/vk/api/generated/video/dto/VideoVideoAdsInstreamSectionsDto;.postroll:Ljava/util/List; // field@7521
+8b9b60: 3902 0300                              |001c: if-nez v2, 001f // +0003
+8b9b64: 2805                                   |001e: goto 0023 // +0005
+8b9b66: 6e10 03cd 0200                         |001f: invoke-virtual {v2}, Ljava/lang/Object;.hashCode:()I // method@cd03
+8b9b6c: 0a01                                   |0022: move-result v1
+8b9b6e: b010                                   |0023: add-int/2addr v0, v1
+8b9b70: 0f00                                   |0024: return v0
+
+    #3              : (in Lcom/vk/api/generated/video/dto/VideoVideoAdsInstreamSectionsDto;)
+      name          : 'toString'
+      type          : '()Ljava/lang/String;'
+      access        : 0x0011 (PUBLIC FINAL)
+      registers     : 4
+      ins           : 1
+      outs          : 3
+      insns size    : 36 16-bit code units
+8b9b74:                                        |[8b9b74] com.vk.api.generated.video.dto.VideoVideoAdsInstreamSectionsDto.toString:()Ljava/lang/String;
+8b9b84: 2200 313b                              |0000: new-instance v0, Ljava/lang/StringBuilder; // type@3b31
+8b9b88: 1a01 46b7                              |0002: const-string v1, "VideoVideoAdsInstreamSectionsDto(preroll=" // string@b746
+8b9b8c: 7020 60cd 1000                         |0004: invoke-direct {v0, v1}, Ljava/lang/StringBuilder;.<init>:(Ljava/lang/String;)V // method@cd60
+8b9b92: 5431 2275                              |0007: iget-object v1, v3, Lcom/vk/api/generated/video/dto/VideoVideoAdsInstreamSectionsDto;.preroll:Ljava/util/List; // field@7522
+8b9b96: 6e20 6acd 1000                         |0009: invoke-virtual {v0, v1}, Ljava/lang/StringBuilder;.append:(Ljava/lang/Object;)Ljava/lang/StringBuilder; // method@cd6a
+8b9b9c: 1a01 b416                              |000c: const-string v1, ", midroll=" // string@16b4
+8b9ba0: 6e20 6bcd 1000                         |000e: invoke-virtual {v0, v1}, Ljava/lang/StringBuilder;.append:(Ljava/lang/String;)Ljava/lang/StringBuilder; // method@cd6b
+8b9ba6: 5431 2075                              |0011: iget-object v1, v3, Lcom/vk/api/generated/video/dto/VideoVideoAdsInstreamSectionsDto;.midroll:Ljava/util/List; // field@7520
+8b9baa: 6e20 6acd 1000                         |0013: invoke-virtual {v0, v1}, Ljava/lang/StringBuilder;.append:(Ljava/lang/Object;)Ljava/lang/StringBuilder; // method@cd6a
+8b9bb0: 1a01 9618                              |0016: const-string v1, ", postroll=" // string@1896
+8b9bb4: 6e20 6bcd 1000                         |0018: invoke-virtual {v0, v1}, Ljava/lang/StringBuilder;.append:(Ljava/lang/String;)Ljava/lang/StringBuilder; // method@cd6b
+8b9bba: 5431 2175                              |001b: iget-object v1, v3, Lcom/vk/api/generated/video/dto/VideoVideoAdsInstreamSectionsDto;.postroll:Ljava/util/List; // field@7521
+8b9bbe: 1302 2900                              |001d: const/16 v2, #int 41 // #29
+8b9bc2: 7130 9d14 0201                         |001f: invoke-static {v2, v0, v1}, Landroidx/compose/animation/b;.d:(CLjava/lang/StringBuilder;Ljava/util/List;)Ljava/lang/String; // method@149d
+8b9bc8: 0c00                                   |0022: move-result-object v0
+8b9bca: 1100                                   |0023: return-object v0
+
+    #4              : (in Lcom/vk/api/generated/video/dto/VideoVideoAdsInstreamSectionsDto;)
+      name          : 'writeToParcel'
+      type          : '(Landroid/os/Parcel;I)V'
+      access        : 0x0011 (PUBLIC FINAL)
+      registers     : 7
+      ins           : 3
+      outs          : 3
+      insns size    : 87 16-bit code units
+8b9bcc:                                        |[8b9bcc] com.vk.api.generated.video.dto.VideoVideoAdsInstreamSectionsDto.writeToParcel:(Landroid/os/Parcel;I)V
+8b9bdc: 5440 2275                              |0000: iget-object v0, v4, Lcom/vk/api/generated/video/dto/VideoVideoAdsInstreamSectionsDto;.preroll:Ljava/util/List; // field@7522
+8b9be0: 1211                                   |0002: const/4 v1, #int 1 // #1
+8b9be2: 1202                                   |0003: const/4 v2, #int 0 // #0
+8b9be4: 3900 0600                              |0004: if-nez v0, 000a // +0006
+8b9be8: 6e20 b409 2500                         |0006: invoke-virtual {v5, v2}, Landroid/os/Parcel;.writeInt:(I)V // method@09b4
+8b9bee: 2815                                   |0009: goto 001e // +0015
+8b9bf0: 7130 2a4d 1500                         |000a: invoke-static {v5, v1, v0}, Lbs/a;.e:(Landroid/os/Parcel;ILjava/util/List;)Ljava/util/Iterator; // method@4d2a
+8b9bf6: 0c00                                   |000d: move-result-object v0
+8b9bf8: 7210 98cf 0000                         |000e: invoke-interface {v0}, Ljava/util/Iterator;.hasNext:()Z // method@cf98
+8b9bfe: 0a03                                   |0011: move-result v3
+8b9c00: 3803 0c00                              |0012: if-eqz v3, 001e // +000c
+8b9c04: 7210 99cf 0000                         |0014: invoke-interface {v0}, Ljava/util/Iterator;.next:()Ljava/lang/Object; // method@cf99
+8b9c0a: 0c03                                   |0017: move-result-object v3
+8b9c0c: 1f03 5829                              |0018: check-cast v3, Lcom/vk/api/generated/video/dto/VideoVideoAdsInstreamSectionDto; // type@2958
+8b9c10: 6e30 7ea5 5306                         |001a: invoke-virtual {v3, v5, v6}, Lcom/vk/api/generated/video/dto/VideoVideoAdsInstreamSectionDto;.writeToParcel:(Landroid/os/Parcel;I)V // method@a57e
+8b9c16: 28f1                                   |001d: goto 000e // -000f
+8b9c18: 5440 2075                              |001e: iget-object v0, v4, Lcom/vk/api/generated/video/dto/VideoVideoAdsInstreamSectionsDto;.midroll:Ljava/util/List; // field@7520
+8b9c1c: 3900 0600                              |0020: if-nez v0, 0026 // +0006
+8b9c20: 6e20 b409 2500                         |0022: invoke-virtual {v5, v2}, Landroid/os/Parcel;.writeInt:(I)V // method@09b4
+8b9c26: 2815                                   |0025: goto 003a // +0015
+8b9c28: 7130 2a4d 1500                         |0026: invoke-static {v5, v1, v0}, Lbs/a;.e:(Landroid/os/Parcel;ILjava/util/List;)Ljava/util/Iterator; // method@4d2a
+8b9c2e: 0c00                                   |0029: move-result-object v0
+8b9c30: 7210 98cf 0000                         |002a: invoke-interface {v0}, Ljava/util/Iterator;.hasNext:()Z // method@cf98
+8b9c36: 0a03                                   |002d: move-result v3
+8b9c38: 3803 0c00                              |002e: if-eqz v3, 003a // +000c
+8b9c3c: 7210 99cf 0000                         |0030: invoke-interface {v0}, Ljava/util/Iterator;.next:()Ljava/lang/Object; // method@cf99
+8b9c42: 0c03                                   |0033: move-result-object v3
+
+===== Lcom/vk/api/generated/video/dto/VideoVideoAdsInstreamSectionDto; =====
+  Static fields     -
+    #0              : (in Lcom/vk/api/generated/video/dto/VideoVideoAdsInstreamSectionDto;)
+      name          : 'CREATOR'
+      type          : 'Landroid/os/Parcelable$Creator;'
+      access        : 0x0019 (PUBLIC STATIC FINAL)
+  Instance fields   -
+    #0              : (in Lcom/vk/api/generated/video/dto/VideoVideoAdsInstreamSectionDto;)
+      name          : 'doAfter'
+      type          : 'Ljava/lang/Boolean;'
+      access        : 0x0012 (PRIVATE FINAL)
+    #1              : (in Lcom/vk/api/generated/video/dto/VideoVideoAdsInstreamSectionDto;)
+      name          : 'isMidrollPoint'
+      type          : 'Ljava/lang/Boolean;'
+      access        : 0x0012 (PRIVATE FINAL)
+    #2              : (in Lcom/vk/api/generated/video/dto/VideoVideoAdsInstreamSectionDto;)
+      name          : 'point'
+      type          : 'Ljava/lang/Integer;'
+      access        : 0x0012 (PRIVATE FINAL)
+    #3              : (in Lcom/vk/api/generated/video/dto/VideoVideoAdsInstreamSectionDto;)
+      name          : 'type'
+      type          : 'Ljava/lang/String;'
+      access        : 0x0012 (PRIVATE FINAL)
+    #4              : (in Lcom/vk/api/generated/video/dto/VideoVideoAdsInstreamSectionDto;)
+      name          : 'url'
+      type          : 'Ljava/lang/String;'
+      access        : 0x0012 (PRIVATE FINAL)
+  Direct methods    -
+
+    #0              : (in Lcom/vk/api/generated/video/dto/VideoVideoAdsInstreamSectionDto;)
+      name          : '<clinit>'
+      type          : '()V'
+      access        : 0x10008 (STATIC CONSTRUCTOR)
+      registers     : 1
+      ins           : 0
+      outs          : 1
+      insns size    : 8 16-bit code units
+8b967c:                                        |[8b967c] com.vk.api.generated.video.dto.VideoVideoAdsInstreamSectionDto.<clinit>:()V
+8b968c: 2200 5729                              |0000: new-instance v0, Lcom/vk/api/generated/video/dto/VideoVideoAdsInstreamSectionDto$a; // type@2957
+8b9690: 7010 fecc 0000                         |0002: invoke-direct {v0}, Ljava/lang/Object;.<init>:()V // method@ccfe
+8b9696: 6900 1975                              |0005: sput-object v0, Lcom/vk/api/generated/video/dto/VideoVideoAdsInstreamSectionDto;.CREATOR:Landroid/os/Parcelable$Creator; // field@7519
+8b969a: 0e00                                   |0007: return-void
+
+    #1              : (in Lcom/vk/api/generated/video/dto/VideoVideoAdsInstreamSectionDto;)
+      name          : '<init>'
+      type          : '(Ljava/lang/String;Ljava/lang/String;Ljava/lang/Boolean;Ljava/lang/Boolean;Ljava/lang/Integer;)V'
+      access        : 0x10001 (PUBLIC CONSTRUCTOR)
+      registers     : 6
+      ins           : 6
+      outs          : 1
+      insns size    : 14 16-bit code units
+8b969c:                                        |[8b969c] com.vk.api.generated.video.dto.VideoVideoAdsInstreamSectionDto.<init>:(Ljava/lang/String;Ljava/lang/String;Ljava/lang/Boolean;Ljava/lang/Boolean;Ljava/lang/Integer;)V
+8b96ac: 7010 fecc 0000                         |0000: invoke-direct {v0}, Ljava/lang/Object;.<init>:()V // method@ccfe
+8b96b2: 5b01 1d75                              |0003: iput-object v1, v0, Lcom/vk/api/generated/video/dto/VideoVideoAdsInstreamSectionDto;.type:Ljava/lang/String; // field@751d
+8b96b6: 5b02 1e75                              |0005: iput-object v2, v0, Lcom/vk/api/generated/video/dto/VideoVideoAdsInstreamSectionDto;.url:Ljava/lang/String; // field@751e
+8b96ba: 5b03 1b75                              |0007: iput-object v3, v0, Lcom/vk/api/generated/video/dto/VideoVideoAdsInstreamSectionDto;.isMidrollPoint:Ljava/lang/Boolean; // field@751b
+8b96be: 5b04 1a75                              |0009: iput-object v4, v0, Lcom/vk/api/generated/video/dto/VideoVideoAdsInstreamSectionDto;.doAfter:Ljava/lang/Boolean; // field@751a
+8b96c2: 5b05 1c75                              |000b: iput-object v5, v0, Lcom/vk/api/generated/video/dto/VideoVideoAdsInstreamSectionDto;.point:Ljava/lang/Integer; // field@751c
+8b96c6: 0e00                                   |000d: return-void
+
+    #2              : (in Lcom/vk/api/generated/video/dto/VideoVideoAdsInstreamSectionDto;)
+      name          : '<init>'
+      type          : '(Ljava/lang/String;Ljava/lang/String;Ljava/lang/Boolean;Ljava/lang/Boolean;Ljava/lang/Integer;ILkotlin/jvm/internal/DefaultConstructorMarker;)V'
+      access        : 0x11001 (PUBLIC SYNTHETIC CONSTRUCTOR)
+      registers     : 9
+      ins           : 8
+      outs          : 6
+      insns size    : 28 16-bit code units
+8b96c8:                                        |[8b96c8] com.vk.api.generated.video.dto.VideoVideoAdsInstreamSectionDto.<init>:(Ljava/lang/String;Ljava/lang/String;Ljava/lang/Boolean;Ljava/lang/Boolean;Ljava/lang/Integer;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+8b96d8: dd08 0704                              |0000: and-int/lit8 v8, v7, #int 4 // #04
+8b96dc: 1200                                   |0002: const/4 v0, #int 0 // #0
+8b96de: 3808 0300                              |0003: if-eqz v8, 0006 // +0003
+8b96e2: 0704                                   |0005: move-object v4, v0
+8b96e4: dd08 0708                              |0006: and-int/lit8 v8, v7, #int 8 // #08
+8b96e8: 3808 0300                              |0008: if-eqz v8, 000b // +0003
+8b96ec: 0705                                   |000a: move-object v5, v0
+8b96ee: dd07 0710                              |000b: and-int/lit8 v7, v7, #int 16 // #10
+8b96f2: 3807 0900                              |000d: if-eqz v7, 0016 // +0009
+8b96f6: 0707                                   |000f: move-object v7, v0
+8b96f8: 0756                                   |0010: move-object v6, v5
+8b96fa: 0745                                   |0011: move-object v5, v4
+8b96fc: 0734                                   |0012: move-object v4, v3
+8b96fe: 0723                                   |0013: move-object v3, v2
+8b9700: 0712                                   |0014: move-object v2, v1
+8b9702: 2803                                   |0015: goto 0018 // +0003
+8b9704: 0767                                   |0016: move-object v7, v6
+8b9706: 28f9                                   |0017: goto 0010 // -0007
+8b9708: 7606 78a5 0200                         |0018: invoke-direct/range {v2, v3, v4, v5, v6, v7}, Lcom/vk/api/generated/video/dto/VideoVideoAdsInstreamSectionDto;.<init>:(Ljava/lang/String;Ljava/lang/String;Ljava/lang/Boolean;Ljava/lang/Boolean;Ljava/lang/Integer;)V // method@a578
+8b970e: 0e00                                   |001b: return-void
+  Virtual methods   -
+
+    #0              : (in Lcom/vk/api/generated/video/dto/VideoVideoAdsInstreamSectionDto;)
+      name          : 'describeContents'
+      type          : '()I'
+      access        : 0x0011 (PUBLIC FINAL)
+      registers     : 2
+      ins           : 1
+      outs          : 0
+      insns size    : 2 16-bit code units
+8b9710:                                        |[8b9710] com.vk.api.generated.video.dto.VideoVideoAdsInstreamSectionDto.describeContents:()I
+8b9720: 1200                                   |0000: const/4 v0, #int 0 // #0
+8b9722: 0f00                                   |0001: return v0
+
+    #1              : (in Lcom/vk/api/generated/video/dto/VideoVideoAdsInstreamSectionDto;)
+      name          : 'equals'
+      type          : '(Ljava/lang/Object;)Z'
+      access        : 0x0011 (PUBLIC FINAL)
+      registers     : 6
+      ins           : 2
+      outs          : 2
+      insns size    : 68 16-bit code units
+8b9724:                                        |[8b9724] com.vk.api.generated.video.dto.VideoVideoAdsInstreamSectionDto.equals:(Ljava/lang/Object;)Z
+8b9734: 1210                                   |0000: const/4 v0, #int 1 // #1
+8b9736: 3354 0300                              |0001: if-ne v4, v5, 0004 // +0003
+8b973a: 0f00                                   |0003: return v0
+8b973c: 2051 5829                              |0004: instance-of v1, v5, Lcom/vk/api/generated/video/dto/VideoVideoAdsInstreamSectionDto; // type@2958
+8b9740: 1202                                   |0006: const/4 v2, #int 0 // #0
+8b9742: 3901 0300                              |0007: if-nez v1, 000a // +0003
+8b9746: 0f02                                   |0009: return v2
+8b9748: 1f05 5829                              |000a: check-cast v5, Lcom/vk/api/generated/video/dto/VideoVideoAdsInstreamSectionDto; // type@2958
+8b974c: 5441 1d75                              |000c: iget-object v1, v4, Lcom/vk/api/generated/video/dto/VideoVideoAdsInstreamSectionDto;.type:Ljava/lang/String; // field@751d
+8b9750: 5453 1d75                              |000e: iget-object v3, v5, Lcom/vk/api/generated/video/dto/VideoVideoAdsInstreamSectionDto;.type:Ljava/lang/String; // field@751d
+8b9754: 7120 54d5 3100                         |0010: invoke-static {v1, v3}, Lkotlin/jvm/internal/h;.d:(Ljava/lang/Object;Ljava/lang/Object;)Z // method@d554
+8b975a: 0a01                                   |0013: move-result v1
+8b975c: 3901 0300                              |0014: if-nez v1, 0017 // +0003
+8b9760: 0f02                                   |0016: return v2
+8b9762: 5441 1e75                              |0017: iget-object v1, v4, Lcom/vk/api/generated/video/dto/VideoVideoAdsInstreamSectionDto;.url:Ljava/lang/String; // field@751e
+8b9766: 5453 1e75                              |0019: iget-object v3, v5, Lcom/vk/api/generated/video/dto/VideoVideoAdsInstreamSectionDto;.url:Ljava/lang/String; // field@751e
+8b976a: 7120 54d5 3100                         |001b: invoke-static {v1, v3}, Lkotlin/jvm/internal/h;.d:(Ljava/lang/Object;Ljava/lang/Object;)Z // method@d554
+8b9770: 0a01                                   |001e: move-result v1
+8b9772: 3901 0300                              |001f: if-nez v1, 0022 // +0003
+8b9776: 0f02                                   |0021: return v2
+8b9778: 5441 1b75                              |0022: iget-object v1, v4, Lcom/vk/api/generated/video/dto/VideoVideoAdsInstreamSectionDto;.isMidrollPoint:Ljava/lang/Boolean; // field@751b
+8b977c: 5453 1b75                              |0024: iget-object v3, v5, Lcom/vk/api/generated/video/dto/VideoVideoAdsInstreamSectionDto;.isMidrollPoint:Ljava/lang/Boolean; // field@751b
+8b9780: 7120 54d5 3100                         |0026: invoke-static {v1, v3}, Lkotlin/jvm/internal/h;.d:(Ljava/lang/Object;Ljava/lang/Object;)Z // method@d554
+8b9786: 0a01                                   |0029: move-result v1
+8b9788: 3901 0300                              |002a: if-nez v1, 002d // +0003
+8b978c: 0f02                                   |002c: return v2
+8b978e: 5441 1a75                              |002d: iget-object v1, v4, Lcom/vk/api/generated/video/dto/VideoVideoAdsInstreamSectionDto;.doAfter:Ljava/lang/Boolean; // field@751a
+
+    #2              : (in Lcom/vk/api/generated/video/dto/VideoVideoAdsInstreamSectionDto;)
+      name          : 'hashCode'
+      type          : '()I'
+      access        : 0x0011 (PUBLIC FINAL)
+      registers     : 5
+      ins           : 1
+      outs          : 3
+      insns size    : 51 16-bit code units
+8b97bc:                                        |[8b97bc] com.vk.api.generated.video.dto.VideoVideoAdsInstreamSectionDto.hashCode:()I
+8b97cc: 5440 1d75                              |0000: iget-object v0, v4, Lcom/vk/api/generated/video/dto/VideoVideoAdsInstreamSectionDto;.type:Ljava/lang/String; // field@751d
+8b97d0: 6e10 3bcd 0000                         |0002: invoke-virtual {v0}, Ljava/lang/String;.hashCode:()I // method@cd3b
+8b97d6: 0a00                                   |0005: move-result v0
+8b97d8: 1301 1f00                              |0006: const/16 v1, #int 31 // #1f
+8b97dc: b210                                   |0008: mul-int/2addr v0, v1
+8b97de: 5442 1e75                              |0009: iget-object v2, v4, Lcom/vk/api/generated/video/dto/VideoVideoAdsInstreamSectionDto;.url:Ljava/lang/String; // field@751e
+8b97e2: 7130 d513 1002                         |000b: invoke-static {v0, v1, v2}, Landroidx/collection/j;.a:(IILjava/lang/String;)I // method@13d5
+8b97e8: 0a00                                   |000e: move-result v0
+8b97ea: 5442 1b75                              |000f: iget-object v2, v4, Lcom/vk/api/generated/video/dto/VideoVideoAdsInstreamSectionDto;.isMidrollPoint:Ljava/lang/Boolean; // field@751b
+8b97ee: 1203                                   |0011: const/4 v3, #int 0 // #0
+8b97f0: 3902 0400                              |0012: if-nez v2, 0016 // +0004
+8b97f4: 0132                                   |0014: move v2, v3
+8b97f6: 2805                                   |0015: goto 001a // +0005
+8b97f8: 6e10 03cd 0200                         |0016: invoke-virtual {v2}, Ljava/lang/Object;.hashCode:()I // method@cd03
+8b97fe: 0a02                                   |0019: move-result v2
+8b9800: b020                                   |001a: add-int/2addr v0, v2
+8b9802: b210                                   |001b: mul-int/2addr v0, v1
+8b9804: 5442 1a75                              |001c: iget-object v2, v4, Lcom/vk/api/generated/video/dto/VideoVideoAdsInstreamSectionDto;.doAfter:Ljava/lang/Boolean; // field@751a
+8b9808: 3902 0400                              |001e: if-nez v2, 0022 // +0004
+8b980c: 0132                                   |0020: move v2, v3
+8b980e: 2805                                   |0021: goto 0026 // +0005
+8b9810: 6e10 03cd 0200                         |0022: invoke-virtual {v2}, Ljava/lang/Object;.hashCode:()I // method@cd03
+8b9816: 0a02                                   |0025: move-result v2
+8b9818: b020                                   |0026: add-int/2addr v0, v2
+8b981a: b210                                   |0027: mul-int/2addr v0, v1
+8b981c: 5441 1c75                              |0028: iget-object v1, v4, Lcom/vk/api/generated/video/dto/VideoVideoAdsInstreamSectionDto;.point:Ljava/lang/Integer; // field@751c
+8b9820: 3901 0300                              |002a: if-nez v1, 002d // +0003
+
+    #3              : (in Lcom/vk/api/generated/video/dto/VideoVideoAdsInstreamSectionDto;)
+      name          : 'toString'
+      type          : '()Ljava/lang/String;'
+      access        : 0x0011 (PUBLIC FINAL)
+      registers     : 4
+      ins           : 1
+      outs          : 3
+      insns size    : 56 16-bit code units
+8b9834:                                        |[8b9834] com.vk.api.generated.video.dto.VideoVideoAdsInstreamSectionDto.toString:()Ljava/lang/String;
+8b9844: 2200 313b                              |0000: new-instance v0, Ljava/lang/StringBuilder; // type@3b31
+8b9848: 1a01 44b7                              |0002: const-string v1, "VideoVideoAdsInstreamSectionDto(type=" // string@b744
+8b984c: 7020 60cd 1000                         |0004: invoke-direct {v0, v1}, Ljava/lang/StringBuilder;.<init>:(Ljava/lang/String;)V // method@cd60
+8b9852: 5431 1d75                              |0007: iget-object v1, v3, Lcom/vk/api/generated/video/dto/VideoVideoAdsInstreamSectionDto;.type:Ljava/lang/String; // field@751d
+8b9856: 6e20 6bcd 1000                         |0009: invoke-virtual {v0, v1}, Ljava/lang/StringBuilder;.append:(Ljava/lang/String;)Ljava/lang/StringBuilder; // method@cd6b
+8b985c: 1a01 d11b                              |000c: const-string v1, ", url=" // string@1bd1
+8b9860: 6e20 6bcd 1000                         |000e: invoke-virtual {v0, v1}, Ljava/lang/StringBuilder;.append:(Ljava/lang/String;)Ljava/lang/StringBuilder; // method@cd6b
+8b9866: 5431 1e75                              |0011: iget-object v1, v3, Lcom/vk/api/generated/video/dto/VideoVideoAdsInstreamSectionDto;.url:Ljava/lang/String; // field@751e
+8b986a: 6e20 6bcd 1000                         |0013: invoke-virtual {v0, v1}, Ljava/lang/StringBuilder;.append:(Ljava/lang/String;)Ljava/lang/StringBuilder; // method@cd6b
+8b9870: 1a01 0b15                              |0016: const-string v1, ", isMidrollPoint=" // string@150b
+8b9874: 6e20 6bcd 1000                         |0018: invoke-virtual {v0, v1}, Ljava/lang/StringBuilder;.append:(Ljava/lang/String;)Ljava/lang/StringBuilder; // method@cd6b
+8b987a: 5431 1b75                              |001b: iget-object v1, v3, Lcom/vk/api/generated/video/dto/VideoVideoAdsInstreamSectionDto;.isMidrollPoint:Ljava/lang/Boolean; // field@751b
+8b987e: 6e20 6acd 1000                         |001d: invoke-virtual {v0, v1}, Ljava/lang/StringBuilder;.append:(Ljava/lang/Object;)Ljava/lang/StringBuilder; // method@cd6a
+8b9884: 1a01 7512                              |0020: const-string v1, ", doAfter=" // string@1275
+8b9888: 6e20 6bcd 1000                         |0022: invoke-virtual {v0, v1}, Ljava/lang/StringBuilder;.append:(Ljava/lang/String;)Ljava/lang/StringBuilder; // method@cd6b
+8b988e: 5431 1a75                              |0025: iget-object v1, v3, Lcom/vk/api/generated/video/dto/VideoVideoAdsInstreamSectionDto;.doAfter:Ljava/lang/Boolean; // field@751a
+8b9892: 6e20 6acd 1000                         |0027: invoke-virtual {v0, v1}, Ljava/lang/StringBuilder;.append:(Ljava/lang/Object;)Ljava/lang/StringBuilder; // method@cd6a
+8b9898: 1a01 7d18                              |002a: const-string v1, ", point=" // string@187d
+8b989c: 6e20 6bcd 1000                         |002c: invoke-virtual {v0, v1}, Ljava/lang/StringBuilder;.append:(Ljava/lang/String;)Ljava/lang/StringBuilder; // method@cd6b
+8b98a2: 5431 1c75                              |002f: iget-object v1, v3, Lcom/vk/api/generated/video/dto/VideoVideoAdsInstreamSectionDto;.point:Ljava/lang/Integer; // field@751c
+8b98a6: 1302 2900                              |0031: const/16 v2, #int 41 // #29
+8b98aa: 7130 d64e 1002                         |0033: invoke-static {v0, v1, v2}, Lc30/a;.b:(Ljava/lang/StringBuilder;Ljava/lang/Integer;C)Ljava/lang/String; // method@4ed6
+8b98b0: 0c00                                   |0036: move-result-object v0
+8b98b2: 1100                                   |0037: return-object v0
+
+    #4              : (in Lcom/vk/api/generated/video/dto/VideoVideoAdsInstreamSectionDto;)
+      name          : 'writeToParcel'
+      type          : '(Landroid/os/Parcel;I)V'
+      access        : 0x0011 (PUBLIC FINAL)
+      registers     : 5
+      ins           : 3
+      outs          : 3
+      insns size    : 46 16-bit code units
+8b98b4:                                        |[8b98b4] com.vk.api.generated.video.dto.VideoVideoAdsInstreamSectionDto.writeToParcel:(Landroid/os/Parcel;I)V
+8b98c4: 5424 1d75                              |0000: iget-object v4, v2, Lcom/vk/api/generated/video/dto/VideoVideoAdsInstreamSectionDto;.type:Ljava/lang/String; // field@751d
+8b98c8: 6e20 bb09 4300                         |0002: invoke-virtual {v3, v4}, Landroid/os/Parcel;.writeString:(Ljava/lang/String;)V // method@09bb
+8b98ce: 5424 1e75                              |0005: iget-object v4, v2, Lcom/vk/api/generated/video/dto/VideoVideoAdsInstreamSectionDto;.url:Ljava/lang/String; // field@751e
+8b98d2: 6e20 bb09 4300                         |0007: invoke-virtual {v3, v4}, Landroid/os/Parcel;.writeString:(Ljava/lang/String;)V // method@09bb
+8b98d8: 5424 1b75                              |000a: iget-object v4, v2, Lcom/vk/api/generated/video/dto/VideoVideoAdsInstreamSectionDto;.isMidrollPoint:Ljava/lang/Boolean; // field@751b
+8b98dc: 1210                                   |000c: const/4 v0, #int 1 // #1
+8b98de: 1201                                   |000d: const/4 v1, #int 0 // #0
+8b98e0: 3904 0600                              |000e: if-nez v4, 0014 // +0006
+8b98e4: 6e20 b409 1300                         |0010: invoke-virtual {v3, v1}, Landroid/os/Parcel;.writeInt:(I)V // method@09b4
+8b98ea: 2804                                   |0013: goto 0017 // +0004
+8b98ec: 7130 9214 0304                         |0014: invoke-static {v3, v0, v4}, Landroidx/compose/animation/a0;.c:(Landroid/os/Parcel;ILjava/lang/Boolean;)V // method@1492
+8b98f2: 5424 1a75                              |0017: iget-object v4, v2, Lcom/vk/api/generated/video/dto/VideoVideoAdsInstreamSectionDto;.doAfter:Ljava/lang/Boolean; // field@751a
+8b98f6: 3904 0600                              |0019: if-nez v4, 001f // +0006
+8b98fa: 6e20 b409 1300                         |001b: invoke-virtual {v3, v1}, Landroid/os/Parcel;.writeInt:(I)V // method@09b4
+8b9900: 2804                                   |001e: goto 0022 // +0004
+8b9902: 7130 9214 0304                         |001f: invoke-static {v3, v0, v4}, Landroidx/compose/animation/a0;.c:(Landroid/os/Parcel;ILjava/lang/Boolean;)V // method@1492
+8b9908: 5424 1c75                              |0022: iget-object v4, v2, Lcom/vk/api/generated/video/dto/VideoVideoAdsInstreamSectionDto;.point:Ljava/lang/Integer; // field@751c
+8b990c: 3904 0600                              |0024: if-nez v4, 002a // +0006
+8b9910: 6e20 b409 1300                         |0026: invoke-virtual {v3, v1}, Landroid/os/Parcel;.writeInt:(I)V // method@09b4
+8b9916: 0e00                                   |0029: return-void
+8b9918: 7130 3716 0304                         |002a: invoke-static {v3, v0, v4}, Landroidx/compose/foundation/l0;.d:(Landroid/os/Parcel;ILjava/lang/Integer;)V // method@1637
+8b991e: 0e00                                   |002d: return-void
+
+===== Lcom/vk/api/generated/video/dto/VideoVideoAdsInstreamDto; =====
+  Static fields     -
+    #0              : (in Lcom/vk/api/generated/video/dto/VideoVideoAdsInstreamDto;)
+      name          : 'CREATOR'
+      type          : 'Landroid/os/Parcelable$Creator;'
+      access        : 0x0019 (PUBLIC STATIC FINAL)
+  Instance fields   -
+    #0              : (in Lcom/vk/api/generated/video/dto/VideoVideoAdsInstreamDto;)
+      name          : 'sections'
+      type          : 'Lcom/vk/api/generated/video/dto/VideoVideoAdsInstreamSectionsDto;'
+      access        : 0x0012 (PRIVATE FINAL)
+  Direct methods    -
+
+    #0              : (in Lcom/vk/api/generated/video/dto/VideoVideoAdsInstreamDto;)
+      name          : '<clinit>'
+      type          : '()V'
+      access        : 0x10008 (STATIC CONSTRUCTOR)
+      registers     : 1
+      ins           : 0
+      outs          : 1
+      insns size    : 8 16-bit code units
+8b94b8:                                        |[8b94b8] com.vk.api.generated.video.dto.VideoVideoAdsInstreamDto.<clinit>:()V
+8b94c8: 2200 5529                              |0000: new-instance v0, Lcom/vk/api/generated/video/dto/VideoVideoAdsInstreamDto$a; // type@2955
+8b94cc: 7010 6da5 0000                         |0002: invoke-direct {v0}, Lcom/vk/api/generated/video/dto/VideoVideoAdsInstreamDto$a;.<init>:()V // method@a56d
+8b94d2: 6900 1775                              |0005: sput-object v0, Lcom/vk/api/generated/video/dto/VideoVideoAdsInstreamDto;.CREATOR:Landroid/os/Parcelable$Creator; // field@7517
+8b94d6: 0e00                                   |0007: return-void
+
+    #1              : (in Lcom/vk/api/generated/video/dto/VideoVideoAdsInstreamDto;)
+      name          : '<init>'
+      type          : '(Lcom/vk/api/generated/video/dto/VideoVideoAdsInstreamSectionsDto;)V'
+      access        : 0x10001 (PUBLIC CONSTRUCTOR)
+      registers     : 2
+      ins           : 2
+      outs          : 1
+      insns size    : 6 16-bit code units
+8b94d8:                                        |[8b94d8] com.vk.api.generated.video.dto.VideoVideoAdsInstreamDto.<init>:(Lcom/vk/api/generated/video/dto/VideoVideoAdsInstreamSectionsDto;)V
+8b94e8: 7010 fecc 0000                         |0000: invoke-direct {v0}, Ljava/lang/Object;.<init>:()V // method@ccfe
+8b94ee: 5b01 1875                              |0003: iput-object v1, v0, Lcom/vk/api/generated/video/dto/VideoVideoAdsInstreamDto;.sections:Lcom/vk/api/generated/video/dto/VideoVideoAdsInstreamSectionsDto; // field@7518
+8b94f2: 0e00                                   |0005: return-void
+  Virtual methods   -
+
+    #0              : (in Lcom/vk/api/generated/video/dto/VideoVideoAdsInstreamDto;)
+      name          : 'describeContents'
+      type          : '()I'
+      access        : 0x0011 (PUBLIC FINAL)
+      registers     : 2
+      ins           : 1
+      outs          : 0
+      insns size    : 2 16-bit code units
+8b94f4:                                        |[8b94f4] com.vk.api.generated.video.dto.VideoVideoAdsInstreamDto.describeContents:()I
+8b9504: 1200                                   |0000: const/4 v0, #int 0 // #0
+8b9506: 0f00                                   |0001: return v0
+
+    #1              : (in Lcom/vk/api/generated/video/dto/VideoVideoAdsInstreamDto;)
+      name          : 'equals'
+      type          : '(Ljava/lang/Object;)Z'
+      access        : 0x0011 (PUBLIC FINAL)
+      registers     : 5
+      ins           : 2
+      outs          : 2
+      insns size    : 24 16-bit code units
+8b9508:                                        |[8b9508] com.vk.api.generated.video.dto.VideoVideoAdsInstreamDto.equals:(Ljava/lang/Object;)Z
+8b9518: 1210                                   |0000: const/4 v0, #int 1 // #1
+8b951a: 3343 0300                              |0001: if-ne v3, v4, 0004 // +0003
+8b951e: 0f00                                   |0003: return v0
+8b9520: 2041 5629                              |0004: instance-of v1, v4, Lcom/vk/api/generated/video/dto/VideoVideoAdsInstreamDto; // type@2956
+8b9524: 1202                                   |0006: const/4 v2, #int 0 // #0
+8b9526: 3901 0300                              |0007: if-nez v1, 000a // +0003
+8b952a: 0f02                                   |0009: return v2
+8b952c: 1f04 5629                              |000a: check-cast v4, Lcom/vk/api/generated/video/dto/VideoVideoAdsInstreamDto; // type@2956
+8b9530: 5431 1875                              |000c: iget-object v1, v3, Lcom/vk/api/generated/video/dto/VideoVideoAdsInstreamDto;.sections:Lcom/vk/api/generated/video/dto/VideoVideoAdsInstreamSectionsDto; // field@7518
+8b9534: 5444 1875                              |000e: iget-object v4, v4, Lcom/vk/api/generated/video/dto/VideoVideoAdsInstreamDto;.sections:Lcom/vk/api/generated/video/dto/VideoVideoAdsInstreamSectionsDto; // field@7518
+8b9538: 7120 54d5 4100                         |0010: invoke-static {v1, v4}, Lkotlin/jvm/internal/h;.d:(Ljava/lang/Object;Ljava/lang/Object;)Z // method@d554
+8b953e: 0a04                                   |0013: move-result v4
+8b9540: 3904 0300                              |0014: if-nez v4, 0017 // +0003
+8b9544: 0f02                                   |0016: return v2
+8b9546: 0f00                                   |0017: return v0
+
+    #2              : (in Lcom/vk/api/generated/video/dto/VideoVideoAdsInstreamDto;)
+      name          : 'hashCode'
+      type          : '()I'
+      access        : 0x0011 (PUBLIC FINAL)
+      registers     : 2
+      ins           : 1
+      outs          : 1
+      insns size    : 7 16-bit code units
+8b9548:                                        |[8b9548] com.vk.api.generated.video.dto.VideoVideoAdsInstreamDto.hashCode:()I
+8b9558: 5410 1875                              |0000: iget-object v0, v1, Lcom/vk/api/generated/video/dto/VideoVideoAdsInstreamDto;.sections:Lcom/vk/api/generated/video/dto/VideoVideoAdsInstreamSectionsDto; // field@7518
+8b955c: 6e10 87a5 0000                         |0002: invoke-virtual {v0}, Lcom/vk/api/generated/video/dto/VideoVideoAdsInstreamSectionsDto;.hashCode:()I // method@a587
+8b9562: 0a00                                   |0005: move-result v0
+8b9564: 0f00                                   |0006: return v0
+
+    #3              : (in Lcom/vk/api/generated/video/dto/VideoVideoAdsInstreamDto;)
+      name          : 'toString'
+      type          : '()Ljava/lang/String;'
+      access        : 0x0011 (PUBLIC FINAL)
+      registers     : 3
+      ins           : 1
+      outs          : 2
+      insns size    : 22 16-bit code units
+8b9568:                                        |[8b9568] com.vk.api.generated.video.dto.VideoVideoAdsInstreamDto.toString:()Ljava/lang/String;
+8b9578: 2200 313b                              |0000: new-instance v0, Ljava/lang/StringBuilder; // type@3b31
+8b957c: 1a01 42b7                              |0002: const-string v1, "VideoVideoAdsInstreamDto(sections=" // string@b742
+8b9580: 7020 60cd 1000                         |0004: invoke-direct {v0, v1}, Ljava/lang/StringBuilder;.<init>:(Ljava/lang/String;)V // method@cd60
+8b9586: 5421 1875                              |0007: iget-object v1, v2, Lcom/vk/api/generated/video/dto/VideoVideoAdsInstreamDto;.sections:Lcom/vk/api/generated/video/dto/VideoVideoAdsInstreamSectionsDto; // field@7518
+8b958a: 6e20 6acd 1000                         |0009: invoke-virtual {v0, v1}, Ljava/lang/StringBuilder;.append:(Ljava/lang/Object;)Ljava/lang/StringBuilder; // method@cd6a
+8b9590: 1301 2900                              |000c: const/16 v1, #int 41 // #29
+8b9594: 6e20 63cd 1000                         |000e: invoke-virtual {v0, v1}, Ljava/lang/StringBuilder;.append:(C)Ljava/lang/StringBuilder; // method@cd63
+8b959a: 6e10 75cd 0000                         |0011: invoke-virtual {v0}, Ljava/lang/StringBuilder;.toString:()Ljava/lang/String; // method@cd75
+8b95a0: 0c00                                   |0014: move-result-object v0
+8b95a2: 1100                                   |0015: return-object v0
+
+    #4              : (in Lcom/vk/api/generated/video/dto/VideoVideoAdsInstreamDto;)
+      name          : 'writeToParcel'
+      type          : '(Landroid/os/Parcel;I)V'
+      access        : 0x0011 (PUBLIC FINAL)
+      registers     : 4
+      ins           : 3
+      outs          : 3
+      insns size    : 6 16-bit code units
+8b95a4:                                        |[8b95a4] com.vk.api.generated.video.dto.VideoVideoAdsInstreamDto.writeToParcel:(Landroid/os/Parcel;I)V
+8b95b4: 5410 1875                              |0000: iget-object v0, v1, Lcom/vk/api/generated/video/dto/VideoVideoAdsInstreamDto;.sections:Lcom/vk/api/generated/video/dto/VideoVideoAdsInstreamSectionsDto; // field@7518
+8b95b8: 6e30 89a5 2003                         |0002: invoke-virtual {v0, v2, v3}, Lcom/vk/api/generated/video/dto/VideoVideoAdsInstreamSectionsDto;.writeToParcel:(Landroid/os/Parcel;I)V // method@a589
+8b95be: 0e00                                   |0005: return-void
+
+===== Lcom/vk/api/generated/video/dto/VideoGetAdsResponseDto; =====
+  Static fields     -
+    #0              : (in Lcom/vk/api/generated/video/dto/VideoGetAdsResponseDto;)
+      name          : 'CREATOR'
+      type          : 'Landroid/os/Parcelable$Creator;'
+      access        : 0x0019 (PUBLIC STATIC FINAL)
+  Instance fields   -
+    #0              : (in Lcom/vk/api/generated/video/dto/VideoGetAdsResponseDto;)
+      name          : 'banners'
+      type          : 'Lcom/vk/api/generated/video/dto/VideoVideoAdsBannersDto;'
+      access        : 0x0012 (PRIVATE FINAL)
+    #1              : (in Lcom/vk/api/generated/video/dto/VideoGetAdsResponseDto;)
+      name          : 'instream'
+      type          : 'Lcom/vk/api/generated/video/dto/VideoVideoAdsInstreamDto;'
+      access        : 0x0012 (PRIVATE FINAL)
+    #2              : (in Lcom/vk/api/generated/video/dto/VideoGetAdsResponseDto;)
+      name          : 'mobileInstream'
+      type          : 'Lcom/vk/api/generated/video/dto/VideoVideoAdsMobileDto;'
+      access        : 0x0012 (PRIVATE FINAL)
+    #3              : (in Lcom/vk/api/generated/video/dto/VideoGetAdsResponseDto;)
+      name          : 'sport'
+      type          : 'Lcom/vk/api/generated/video/dto/VideoVideoAdsSportDto;'
+      access        : 0x0012 (PRIVATE FINAL)
+  Direct methods    -
+
+    #0              : (in Lcom/vk/api/generated/video/dto/VideoGetAdsResponseDto;)
+      name          : '<clinit>'
+      type          : '()V'
+      access        : 0x10008 (STATIC CONSTRUCTOR)
+      registers     : 1
+      ins           : 0
+      outs          : 1
+      insns size    : 8 16-bit code units
+8b22c8:                                        |[8b22c8] com.vk.api.generated.video.dto.VideoGetAdsResponseDto.<clinit>:()V
+8b22d8: 2200 ea28                              |0000: new-instance v0, Lcom/vk/api/generated/video/dto/VideoGetAdsResponseDto$a; // type@28ea
+8b22dc: 7010 fecc 0000                         |0002: invoke-direct {v0}, Ljava/lang/Object;.<init>:()V // method@ccfe
+8b22e2: 6900 1474                              |0005: sput-object v0, Lcom/vk/api/generated/video/dto/VideoGetAdsResponseDto;.CREATOR:Landroid/os/Parcelable$Creator; // field@7414
+8b22e6: 0e00                                   |0007: return-void
+
+    #1              : (in Lcom/vk/api/generated/video/dto/VideoGetAdsResponseDto;)
+      name          : '<init>'
+      type          : '()V'
+      access        : 0x10001 (PUBLIC CONSTRUCTOR)
+      registers     : 8
+      ins           : 1
+      outs          : 7
+      insns size    : 12 16-bit code units
+8b22e8:                                        |[8b22e8] com.vk.api.generated.video.dto.VideoGetAdsResponseDto.<init>:()V
+8b22f8: 1305 0f00                              |0000: const/16 v5, #int 15 // #f
+8b22fc: 1206                                   |0002: const/4 v6, #int 0 // #0
+8b22fe: 1201                                   |0003: const/4 v1, #int 0 // #0
+8b2300: 1202                                   |0004: const/4 v2, #int 0 // #0
+8b2302: 1203                                   |0005: const/4 v3, #int 0 // #0
+8b2304: 1204                                   |0006: const/4 v4, #int 0 // #0
+8b2306: 0770                                   |0007: move-object v0, v7
+8b2308: 7607 57a3 0000                         |0008: invoke-direct/range {v0, v1, v2, v3, v4, v5, v6}, Lcom/vk/api/generated/video/dto/VideoGetAdsResponseDto;.<init>:(Lcom/vk/api/generated/video/dto/VideoVideoAdsInstreamDto;Lcom/vk/api/generated/video/dto/VideoVideoAdsSportDto;Lcom/vk/api/generated/video/dto/VideoVideoAdsMobileDto;Lcom/vk/api/generated/video/dto/VideoVideoAdsBannersDto;ILkotlin/jvm/internal/DefaultConstructorMarker;)V // method@a357
+8b230e: 0e00                                   |000b: return-void
+
+    #2              : (in Lcom/vk/api/generated/video/dto/VideoGetAdsResponseDto;)
+      name          : '<init>'
+      type          : '(Lcom/vk/api/generated/video/dto/VideoVideoAdsInstreamDto;Lcom/vk/api/generated/video/dto/VideoVideoAdsSportDto;Lcom/vk/api/generated/video/dto/VideoVideoAdsMobileDto;Lcom/vk/api/generated/video/dto/VideoVideoAdsBannersDto;)V'
+      access        : 0x10001 (PUBLIC CONSTRUCTOR)
+      registers     : 5
+      ins           : 5
+      outs          : 1
+      insns size    : 12 16-bit code units
+8b2310:                                        |[8b2310] com.vk.api.generated.video.dto.VideoGetAdsResponseDto.<init>:(Lcom/vk/api/generated/video/dto/VideoVideoAdsInstreamDto;Lcom/vk/api/generated/video/dto/VideoVideoAdsSportDto;Lcom/vk/api/generated/video/dto/VideoVideoAdsMobileDto;Lcom/vk/api/generated/video/dto/VideoVideoAdsBannersDto;)V
+8b2320: 7010 fecc 0000                         |0000: invoke-direct {v0}, Ljava/lang/Object;.<init>:()V // method@ccfe
+8b2326: 5b01 1674                              |0003: iput-object v1, v0, Lcom/vk/api/generated/video/dto/VideoGetAdsResponseDto;.instream:Lcom/vk/api/generated/video/dto/VideoVideoAdsInstreamDto; // field@7416
+8b232a: 5b02 1874                              |0005: iput-object v2, v0, Lcom/vk/api/generated/video/dto/VideoGetAdsResponseDto;.sport:Lcom/vk/api/generated/video/dto/VideoVideoAdsSportDto; // field@7418
+8b232e: 5b03 1774                              |0007: iput-object v3, v0, Lcom/vk/api/generated/video/dto/VideoGetAdsResponseDto;.mobileInstream:Lcom/vk/api/generated/video/dto/VideoVideoAdsMobileDto; // field@7417
+8b2332: 5b04 1574                              |0009: iput-object v4, v0, Lcom/vk/api/generated/video/dto/VideoGetAdsResponseDto;.banners:Lcom/vk/api/generated/video/dto/VideoVideoAdsBannersDto; // field@7415
+8b2336: 0e00                                   |000b: return-void
+
+    #3              : (in Lcom/vk/api/generated/video/dto/VideoGetAdsResponseDto;)
+      name          : '<init>'
+      type          : '(Lcom/vk/api/generated/video/dto/VideoVideoAdsInstreamDto;Lcom/vk/api/generated/video/dto/VideoVideoAdsSportDto;Lcom/vk/api/generated/video/dto/VideoVideoAdsMobileDto;Lcom/vk/api/generated/video/dto/VideoVideoAdsBannersDto;ILkotlin/jvm/internal/DefaultConstructorMarker;)V'
+      access        : 0x11001 (PUBLIC SYNTHETIC CONSTRUCTOR)
+      registers     : 8
+      ins           : 7
+      outs          : 5
+      insns size    : 25 16-bit code units
+8b2338:                                        |[8b2338] com.vk.api.generated.video.dto.VideoGetAdsResponseDto.<init>:(Lcom/vk/api/generated/video/dto/VideoVideoAdsInstreamDto;Lcom/vk/api/generated/video/dto/VideoVideoAdsSportDto;Lcom/vk/api/generated/video/dto/VideoVideoAdsMobileDto;Lcom/vk/api/generated/video/dto/VideoVideoAdsBannersDto;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+8b2348: dd07 0601                              |0000: and-int/lit8 v7, v6, #int 1 // #01
+8b234c: 1200                                   |0002: const/4 v0, #int 0 // #0
+8b234e: 3807 0300                              |0003: if-eqz v7, 0006 // +0003
+8b2352: 0702                                   |0005: move-object v2, v0
+8b2354: dd07 0602                              |0006: and-int/lit8 v7, v6, #int 2 // #02
+8b2358: 3807 0300                              |0008: if-eqz v7, 000b // +0003
+8b235c: 0703                                   |000a: move-object v3, v0
+8b235e: dd07 0604                              |000b: and-int/lit8 v7, v6, #int 4 // #04
+8b2362: 3807 0300                              |000d: if-eqz v7, 0010 // +0003
+8b2366: 0704                                   |000f: move-object v4, v0
+8b2368: dd06 0608                              |0010: and-int/lit8 v6, v6, #int 8 // #08
+8b236c: 3806 0300                              |0012: if-eqz v6, 0015 // +0003
+8b2370: 0705                                   |0014: move-object v5, v0
+8b2372: 7055 56a3 2143                         |0015: invoke-direct {v1, v2, v3, v4, v5}, Lcom/vk/api/generated/video/dto/VideoGetAdsResponseDto;.<init>:(Lcom/vk/api/generated/video/dto/VideoVideoAdsInstreamDto;Lcom/vk/api/generated/video/dto/VideoVideoAdsSportDto;Lcom/vk/api/generated/video/dto/VideoVideoAdsMobileDto;Lcom/vk/api/generated/video/dto/VideoVideoAdsBannersDto;)V // method@a356
+8b2378: 0e00                                   |0018: return-void
+  Virtual methods   -
+
+    #0              : (in Lcom/vk/api/generated/video/dto/VideoGetAdsResponseDto;)
+      name          : 'b'
+      type          : '()Lcom/vk/api/generated/video/dto/VideoVideoAdsBannersDto;'
+      access        : 0x0011 (PUBLIC FINAL)
+      registers     : 2
+      ins           : 1
+      outs          : 0
+      insns size    : 3 16-bit code units
+8b237c:                                        |[8b237c] com.vk.api.generated.video.dto.VideoGetAdsResponseDto.b:()Lcom/vk/api/generated/video/dto/VideoVideoAdsBannersDto;
+8b238c: 5410 1574                              |0000: iget-object v0, v1, Lcom/vk/api/generated/video/dto/VideoGetAdsResponseDto;.banners:Lcom/vk/api/generated/video/dto/VideoVideoAdsBannersDto; // field@7415
+8b2390: 1100                                   |0002: return-object v0
+
+    #1              : (in Lcom/vk/api/generated/video/dto/VideoGetAdsResponseDto;)
+      name          : 'c'
+      type          : '()Lcom/vk/api/generated/video/dto/VideoVideoAdsMobileDto;'
+      access        : 0x0011 (PUBLIC FINAL)
+      registers     : 2
+      ins           : 1
+      outs          : 0
+      insns size    : 3 16-bit code units
+8b2394:                                        |[8b2394] com.vk.api.generated.video.dto.VideoGetAdsResponseDto.c:()Lcom/vk/api/generated/video/dto/VideoVideoAdsMobileDto;
+8b23a4: 5410 1774                              |0000: iget-object v0, v1, Lcom/vk/api/generated/video/dto/VideoGetAdsResponseDto;.mobileInstream:Lcom/vk/api/generated/video/dto/VideoVideoAdsMobileDto; // field@7417
+8b23a8: 1100                                   |0002: return-object v0
+
+    #2              : (in Lcom/vk/api/generated/video/dto/VideoGetAdsResponseDto;)
+      name          : 'd'
+      type          : '()Lcom/vk/api/generated/video/dto/VideoVideoAdsSportDto;'
+      access        : 0x0011 (PUBLIC FINAL)
+      registers     : 2
+      ins           : 1
+      outs          : 0
+      insns size    : 3 16-bit code units
+8b23ac:                                        |[8b23ac] com.vk.api.generated.video.dto.VideoGetAdsResponseDto.d:()Lcom/vk/api/generated/video/dto/VideoVideoAdsSportDto;
+8b23bc: 5410 1874                              |0000: iget-object v0, v1, Lcom/vk/api/generated/video/dto/VideoGetAdsResponseDto;.sport:Lcom/vk/api/generated/video/dto/VideoVideoAdsSportDto; // field@7418
+8b23c0: 1100                                   |0002: return-object v0
+
+    #3              : (in Lcom/vk/api/generated/video/dto/VideoGetAdsResponseDto;)
+      name          : 'describeContents'
+      type          : '()I'
+      access        : 0x0011 (PUBLIC FINAL)
+      registers     : 2
+      ins           : 1
+      outs          : 0
+      insns size    : 2 16-bit code units
+8b23c4:                                        |[8b23c4] com.vk.api.generated.video.dto.VideoGetAdsResponseDto.describeContents:()I
+8b23d4: 1200                                   |0000: const/4 v0, #int 0 // #0
+8b23d6: 0f00                                   |0001: return v0
+
+    #4              : (in Lcom/vk/api/generated/video/dto/VideoGetAdsResponseDto;)
+      name          : 'equals'
+      type          : '(Ljava/lang/Object;)Z'
+      access        : 0x0011 (PUBLIC FINAL)
+      registers     : 6
+      ins           : 2
+      outs          : 2
+      insns size    : 57 16-bit code units
+8b23d8:                                        |[8b23d8] com.vk.api.generated.video.dto.VideoGetAdsResponseDto.equals:(Ljava/lang/Object;)Z
+8b23e8: 1210                                   |0000: const/4 v0, #int 1 // #1
+8b23ea: 3354 0300                              |0001: if-ne v4, v5, 0004 // +0003
+8b23ee: 0f00                                   |0003: return v0
+8b23f0: 2051 eb28                              |0004: instance-of v1, v5, Lcom/vk/api/generated/video/dto/VideoGetAdsResponseDto; // type@28eb
+8b23f4: 1202                                   |0006: const/4 v2, #int 0 // #0
+8b23f6: 3901 0300                              |0007: if-nez v1, 000a // +0003
+8b23fa: 0f02                                   |0009: return v2
+8b23fc: 1f05 eb28                              |000a: check-cast v5, Lcom/vk/api/generated/video/dto/VideoGetAdsResponseDto; // type@28eb
+8b2400: 5441 1674                              |000c: iget-object v1, v4, Lcom/vk/api/generated/video/dto/VideoGetAdsResponseDto;.instream:Lcom/vk/api/generated/video/dto/VideoVideoAdsInstreamDto; // field@7416
+8b2404: 5453 1674                              |000e: iget-object v3, v5, Lcom/vk/api/generated/video/dto/VideoGetAdsResponseDto;.instream:Lcom/vk/api/generated/video/dto/VideoVideoAdsInstreamDto; // field@7416
+8b2408: 7120 54d5 3100                         |0010: invoke-static {v1, v3}, Lkotlin/jvm/internal/h;.d:(Ljava/lang/Object;Ljava/lang/Object;)Z // method@d554
+8b240e: 0a01                                   |0013: move-result v1
+8b2410: 3901 0300                              |0014: if-nez v1, 0017 // +0003
+8b2414: 0f02                                   |0016: return v2
+8b2416: 5441 1874                              |0017: iget-object v1, v4, Lcom/vk/api/generated/video/dto/VideoGetAdsResponseDto;.sport:Lcom/vk/api/generated/video/dto/VideoVideoAdsSportDto; // field@7418
+8b241a: 5453 1874                              |0019: iget-object v3, v5, Lcom/vk/api/generated/video/dto/VideoGetAdsResponseDto;.sport:Lcom/vk/api/generated/video/dto/VideoVideoAdsSportDto; // field@7418
+8b241e: 7120 54d5 3100                         |001b: invoke-static {v1, v3}, Lkotlin/jvm/internal/h;.d:(Ljava/lang/Object;Ljava/lang/Object;)Z // method@d554
+8b2424: 0a01                                   |001e: move-result v1
+8b2426: 3901 0300                              |001f: if-nez v1, 0022 // +0003
+8b242a: 0f02                                   |0021: return v2
+8b242c: 5441 1774                              |0022: iget-object v1, v4, Lcom/vk/api/generated/video/dto/VideoGetAdsResponseDto;.mobileInstream:Lcom/vk/api/generated/video/dto/VideoVideoAdsMobileDto; // field@7417
+8b2430: 5453 1774                              |0024: iget-object v3, v5, Lcom/vk/api/generated/video/dto/VideoGetAdsResponseDto;.mobileInstream:Lcom/vk/api/generated/video/dto/VideoVideoAdsMobileDto; // field@7417
+8b2434: 7120 54d5 3100                         |0026: invoke-static {v1, v3}, Lkotlin/jvm/internal/h;.d:(Ljava/lang/Object;Ljava/lang/Object;)Z // method@d554
+8b243a: 0a01                                   |0029: move-result v1
+8b243c: 3901 0300                              |002a: if-nez v1, 002d // +0003
+8b2440: 0f02                                   |002c: return v2
+8b2442: 5441 1574                              |002d: iget-object v1, v4, Lcom/vk/api/generated/video/dto/VideoGetAdsResponseDto;.banners:Lcom/vk/api/generated/video/dto/VideoVideoAdsBannersDto; // field@7415
+
+    #5              : (in Lcom/vk/api/generated/video/dto/VideoGetAdsResponseDto;)
+      name          : 'hashCode'
+      type          : '()I'
+      access        : 0x0011 (PUBLIC FINAL)
+      registers     : 4
+      ins           : 1
+      outs          : 1
+      insns size    : 50 16-bit code units
+8b245c:                                        |[8b245c] com.vk.api.generated.video.dto.VideoGetAdsResponseDto.hashCode:()I
+8b246c: 5430 1674                              |0000: iget-object v0, v3, Lcom/vk/api/generated/video/dto/VideoGetAdsResponseDto;.instream:Lcom/vk/api/generated/video/dto/VideoVideoAdsInstreamDto; // field@7416
+8b2470: 1201                                   |0002: const/4 v1, #int 0 // #0
+8b2472: 3900 0400                              |0003: if-nez v0, 0007 // +0004
+8b2476: 0110                                   |0005: move v0, v1
+8b2478: 2805                                   |0006: goto 000b // +0005
+8b247a: 6e10 72a5 0000                         |0007: invoke-virtual {v0}, Lcom/vk/api/generated/video/dto/VideoVideoAdsInstreamDto;.hashCode:()I // method@a572
+8b2480: 0a00                                   |000a: move-result v0
+8b2482: da00 001f                              |000b: mul-int/lit8 v0, v0, #int 31 // #1f
+8b2486: 5432 1874                              |000d: iget-object v2, v3, Lcom/vk/api/generated/video/dto/VideoGetAdsResponseDto;.sport:Lcom/vk/api/generated/video/dto/VideoVideoAdsSportDto; // field@7418
+8b248a: 3902 0400                              |000f: if-nez v2, 0013 // +0004
+8b248e: 0112                                   |0011: move v2, v1
+8b2490: 2805                                   |0012: goto 0017 // +0005
+8b2492: 6e10 bca5 0200                         |0013: invoke-virtual {v2}, Lcom/vk/api/generated/video/dto/VideoVideoAdsSportDto;.hashCode:()I // method@a5bc
+8b2498: 0a02                                   |0016: move-result v2
+8b249a: b020                                   |0017: add-int/2addr v0, v2
+8b249c: da00 001f                              |0018: mul-int/lit8 v0, v0, #int 31 // #1f
+8b24a0: 5432 1774                              |001a: iget-object v2, v3, Lcom/vk/api/generated/video/dto/VideoGetAdsResponseDto;.mobileInstream:Lcom/vk/api/generated/video/dto/VideoVideoAdsMobileDto; // field@7417
+8b24a4: 3902 0400                              |001c: if-nez v2, 0020 // +0004
+8b24a8: 0112                                   |001e: move v2, v1
+8b24aa: 2805                                   |001f: goto 0024 // +0005
+8b24ac: 6e10 90a5 0200                         |0020: invoke-virtual {v2}, Lcom/vk/api/generated/video/dto/VideoVideoAdsMobileDto;.hashCode:()I // method@a590
+8b24b2: 0a02                                   |0023: move-result v2
+8b24b4: b020                                   |0024: add-int/2addr v0, v2
+8b24b6: da00 001f                              |0025: mul-int/lit8 v0, v0, #int 31 // #1f
+8b24ba: 5432 1574                              |0027: iget-object v2, v3, Lcom/vk/api/generated/video/dto/VideoGetAdsResponseDto;.banners:Lcom/vk/api/generated/video/dto/VideoVideoAdsBannersDto; // field@7415
+8b24be: 3902 0300                              |0029: if-nez v2, 002c // +0003
+8b24c2: 2805                                   |002b: goto 0030 // +0005
+
+    #6              : (in Lcom/vk/api/generated/video/dto/VideoGetAdsResponseDto;)
+      name          : 'toString'
+      type          : '()Ljava/lang/String;'
+      access        : 0x0011 (PUBLIC FINAL)
+      registers     : 3
+      ins           : 1
+      outs          : 2
+      insns size    : 52 16-bit code units
+8b24d0:                                        |[8b24d0] com.vk.api.generated.video.dto.VideoGetAdsResponseDto.toString:()Ljava/lang/String;
+8b24e0: 2200 313b                              |0000: new-instance v0, Ljava/lang/StringBuilder; // type@3b31
+8b24e4: 1a01 cab6                              |0002: const-string v1, "VideoGetAdsResponseDto(instream=" // string@b6ca
+8b24e8: 7020 60cd 1000                         |0004: invoke-direct {v0, v1}, Ljava/lang/StringBuilder;.<init>:(Ljava/lang/String;)V // method@cd60
+8b24ee: 5421 1674                              |0007: iget-object v1, v2, Lcom/vk/api/generated/video/dto/VideoGetAdsResponseDto;.instream:Lcom/vk/api/generated/video/dto/VideoVideoAdsInstreamDto; // field@7416
+8b24f2: 6e20 6acd 1000                         |0009: invoke-virtual {v0, v1}, Ljava/lang/StringBuilder;.append:(Ljava/lang/Object;)Ljava/lang/StringBuilder; // method@cd6a
+8b24f8: 1a01 641a                              |000c: const-string v1, ", sport=" // string@1a64
+8b24fc: 6e20 6bcd 1000                         |000e: invoke-virtual {v0, v1}, Ljava/lang/StringBuilder;.append:(Ljava/lang/String;)Ljava/lang/StringBuilder; // method@cd6b
+8b2502: 5421 1874                              |0011: iget-object v1, v2, Lcom/vk/api/generated/video/dto/VideoGetAdsResponseDto;.sport:Lcom/vk/api/generated/video/dto/VideoVideoAdsSportDto; // field@7418
+8b2506: 6e20 6acd 1000                         |0013: invoke-virtual {v0, v1}, Ljava/lang/StringBuilder;.append:(Ljava/lang/Object;)Ljava/lang/StringBuilder; // method@cd6a
+8b250c: 1a01 ce16                              |0016: const-string v1, ", mobileInstream=" // string@16ce
+8b2510: 6e20 6bcd 1000                         |0018: invoke-virtual {v0, v1}, Ljava/lang/StringBuilder;.append:(Ljava/lang/String;)Ljava/lang/StringBuilder; // method@cd6b
+8b2516: 5421 1774                              |001b: iget-object v1, v2, Lcom/vk/api/generated/video/dto/VideoGetAdsResponseDto;.mobileInstream:Lcom/vk/api/generated/video/dto/VideoVideoAdsMobileDto; // field@7417
+8b251a: 6e20 6acd 1000                         |001d: invoke-virtual {v0, v1}, Ljava/lang/StringBuilder;.append:(Ljava/lang/Object;)Ljava/lang/StringBuilder; // method@cd6a
+8b2520: 1a01 1f10                              |0020: const-string v1, ", banners=" // string@101f
+8b2524: 6e20 6bcd 1000                         |0022: invoke-virtual {v0, v1}, Ljava/lang/StringBuilder;.append:(Ljava/lang/String;)Ljava/lang/StringBuilder; // method@cd6b
+8b252a: 5421 1574                              |0025: iget-object v1, v2, Lcom/vk/api/generated/video/dto/VideoGetAdsResponseDto;.banners:Lcom/vk/api/generated/video/dto/VideoVideoAdsBannersDto; // field@7415
+8b252e: 6e20 6acd 1000                         |0027: invoke-virtual {v0, v1}, Ljava/lang/StringBuilder;.append:(Ljava/lang/Object;)Ljava/lang/StringBuilder; // method@cd6a
+8b2534: 1301 2900                              |002a: const/16 v1, #int 41 // #29
+8b2538: 6e20 63cd 1000                         |002c: invoke-virtual {v0, v1}, Ljava/lang/StringBuilder;.append:(C)Ljava/lang/StringBuilder; // method@cd63
+8b253e: 6e10 75cd 0000                         |002f: invoke-virtual {v0}, Ljava/lang/StringBuilder;.toString:()Ljava/lang/String; // method@cd75
+8b2544: 0c00                                   |0032: move-result-object v0
+8b2546: 1100                                   |0033: return-object v0
+
+    #7              : (in Lcom/vk/api/generated/video/dto/VideoGetAdsResponseDto;)
+      name          : 'writeToParcel'
+      type          : '(Landroid/os/Parcel;I)V'
+      access        : 0x0011 (PUBLIC FINAL)
+      registers     : 6
+      ins           : 3
+      outs          : 3
+      insns size    : 59 16-bit code units
+8b2548:                                        |[8b2548] com.vk.api.generated.video.dto.VideoGetAdsResponseDto.writeToParcel:(Landroid/os/Parcel;I)V
+8b2558: 5430 1674                              |0000: iget-object v0, v3, Lcom/vk/api/generated/video/dto/VideoGetAdsResponseDto;.instream:Lcom/vk/api/generated/video/dto/VideoVideoAdsInstreamDto; // field@7416
+8b255c: 1211                                   |0002: const/4 v1, #int 1 // #1
+8b255e: 1202                                   |0003: const/4 v2, #int 0 // #0
+8b2560: 3900 0600                              |0004: if-nez v0, 000a // +0006
+8b2564: 6e20 b409 2400                         |0006: invoke-virtual {v4, v2}, Landroid/os/Parcel;.writeInt:(I)V // method@09b4
+8b256a: 2807                                   |0009: goto 0010 // +0007
+8b256c: 6e20 b409 1400                         |000a: invoke-virtual {v4, v1}, Landroid/os/Parcel;.writeInt:(I)V // method@09b4
+8b2572: 6e30 74a5 4005                         |000d: invoke-virtual {v0, v4, v5}, Lcom/vk/api/generated/video/dto/VideoVideoAdsInstreamDto;.writeToParcel:(Landroid/os/Parcel;I)V // method@a574
+8b2578: 5430 1874                              |0010: iget-object v0, v3, Lcom/vk/api/generated/video/dto/VideoGetAdsResponseDto;.sport:Lcom/vk/api/generated/video/dto/VideoVideoAdsSportDto; // field@7418
+8b257c: 3900 0600                              |0012: if-nez v0, 0018 // +0006
+8b2580: 6e20 b409 2400                         |0014: invoke-virtual {v4, v2}, Landroid/os/Parcel;.writeInt:(I)V // method@09b4
+8b2586: 2807                                   |0017: goto 001e // +0007
+8b2588: 6e20 b409 1400                         |0018: invoke-virtual {v4, v1}, Landroid/os/Parcel;.writeInt:(I)V // method@09b4
+8b258e: 6e30 bea5 4005                         |001b: invoke-virtual {v0, v4, v5}, Lcom/vk/api/generated/video/dto/VideoVideoAdsSportDto;.writeToParcel:(Landroid/os/Parcel;I)V // method@a5be
+8b2594: 5430 1774                              |001e: iget-object v0, v3, Lcom/vk/api/generated/video/dto/VideoGetAdsResponseDto;.mobileInstream:Lcom/vk/api/generated/video/dto/VideoVideoAdsMobileDto; // field@7417
+8b2598: 3900 0600                              |0020: if-nez v0, 0026 // +0006
+8b259c: 6e20 b409 2400                         |0022: invoke-virtual {v4, v2}, Landroid/os/Parcel;.writeInt:(I)V // method@09b4
+8b25a2: 2807                                   |0025: goto 002c // +0007
+8b25a4: 6e20 b409 1400                         |0026: invoke-virtual {v4, v1}, Landroid/os/Parcel;.writeInt:(I)V // method@09b4
+8b25aa: 6e30 92a5 4005                         |0029: invoke-virtual {v0, v4, v5}, Lcom/vk/api/generated/video/dto/VideoVideoAdsMobileDto;.writeToParcel:(Landroid/os/Parcel;I)V // method@a592
+8b25b0: 5430 1574                              |002c: iget-object v0, v3, Lcom/vk/api/generated/video/dto/VideoGetAdsResponseDto;.banners:Lcom/vk/api/generated/video/dto/VideoVideoAdsBannersDto; // field@7415
+8b25b4: 3900 0600                              |002e: if-nez v0, 0034 // +0006
+8b25b8: 6e20 b409 2400                         |0030: invoke-virtual {v4, v2}, Landroid/os/Parcel;.writeInt:(I)V // method@09b4
+8b25be: 0e00                                   |0033: return-void
+8b25c0: 6e20 b409 1400                         |0034: invoke-virtual {v4, v1}, Landroid/os/Parcel;.writeInt:(I)V // method@09b4
+8b25c6: 6e30 6ca5 4005                         |0037: invoke-virtual {v0, v4, v5}, Lcom/vk/api/generated/video/dto/VideoVideoAdsBannersDto;.writeToParcel:(Landroid/os/Parcel;I)V // method@a56c
+8b25cc: 0e00                                   |003a: return-void
+
+===== Lcom/vk/api/generated/video/dto/VideoVideoAdsMobileInstreamadsDto; =====
+  Static fields     -
+    #0              : (in Lcom/vk/api/generated/video/dto/VideoVideoAdsMobileInstreamadsDto;)
+      name          : 'CREATOR'
+      type          : 'Landroid/os/Parcelable$Creator;'
+      access        : 0x0019 (PUBLIC STATIC FINAL)
+  Instance fields   -
+    #0              : (in Lcom/vk/api/generated/video/dto/VideoVideoAdsMobileInstreamadsDto;)
+      name          : 'sections'
+      type          : 'Lcom/vk/api/generated/video/dto/VideoVideoAdsInstreamSectionsDto;'
+      access        : 0x0012 (PRIVATE FINAL)
+  Direct methods    -
+
+    #0              : (in Lcom/vk/api/generated/video/dto/VideoVideoAdsMobileInstreamadsDto;)
+      name          : '<clinit>'
+      type          : '()V'
+      access        : 0x10008 (STATIC CONSTRUCTOR)
+      registers     : 1
+      ins           : 0
+      outs          : 1
+      insns size    : 8 16-bit code units
+8b9e70:                                        |[8b9e70] com.vk.api.generated.video.dto.VideoVideoAdsMobileInstreamadsDto.<clinit>:()V
+8b9e80: 2200 5d29                              |0000: new-instance v0, Lcom/vk/api/generated/video/dto/VideoVideoAdsMobileInstreamadsDto$a; // type@295d
+8b9e84: 7010 fecc 0000                         |0002: invoke-direct {v0}, Ljava/lang/Object;.<init>:()V // method@ccfe
+8b9e8a: 6900 2675                              |0005: sput-object v0, Lcom/vk/api/generated/video/dto/VideoVideoAdsMobileInstreamadsDto;.CREATOR:Landroid/os/Parcelable$Creator; // field@7526
+8b9e8e: 0e00                                   |0007: return-void
+
+    #1              : (in Lcom/vk/api/generated/video/dto/VideoVideoAdsMobileInstreamadsDto;)
+      name          : '<init>'
+      type          : '(Lcom/vk/api/generated/video/dto/VideoVideoAdsInstreamSectionsDto;)V'
+      access        : 0x10001 (PUBLIC CONSTRUCTOR)
+      registers     : 2
+      ins           : 2
+      outs          : 1
+      insns size    : 6 16-bit code units
+8b9e90:                                        |[8b9e90] com.vk.api.generated.video.dto.VideoVideoAdsMobileInstreamadsDto.<init>:(Lcom/vk/api/generated/video/dto/VideoVideoAdsInstreamSectionsDto;)V
+8b9ea0: 7010 fecc 0000                         |0000: invoke-direct {v0}, Ljava/lang/Object;.<init>:()V // method@ccfe
+8b9ea6: 5b01 2775                              |0003: iput-object v1, v0, Lcom/vk/api/generated/video/dto/VideoVideoAdsMobileInstreamadsDto;.sections:Lcom/vk/api/generated/video/dto/VideoVideoAdsInstreamSectionsDto; // field@7527
+8b9eaa: 0e00                                   |0005: return-void
+  Virtual methods   -
+
+    #0              : (in Lcom/vk/api/generated/video/dto/VideoVideoAdsMobileInstreamadsDto;)
+      name          : 'describeContents'
+      type          : '()I'
+      access        : 0x0011 (PUBLIC FINAL)
+      registers     : 2
+      ins           : 1
+      outs          : 0
+      insns size    : 2 16-bit code units
+8b9eac:                                        |[8b9eac] com.vk.api.generated.video.dto.VideoVideoAdsMobileInstreamadsDto.describeContents:()I
+8b9ebc: 1200                                   |0000: const/4 v0, #int 0 // #0
+8b9ebe: 0f00                                   |0001: return v0
+
+    #1              : (in Lcom/vk/api/generated/video/dto/VideoVideoAdsMobileInstreamadsDto;)
+      name          : 'equals'
+      type          : '(Ljava/lang/Object;)Z'
+      access        : 0x0011 (PUBLIC FINAL)
+      registers     : 5
+      ins           : 2
+      outs          : 2
+      insns size    : 24 16-bit code units
+8b9ec0:                                        |[8b9ec0] com.vk.api.generated.video.dto.VideoVideoAdsMobileInstreamadsDto.equals:(Ljava/lang/Object;)Z
+8b9ed0: 1210                                   |0000: const/4 v0, #int 1 // #1
+8b9ed2: 3343 0300                              |0001: if-ne v3, v4, 0004 // +0003
+8b9ed6: 0f00                                   |0003: return v0
+8b9ed8: 2041 5e29                              |0004: instance-of v1, v4, Lcom/vk/api/generated/video/dto/VideoVideoAdsMobileInstreamadsDto; // type@295e
+8b9edc: 1202                                   |0006: const/4 v2, #int 0 // #0
+8b9ede: 3901 0300                              |0007: if-nez v1, 000a // +0003
+8b9ee2: 0f02                                   |0009: return v2
+8b9ee4: 1f04 5e29                              |000a: check-cast v4, Lcom/vk/api/generated/video/dto/VideoVideoAdsMobileInstreamadsDto; // type@295e
+8b9ee8: 5431 2775                              |000c: iget-object v1, v3, Lcom/vk/api/generated/video/dto/VideoVideoAdsMobileInstreamadsDto;.sections:Lcom/vk/api/generated/video/dto/VideoVideoAdsInstreamSectionsDto; // field@7527
+8b9eec: 5444 2775                              |000e: iget-object v4, v4, Lcom/vk/api/generated/video/dto/VideoVideoAdsMobileInstreamadsDto;.sections:Lcom/vk/api/generated/video/dto/VideoVideoAdsInstreamSectionsDto; // field@7527
+8b9ef0: 7120 54d5 4100                         |0010: invoke-static {v1, v4}, Lkotlin/jvm/internal/h;.d:(Ljava/lang/Object;Ljava/lang/Object;)Z // method@d554
+8b9ef6: 0a04                                   |0013: move-result v4
+8b9ef8: 3904 0300                              |0014: if-nez v4, 0017 // +0003
+8b9efc: 0f02                                   |0016: return v2
+8b9efe: 0f00                                   |0017: return v0
+
+    #2              : (in Lcom/vk/api/generated/video/dto/VideoVideoAdsMobileInstreamadsDto;)
+      name          : 'hashCode'
+      type          : '()I'
+      access        : 0x0011 (PUBLIC FINAL)
+      registers     : 2
+      ins           : 1
+      outs          : 1
+      insns size    : 7 16-bit code units
+8b9f00:                                        |[8b9f00] com.vk.api.generated.video.dto.VideoVideoAdsMobileInstreamadsDto.hashCode:()I
+8b9f10: 5410 2775                              |0000: iget-object v0, v1, Lcom/vk/api/generated/video/dto/VideoVideoAdsMobileInstreamadsDto;.sections:Lcom/vk/api/generated/video/dto/VideoVideoAdsInstreamSectionsDto; // field@7527
+8b9f14: 6e10 87a5 0000                         |0002: invoke-virtual {v0}, Lcom/vk/api/generated/video/dto/VideoVideoAdsInstreamSectionsDto;.hashCode:()I // method@a587
+8b9f1a: 0a00                                   |0005: move-result v0
+8b9f1c: 0f00                                   |0006: return v0
+
+    #3              : (in Lcom/vk/api/generated/video/dto/VideoVideoAdsMobileInstreamadsDto;)
+      name          : 'toString'
+      type          : '()Ljava/lang/String;'
+      access        : 0x0011 (PUBLIC FINAL)
+      registers     : 3
+      ins           : 1
+      outs          : 2
+      insns size    : 22 16-bit code units
+8b9f20:                                        |[8b9f20] com.vk.api.generated.video.dto.VideoVideoAdsMobileInstreamadsDto.toString:()Ljava/lang/String;
+8b9f30: 2200 313b                              |0000: new-instance v0, Ljava/lang/StringBuilder; // type@3b31
+8b9f34: 1a01 4ab7                              |0002: const-string v1, "VideoVideoAdsMobileInstreamadsDto(sections=" // string@b74a
+8b9f38: 7020 60cd 1000                         |0004: invoke-direct {v0, v1}, Ljava/lang/StringBuilder;.<init>:(Ljava/lang/String;)V // method@cd60
+8b9f3e: 5421 2775                              |0007: iget-object v1, v2, Lcom/vk/api/generated/video/dto/VideoVideoAdsMobileInstreamadsDto;.sections:Lcom/vk/api/generated/video/dto/VideoVideoAdsInstreamSectionsDto; // field@7527
+8b9f42: 6e20 6acd 1000                         |0009: invoke-virtual {v0, v1}, Ljava/lang/StringBuilder;.append:(Ljava/lang/Object;)Ljava/lang/StringBuilder; // method@cd6a
+8b9f48: 1301 2900                              |000c: const/16 v1, #int 41 // #29
+8b9f4c: 6e20 63cd 1000                         |000e: invoke-virtual {v0, v1}, Ljava/lang/StringBuilder;.append:(C)Ljava/lang/StringBuilder; // method@cd63
+8b9f52: 6e10 75cd 0000                         |0011: invoke-virtual {v0}, Ljava/lang/StringBuilder;.toString:()Ljava/lang/String; // method@cd75
+8b9f58: 0c00                                   |0014: move-result-object v0
+8b9f5a: 1100                                   |0015: return-object v0
+
+    #4              : (in Lcom/vk/api/generated/video/dto/VideoVideoAdsMobileInstreamadsDto;)
+      name          : 'writeToParcel'
+      type          : '(Landroid/os/Parcel;I)V'
+      access        : 0x0011 (PUBLIC FINAL)
+      registers     : 4
+      ins           : 3
+      outs          : 3
+      insns size    : 6 16-bit code units
+8b9f5c:                                        |[8b9f5c] com.vk.api.generated.video.dto.VideoVideoAdsMobileInstreamadsDto.writeToParcel:(Landroid/os/Parcel;I)V
+8b9f6c: 5410 2775                              |0000: iget-object v0, v1, Lcom/vk/api/generated/video/dto/VideoVideoAdsMobileInstreamadsDto;.sections:Lcom/vk/api/generated/video/dto/VideoVideoAdsInstreamSectionsDto; // field@7527
+8b9f70: 6e30 89a5 2003                         |0002: invoke-virtual {v0, v2, v3}, Lcom/vk/api/generated/video/dto/VideoVideoAdsInstreamSectionsDto;.writeToParcel:(Landroid/os/Parcel;I)V // method@a589
+8b9f76: 0e00                                   |0005: return-void
+
+===== Lcom/vk/mytarget/di/AdsSdkComponentImpl; =====
+  Static fields     -
+    #0              : (in Lcom/vk/mytarget/di/AdsSdkComponentImpl;)
+      name          : 'e'
+      type          : '[Lc17/l;'
+      access        : 0x1019 (PUBLIC STATIC FINAL SYNTHETIC)
+  Instance fields   -
+    #0              : (in Lcom/vk/mytarget/di/AdsSdkComponentImpl;)
+      name          : 'a'
+      type          : 'Lw62/c;'
+      access        : 0x0011 (PUBLIC FINAL)
+    #1              : (in Lcom/vk/mytarget/di/AdsSdkComponentImpl;)
+      name          : 'b'
+      type          : 'Lw62/b;'
+      access        : 0x0011 (PUBLIC FINAL)
+    #2              : (in Lcom/vk/mytarget/di/AdsSdkComponentImpl;)
+      name          : 'c'
+      type          : 'Lw62/c;'
+      access        : 0x0011 (PUBLIC FINAL)
+    #3              : (in Lcom/vk/mytarget/di/AdsSdkComponentImpl;)
+      name          : 'd'
+      type          : 'Lw62/c;'
+      access        : 0x0011 (PUBLIC FINAL)
+  Direct methods    -
+
+    #0              : (in Lcom/vk/mytarget/di/AdsSdkComponentImpl;)
+      name          : '<clinit>'
+      type          : '()V'
+      access        : 0x10008 (STATIC CONSTRUCTOR)
+      registers     : 8
+      ins           : 0
+      outs          : 5
+      insns size    : 59 16-bit code units
+7bfe48:                                        |[7bfe48] com.vk.mytarget.di.AdsSdkComponentImpl.<clinit>:()V
+7bfe58: 2200 9b4f                              |0000: new-instance v0, Lkotlin/jvm/internal/PropertyReference1Impl; // type@4f9b
+7bfe5c: 1c01 9d32                              |0002: const-class v1, Lcom/vk/mytarget/di/AdsSdkComponentImpl; // type@329d
+7bfe60: 1a02 ebd0                              |0004: const-string v2, "adPixelStatsComponent" // string@d0eb
+7bfe64: 1a03 76de                              |0006: const-string v3, "getAdPixelStatsComponent()Lcom/vk/ads/stats/api/di/AdPixelStatsComponent;" // string@de76
+7bfe68: 1204                                   |0008: const/4 v4, #int 0 // #0
+7bfe6a: 7054 93b9 1032                         |0009: invoke-direct {v0, v1, v2, v3, v4}, Lkotlin/jvm/internal/PropertyReference1Impl;.<init>:(Ljava/lang/Class;Ljava/lang/String;Ljava/lang/String;I)V // method@b993
+7bfe70: 6202 a48f                              |000c: sget-object v2, Lkotlin/jvm/internal/k;.a:Lkotlin/jvm/internal/l; // field@8fa4
+7bfe74: 6e20 a5b9 0200                         |000e: invoke-virtual {v2, v0}, Lkotlin/jvm/internal/l;.i:(Lkotlin/jvm/internal/PropertyReference1;)Lc17/n; // method@b9a5
+7bfe7a: 0c00                                   |0011: move-result-object v0
+7bfe7c: 1a03 69d1                              |0012: const-string v3, "adsSdkRouter" // string@d169
+7bfe80: 1a05 96de                              |0014: const-string v5, "getAdsSdkRouter()Lcom/vk/mytarget/AdsSdkRouter;" // string@de96
+7bfe84: 7152 d6a6 3145                         |0016: invoke-static {v1, v3, v5, v4, v2}, Lgn5/c0;.a:(Ljava/lang/Class;Ljava/lang/String;Ljava/lang/String;ILkotlin/jvm/internal/l;)Lc17/n; // method@a6d6
+7bfe8a: 0c03                                   |0019: move-result-object v3
+7bfe8c: 1a05 62d1                              |001a: const-string v5, "adsChoicesAnalytics" // string@d162
+7bfe90: 1a06 90de                              |001c: const-string v6, "getAdsChoicesAnalytics()Lcom/vk/mytarget/AdsChoicesAnalytics;" // string@de90
+7bfe94: 7152 d6a6 5146                         |001e: invoke-static {v1, v5, v6, v4, v2}, Lgn5/c0;.a:(Ljava/lang/Class;Ljava/lang/String;Ljava/lang/String;ILkotlin/jvm/internal/l;)Lc17/n; // method@a6d6
+7bfe9a: 0c05                                   |0021: move-result-object v5
+7bfe9c: 1a06 80fa                              |0022: const-string v6, "reportRepository" // string@fa80
+7bfea0: 1a07 f8e6                              |0024: const-string v7, "getReportRepository()Lcom/vk/mytarget/ReportRepository;" // string@e6f8
+7bfea4: 7152 d6a6 6147                         |0026: invoke-static {v1, v6, v7, v4, v2}, Lgn5/c0;.a:(Ljava/lang/Class;Ljava/lang/String;Ljava/lang/String;ILkotlin/jvm/internal/l;)Lc17/n; // method@a6d6
+7bfeaa: 0c01                                   |0029: move-result-object v1
+7bfeac: 1242                                   |002a: const/4 v2, #int 4 // #4
+7bfeae: 2322 4472                              |002b: new-array v2, v2, [Lc17/l; // type@7244
+7bfeb2: 4d00 0204                              |002d: aput-object v0, v2, v4
+7bfeb6: 1210                                   |002f: const/4 v0, #int 1 // #1
+7bfeb8: 4d03 0200                              |0030: aput-object v3, v2, v0
+7bfebc: 1220                                   |0032: const/4 v0, #int 2 // #2
+
+    #1              : (in Lcom/vk/mytarget/di/AdsSdkComponentImpl;)
+      name          : '<init>'
+      type          : '(Lkotlin/Lazy;)V'
+      access        : 0x10001 (PUBLIC CONSTRUCTOR)
+      registers     : 4
+      ins           : 2
+      outs          : 3
+      insns size    : 57 16-bit code units
+7bfed0:                                        |[7bfed0] com.vk.mytarget.di.AdsSdkComponentImpl.<init>:(Lkotlin/Lazy;)V
+7bfee0: 7010 96b1 0200                         |0000: invoke-direct {v2}, Ljava/lang/Object;.<init>:()V // method@b196
+7bfee6: 2200 7344                              |0003: new-instance v0, Lfh4/f; // type@4473
+7bfeea: 1301 0800                              |0005: const/16 v1, #int 8 // #8
+7bfeee: 7030 5aa3 3001                         |0007: invoke-direct {v0, v3, v1}, Lfh4/f;.<init>:(Ljava/lang/Object;I)V // method@a35a
+7bfef4: 2203 566a                              |000a: new-instance v3, Lw62/c; // type@6a56
+7bfef8: 7020 3df1 0300                         |000c: invoke-direct {v3, v0}, Lw62/a;.<init>:(Lkotlin/jvm/functions/Function0;)V // method@f13d
+7bfefe: 5b23 2553                              |000f: iput-object v3, v2, Lcom/vk/mytarget/di/AdsSdkComponentImpl;.a:Lw62/c; // field@5325
+7bff02: 2203 cd48                              |0011: new-instance v3, Lhw5/j; // type@48cd
+7bff06: 1240                                   |0013: const/4 v0, #int 4 // #4
+7bff08: 7030 45ab 2300                         |0014: invoke-direct {v3, v2, v0}, Lhw5/j;.<init>:(Ljava/lang/Object;I)V // method@ab45
+7bff0e: 2200 556a                              |0017: new-instance v0, Lw62/b; // type@6a55
+7bff12: 7020 3df1 3000                         |0019: invoke-direct {v0, v3}, Lw62/a;.<init>:(Lkotlin/jvm/functions/Function0;)V // method@f13d
+7bff18: 5b20 2653                              |001c: iput-object v0, v2, Lcom/vk/mytarget/di/AdsSdkComponentImpl;.b:Lw62/b; // field@5326
+7bff1c: 2203 134d                              |001e: new-instance v3, Ljc0/a; // type@4d13
+7bff20: 1230                                   |0020: const/4 v0, #int 3 // #3
+7bff22: 7030 82b4 2300                         |0021: invoke-direct {v3, v2, v0}, Ljc0/a;.<init>:(Ljava/lang/Object;I)V // method@b482
+7bff28: 2200 566a                              |0024: new-instance v0, Lw62/c; // type@6a56
+7bff2c: 7020 3df1 3000                         |0026: invoke-direct {v0, v3}, Lw62/a;.<init>:(Lkotlin/jvm/functions/Function0;)V // method@f13d
+7bff32: 5b20 2753                              |0029: iput-object v0, v2, Lcom/vk/mytarget/di/AdsSdkComponentImpl;.c:Lw62/c; // field@5327
+7bff36: 2203 204e                              |002b: new-instance v3, Lk04/b; // type@4e20
+7bff3a: 1200                                   |002d: const/4 v0, #int 0 // #0
+7bff3c: 7020 00b6 0300                         |002e: invoke-direct {v3, v0}, Lk04/b;.<init>:(I)V // method@b600
+7bff42: 2200 566a                              |0031: new-instance v0, Lw62/c; // type@6a56
+7bff46: 7020 3df1 3000                         |0033: invoke-direct {v0, v3}, Lw62/a;.<init>:(Lkotlin/jvm/functions/Function0;)V // method@f13d
+7bff4c: 5b20 2853                              |0036: iput-object v0, v2, Lcom/vk/mytarget/di/AdsSdkComponentImpl;.d:Lw62/c; // field@5328
+7bff50: 0e00                                   |0038: return-void
+  Virtual methods   -
+
+    #0              : (in Lcom/vk/mytarget/di/AdsSdkComponentImpl;)
+      name          : 'C1'
+      type          : '()Lj04/c;'
+      access        : 0x0011 (PUBLIC FINAL)
+      registers     : 3
+      ins           : 1
+      outs          : 1
+      insns size    : 14 16-bit code units
+7bff54:                                        |[7bff54] com.vk.mytarget.di.AdsSdkComponentImpl.C1:()Lj04/c;
+7bff64: 6200 2953                              |0000: sget-object v0, Lcom/vk/mytarget/di/AdsSdkComponentImpl;.e:[Lc17/l; // field@5329
+7bff68: 1231                                   |0002: const/4 v1, #int 3 // #3
+7bff6a: 4600 0001                              |0003: aget-object v0, v0, v1
+7bff6e: 5420 2853                              |0005: iget-object v0, v2, Lcom/vk/mytarget/di/AdsSdkComponentImpl;.d:Lw62/c; // field@5328
+7bff72: 6e10 3ef1 0000                         |0007: invoke-virtual {v0}, Lw62/a;.c:()Ljava/lang/Object; // method@f13e
+7bff78: 0c00                                   |000a: move-result-object v0
+7bff7a: 1f00 584b                              |000b: check-cast v0, Lj04/c; // type@4b58
+7bff7e: 1100                                   |000d: return-object v0
+
+    #1              : (in Lcom/vk/mytarget/di/AdsSdkComponentImpl;)
+      name          : 'G8'
+      type          : '()Lj04/a;'
+      access        : 0x0011 (PUBLIC FINAL)
+      registers     : 3
+      ins           : 1
+      outs          : 1
+      insns size    : 14 16-bit code units
+7bff80:                                        |[7bff80] com.vk.mytarget.di.AdsSdkComponentImpl.G8:()Lj04/a;
+7bff90: 6200 2953                              |0000: sget-object v0, Lcom/vk/mytarget/di/AdsSdkComponentImpl;.e:[Lc17/l; // field@5329
+7bff94: 1221                                   |0002: const/4 v1, #int 2 // #2
+7bff96: 4600 0001                              |0003: aget-object v0, v0, v1
+7bff9a: 5420 2753                              |0005: iget-object v0, v2, Lcom/vk/mytarget/di/AdsSdkComponentImpl;.c:Lw62/c; // field@5327
+7bff9e: 6e10 3ef1 0000                         |0007: invoke-virtual {v0}, Lw62/a;.c:()Ljava/lang/Object; // method@f13e
+7bffa4: 0c00                                   |000a: move-result-object v0
+7bffa6: 1f00 564b                              |000b: check-cast v0, Lj04/a; // type@4b56
+7bffaa: 1100                                   |000d: return-object v0
+
+    #2              : (in Lcom/vk/mytarget/di/AdsSdkComponentImpl;)
+      name          : 'u8'
+      type          : '()Lj04/b;'
+      access        : 0x0011 (PUBLIC FINAL)
+      registers     : 3
+      ins           : 1
+      outs          : 1
+      insns size    : 14 16-bit code units
+7bffac:                                        |[7bffac] com.vk.mytarget.di.AdsSdkComponentImpl.u8:()Lj04/b;
+7bffbc: 6200 2953                              |0000: sget-object v0, Lcom/vk/mytarget/di/AdsSdkComponentImpl;.e:[Lc17/l; // field@5329
+7bffc0: 1211                                   |0002: const/4 v1, #int 1 // #1
+7bffc2: 4600 0001                              |0003: aget-object v0, v0, v1
+7bffc6: 5420 2653                              |0005: iget-object v0, v2, Lcom/vk/mytarget/di/AdsSdkComponentImpl;.b:Lw62/b; // field@5326
+7bffca: 6e10 3ef1 0000                         |0007: invoke-virtual {v0}, Lw62/a;.c:()Ljava/lang/Object; // method@f13e
+7bffd0: 0c00                                   |000a: move-result-object v0
+7bffd2: 1f00 574b                              |000b: check-cast v0, Lj04/b; // type@4b57
+7bffd6: 1100                                   |000d: return-object v0
+
+===== Lcom/vk/mytarget/di/AdsSdkComponentImpl$a; =====
+  Static fields     -
+  Instance fields   -
+  Direct methods    -
+
+    #0              : (in Lcom/vk/mytarget/di/AdsSdkComponentImpl$a;)
+      name          : '<init>'
+      type          : '()V'
+      access        : 0x10001 (PUBLIC CONSTRUCTOR)
+      registers     : 1
+      ins           : 1
+      outs          : 1
+      insns size    : 4 16-bit code units
+7bfdf8:                                        |[7bfdf8] com.vk.mytarget.di.AdsSdkComponentImpl$a.<init>:()V
+7bfe08: 7010 96b1 0000                         |0000: invoke-direct {v0}, Ljava/lang/Object;.<init>:()V // method@b196
+7bfe0e: 0e00                                   |0003: return-void
+  Virtual methods   -
+
+    #0              : (in Lcom/vk/mytarget/di/AdsSdkComponentImpl$a;)
+      name          : 'a'
+      type          : '(Lz62/c;)Lcom/vk/di/component/DiUnscopedComponent;'
+      access        : 0x0011 (PUBLIC FINAL)
+      registers     : 5
+      ins           : 2
+      outs          : 3
+      insns size    : 19 16-bit code units
+7bfe10:                                        |[7bfe10] com.vk.mytarget.di.AdsSdkComponentImpl$a.a:(Lz62/c;)Lcom/vk/di/component/DiUnscopedComponent;
+7bfe20: 2200 9d32                              |0000: new-instance v0, Lcom/vk/mytarget/di/AdsSdkComponentImpl; // type@329d
+7bfe24: 2201 db43                              |0002: new-instance v1, Lf46/b; // type@43db
+7bfe28: 1302 0b00                              |0004: const/16 v2, #int 11 // #b
+7bfe2c: 7030 7ba2 4102                         |0006: invoke-direct {v1, v4, v2}, Lf46/b;.<init>:(Ljava/lang/Object;I)V // method@a27b
+7bfe32: 6204 918f                              |0009: sget-object v4, Lkotlin/LazyThreadSafetyMode;.NONE:Lkotlin/LazyThreadSafetyMode; // field@8f91
+7bfe36: 7120 d2a4 1400                         |000b: invoke-static {v4, v1}, Lg07/g;.b:(Lkotlin/LazyThreadSafetyMode;Lkotlin/jvm/functions/Function0;)Lkotlin/Lazy; // method@a4d2
+7bfe3c: 0c04                                   |000e: move-result-object v4
+7bfe3e: 7020 b87d 4000                         |000f: invoke-direct {v0, v4}, Lcom/vk/mytarget/di/AdsSdkComponentImpl;.<init>:(Lkotlin/Lazy;)V // method@7db8
+7bfe44: 1100                                   |0012: return-object v0
+
+===== Lcom/vk/clips/tool/view/newsfeed/mytarget/ClipEndOverlayAdWrapperView; =====
+  Static fields     -
+    #0              : (in Lcom/vk/clips/tool/view/newsfeed/mytarget/ClipEndOverlayAdWrapperView;)
+      name          : 'l'
+      type          : 'I'
+      access        : 0x1019 (PUBLIC STATIC FINAL SYNTHETIC)
+  Instance fields   -
+    #0              : (in Lcom/vk/clips/tool/view/newsfeed/mytarget/ClipEndOverlayAdWrapperView;)
+      name          : 'a'
+      type          : 'Ljava/lang/Object;'
+      access        : 0x0011 (PUBLIC FINAL)
+    #1              : (in Lcom/vk/clips/tool/view/newsfeed/mytarget/ClipEndOverlayAdWrapperView;)
+      name          : 'b'
+      type          : 'Lgo2/a;'
+      access        : 0x0011 (PUBLIC FINAL)
+    #2              : (in Lcom/vk/clips/tool/view/newsfeed/mytarget/ClipEndOverlayAdWrapperView;)
+      name          : 'c'
+      type          : 'Lcom/vk/clips/tool/view/newsfeed/mytarget/ClipEndOverlayAdWrapperView$a;'
+      access        : 0x0011 (PUBLIC FINAL)
+    #3              : (in Lcom/vk/clips/tool/view/newsfeed/mytarget/ClipEndOverlayAdWrapperView;)
+      name          : 'd'
+      type          : 'Lcom/vk/clips/tool/view/newsfeed/mytarget/ClipEndOverlayAdWrapperView$d;'
+      access        : 0x0011 (PUBLIC FINAL)
+    #4              : (in Lcom/vk/clips/tool/view/newsfeed/mytarget/ClipEndOverlayAdWrapperView;)
+      name          : 'e'
+      type          : 'Loi2/a;'
+      access        : 0x0011 (PUBLIC FINAL)
+    #5              : (in Lcom/vk/clips/tool/view/newsfeed/mytarget/ClipEndOverlayAdWrapperView;)
+      name          : 'f'
+      type          : 'Lcom/vk/clips/tool/view/newsfeed/mytarget/ClipEndOverlayAdWrapperView$c;'
+      access        : 0x0001 (PUBLIC)
+    #6              : (in Lcom/vk/clips/tool/view/newsfeed/mytarget/ClipEndOverlayAdWrapperView;)
+      name          : 'g'
+      type          : 'Lz94/a;'
+      access        : 0x0001 (PUBLIC)
+    #7              : (in Lcom/vk/clips/tool/view/newsfeed/mytarget/ClipEndOverlayAdWrapperView;)
+      name          : 'h'
+      type          : 'Lcom/vk/clips/tool/view/newsfeed/overlay/ClipEndOverlayView$b;'
+      access        : 0x0001 (PUBLIC)
+    #8              : (in Lcom/vk/clips/tool/view/newsfeed/mytarget/ClipEndOverlayAdWrapperView;)
+      name          : 'i'
+      type          : 'Lcom/vk/feed/core/models/news/NewsEntry;'
+      access        : 0x0001 (PUBLIC)
+    #9              : (in Lcom/vk/clips/tool/view/newsfeed/mytarget/ClipEndOverlayAdWrapperView;)
+      name          : 'j'
+      type          : 'Lcom/vk/clips/tool/view/newsfeed/mytarget/ClipEndOverlayAdWrapperView$e;'
+      access        : 0x0011 (PUBLIC FINAL)
+    #10              : (in Lcom/vk/clips/tool/view/newsfeed/mytarget/ClipEndOverlayAdWrapperView;)
+      name          : 'k'
+      type          : 'Z'
+      access        : 0x0011 (PUBLIC FINAL)
+  Direct methods    -
+
+    #0              : (in Lcom/vk/clips/tool/view/newsfeed/mytarget/ClipEndOverlayAdWrapperView;)
+      name          : '<init>'
+      type          : '(Landroid/content/Context;Landroid/util/AttributeSet;)V'
+      access        : 0x10001 (PUBLIC CONSTRUCTOR)
+      registers     : 7
+      ins           : 3
+      outs          : 5
+      insns size    : 115 16-bit code units
+74afb8:                                        |[74afb8] com.vk.clips.tool.view.newsfeed.mytarget.ClipEndOverlayAdWrapperView.<init>:(Landroid/content/Context;Landroid/util/AttributeSet;)V
+74afc8: 1200                                   |0000: const/4 v0, #int 0 // #0
+74afca: 7040 690a 5406                         |0001: invoke-direct {v4, v5, v6, v0}, Landroid/widget/FrameLayout;.<init>:(Landroid/content/Context;Landroid/util/AttributeSet;I)V // method@0a69
+74afd0: 2206 eb56                              |0004: new-instance v6, Llq/b; // type@56eb
+74afd4: 1301 0900                              |0006: const/16 v1, #int 9 // #9
+74afd8: 7030 34c2 4601                         |0008: invoke-direct {v6, v4, v1}, Llq/b;.<init>:(Ljava/lang/Object;I)V // method@c234
+74afde: 6201 3186                              |000b: sget-object v1, Lkotlin/LazyThreadSafetyMode;.NONE:Lkotlin/LazyThreadSafetyMode; // field@8631
+74afe2: 7120 f0a8 6100                         |000d: invoke-static {v1, v6}, Lg07/g;.b:(Lkotlin/LazyThreadSafetyMode;Lkotlin/jvm/functions/Function0;)Lkotlin/Lazy; // method@a8f0
+74afe8: 0c06                                   |0010: move-result-object v6
+74afea: 5b46 064e                              |0011: iput-object v6, v4, Lcom/vk/clips/tool/view/newsfeed/mytarget/ClipEndOverlayAdWrapperView;.a:Ljava/lang/Object; // field@4e06
+74afee: 2206 134a                              |0013: new-instance v6, Lgo2/a; // type@4a13
+74aff2: 7010 fbaa 0600                         |0015: invoke-direct {v6}, Lgo2/a;.<init>:()V // method@aafb
+74aff8: 5b46 074e                              |0018: iput-object v6, v4, Lcom/vk/clips/tool/view/newsfeed/mytarget/ClipEndOverlayAdWrapperView;.b:Lgo2/a; // field@4e07
+74affc: 2206 8c29                              |001a: new-instance v6, Lcom/vk/clips/tool/view/newsfeed/mytarget/ClipEndOverlayAdWrapperView$a; // type@298c
+74b000: 7020 507b 4600                         |001c: invoke-direct {v6, v4}, Lcom/vk/clips/tool/view/newsfeed/mytarget/ClipEndOverlayAdWrapperView$a;.<init>:(Lcom/vk/clips/tool/view/newsfeed/mytarget/ClipEndOverlayAdWrapperView;)V // method@7b50
+74b006: 5b46 084e                              |001f: iput-object v6, v4, Lcom/vk/clips/tool/view/newsfeed/mytarget/ClipEndOverlayAdWrapperView;.c:Lcom/vk/clips/tool/view/newsfeed/mytarget/ClipEndOverlayAdWrapperView$a; // field@4e08
+74b00a: 2206 9129                              |0021: new-instance v6, Lcom/vk/clips/tool/view/newsfeed/mytarget/ClipEndOverlayAdWrapperView$d; // type@2991
+74b00e: 7020 667b 4600                         |0023: invoke-direct {v6, v4}, Lcom/vk/clips/tool/view/newsfeed/mytarget/ClipEndOverlayAdWrapperView$d;.<init>:(Lcom/vk/clips/tool/view/newsfeed/mytarget/ClipEndOverlayAdWrapperView;)V // method@7b66
+74b014: 5b46 094e                              |0026: iput-object v6, v4, Lcom/vk/clips/tool/view/newsfeed/mytarget/ClipEndOverlayAdWrapperView;.d:Lcom/vk/clips/tool/view/newsfeed/mytarget/ClipEndOverlayAdWrapperView$d; // field@4e09
+74b018: 2206 9229                              |0028: new-instance v6, Lcom/vk/clips/tool/view/newsfeed/mytarget/ClipEndOverlayAdWrapperView$e; // type@2992
+74b01c: 7020 6a7b 4600                         |002a: invoke-direct {v6, v4}, Lcom/vk/clips/tool/view/newsfeed/mytarget/ClipEndOverlayAdWrapperView$e;.<init>:(Lcom/vk/clips/tool/view/newsfeed/mytarget/ClipEndOverlayAdWrapperView;)V // method@7b6a
+74b022: 5b46 0f4e                              |002d: iput-object v6, v4, Lcom/vk/clips/tool/view/newsfeed/mytarget/ClipEndOverlayAdWrapperView;.j:Lcom/vk/clips/tool/view/newsfeed/mytarget/ClipEndOverlayAdWrapperView$e; // field@4e0f
+74b026: 6206 f257                              |002f: sget-object v6, Lcom/vk/core/design/lego/LegoCustomRedesignedScreen;.FEED:Lcom/vk/core/design/lego/LegoCustomRedesignedScreen; // field@57f2
+74b02a: 7110 e6ef 0600                         |0031: invoke-static {v6}, Lvv1/a;.a:(Lcom/vk/core/design/lego/LegoCustomRedesignedScreen;)Z // method@efe6
+74b030: 0a06                                   |0034: move-result v6
+74b032: 5c46 104e                              |0035: iput-boolean v6, v4, Lcom/vk/clips/tool/view/newsfeed/mytarget/ClipEndOverlayAdWrapperView;.k:Z // field@4e10
+74b036: 2201 db04                              |0037: new-instance v1, Landroidx/appcompat/view/c; // type@04db
+74b03a: 6202 98a8                              |0039: sget-object v2, Ly02/v;.a:Ly02/v; // field@a898
+
+    #1              : (in Lcom/vk/clips/tool/view/newsfeed/mytarget/ClipEndOverlayAdWrapperView;)
+      name          : 'a'
+      type          : '(Lcom/vk/clips/tool/view/newsfeed/mytarget/ClipEndOverlayAdWrapperView;Landroid/view/View;)Lcom/vk/newsfeed/common/util/a$a$a;'
+      access        : 0x0019 (PUBLIC STATIC FINAL)
+      registers     : 5
+      ins           : 2
+      outs          : 3
+      insns size    : 31 16-bit code units
+74b0b0:                                        |[74b0b0] com.vk.clips.tool.view.newsfeed.mytarget.ClipEndOverlayAdWrapperView.a:(Lcom/vk/clips/tool/view/newsfeed/mytarget/ClipEndOverlayAdWrapperView;Landroid/view/View;)Lcom/vk/newsfeed/common/util/a$a$a;
+74b0c0: 7110 e4d1 0400                         |0000: invoke-static {v4}, Lph2/c0;.D:(Landroid/view/View;)Landroid/graphics/Rect; // method@d1e4
+74b0c6: 0c03                                   |0003: move-result-object v3
+74b0c8: 5230 2e02                              |0004: iget v0, v3, Landroid/graphics/Rect;.top:I // field@022e
+74b0cc: 1301 0800                              |0006: const/16 v1, #int 8 // #8
+74b0d0: 8211                                   |0008: int-to-float v1, v1
+74b0d2: 7110 2cd4 0100                         |0009: invoke-static {v1}, Lq12/j1;.a:(F)I // method@d42c
+74b0d8: 0a02                                   |000c: move-result v2
+74b0da: b120                                   |000d: sub-int/2addr v0, v2
+74b0dc: 5930 2e02                              |000e: iput v0, v3, Landroid/graphics/Rect;.top:I // field@022e
+74b0e0: 5230 2b02                              |0010: iget v0, v3, Landroid/graphics/Rect;.bottom:I // field@022b
+74b0e4: 7110 2cd4 0100                         |0012: invoke-static {v1}, Lq12/j1;.a:(F)I // method@d42c
+74b0ea: 0a01                                   |0015: move-result v1
+74b0ec: b001                                   |0016: add-int/2addr v1, v0
+74b0ee: 5931 2b02                              |0017: iput v1, v3, Landroid/graphics/Rect;.bottom:I // field@022b
+74b0f2: 2200 8c38                              |0019: new-instance v0, Lcom/vk/newsfeed/common/util/a$a$a; // type@388c
+74b0f6: 7030 5091 3004                         |001b: invoke-direct {v0, v3, v4}, Lcom/vk/newsfeed/common/util/a$a$a;.<init>:(Landroid/graphics/Rect;Landroid/view/View;)V // method@9150
+74b0fc: 1100                                   |001e: return-object v0
+
+    #2              : (in Lcom/vk/clips/tool/view/newsfeed/mytarget/ClipEndOverlayAdWrapperView;)
+      name          : 'b'
+      type          : '(Lcom/vk/clips/tool/view/newsfeed/mytarget/ClipEndOverlayAdWrapperView;)Landroid/view/View;'
+      access        : 0x1019 (PUBLIC STATIC FINAL SYNTHETIC)
+      registers     : 1
+      ins           : 1
+      outs          : 1
+      insns size    : 5 16-bit code units
+74b100:                                        |[74b100] com.vk.clips.tool.view.newsfeed.mytarget.ClipEndOverlayAdWrapperView.b:(Lcom/vk/clips/tool/view/newsfeed/mytarget/ClipEndOverlayAdWrapperView;)Landroid/view/View;
+74b110: 7010 737b 0000                         |0000: invoke-direct {v0}, Lcom/vk/clips/tool/view/newsfeed/mytarget/ClipEndOverlayAdWrapperView;.getAdChoicesAnchorView:()Landroid/view/View; // method@7b73
+74b116: 0c00                                   |0003: move-result-object v0
+74b118: 1100                                   |0004: return-object v0
+
+    #3              : (in Lcom/vk/clips/tool/view/newsfeed/mytarget/ClipEndOverlayAdWrapperView;)
+      name          : 'c'
+      type          : '(Lcom/vk/clips/tool/view/newsfeed/mytarget/ClipEndOverlayAdWrapperView;)Lx24/e;'
+      access        : 0x1019 (PUBLIC STATIC FINAL SYNTHETIC)
+      registers     : 1
+      ins           : 1
+      outs          : 1
+      insns size    : 5 16-bit code units
+74b11c:                                        |[74b11c] com.vk.clips.tool.view.newsfeed.mytarget.ClipEndOverlayAdWrapperView.c:(Lcom/vk/clips/tool/view/newsfeed/mytarget/ClipEndOverlayAdWrapperView;)Lx24/e;
+74b12c: 7010 747b 0000                         |0000: invoke-direct {v0}, Lcom/vk/clips/tool/view/newsfeed/mytarget/ClipEndOverlayAdWrapperView;.getNewsfeedRouter:()Lx24/e; // method@7b74
+74b132: 0c00                                   |0003: move-result-object v0
+74b134: 1100                                   |0004: return-object v0
+
+    #4              : (in Lcom/vk/clips/tool/view/newsfeed/mytarget/ClipEndOverlayAdWrapperView;)
+      name          : 'd'
+      type          : '(Lcom/vk/clips/tool/view/newsfeed/mytarget/ClipEndOverlayAdWrapperView;I)V'
+      access        : 0x0019 (PUBLIC STATIC FINAL)
+      registers     : 8
+      ins           : 2
+      outs          : 5
+      insns size    : 57 16-bit code units
+74b138:                                        |[74b138] com.vk.clips.tool.view.newsfeed.mytarget.ClipEndOverlayAdWrapperView.d:(Lcom/vk/clips/tool/view/newsfeed/mytarget/ClipEndOverlayAdWrapperView;I)V
+74b148: 5560 104e                              |0000: iget-boolean v0, v6, Lcom/vk/clips/tool/view/newsfeed/mytarget/ClipEndOverlayAdWrapperView;.k:Z // field@4e10
+74b14c: 3800 0600                              |0002: if-eqz v0, 0008 // +0006
+74b150: 1400 961c 087f                         |0004: const v0, #float 1.80923e+38 // #7f081c96
+74b156: 2804                                   |0007: goto 000b // +0004
+74b158: 1400 3c17 087f                         |0008: const v0, #float 1.80896e+38 // #7f08173c
+74b15e: 2201 9930                              |000b: new-instance v1, Lcom/vk/core/view/components/snackbar/VkSnackbar$a; // type@3099
+74b162: 6e10 1909 0600                         |000d: invoke-virtual {v6}, Landroid/view/View;.getContext:()Landroid/content/Context; // method@0919
+74b168: 0c02                                   |0010: move-result-object v2
+74b16a: 7020 2588 2100                         |0011: invoke-direct {v1, v2}, Lcom/vk/core/view/components/snackbar/VkSnackbar$a;.<init>:(Landroid/content/Context;)V // method@8825
+74b170: 2202 9b30                              |0014: new-instance v2, Lcom/vk/core/view/components/snackbar/VkSnackbar$c$c; // type@309b
+74b174: 1403 560d 047f                         |0016: const v3, #float 1.75527e+38 // #7f040d56
+74b17a: 7110 79b8 0300                         |0019: invoke-static {v3}, Ljava/lang/Integer;.valueOf:(I)Ljava/lang/Integer; // method@b879
+74b180: 0c03                                   |001c: move-result-object v3
+74b182: 1304 0c00                              |001d: const/16 v4, #int 12 // #c
+74b186: 1205                                   |001f: const/4 v5, #int 0 // #0
+74b188: 7054 2c88 0253                         |0020: invoke-direct {v2, v0, v3, v5, v4}, Lcom/vk/core/view/components/snackbar/VkSnackbar$c$c;.<init>:(ILjava/lang/Integer;Landroid/util/Size;I)V // method@882c
+74b18e: 5b12 2b59                              |0023: iput-object v2, v1, Lcom/vk/core/view/components/snackbar/VkSnackbar$a;.r:Lcom/vk/core/view/components/snackbar/VkSnackbar$c; // field@592b
+74b192: 2200 9830                              |0025: new-instance v0, Lcom/vk/core/view/components/snackbar/VkSnackbar$Middle; // type@3098
+74b196: 6e10 1909 0600                         |0027: invoke-virtual {v6}, Landroid/view/View;.getContext:()Landroid/content/Context; // method@0919
+74b19c: 0c06                                   |002a: move-result-object v6
+74b19e: 6e20 dc05 7600                         |002b: invoke-virtual {v6, v7}, Landroid/content/Context;.getString:(I)Ljava/lang/String; // method@05dc
+74b1a4: 0c06                                   |002e: move-result-object v6
+74b1a6: 1267                                   |002f: const/4 v7, #int 6 // #6
+74b1a8: 7057 2388 6055                         |0030: invoke-direct {v0, v6, v5, v5, v7}, Lcom/vk/core/view/components/snackbar/VkSnackbar$Middle;.<init>:(Ljava/lang/String;Ljava/lang/String;Lcom/vk/core/view/components/snackbar/VkSnackbar$Middle$Button;I)V // method@8823
+74b1ae: 5b10 2c59                              |0033: iput-object v0, v1, Lcom/vk/core/view/components/snackbar/VkSnackbar$a;.s:Lcom/vk/core/view/components/snackbar/VkSnackbar$Middle; // field@592c
+74b1b2: 6e10 2988 0100                         |0035: invoke-virtual {v1}, Lcom/vk/core/view/components/snackbar/VkSnackbar$a;.q:()Lcom/vk/core/view/components/snackbar/VkSnackbar; // method@8829
+74b1b8: 0e00                                   |0038: return-void
+
+    #5              : (in Lcom/vk/clips/tool/view/newsfeed/mytarget/ClipEndOverlayAdWrapperView;)
+      name          : 'getAdChoicesAnchorView'
+      type          : '()Landroid/view/View;'
+      access        : 0x0012 (PRIVATE FINAL)
+      registers     : 2
+      ins           : 1
+      outs          : 1
+      insns size    : 7 16-bit code units
+74b1bc:                                        |[74b1bc] com.vk.clips.tool.view.newsfeed.mytarget.ClipEndOverlayAdWrapperView.getAdChoicesAnchorView:()Landroid/view/View;
+74b1cc: 5410 0a4e                              |0000: iget-object v0, v1, Lcom/vk/clips/tool/view/newsfeed/mytarget/ClipEndOverlayAdWrapperView;.e:Loi2/a; // field@4e0a
+74b1d0: 6e10 58cd 0000                         |0002: invoke-virtual {v0}, Loi2/a;.getBadgeContainerView:()Landroid/view/View; // method@cd58
+74b1d6: 0c00                                   |0005: move-result-object v0
+74b1d8: 1100                                   |0006: return-object v0
+
+    #6              : (in Lcom/vk/clips/tool/view/newsfeed/mytarget/ClipEndOverlayAdWrapperView;)
+      name          : 'getNewsfeedRouter'
+      type          : '()Lx24/e;'
+      access        : 0x0012 (PRIVATE FINAL)
+      registers     : 2
+      ins           : 1
+      outs          : 1
+      insns size    : 9 16-bit code units
+74b1dc:                                        |[74b1dc] com.vk.clips.tool.view.newsfeed.mytarget.ClipEndOverlayAdWrapperView.getNewsfeedRouter:()Lx24/e;
+74b1ec: 5410 064e                              |0000: iget-object v0, v1, Lcom/vk/clips/tool/view/newsfeed/mytarget/ClipEndOverlayAdWrapperView;.a:Ljava/lang/Object; // field@4e06
+74b1f0: 7210 d1be 0000                         |0002: invoke-interface {v0}, Lkotlin/Lazy;.getValue:()Ljava/lang/Object; // method@bed1
+74b1f6: 0c00                                   |0005: move-result-object v0
+74b1f8: 1f00 1071                              |0006: check-cast v0, Lx24/e; // type@7110
+74b1fc: 1100                                   |0008: return-object v0
+  Virtual methods   -
+
+    #0              : (in Lcom/vk/clips/tool/view/newsfeed/mytarget/ClipEndOverlayAdWrapperView;)
+      name          : 'e'
+      type          : '()V'
+      access        : 0x0011 (PUBLIC FINAL)
+      registers     : 2
+      ins           : 1
+      outs          : 1
+      insns size    : 15 16-bit code units
+74b200:                                        |[74b200] com.vk.clips.tool.view.newsfeed.mytarget.ClipEndOverlayAdWrapperView.e:()V
+74b210: 6e10 777b 0100                         |0000: invoke-virtual {v1}, Lcom/vk/clips/tool/view/newsfeed/mytarget/ClipEndOverlayAdWrapperView;.j:()V // method@7b77
+74b216: 1200                                   |0003: const/4 v0, #int 0 // #0
+74b218: 5b10 0c4e                              |0004: iput-object v0, v1, Lcom/vk/clips/tool/view/newsfeed/mytarget/ClipEndOverlayAdWrapperView;.g:Lz94/a; // field@4e0c
+74b21c: 5410 0a4e                              |0006: iget-object v0, v1, Lcom/vk/clips/tool/view/newsfeed/mytarget/ClipEndOverlayAdWrapperView;.e:Loi2/a; // field@4e0a
+74b220: 6e10 57cd 0000                         |0008: invoke-virtual {v0}, Loi2/a;.T4:()V // method@cd57
+74b226: 7110 dbe8 0100                         |000b: invoke-static {v1}, Ltw1/g0;.m:(Landroid/view/View;)V // method@e8db
+74b22c: 0e00                                   |000e: return-void
+
+    #1              : (in Lcom/vk/clips/tool/view/newsfeed/mytarget/ClipEndOverlayAdWrapperView;)
+      name          : 'g'
+      type          : '()V'
+      access        : 0x0011 (PUBLIC FINAL)
+      registers     : 8
+      ins           : 1
+      outs          : 3
+      insns size    : 47 16-bit code units
+74b230:                                        |[74b230] com.vk.clips.tool.view.newsfeed.mytarget.ClipEndOverlayAdWrapperView.g:()V
+74b240: 5470 0b4e                              |0000: iget-object v0, v7, Lcom/vk/clips/tool/view/newsfeed/mytarget/ClipEndOverlayAdWrapperView;.f:Lcom/vk/clips/tool/view/newsfeed/mytarget/ClipEndOverlayAdWrapperView$c; // field@4e0b
+74b244: 3800 2c00                              |0002: if-eqz v0, 002e // +002c
+74b248: 5471 0c4e                              |0004: iget-object v1, v7, Lcom/vk/clips/tool/view/newsfeed/mytarget/ClipEndOverlayAdWrapperView;.g:Lz94/a; // field@4e0c
+74b24c: 3801 2800                              |0006: if-eqz v1, 002e // +0028
+74b250: 5411 ebab                              |0008: iget-object v1, v1, Lz94/a;.a:Lhp/b; // field@abeb
+74b254: 5472 0a4e                              |000a: iget-object v2, v7, Lcom/vk/clips/tool/view/newsfeed/mytarget/ClipEndOverlayAdWrapperView;.e:Loi2/a; // field@4e0a
+74b258: 6e10 5ccd 0200                         |000c: invoke-virtual {v2}, Loi2/a;.getTitleView:()Landroid/view/View; // method@cd5c
+74b25e: 0c03                                   |000f: move-result-object v3
+74b260: 6e10 5acd 0200                         |0010: invoke-virtual {v2}, Loi2/a;.getButtonView:()Landroid/view/View; // method@cd5a
+74b266: 0c04                                   |0013: move-result-object v4
+74b268: 6e10 5bcd 0200                         |0014: invoke-virtual {v2}, Loi2/a;.getImageView:()Landroid/view/View; // method@cd5b
+74b26e: 0c02                                   |0017: move-result-object v2
+74b270: 1245                                   |0018: const/4 v5, #int 4 // #4
+74b272: 2355 b776                              |0019: new-array v5, v5, [Landroid/view/View; // type@76b7
+74b276: 1206                                   |001b: const/4 v6, #int 0 // #0
+74b278: 4d03 0506                              |001c: aput-object v3, v5, v6
+74b27c: 1213                                   |001e: const/4 v3, #int 1 // #1
+74b27e: 4d04 0503                              |001f: aput-object v4, v5, v3
+74b282: 1223                                   |0021: const/4 v3, #int 2 // #2
+74b284: 4d02 0503                              |0022: aput-object v2, v5, v3
+74b288: 1232                                   |0024: const/4 v2, #int 3 // #3
+74b28a: 4d07 0502                              |0025: aput-object v7, v5, v2
+74b28e: 7110 26bf 0500                         |0027: invoke-static {v5}, Lkotlin/collections/p;.l:([Ljava/lang/Object;)Ljava/util/List; // method@bf26
+74b294: 0c02                                   |002a: move-result-object v2
+74b296: 6e30 74af 0102                         |002b: invoke-virtual {v1, v0, v2}, Lhp/b;.g:(Lhp/c;Ljava/util/List;)V // method@af74
+74b29c: 0e00                                   |002e: return-void
+
+    #2              : (in Lcom/vk/clips/tool/view/newsfeed/mytarget/ClipEndOverlayAdWrapperView;)
+      name          : 'h'
+      type          : '(Lcom/vk/clips/tool/view/newsfeed/mytarget/ClipEndOverlayAdWrapperView$b;Lcom/vk/clips/tool/view/newsfeed/overlay/ClipEndOverlayView$b;)V'
+      access        : 0x0011 (PUBLIC FINAL)
+      registers     : 14
+      ins           : 3
+      outs          : 6
+      insns size    : 267 16-bit code units
+74b2a0:                                        |[74b2a0] com.vk.clips.tool.view.newsfeed.mytarget.ClipEndOverlayAdWrapperView.h:(Lcom/vk/clips/tool/view/newsfeed/mytarget/ClipEndOverlayAdWrapperView$b;Lcom/vk/clips/tool/view/newsfeed/overlay/ClipEndOverlayView$b;)V
+74b2b0: 5bbd 0d4e                              |0000: iput-object v13, v11, Lcom/vk/clips/tool/view/newsfeed/mytarget/ClipEndOverlayAdWrapperView;.h:Lcom/vk/clips/tool/view/newsfeed/overlay/ClipEndOverlayView$b; // field@4e0d
+74b2b4: 20c0 8e29                              |0002: instance-of v0, v12, Lcom/vk/clips/tool/view/newsfeed/mytarget/ClipEndOverlayAdWrapperView$b$b; // type@298e
+74b2b8: 54b1 0a4e                              |0004: iget-object v1, v11, Lcom/vk/clips/tool/view/newsfeed/mytarget/ClipEndOverlayAdWrapperView;.e:Loi2/a; // field@4e0a
+74b2bc: 3800 1c00                              |0006: if-eqz v0, 0022 // +001c
+74b2c0: 1f0c 8e29                              |0008: check-cast v12, Lcom/vk/clips/tool/view/newsfeed/mytarget/ClipEndOverlayAdWrapperView$b$b; // type@298e
+74b2c4: 54cc 024e                              |000a: iget-object v12, v12, Lcom/vk/clips/tool/view/newsfeed/mytarget/ClipEndOverlayAdWrapperView$b$b;.a:Lz94/a; // field@4e02
+74b2c8: 5bbc 0c4e                              |000c: iput-object v12, v11, Lcom/vk/clips/tool/view/newsfeed/mytarget/ClipEndOverlayAdWrapperView;.g:Lz94/a; // field@4e0c
+74b2cc: 220d 9029                              |000e: new-instance v13, Lcom/vk/clips/tool/view/newsfeed/mytarget/ClipEndOverlayAdWrapperView$c; // type@2990
+74b2d0: 7020 597b 1d00                         |0010: invoke-direct {v13, v1}, Lcom/vk/clips/tool/view/newsfeed/mytarget/ClipEndOverlayAdWrapperView$c;.<init>:(Loi2/a;)V // method@7b59
+74b2d6: 5bbd 0b4e                              |0013: iput-object v13, v11, Lcom/vk/clips/tool/view/newsfeed/mytarget/ClipEndOverlayAdWrapperView;.f:Lcom/vk/clips/tool/view/newsfeed/mytarget/ClipEndOverlayAdWrapperView$c; // field@4e0b
+74b2da: 6e10 727b 0b00                         |0015: invoke-virtual {v11}, Lcom/vk/clips/tool/view/newsfeed/mytarget/ClipEndOverlayAdWrapperView;.g:()V // method@7b72
+74b2e0: 54cd ecab                              |0018: iget-object v13, v12, Lz94/a;.b:Lip/b; // field@abec
+74b2e4: 54c0 ebab                              |001a: iget-object v0, v12, Lz94/a;.a:Lhp/b; // field@abeb
+74b2e8: 55cc edab                              |001c: iget-boolean v12, v12, Lz94/a;.c:Z // field@abed
+74b2ec: 6e40 767b 0bcd                         |001e: invoke-virtual {v11, v0, v13, v12}, Lcom/vk/clips/tool/view/newsfeed/mytarget/ClipEndOverlayAdWrapperView;.i:(Lhp/b;Lip/b;Z)V // method@7b76
+74b2f2: 0e00                                   |0021: return-void
+74b2f4: 20c0 8d29                              |0022: instance-of v0, v12, Lcom/vk/clips/tool/view/newsfeed/mytarget/ClipEndOverlayAdWrapperView$b$a; // type@298d
+74b2f8: 3800 e100                              |0024: if-eqz v0, 0105 // +00e1
+74b2fc: 1f0c 8d29                              |0026: check-cast v12, Lcom/vk/clips/tool/view/newsfeed/mytarget/ClipEndOverlayAdWrapperView$b$a; // type@298d
+74b300: 54c0 ff4d                              |0028: iget-object v0, v12, Lcom/vk/clips/tool/view/newsfeed/mytarget/ClipEndOverlayAdWrapperView$b$a;.b:Lcom/vk/feed/core/models/news/NewsEntry; // field@4dff
+74b304: 5bb0 0e4e                              |002a: iput-object v0, v11, Lcom/vk/clips/tool/view/newsfeed/mytarget/ClipEndOverlayAdWrapperView;.i:Lcom/vk/feed/core/models/news/NewsEntry; // field@4e0e
+74b308: 6e10 1909 0b00                         |002c: invoke-virtual {v11}, Landroid/view/View;.getContext:()Landroid/content/Context; // method@0919
+74b30e: 0c00                                   |002f: move-result-object v0
+74b310: 52c2 fe4d                              |0030: iget v2, v12, Lcom/vk/clips/tool/view/newsfeed/mytarget/ClipEndOverlayAdWrapperView$b$a;.a:I // field@4dfe
+74b314: 54c3 004e                              |0032: iget-object v3, v12, Lcom/vk/clips/tool/view/newsfeed/mytarget/ClipEndOverlayAdWrapperView$b$a;.c:Ln91/c; // field@4e00
+74b318: 54cc 014e                              |0034: iget-object v12, v12, Lcom/vk/clips/tool/view/newsfeed/mytarget/ClipEndOverlayAdWrapperView$b$a;.d:Lkotlin/jvm/functions/Function0; // field@4e01
+74b31c: 2204 9029                              |0036: new-instance v4, Lcom/vk/clips/tool/view/newsfeed/mytarget/ClipEndOverlayAdWrapperView$c; // type@2990
+
+    #3              : (in Lcom/vk/clips/tool/view/newsfeed/mytarget/ClipEndOverlayAdWrapperView;)
+      name          : 'i'
+      type          : '(Lhp/b;Lip/b;Z)V'
+      access        : 0x0011 (PUBLIC FINAL)
+      registers     : 14
+      ins           : 4
+      outs          : 9
+      insns size    : 190 16-bit code units
+74b4c8:                                        |[74b4c8] com.vk.clips.tool.view.newsfeed.mytarget.ClipEndOverlayAdWrapperView.i:(Lhp/b;Lip/b;Z)V
+74b4d8: 54c0 d981                              |0000: iget-object v0, v12, Lip/a;.g:Ljava/lang/String; // field@81d9
+74b4dc: 1a01 0000                              |0002: const-string v1, "" // string@0000
+74b4e0: 3900 0300                              |0004: if-nez v0, 0007 // +0003
+74b4e4: 0710                                   |0006: move-object v0, v1
+74b4e6: 54c2 db81                              |0007: iget-object v2, v12, Lip/a;.i:Ljava/lang/String; // field@81db
+74b4ea: 1203                                   |0009: const/4 v3, #int 0 // #0
+74b4ec: 390d 0300                              |000a: if-nez v13, 000d // +0003
+74b4f0: 2802                                   |000c: goto 000e // +0002
+74b4f2: 0732                                   |000d: move-object v2, v3
+74b4f4: 54c4 da81                              |000e: iget-object v4, v12, Lip/a;.h:Ljava/lang/String; // field@81da
+74b4f8: 1a05 1125                              |0010: const-string v5, "Install" // string@2511
+74b4fc: 7120 79bf 5400                         |0012: invoke-static {v4, v5}, Lkotlin/jvm/internal/h;.d:(Ljava/lang/Object;Ljava/lang/Object;)Z // method@bf79
+74b502: 0a05                                   |0015: move-result v5
+74b504: 3905 0b00                              |0016: if-nez v5, 0021 // +000b
+74b508: 1a05 0fb7                              |0018: const-string v5, "Visit" // string@b70f
+74b50c: 7120 79bf 5400                         |001a: invoke-static {v4, v5}, Lkotlin/jvm/internal/h;.d:(Ljava/lang/Object;Ljava/lang/Object;)Z // method@bf79
+74b512: 0a05                                   |001d: move-result v5
+74b514: 3905 0300                              |001e: if-nez v5, 0021 // +0003
+74b518: 2802                                   |0020: goto 0022 // +0002
+74b51a: 0734                                   |0021: move-object v4, v3
+74b51c: 2205 c05c                              |0022: new-instance v5, Loi2/a$a; // type@5cc0
+74b520: 7040 54cd 0542                         |0024: invoke-direct {v5, v0, v2, v4}, Loi2/a$a;.<init>:(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)V // method@cd54
+74b526: 54a0 0a4e                              |0027: iget-object v0, v10, Lcom/vk/clips/tool/view/newsfeed/mytarget/ClipEndOverlayAdWrapperView;.e:Loi2/a; // field@4e0a
+74b52a: 6e20 5ecd 5000                         |0029: invoke-virtual {v0, v5}, Loi2/a;.setMainContent:(Loi2/a$a;)V // method@cd5e
+74b530: 54c2 df81                              |002c: iget-object v2, v12, Lip/a;.o:Ljava/lang/String; // field@81df
+74b534: 54c4 dd81                              |002e: iget-object v4, v12, Lip/a;.l:Ljava/lang/String; // field@81dd
+74b538: 3802 1400                              |0030: if-eqz v2, 0044 // +0014
+
+    #4              : (in Lcom/vk/clips/tool/view/newsfeed/mytarget/ClipEndOverlayAdWrapperView;)
+      name          : 'j'
+      type          : '()V'
+      access        : 0x0011 (PUBLIC FINAL)
+      registers     : 2
+      ins           : 1
+      outs          : 1
+      insns size    : 13 16-bit code units
+74b654:                                        |[74b654] com.vk.clips.tool.view.newsfeed.mytarget.ClipEndOverlayAdWrapperView.j:()V
+74b664: 5410 0c4e                              |0000: iget-object v0, v1, Lcom/vk/clips/tool/view/newsfeed/mytarget/ClipEndOverlayAdWrapperView;.g:Lz94/a; // field@4e0c
+74b668: 3800 0700                              |0002: if-eqz v0, 0009 // +0007
+74b66c: 5400 ebab                              |0004: iget-object v0, v0, Lz94/a;.a:Lhp/b; // field@abeb
+74b670: 6e10 6faf 0000                         |0006: invoke-virtual {v0}, Lhp/b;.a:()V // method@af6f
+74b676: 1200                                   |0009: const/4 v0, #int 0 // #0
+74b678: 5b10 0b4e                              |000a: iput-object v0, v1, Lcom/vk/clips/tool/view/newsfeed/mytarget/ClipEndOverlayAdWrapperView;.f:Lcom/vk/clips/tool/view/newsfeed/mytarget/ClipEndOverlayAdWrapperView$c; // field@4e0b
+74b67c: 0e00                                   |000c: return-void
+
+    #5              : (in Lcom/vk/clips/tool/view/newsfeed/mytarget/ClipEndOverlayAdWrapperView;)
+      name          : 'onAttachedToWindow'
+      type          : '()V'
+      access        : 0x0011 (PUBLIC FINAL)
+      registers     : 6
+      ins           : 1
+      outs          : 5
+      insns size    : 30 16-bit code units
+74b680:                                        |[74b680] com.vk.clips.tool.view.newsfeed.mytarget.ClipEndOverlayAdWrapperView.onAttachedToWindow:()V
+74b690: 6f10 5e09 0500                         |0000: invoke-super {v5}, Landroid/view/View;.onAttachedToWindow:()V // method@095e
+74b696: 2200 6203                              |0003: new-instance v0, Landroid/content/IntentFilter; // type@0362
+74b69a: 7010 0a06 0000                         |0005: invoke-direct {v0}, Landroid/content/IntentFilter;.<init>:()V // method@060a
+74b6a0: 1a01 ddc3                              |0008: const-string v1, "com.vkontakte.android.AD_REPORTED" // string@c3dd
+74b6a4: 6e20 0c06 1000                         |000a: invoke-virtual {v0, v1}, Landroid/content/IntentFilter;.addAction:(Ljava/lang/String;)V // method@060c
+74b6aa: 1a01 dec3                              |000d: const-string v1, "com.vkontakte.android.AD_REPORT_CANCELLED" // string@c3de
+74b6ae: 6e20 0c06 1000                         |000f: invoke-virtual {v0, v1}, Landroid/content/IntentFilter;.addAction:(Ljava/lang/String;)V // method@060c
+74b6b4: 6e10 1909 0500                         |0012: invoke-virtual {v5}, Landroid/view/View;.getContext:()Landroid/content/Context; // method@0919
+74b6ba: 0c01                                   |0015: move-result-object v1
+74b6bc: 1242                                   |0016: const/4 v2, #int 4 // #4
+74b6be: 1203                                   |0017: const/4 v3, #int 0 // #0
+74b6c0: 5454 0f4e                              |0018: iget-object v4, v5, Lcom/vk/clips/tool/view/newsfeed/mytarget/ClipEndOverlayAdWrapperView;.j:Lcom/vk/clips/tool/view/newsfeed/mytarget/ClipEndOverlayAdWrapperView$e; // field@4e0f
+74b6c4: 7152 01a9 4130                         |001a: invoke-static {v1, v4, v0, v3, v2}, Lg3/a;.c:(Landroid/content/Context;Landroid/content/BroadcastReceiver;Landroid/content/IntentFilter;Ljava/lang/String;I)Landroid/content/Intent; // method@a901
+74b6ca: 0e00                                   |001d: return-void
+
+    #6              : (in Lcom/vk/clips/tool/view/newsfeed/mytarget/ClipEndOverlayAdWrapperView;)
+      name          : 'onDetachedFromWindow'
+      type          : '()V'
+      access        : 0x0011 (PUBLIC FINAL)
+      registers     : 3
+      ins           : 1
+      outs          : 2
+      insns size    : 13 16-bit code units
+74b6cc:                                        |[74b6cc] com.vk.clips.tool.view.newsfeed.mytarget.ClipEndOverlayAdWrapperView.onDetachedFromWindow:()V
+74b6dc: 6f10 6009 0200                         |0000: invoke-super {v2}, Landroid/view/View;.onDetachedFromWindow:()V // method@0960
+74b6e2: 6e10 1909 0200                         |0003: invoke-virtual {v2}, Landroid/view/View;.getContext:()Landroid/content/Context; // method@0919
+74b6e8: 0c00                                   |0006: move-result-object v0
+74b6ea: 5421 0f4e                              |0007: iget-object v1, v2, Lcom/vk/clips/tool/view/newsfeed/mytarget/ClipEndOverlayAdWrapperView;.j:Lcom/vk/clips/tool/view/newsfeed/mytarget/ClipEndOverlayAdWrapperView$e; // field@4e0f
+74b6ee: 7120 2ce9 1000                         |0009: invoke-static {v0, v1}, Ltw1/x;.p:(Landroid/content/Context;Landroid/content/BroadcastReceiver;)V // method@e92c
+74b6f4: 0e00                                   |000c: return-void
+
+===== Lcom/vk/clips/tool/view/newsfeed/overlay/ClipEndOverlayView; =====
+  Static fields     -
+    #0              : (in Lcom/vk/clips/tool/view/newsfeed/overlay/ClipEndOverlayView;)
+      name          : 'v'
+      type          : 'I'
+      access        : 0x1019 (PUBLIC STATIC FINAL SYNTHETIC)
+  Instance fields   -
+    #0              : (in Lcom/vk/clips/tool/view/newsfeed/overlay/ClipEndOverlayView;)
+      name          : 'a'
+      type          : 'Z'
+      access        : 0x0011 (PUBLIC FINAL)
+    #1              : (in Lcom/vk/clips/tool/view/newsfeed/overlay/ClipEndOverlayView;)
+      name          : 'b'
+      type          : 'Ljava/util/concurrent/atomic/AtomicBoolean;'
+      access        : 0x0011 (PUBLIC FINAL)
+    #2              : (in Lcom/vk/clips/tool/view/newsfeed/overlay/ClipEndOverlayView;)
+      name          : 'c'
+      type          : 'Lo91/a;'
+      access        : 0x0001 (PUBLIC)
+    #3              : (in Lcom/vk/clips/tool/view/newsfeed/overlay/ClipEndOverlayView;)
+      name          : 'd'
+      type          : 'Ljava/lang/Object;'
+      access        : 0x0011 (PUBLIC FINAL)
+    #4              : (in Lcom/vk/clips/tool/view/newsfeed/overlay/ClipEndOverlayView;)
+      name          : 'e'
+      type          : 'Ljava/lang/Object;'
+      access        : 0x0011 (PUBLIC FINAL)
+    #5              : (in Lcom/vk/clips/tool/view/newsfeed/overlay/ClipEndOverlayView;)
+      name          : 'f'
+      type          : 'Ljava/lang/Object;'
+      access        : 0x0011 (PUBLIC FINAL)
+    #6              : (in Lcom/vk/clips/tool/view/newsfeed/overlay/ClipEndOverlayView;)
+      name          : 'g'
+      type          : 'Ljava/lang/Object;'
+      access        : 0x0011 (PUBLIC FINAL)
+    #7              : (in Lcom/vk/clips/tool/view/newsfeed/overlay/ClipEndOverlayView;)
+      name          : 'h'
+      type          : 'Ljava/lang/Object;'
+      access        : 0x0011 (PUBLIC FINAL)
+    #8              : (in Lcom/vk/clips/tool/view/newsfeed/overlay/ClipEndOverlayView;)
+      name          : 'i'
+      type          : 'Ljava/lang/Object;'
+      access        : 0x0011 (PUBLIC FINAL)
+    #9              : (in Lcom/vk/clips/tool/view/newsfeed/overlay/ClipEndOverlayView;)
+      name          : 'j'
+      type          : 'Landroid/view/View$OnClickListener;'
+      access        : 0x0001 (PUBLIC)
+    #10              : (in Lcom/vk/clips/tool/view/newsfeed/overlay/ClipEndOverlayView;)
+      name          : 'k'
+      type          : 'Lcom/vk/clips/tool/view/newsfeed/overlay/ClipEndOverlayView$a;'
+      access        : 0x0001 (PUBLIC)
+    #11              : (in Lcom/vk/clips/tool/view/newsfeed/overlay/ClipEndOverlayView;)
+      name          : 'l'
+      type          : 'Lo91/b;'
+      access        : 0x0001 (PUBLIC)
+    #12              : (in Lcom/vk/clips/tool/view/newsfeed/overlay/ClipEndOverlayView;)
+      name          : 'm'
+      type          : 'Ljava/util/ArrayList;'
+      access        : 0x0011 (PUBLIC FINAL)
+    #13              : (in Lcom/vk/clips/tool/view/newsfeed/overlay/ClipEndOverlayView;)
+      name          : 'n'
+      type          : 'Ljava/util/ArrayList;'
+      access        : 0x0011 (PUBLIC FINAL)
+    #14              : (in Lcom/vk/clips/tool/view/newsfeed/overlay/ClipEndOverlayView;)
+      name          : 'o'
+      type          : 'Landroid/view/View;'
+      access        : 0x0001 (PUBLIC)
+    #15              : (in Lcom/vk/clips/tool/view/newsfeed/overlay/ClipEndOverlayView;)
+      name          : 'p'
+      type          : 'Z'
+      access        : 0x0001 (PUBLIC)
+    #16              : (in Lcom/vk/clips/tool/view/newsfeed/overlay/ClipEndOverlayView;)
+      name          : 'q'
+      type          : 'Z'
+      access        : 0x0001 (PUBLIC)
+    #17              : (in Lcom/vk/clips/tool/view/newsfeed/overlay/ClipEndOverlayView;)
+      name          : 'r'
+      type          : 'Z'
+      access        : 0x0001 (PUBLIC)
+    #18              : (in Lcom/vk/clips/tool/view/newsfeed/overlay/ClipEndOverlayView;)
+      name          : 's'
+      type          : 'Lg07/j;'
+      access        : 0x0011 (PUBLIC FINAL)
+    #19              : (in Lcom/vk/clips/tool/view/newsfeed/overlay/ClipEndOverlayView;)
+      name          : 't'
+      type          : 'Ljava/lang/Object;'
+      access        : 0x0011 (PUBLIC FINAL)
+    #20              : (in Lcom/vk/clips/tool/view/newsfeed/overlay/ClipEndOverlayView;)
+      name          : 'u'
+      type          : 'Z'
+      access        : 0x0001 (PUBLIC)
+  Direct methods    -
+
+    #0              : (in Lcom/vk/clips/tool/view/newsfeed/overlay/ClipEndOverlayView;)
+      name          : '<init>'
+      type          : '(Landroid/content/Context;Landroid/util/AttributeSet;)V'
+      access        : 0x10001 (PUBLIC CONSTRUCTOR)
+      registers     : 5
+      ins           : 3
+      outs          : 4
+      insns size    : 150 16-bit code units
+605a2c:                                        |[605a2c] com.vk.clips.tool.view.newsfeed.overlay.ClipEndOverlayView.<init>:(Landroid/content/Context;Landroid/util/AttributeSet;)V
+605a3c: 1200                                   |0000: const/4 v0, #int 0 // #0
+605a3e: 7040 2f0b 3204                         |0001: invoke-direct {v2, v3, v4, v0}, Landroid/widget/FrameLayout;.<init>:(Landroid/content/Context;Landroid/util/AttributeSet;I)V // method@0b2f
+605a44: 6204 9e9b                              |0004: sget-object v4, Luv1/a;.a:Luv1/a; // field@9b9e
+605a48: 6e10 34ad 0400                         |0006: invoke-virtual {v4}, Ljava/lang/Object;.getClass:()Ljava/lang/Class; // method@ad34
+605a4e: 7110 b6ea 0300                         |0009: invoke-static {v3}, Luv1/a;.b:(Landroid/content/Context;)Z // method@eab6
+605a54: 0a04                                   |000c: move-result v4
+605a56: 5c24 f610                              |000d: iput-boolean v4, v2, Lcom/vk/clips/tool/view/newsfeed/overlay/ClipEndOverlayView;.a:Z // field@10f6
+605a5a: 2204 543f                              |000f: new-instance v4, Ljava/util/concurrent/atomic/AtomicBoolean; // type@3f54
+605a5e: 7020 c2b0 0400                         |0011: invoke-direct {v4, v0}, Ljava/util/concurrent/atomic/AtomicBoolean;.<init>:(Z)V // method@b0c2
+605a64: 5b24 f710                              |0014: iput-object v4, v2, Lcom/vk/clips/tool/view/newsfeed/overlay/ClipEndOverlayView;.b:Ljava/util/concurrent/atomic/AtomicBoolean; // field@10f7
+605a68: 2204 7f37                              |0016: new-instance v4, Lfv7/d; // type@377f
+605a6c: 1300 1800                              |0018: const/16 v0, #int 24 // #18
+605a70: 7030 8899 2400                         |001a: invoke-direct {v4, v2, v0}, Lfv7/d;.<init>:(Ljava/lang/Object;I)V // method@9988
+605a76: 6200 5c83                              |001d: sget-object v0, Lkotlin/LazyThreadSafetyMode;.NONE:Lkotlin/LazyThreadSafetyMode; // field@835c
+605a7a: 7120 d299 4000                         |001f: invoke-static {v0, v4}, Lg07/g;.b:(Lkotlin/LazyThreadSafetyMode;Lkotlin/jvm/functions/Function0;)Lkotlin/Lazy; // method@99d2
+605a80: 0c04                                   |0022: move-result-object v4
+605a82: 5b24 f910                              |0023: iput-object v4, v2, Lcom/vk/clips/tool/view/newsfeed/overlay/ClipEndOverlayView;.d:Ljava/lang/Object; // field@10f9
+605a86: 2204 2a46                              |0025: new-instance v4, Lme6/b; // type@462a
+605a8a: 1301 0800                              |0027: const/16 v1, #int 8 // #8
+605a8e: 7030 7ec6 2401                         |0029: invoke-direct {v4, v2, v1}, Lme6/b;.<init>:(Ljava/lang/Object;I)V // method@c67e
+605a94: 7120 d299 4000                         |002c: invoke-static {v0, v4}, Lg07/g;.b:(Lkotlin/LazyThreadSafetyMode;Lkotlin/jvm/functions/Function0;)Lkotlin/Lazy; // method@99d2
+605a9a: 0c04                                   |002f: move-result-object v4
+605a9c: 5b24 fa10                              |0030: iput-object v4, v2, Lcom/vk/clips/tool/view/newsfeed/overlay/ClipEndOverlayView;.e:Ljava/lang/Object; // field@10fa
+605aa0: 2204 4a41                              |0032: new-instance v4, Lkf4/a; // type@414a
+605aa4: 1301 0c00                              |0034: const/16 v1, #int 12 // #c
+605aa8: 7030 4db6 2401                         |0036: invoke-direct {v4, v2, v1}, Lkf4/a;.<init>:(Ljava/lang/Object;I)V // method@b64d
+605aae: 7120 d299 4000                         |0039: invoke-static {v0, v4}, Lg07/g;.b:(Lkotlin/LazyThreadSafetyMode;Lkotlin/jvm/functions/Function0;)Lkotlin/Lazy; // method@99d2
+
+    #1              : (in Lcom/vk/clips/tool/view/newsfeed/overlay/ClipEndOverlayView;)
+      name          : 'a'
+      type          : '(Lrc1/c;Ljava/lang/String;Lcom/vk/dto/common/ClipVideoFile;Lwo0/b;Lcom/vk/feed/core/models/news/NewsEntry;Lcom/vk/clips/tool/view/newsfeed/overlay/ClipEndOverlayView;ZLjava/util/HashMap;)Lcom/vk/clips/tool/view/newsfeed/mytarget/ClipEndOverlayAdWrapperView$b;'
+      access        : 0x0009 (PUBLIC STATIC)
+      registers     : 24
+      ins           : 8
+      outs          : 8
+      insns size    : 199 16-bit code units
+605b68:                                        |[605b68] com.vk.clips.tool.view.newsfeed.overlay.ClipEndOverlayView.a:(Lrc1/c;Ljava/lang/String;Lcom/vk/dto/common/ClipVideoFile;Lwo0/b;Lcom/vk/feed/core/models/news/NewsEntry;Lcom/vk/clips/tool/view/newsfeed/overlay/ClipEndOverlayView;ZLjava/util/HashMap;)Lcom/vk/clips/tool/view/newsfeed/mytarget/ClipEndOverlayAdWrapperView$b;
+605b78: 0800 1200                              |0000: move-object/from16 v0, v18
+605b7c: 0801 1400                              |0002: move-object/from16 v1, v20
+605b80: 0802 1500                              |0004: move-object/from16 v2, v21
+605b84: 0803 1000                              |0006: move-object/from16 v3, v16
+605b88: 0804 1100                              |0008: move-object/from16 v4, v17
+605b8c: 7230 c4dd 0304                         |000a: invoke-interface {v3, v0, v4}, Lrc1/c;.e:(Lcom/vk/dto/common/ClipVideoFile;Ljava/lang/String;)Lrc1/c$a; // method@ddc4
+605b92: 0c03                                   |000d: move-result-object v3
+605b94: 2034 de4e                              |000e: instance-of v4, v3, Lrc1/c$a$c; // type@4ede
+605b98: 1405 f977 1b00                         |0010: const v5, #float 2.5226e-39 // #001b77f9
+605b9e: 1206                                   |0013: const/4 v6, #int 0 // #0
+605ba0: 3804 6300                              |0014: if-eqz v4, 0077 // +0063
+605ba4: 1f03 de4e                              |0016: check-cast v3, Lrc1/c$a$c; // type@4ede
+605ba8: 6e10 c3dd 0300                         |0018: invoke-virtual {v3}, Lrc1/c$a$c;.a:()Ljava/lang/Object; // method@ddc3
+605bae: 0c03                                   |001b: move-result-object v3
+605bb0: 2034 505b                              |001c: instance-of v4, v3, Lz94/a; // type@5b50
+605bb4: 3804 0500                              |001e: if-eqz v4, 0023 // +0005
+605bb8: 1f03 505b                              |0020: check-cast v3, Lz94/a; // type@5b50
+605bbc: 2802                                   |0022: goto 0024 // +0002
+605bbe: 0763                                   |0023: move-object v3, v6
+605bc0: 3803 0800                              |0024: if-eqz v3, 002c // +0008
+605bc4: 2200 5e14                              |0026: new-instance v0, Lcom/vk/clips/tool/view/newsfeed/mytarget/ClipEndOverlayAdWrapperView$b$b; // type@145e
+605bc8: 7020 cf29 3000                         |0028: invoke-direct {v0, v3}, Lcom/vk/clips/tool/view/newsfeed/mytarget/ClipEndOverlayAdWrapperView$b$b;.<init>:(Lz94/a;)V // method@29cf
+605bce: 1100                                   |002b: return-object v0
+605bd0: 2203 5d14                              |002c: new-instance v3, Lcom/vk/clips/tool/view/newsfeed/mytarget/ClipEndOverlayAdWrapperView$b$a; // type@145d
+605bd4: 7401 34ad 1300                         |002e: invoke-virtual/range {v19}, Ljava/lang/Object;.getClass:()Ljava/lang/Class; // method@ad34
+605bda: 2207 8b47                              |0031: new-instance v7, Ln91/c; // type@478b
+605bde: 7010 df29 0200                         |0033: invoke-direct {v2}, Lcom/vk/clips/tool/view/newsfeed/overlay/ClipEndOverlayView;.getAdBannerConfig:()Ltx5/q0; // method@29df
+
+    #2              : (in Lcom/vk/clips/tool/view/newsfeed/overlay/ClipEndOverlayView;)
+      name          : 'b'
+      type          : '(Lcom/vk/core/tool/view/vkblur/VkBlurView;Lcom/vk/clips/tool/view/newsfeed/overlay/ClipEndOverlayView;)Lg07/t;'
+      access        : 0x0009 (PUBLIC STATIC)
+      registers     : 3
+      ins           : 2
+      outs          : 2
+      insns size    : 27 16-bit code units
+605d08:                                        |[605d08] com.vk.clips.tool.view.newsfeed.overlay.ClipEndOverlayView.b:(Lcom/vk/core/tool/view/vkblur/VkBlurView;Lcom/vk/clips/tool/view/newsfeed/overlay/ClipEndOverlayView;)Lg07/t;
+605d18: 6000 8a93                              |0000: sget v0, Lqz1/j;.a:I // field@938a
+605d1c: 7010 e429 0200                         |0002: invoke-direct {v2}, Lcom/vk/clips/tool/view/newsfeed/overlay/ClipEndOverlayView;.getOverlaySecondaryColor:()I // method@29e4
+605d22: 0a00                                   |0005: move-result v0
+605d24: 7110 69dc 0000                         |0006: invoke-static {v0}, Lqz1/j;.a:(I)Landroid/graphics/BitmapShader; // method@dc69
+605d2a: 0c00                                   |0009: move-result-object v0
+605d2c: 6e20 4f31 0100                         |000a: invoke-virtual {v1, v0}, Lcom/vk/core/tool/view/vkblur/VkBlurView;.setColorOverlayShader:(Landroid/graphics/Shader;)V // method@314f
+605d32: 7010 e429 0200                         |000d: invoke-direct {v2}, Lcom/vk/clips/tool/view/newsfeed/overlay/ClipEndOverlayView;.getOverlaySecondaryColor:()I // method@29e4
+605d38: 0a02                                   |0010: move-result v2
+605d3a: 7110 69dc 0200                         |0011: invoke-static {v2}, Lqz1/j;.a:(I)Landroid/graphics/BitmapShader; // method@dc69
+605d40: 0c02                                   |0014: move-result-object v2
+605d42: 6e20 5031 2100                         |0015: invoke-virtual {v1, v2}, Lcom/vk/core/tool/view/vkblur/VkBlurView;.setFallbackColorOverlay:(Landroid/graphics/Shader;)V // method@3150
+605d48: 6201 5077                              |0018: sget-object v1, Lg07/t;.a:Lg07/t; // field@7750
+605d4c: 1101                                   |001a: return-object v1
+
+    #3              : (in Lcom/vk/clips/tool/view/newsfeed/overlay/ClipEndOverlayView;)
+      name          : 'getAdBanner'
+      type          : '()Lcom/vk/clips/tool/view/newsfeed/mytarget/ClipEndOverlayAdWrapperView;'
+      access        : 0x0012 (PRIVATE FINAL)
+      registers     : 2
+      ins           : 1
+      outs          : 1
+      insns size    : 9 16-bit code units
+605d50:                                        |[605d50] com.vk.clips.tool.view.newsfeed.overlay.ClipEndOverlayView.getAdBanner:()Lcom/vk/clips/tool/view/newsfeed/mytarget/ClipEndOverlayAdWrapperView;
+605d60: 5410 fd10                              |0000: iget-object v0, v1, Lcom/vk/clips/tool/view/newsfeed/overlay/ClipEndOverlayView;.h:Ljava/lang/Object; // field@10fd
+605d64: 7210 4ab7 0000                         |0002: invoke-interface {v0}, Lkotlin/Lazy;.getValue:()Ljava/lang/Object; // method@b74a
+605d6a: 0c00                                   |0005: move-result-object v0
+605d6c: 1f00 6014                              |0006: check-cast v0, Lcom/vk/clips/tool/view/newsfeed/mytarget/ClipEndOverlayAdWrapperView; // type@1460
+605d70: 1100                                   |0008: return-object v0
+
+    #4              : (in Lcom/vk/clips/tool/view/newsfeed/overlay/ClipEndOverlayView;)
+      name          : 'getAdBannerConfig'
+      type          : '()Ltx5/q0;'
+      access        : 0x0012 (PRIVATE FINAL)
+      registers     : 2
+      ins           : 1
+      outs          : 1
+      insns size    : 9 16-bit code units
+605d74:                                        |[605d74] com.vk.clips.tool.view.newsfeed.overlay.ClipEndOverlayView.getAdBannerConfig:()Ltx5/q0;
+605d84: 5410 0911                              |0000: iget-object v0, v1, Lcom/vk/clips/tool/view/newsfeed/overlay/ClipEndOverlayView;.t:Ljava/lang/Object; // field@1109
+605d88: 7210 4ab7 0000                         |0002: invoke-interface {v0}, Lkotlin/Lazy;.getValue:()Ljava/lang/Object; // method@b74a
+605d8e: 0c00                                   |0005: move-result-object v0
+605d90: 1f00 fd52                              |0006: check-cast v0, Ltx5/q0; // type@52fd
+605d94: 1100                                   |0008: return-object v0
+
+    #5              : (in Lcom/vk/clips/tool/view/newsfeed/overlay/ClipEndOverlayView;)
+      name          : 'getBlurView'
+      type          : '()Lcom/vk/core/tool/view/vkblur/VkBlurView;'
+      access        : 0x0012 (PRIVATE FINAL)
+      registers     : 2
+      ins           : 1
+      outs          : 1
+      insns size    : 9 16-bit code units
+605d98:                                        |[605d98] com.vk.clips.tool.view.newsfeed.overlay.ClipEndOverlayView.getBlurView:()Lcom/vk/core/tool/view/vkblur/VkBlurView;
+605da8: 5410 fe10                              |0000: iget-object v0, v1, Lcom/vk/clips/tool/view/newsfeed/overlay/ClipEndOverlayView;.i:Ljava/lang/Object; // field@10fe
+605dac: 7210 4ab7 0000                         |0002: invoke-interface {v0}, Lkotlin/Lazy;.getValue:()Ljava/lang/Object; // method@b74a
+605db2: 0c00                                   |0005: move-result-object v0
+605db4: 1f00 d816                              |0006: check-cast v0, Lcom/vk/core/tool/view/vkblur/VkBlurView; // type@16d8
+605db8: 1100                                   |0008: return-object v0
+
+    #6              : (in Lcom/vk/clips/tool/view/newsfeed/overlay/ClipEndOverlayView;)
+      name          : 'getClipProductsContainer'
+      type          : '()Landroid/widget/FrameLayout;'
+      access        : 0x0012 (PRIVATE FINAL)
+      registers     : 2
+      ins           : 1
+      outs          : 1
+      insns size    : 9 16-bit code units
+605dbc:                                        |[605dbc] com.vk.clips.tool.view.newsfeed.overlay.ClipEndOverlayView.getClipProductsContainer:()Landroid/widget/FrameLayout;
+605dcc: 5410 fb10                              |0000: iget-object v0, v1, Lcom/vk/clips/tool/view/newsfeed/overlay/ClipEndOverlayView;.f:Ljava/lang/Object; // field@10fb
+605dd0: 7210 4ab7 0000                         |0002: invoke-interface {v0}, Lkotlin/Lazy;.getValue:()Ljava/lang/Object; // method@b74a
+605dd6: 0c00                                   |0005: move-result-object v0
+605dd8: 1f00 5704                              |0006: check-cast v0, Landroid/widget/FrameLayout; // type@0457
+605ddc: 1100                                   |0008: return-object v0
+
+    #7              : (in Lcom/vk/clips/tool/view/newsfeed/overlay/ClipEndOverlayView;)
+      name          : 'getLayout'
+      type          : '()Landroidx/constraintlayout/widget/ConstraintLayout;'
+      access        : 0x0012 (PRIVATE FINAL)
+      registers     : 2
+      ins           : 1
+      outs          : 1
+      insns size    : 9 16-bit code units
+605de0:                                        |[605de0] com.vk.clips.tool.view.newsfeed.overlay.ClipEndOverlayView.getLayout:()Landroidx/constraintlayout/widget/ConstraintLayout;
+605df0: 5410 fc10                              |0000: iget-object v0, v1, Lcom/vk/clips/tool/view/newsfeed/overlay/ClipEndOverlayView;.g:Ljava/lang/Object; // field@10fc
+605df4: 7210 4ab7 0000                         |0002: invoke-interface {v0}, Lkotlin/Lazy;.getValue:()Ljava/lang/Object; // method@b74a
+605dfa: 0c00                                   |0005: move-result-object v0
+605dfc: 1f00 8b06                              |0006: check-cast v0, Landroidx/constraintlayout/widget/ConstraintLayout; // type@068b
+605e00: 1100                                   |0008: return-object v0
+
+    #8              : (in Lcom/vk/clips/tool/view/newsfeed/overlay/ClipEndOverlayView;)
+      name          : 'getMoreButton'
+      type          : '()Lcom/vk/core/view/components/button/VkButton;'
+      access        : 0x0012 (PRIVATE FINAL)
+      registers     : 2
+      ins           : 1
+      outs          : 1
+      insns size    : 9 16-bit code units
+605e04:                                        |[605e04] com.vk.clips.tool.view.newsfeed.overlay.ClipEndOverlayView.getMoreButton:()Lcom/vk/core/view/components/button/VkButton;
+605e14: 5410 f910                              |0000: iget-object v0, v1, Lcom/vk/clips/tool/view/newsfeed/overlay/ClipEndOverlayView;.d:Ljava/lang/Object; // field@10f9
+605e18: 7210 4ab7 0000                         |0002: invoke-interface {v0}, Lkotlin/Lazy;.getValue:()Ljava/lang/Object; // method@b74a
+605e1e: 0c00                                   |0005: move-result-object v0
+605e20: 1f00 ad17                              |0006: check-cast v0, Lcom/vk/core/view/components/button/VkButton; // type@17ad
+605e24: 1100                                   |0008: return-object v0
+
+    #9              : (in Lcom/vk/clips/tool/view/newsfeed/overlay/ClipEndOverlayView;)
+      name          : 'getOverlaySecondaryColor'
+      type          : '()I'
+      access        : 0x0012 (PRIVATE FINAL)
+      registers     : 2
+      ins           : 1
+      outs          : 1
+      insns size    : 13 16-bit code units
+605e28:                                        |[605e28] com.vk.clips.tool.view.newsfeed.overlay.ClipEndOverlayView.getOverlaySecondaryColor:()I
+605e38: 5410 0811                              |0000: iget-object v0, v1, Lcom/vk/clips/tool/view/newsfeed/overlay/ClipEndOverlayView;.s:Lg07/j; // field@1108
+605e3c: 6e10 db99 0000                         |0002: invoke-virtual {v0}, Lg07/j;.getValue:()Ljava/lang/Object; // method@99db
+605e42: 0c00                                   |0005: move-result-object v0
+605e44: 1f00 743e                              |0006: check-cast v0, Ljava/lang/Number; // type@3e74
+605e48: 6e10 2dad 0000                         |0008: invoke-virtual {v0}, Ljava/lang/Number;.intValue:()I // method@ad2d
+605e4e: 0a00                                   |000b: move-result v0
+605e50: 0f00                                   |000c: return v0
+
+    #10              : (in Lcom/vk/clips/tool/view/newsfeed/overlay/ClipEndOverlayView;)
+      name          : 'getReplayButton'
+      type          : '()Lcom/vk/core/view/components/button/VkButton;'
+      access        : 0x0012 (PRIVATE FINAL)
+      registers     : 2
+      ins           : 1
+      outs          : 1
+      insns size    : 9 16-bit code units
+605e54:                                        |[605e54] com.vk.clips.tool.view.newsfeed.overlay.ClipEndOverlayView.getReplayButton:()Lcom/vk/core/view/components/button/VkButton;
+605e64: 5410 fa10                              |0000: iget-object v0, v1, Lcom/vk/clips/tool/view/newsfeed/overlay/ClipEndOverlayView;.e:Ljava/lang/Object; // field@10fa
+605e68: 7210 4ab7 0000                         |0002: invoke-interface {v0}, Lkotlin/Lazy;.getValue:()Ljava/lang/Object; // method@b74a
+605e6e: 0c00                                   |0005: move-result-object v0
+605e70: 1f00 ad17                              |0006: check-cast v0, Lcom/vk/core/view/components/button/VkButton; // type@17ad
+605e74: 1100                                   |0008: return-object v0
+
+    #11              : (in Lcom/vk/clips/tool/view/newsfeed/overlay/ClipEndOverlayView;)
+      name          : 'setupAd'
+      type          : '(Lcom/vk/clips/tool/view/newsfeed/mytarget/ClipEndOverlayAdWrapperView$b;)V'
+      access        : 0x0012 (PRIVATE FINAL)
+      registers     : 4
+      ins           : 2
+      outs          : 3
+      insns size    : 13 16-bit code units
+605e78:                                        |[605e78] com.vk.clips.tool.view.newsfeed.overlay.ClipEndOverlayView.setupAd:(Lcom/vk/clips/tool/view/newsfeed/mytarget/ClipEndOverlayAdWrapperView$b;)V
+605e88: 7010 de29 0200                         |0000: invoke-direct {v2}, Lcom/vk/clips/tool/view/newsfeed/overlay/ClipEndOverlayView;.getAdBanner:()Lcom/vk/clips/tool/view/newsfeed/mytarget/ClipEndOverlayAdWrapperView; // method@29de
+605e8e: 0c00                                   |0003: move-result-object v0
+605e90: 2201 6214                              |0004: new-instance v1, Lcom/vk/clips/tool/view/newsfeed/overlay/ClipEndOverlayView$b; // type@1462
+605e94: 7020 d529 2100                         |0006: invoke-direct {v1, v2}, Lcom/vk/clips/tool/view/newsfeed/overlay/ClipEndOverlayView$b;.<init>:(Lcom/vk/clips/tool/view/newsfeed/overlay/ClipEndOverlayView;)V // method@29d5
+605e9a: 6e30 d229 3001                         |0009: invoke-virtual {v0, v3, v1}, Lcom/vk/clips/tool/view/newsfeed/mytarget/ClipEndOverlayAdWrapperView;.h:(Lcom/vk/clips/tool/view/newsfeed/mytarget/ClipEndOverlayAdWrapperView$b;Lcom/vk/clips/tool/view/newsfeed/overlay/ClipEndOverlayView$b;)V // method@29d2
+605ea0: 0e00                                   |000c: return-void
+  Virtual methods   -
+
+    #0              : (in Lcom/vk/clips/tool/view/newsfeed/overlay/ClipEndOverlayView;)
+      name          : 'B'
+      type          : '(Z)V'
+      access        : 0x0011 (PUBLIC FINAL)
+      registers     : 12
+      ins           : 2
+      outs          : 9
+      insns size    : 158 16-bit code units
+605ea4:                                        |[605ea4] com.vk.clips.tool.view.newsfeed.overlay.ClipEndOverlayView.B:(Z)V
+605eb4: 54a9 0211                              |0000: iget-object v9, v10, Lcom/vk/clips/tool/view/newsfeed/overlay/ClipEndOverlayView;.m:Ljava/util/ArrayList; // field@1102
+605eb8: 1211                                   |0002: const/4 v1, #int 1 // #1
+605eba: 380b 3b00                              |0003: if-eqz v11, 003e // +003b
+605ebe: 54a2 f710                              |0005: iget-object v2, v10, Lcom/vk/clips/tool/view/newsfeed/overlay/ClipEndOverlayView;.b:Ljava/util/concurrent/atomic/AtomicBoolean; // field@10f7
+605ec2: 6e10 c4b0 0200                         |0007: invoke-virtual {v2}, Ljava/util/concurrent/atomic/AtomicBoolean;.get:()Z // method@b0c4
+605ec8: 0a02                                   |000a: move-result v2
+605eca: 3802 3300                              |000b: if-eqz v2, 003e // +0033
+605ece: 5ca1 0711                              |000d: iput-boolean v1, v10, Lcom/vk/clips/tool/view/newsfeed/overlay/ClipEndOverlayView;.r:Z // field@1107
+605ed2: 1207                                   |000f: const/4 v7, #int 0 // #0
+605ed4: 1308 1e00                              |0010: const/16 v8, #int 30 // #1e
+605ed8: 1601 6400                              |0012: const-wide/16 v1, #int 100 // #64
+605edc: 1603 0000                              |0014: const-wide/16 v3, #int 0 // #0
+605ee0: 1205                                   |0016: const/4 v5, #int 0 // #0
+605ee2: 1206                                   |0017: const/4 v6, #int 0 // #0
+605ee4: 07a0                                   |0018: move-object v0, v10
+605ee6: 7709 60e5 0000                         |0019: invoke-static/range {v0, v1, v2, v3, v4, v5, v6, v7, v8}, Ltw1/a0;.d:(Landroid/view/View;JJLjava/lang/Runnable;Landroid/view/animation/Interpolator;FI)Landroid/view/ViewPropertyAnimator; // method@e560
+605eec: 6e10 db29 0a00                         |001c: invoke-virtual {v10}, Lcom/vk/clips/tool/view/newsfeed/overlay/ClipEndOverlayView;.d:()V // method@29db
+605ef2: 54a1 0111                              |001f: iget-object v1, v10, Lcom/vk/clips/tool/view/newsfeed/overlay/ClipEndOverlayView;.l:Lo91/b; // field@1101
+605ef6: 3801 0500                              |0021: if-eqz v1, 0026 // +0005
+605efa: 6e10 bdcd 0100                         |0023: invoke-virtual {v1}, Lo91/b;.b:()V // method@cdbd
+605f00: 6e10 fcae 0900                         |0026: invoke-virtual {v9}, Ljava/util/ArrayList;.iterator:()Ljava/util/Iterator; // method@aefc
+605f06: 0c01                                   |0029: move-result-object v1
+605f08: 7210 7baf 0100                         |002a: invoke-interface {v1}, Ljava/util/Iterator;.hasNext:()Z // method@af7b
+605f0e: 0a02                                   |002d: move-result v2
+605f10: 3802 0c00                              |002e: if-eqz v2, 003a // +000c
+605f14: 7210 7caf 0100                         |0030: invoke-interface {v1}, Ljava/util/Iterator;.next:()Ljava/lang/Object; // method@af7c
+605f1a: 0c02                                   |0033: move-result-object v2
+
+    #1              : (in Lcom/vk/clips/tool/view/newsfeed/overlay/ClipEndOverlayView;)
+      name          : 'c'
+      type          : '()V'
+      access        : 0x0011 (PUBLIC FINAL)
+      registers     : 8
+      ins           : 1
+      outs          : 4
+      insns size    : 96 16-bit code units
+605ff0:                                        |[605ff0] com.vk.clips.tool.view.newsfeed.overlay.ClipEndOverlayView.c:()V
+606000: 5470 f710                              |0000: iget-object v0, v7, Lcom/vk/clips/tool/view/newsfeed/overlay/ClipEndOverlayView;.b:Ljava/util/concurrent/atomic/AtomicBoolean; // field@10f7
+606004: 1201                                   |0002: const/4 v1, #int 0 // #0
+606006: 1212                                   |0003: const/4 v2, #int 1 // #1
+606008: 6e30 c3b0 1002                         |0004: invoke-virtual {v0, v1, v2}, Ljava/util/concurrent/atomic/AtomicBoolean;.compareAndSet:(ZZ)Z // method@b0c3
+60600e: 0a00                                   |0007: move-result v0
+606010: 3800 5700                              |0008: if-eqz v0, 005f // +0057
+606014: 6e10 dc09 0700                         |000a: invoke-virtual {v7}, Landroid/view/View;.getContext:()Landroid/content/Context; // method@09dc
+60601a: 0c00                                   |000d: move-result-object v0
+60601c: 7110 9209 0000                         |000e: invoke-static {v0}, Landroid/view/LayoutInflater;.from:(Landroid/content/Context;)Landroid/view/LayoutInflater; // method@0992
+606022: 0c00                                   |0011: move-result-object v0
+606024: 1401 7600 0e7f                         |0012: const v1, #float 1.88753e+38 // #7f0e0076
+60602a: 6e40 9609 1027                         |0015: invoke-virtual {v0, v1, v7, v2}, Landroid/view/LayoutInflater;.inflate:(ILandroid/view/ViewGroup;Z)Landroid/view/View; // method@0996
+606030: 7010 e329 0700                         |0018: invoke-direct {v7}, Lcom/vk/clips/tool/view/newsfeed/overlay/ClipEndOverlayView;.getMoreButton:()Lcom/vk/core/view/components/button/VkButton; // method@29e3
+606036: 0c00                                   |001b: move-result-object v0
+606038: 5571 f610                              |001c: iget-boolean v1, v7, Lcom/vk/clips/tool/view/newsfeed/overlay/ClipEndOverlayView;.a:Z // field@10f6
+60603c: 3801 0c00                              |001e: if-eqz v1, 002a // +000c
+606040: 6203 0919                              |0020: sget-object v3, Lcom/vk/core/view/components/button/VkButton$Mode;.Primary:Lcom/vk/core/view/components/button/VkButton$Mode; // field@1909
+606044: 6e20 4b36 3000                         |0022: invoke-virtual {v0, v3}, Lcom/vk/core/view/components/button/VkButton;.setMode:(Lcom/vk/core/view/components/button/VkButton$Mode;)V // method@364b
+60604a: 6203 1019                              |0025: sget-object v3, Lcom/vk/core/view/components/button/VkButton$Size;.Small:Lcom/vk/core/view/components/button/VkButton$Size; // field@1910
+60604e: 6e20 5336 3000                         |0027: invoke-virtual {v0, v3}, Lcom/vk/core/view/components/button/VkButton;.setSize:(Lcom/vk/core/view/components/button/VkButton$Size;)V // method@3653
+606054: 6203 0319                              |002a: sget-object v3, Lcom/vk/core/view/components/button/VkButton$Appearance;.Overlay:Lcom/vk/core/view/components/button/VkButton$Appearance; // field@1903
+606058: 6e20 3536 3000                         |002c: invoke-virtual {v0, v3}, Lcom/vk/core/view/components/button/VkButton;.setAppearance:(Lcom/vk/core/view/components/button/VkButton$Appearance;)V // method@3635
+60605e: 6e10 dc09 0000                         |002f: invoke-virtual {v0}, Landroid/view/View;.getContext:()Landroid/content/Context; // method@09dc
+606064: 0c04                                   |0032: move-result-object v4
+606066: 1405 1b20 087f                         |0033: const v5, #float 1.80942e+38 // #7f08201b
+60606c: 1406 380d 047f                         |0036: const v6, #float 1.75527e+38 // #7f040d38
+606072: 7130 6de6 6504                         |0039: invoke-static {v5, v6, v4}, Ltw1/x;.e:(IILandroid/content/Context;)Landroid/graphics/drawable/Drawable; // method@e66d
+
+    #2              : (in Lcom/vk/clips/tool/view/newsfeed/overlay/ClipEndOverlayView;)
+      name          : 'd'
+      type          : '()V'
+      access        : 0x0011 (PUBLIC FINAL)
+      registers     : 6
+      ins           : 1
+      outs          : 5
+      insns size    : 74 16-bit code units
+6060c0:                                        |[6060c0] com.vk.clips.tool.view.newsfeed.overlay.ClipEndOverlayView.d:()V
+6060d0: 5450 f810                              |0000: iget-object v0, v5, Lcom/vk/clips/tool/view/newsfeed/overlay/ClipEndOverlayView;.c:Lo91/a; // field@10f8
+6060d4: 3800 0900                              |0002: if-eqz v0, 000b // +0009
+6060d8: 6e10 bbcd 0000                         |0004: invoke-virtual {v0}, Lo91/a;.invoke:()Ljava/lang/Object; // method@cdbb
+6060de: 0c00                                   |0007: move-result-object v0
+6060e0: 1f00 5f14                              |0008: check-cast v0, Lcom/vk/clips/tool/view/newsfeed/mytarget/ClipEndOverlayAdWrapperView$b; // type@145f
+6060e4: 2802                                   |000a: goto 000c // +0002
+6060e6: 1200                                   |000b: const/4 v0, #int 0 // #0
+6060e8: 3800 3a00                              |000c: if-eqz v0, 0046 // +003a
+6060ec: 2001 5d14                              |000e: instance-of v1, v0, Lcom/vk/clips/tool/view/newsfeed/mytarget/ClipEndOverlayAdWrapperView$b$a; // type@145d
+6060f0: 3801 1d00                              |0010: if-eqz v1, 002d // +001d
+6060f4: 2201 5d14                              |0012: new-instance v1, Lcom/vk/clips/tool/view/newsfeed/mytarget/ClipEndOverlayAdWrapperView$b$a; // type@145d
+6060f8: 1f00 5d14                              |0014: check-cast v0, Lcom/vk/clips/tool/view/newsfeed/mytarget/ClipEndOverlayAdWrapperView$b$a; // type@145d
+6060fc: 6e10 ce29 0000                         |0016: invoke-virtual {v0}, Lcom/vk/clips/tool/view/newsfeed/mytarget/ClipEndOverlayAdWrapperView$b$a;.d:()I // method@29ce
+606102: 0a02                                   |0019: move-result v2
+606104: 6e10 cd29 0000                         |001a: invoke-virtual {v0}, Lcom/vk/clips/tool/view/newsfeed/mytarget/ClipEndOverlayAdWrapperView$b$a;.c:()Lcom/vk/feed/core/models/news/NewsEntry; // method@29cd
+60610a: 0c03                                   |001d: move-result-object v3
+60610c: 6e10 cc29 0000                         |001e: invoke-virtual {v0}, Lcom/vk/clips/tool/view/newsfeed/mytarget/ClipEndOverlayAdWrapperView$b$a;.b:()Ln91/c; // method@29cc
+606112: 0c04                                   |0021: move-result-object v4
+606114: 6e10 cb29 0000                         |0022: invoke-virtual {v0}, Lcom/vk/clips/tool/view/newsfeed/mytarget/ClipEndOverlayAdWrapperView$b$a;.a:()Lkotlin/jvm/functions/Function0; // method@29cb
+60611a: 0c00                                   |0025: move-result-object v0
+60611c: 7050 ca29 2143                         |0026: invoke-direct {v1, v2, v3, v4, v0}, Lcom/vk/clips/tool/view/newsfeed/mytarget/ClipEndOverlayAdWrapperView$b$a;.<init>:(ILcom/vk/feed/core/models/news/NewsEntry;Ln91/c;Lkotlin/jvm/functions/Function0;)V // method@29ca
+606122: 7020 ea29 1500                         |0029: invoke-direct {v5, v1}, Lcom/vk/clips/tool/view/newsfeed/overlay/ClipEndOverlayView;.setupAd:(Lcom/vk/clips/tool/view/newsfeed/mytarget/ClipEndOverlayAdWrapperView$b;)V // method@29ea
+606128: 0e00                                   |002c: return-void
+60612a: 2001 5e14                              |002d: instance-of v1, v0, Lcom/vk/clips/tool/view/newsfeed/mytarget/ClipEndOverlayAdWrapperView$b$b; // type@145e
+60612e: 3801 1100                              |002f: if-eqz v1, 0040 // +0011
+606132: 2201 5e14                              |0031: new-instance v1, Lcom/vk/clips/tool/view/newsfeed/mytarget/ClipEndOverlayAdWrapperView$b$b; // type@145e
+606136: 1f00 5e14                              |0033: check-cast v0, Lcom/vk/clips/tool/view/newsfeed/mytarget/ClipEndOverlayAdWrapperView$b$b; // type@145e
+
+    #3              : (in Lcom/vk/clips/tool/view/newsfeed/overlay/ClipEndOverlayView;)
+      name          : 'e'
+      type          : '()V'
+      access        : 0x0011 (PUBLIC FINAL)
+      registers     : 2
+      ins           : 1
+      outs          : 1
+      insns size    : 19 16-bit code units
+606164:                                        |[606164] com.vk.clips.tool.view.newsfeed.overlay.ClipEndOverlayView.e:()V
+606174: 5410 f710                              |0000: iget-object v0, v1, Lcom/vk/clips/tool/view/newsfeed/overlay/ClipEndOverlayView;.b:Ljava/util/concurrent/atomic/AtomicBoolean; // field@10f7
+606178: 6e10 c4b0 0000                         |0002: invoke-virtual {v0}, Ljava/util/concurrent/atomic/AtomicBoolean;.get:()Z // method@b0c4
+60617e: 0a00                                   |0005: move-result v0
+606180: 3800 0900                              |0006: if-eqz v0, 000f // +0009
+606184: 7010 de29 0100                         |0008: invoke-direct {v1}, Lcom/vk/clips/tool/view/newsfeed/overlay/ClipEndOverlayView;.getAdBanner:()Lcom/vk/clips/tool/view/newsfeed/mytarget/ClipEndOverlayAdWrapperView; // method@29de
+60618a: 0c00                                   |000b: move-result-object v0
+60618c: 6e10 d129 0000                         |000c: invoke-virtual {v0}, Lcom/vk/clips/tool/view/newsfeed/mytarget/ClipEndOverlayAdWrapperView;.e:()V // method@29d1
+606192: 1200                                   |000f: const/4 v0, #int 0 // #0
+606194: 5c10 0611                              |0010: iput-boolean v0, v1, Lcom/vk/clips/tool/view/newsfeed/overlay/ClipEndOverlayView;.q:Z // field@1106
+606198: 0e00                                   |0012: return-void
+
+    #4              : (in Lcom/vk/clips/tool/view/newsfeed/overlay/ClipEndOverlayView;)
+      name          : 'g'
+      type          : '()V'
+      access        : 0x0011 (PUBLIC FINAL)
+      registers     : 7
+      ins           : 1
+      outs          : 5
+      insns size    : 157 16-bit code units
+60619c:                                        |[60619c] com.vk.clips.tool.view.newsfeed.overlay.ClipEndOverlayView.g:()V
+6061ac: 5460 0411                              |0000: iget-object v0, v6, Lcom/vk/clips/tool/view/newsfeed/overlay/ClipEndOverlayView;.o:Landroid/view/View; // field@1104
+6061b0: 3800 2200                              |0002: if-eqz v0, 0024 // +0022
+6061b4: 7010 e129 0600                         |0004: invoke-direct {v6}, Lcom/vk/clips/tool/view/newsfeed/overlay/ClipEndOverlayView;.getClipProductsContainer:()Landroid/widget/FrameLayout; // method@29e1
+6061ba: 0c01                                   |0007: move-result-object v1
+6061bc: 3801 0a00                              |0008: if-eqz v1, 0012 // +000a
+6061c0: 6e20 9f0a 0100                         |000a: invoke-virtual {v1, v0}, Landroid/view/ViewGroup;.indexOfChild:(Landroid/view/View;)I // method@0a9f
+6061c6: 0a01                                   |000d: move-result v1
+6061c8: 12f2                                   |000e: const/4 v2, #int -1 // #ff
+6061ca: 3221 0300                              |000f: if-eq v1, v2, 0012 // +0003
+6061ce: 2813                                   |0011: goto 0024 // +0013
+6061d0: 7010 e129 0600                         |0012: invoke-direct {v6}, Lcom/vk/clips/tool/view/newsfeed/overlay/ClipEndOverlayView;.getClipProductsContainer:()Landroid/widget/FrameLayout; // method@29e1
+6061d6: 0c01                                   |0015: move-result-object v1
+6061d8: 3801 0500                              |0016: if-eqz v1, 001b // +0005
+6061dc: 6e10 a80a 0100                         |0018: invoke-virtual {v1}, Landroid/view/ViewGroup;.removeAllViews:()V // method@0aa8
+6061e2: 7010 e129 0600                         |001b: invoke-direct {v6}, Lcom/vk/clips/tool/view/newsfeed/overlay/ClipEndOverlayView;.getClipProductsContainer:()Landroid/widget/FrameLayout; // method@29e1
+6061e8: 0c01                                   |001e: move-result-object v1
+6061ea: 3801 0500                              |001f: if-eqz v1, 0024 // +0005
+6061ee: 6e20 930a 0100                         |0021: invoke-virtual {v1, v0}, Landroid/view/ViewGroup;.addView:(Landroid/view/View;)V // method@0a93
+6061f4: 5560 0511                              |0024: iget-boolean v0, v6, Lcom/vk/clips/tool/view/newsfeed/overlay/ClipEndOverlayView;.p:Z // field@1105
+6061f8: 1201                                   |0026: const/4 v1, #int 0 // #0
+6061fa: 1232                                   |0027: const/4 v2, #int 3 // #3
+6061fc: 1403 e201 0b7f                         |0028: const v3, #float 1.84772e+38 // #7f0b01e2
+606202: 3800 3b00                              |002b: if-eqz v0, 0066 // +003b
+606206: 7010 e329 0600                         |002d: invoke-direct {v6}, Lcom/vk/clips/tool/view/newsfeed/overlay/ClipEndOverlayView;.getMoreButton:()Lcom/vk/core/view/components/button/VkButton; // method@29e3
+60620c: 0c00                                   |0030: move-result-object v0
+60620e: 7110 dde5 0000                         |0031: invoke-static {v0}, Ltw1/g0;.m:(Landroid/view/View;)V // method@e5dd
+606214: 7010 e129 0600                         |0034: invoke-direct {v6}, Lcom/vk/clips/tool/view/newsfeed/overlay/ClipEndOverlayView;.getClipProductsContainer:()Landroid/widget/FrameLayout; // method@29e1
+
+    #5              : (in Lcom/vk/clips/tool/view/newsfeed/overlay/ClipEndOverlayView;)
+      name          : 'onClick'
+      type          : '(Landroid/view/View;)V'
+      access        : 0x0011 (PUBLIC FINAL)
+      registers     : 4
+      ins           : 2
+      outs          : 2
+      insns size    : 48 16-bit code units
+6062e8:                                        |[6062e8] com.vk.clips.tool.view.newsfeed.overlay.ClipEndOverlayView.onClick:(Landroid/view/View;)V
+6062f8: 6e10 e509 0300                         |0000: invoke-virtual {v3}, Landroid/view/View;.getId:()I // method@09e5
+6062fe: 0a00                                   |0003: move-result v0
+606300: 7010 e329 0200                         |0004: invoke-direct {v2}, Lcom/vk/clips/tool/view/newsfeed/overlay/ClipEndOverlayView;.getMoreButton:()Lcom/vk/core/view/components/button/VkButton; // method@29e3
+606306: 0c01                                   |0007: move-result-object v1
+606308: 6e10 e509 0100                         |0008: invoke-virtual {v1}, Landroid/view/View;.getId:()I // method@09e5
+60630e: 0a01                                   |000b: move-result v1
+606310: 3310 0a00                              |000c: if-ne v0, v1, 0016 // +000a
+606314: 5423 0011                              |000e: iget-object v3, v2, Lcom/vk/clips/tool/view/newsfeed/overlay/ClipEndOverlayView;.k:Lcom/vk/clips/tool/view/newsfeed/overlay/ClipEndOverlayView$a; // field@1100
+606318: 3803 1f00                              |0010: if-eqz v3, 002f // +001f
+60631c: 7210 d429 0300                         |0012: invoke-interface {v3}, Lcom/vk/clips/tool/view/newsfeed/overlay/ClipEndOverlayView$a;.b:()V // method@29d4
+606322: 0e00                                   |0015: return-void
+606324: 7010 e529 0200                         |0016: invoke-direct {v2}, Lcom/vk/clips/tool/view/newsfeed/overlay/ClipEndOverlayView;.getReplayButton:()Lcom/vk/core/view/components/button/VkButton; // method@29e5
+60632a: 0c01                                   |0019: move-result-object v1
+60632c: 6e10 e509 0100                         |001a: invoke-virtual {v1}, Landroid/view/View;.getId:()I // method@09e5
+606332: 0a01                                   |001d: move-result v1
+606334: 3310 0a00                              |001e: if-ne v0, v1, 0028 // +000a
+606338: 5420 0011                              |0020: iget-object v0, v2, Lcom/vk/clips/tool/view/newsfeed/overlay/ClipEndOverlayView;.k:Lcom/vk/clips/tool/view/newsfeed/overlay/ClipEndOverlayView$a; // field@1100
+60633c: 3800 0d00                              |0022: if-eqz v0, 002f // +000d
+606340: 7220 d329 3000                         |0024: invoke-interface {v0, v3}, Lcom/vk/clips/tool/view/newsfeed/overlay/ClipEndOverlayView$a;.a:(Landroid/view/View;)V // method@29d3
+606346: 0e00                                   |0027: return-void
+606348: 5420 ff10                              |0028: iget-object v0, v2, Lcom/vk/clips/tool/view/newsfeed/overlay/ClipEndOverlayView;.j:Landroid/view/View$OnClickListener; // field@10ff
+60634c: 3800 0500                              |002a: if-eqz v0, 002f // +0005
+606350: 7220 be09 3000                         |002c: invoke-interface {v0, v3}, Landroid/view/View$OnClickListener;.onClick:(Landroid/view/View;)V // method@09be
+606356: 0e00                                   |002f: return-void
+
+    #6              : (in Lcom/vk/clips/tool/view/newsfeed/overlay/ClipEndOverlayView;)
+      name          : 'setButtonsClickListener'
+      type          : '(Lcom/vk/clips/tool/view/newsfeed/overlay/ClipEndOverlayView$a;)V'
+      access        : 0x0011 (PUBLIC FINAL)
+      registers     : 2
+      ins           : 2
+      outs          : 0
+      insns size    : 3 16-bit code units
+606358:                                        |[606358] com.vk.clips.tool.view.newsfeed.overlay.ClipEndOverlayView.setButtonsClickListener:(Lcom/vk/clips/tool/view/newsfeed/overlay/ClipEndOverlayView$a;)V
+606368: 5b01 0011                              |0000: iput-object v1, v0, Lcom/vk/clips/tool/view/newsfeed/overlay/ClipEndOverlayView;.k:Lcom/vk/clips/tool/view/newsfeed/overlay/ClipEndOverlayView$a; // field@1100
+60636c: 0e00                                   |0002: return-void
+
+    #7              : (in Lcom/vk/clips/tool/view/newsfeed/overlay/ClipEndOverlayView;)
+      name          : 'setIsLoadNewAdAfterRewatchEnabled'
+      type          : '(Z)V'
+      access        : 0x0011 (PUBLIC FINAL)
+      registers     : 2
+      ins           : 2
+      outs          : 0
+      insns size    : 3 16-bit code units
+606370:                                        |[606370] com.vk.clips.tool.view.newsfeed.overlay.ClipEndOverlayView.setIsLoadNewAdAfterRewatchEnabled:(Z)V
+606380: 5c01 0a11                              |0000: iput-boolean v1, v0, Lcom/vk/clips/tool/view/newsfeed/overlay/ClipEndOverlayView;.u:Z // field@110a
+606384: 0e00                                   |0002: return-void
+
+    #8              : (in Lcom/vk/clips/tool/view/newsfeed/overlay/ClipEndOverlayView;)
+      name          : 'setOnClickListener'
+      type          : '(Landroid/view/View$OnClickListener;)V'
+      access        : 0x0001 (PUBLIC)
+      registers     : 2
+      ins           : 2
+      outs          : 2
+      insns size    : 6 16-bit code units
+606388:                                        |[606388] com.vk.clips.tool.view.newsfeed.overlay.ClipEndOverlayView.setOnClickListener:(Landroid/view/View$OnClickListener;)V
+606398: 6f20 650a 1000                         |0000: invoke-super {v0, v1}, Landroid/view/View;.setOnClickListener:(Landroid/view/View$OnClickListener;)V // method@0a65
+60639e: 5b01 ff10                              |0003: iput-object v1, v0, Lcom/vk/clips/tool/view/newsfeed/overlay/ClipEndOverlayView;.j:Landroid/view/View$OnClickListener; // field@10ff
+6063a2: 0e00                                   |0005: return-void
+
+    #9              : (in Lcom/vk/clips/tool/view/newsfeed/overlay/ClipEndOverlayView;)
+      name          : 'setupBlurContent'
+      type          : '(Lcom/vk/core/tool/view/vkblur/VkBlurContentView;)V'
+      access        : 0x0011 (PUBLIC FINAL)
+      registers     : 4
+      ins           : 2
+      outs          : 4
+      insns size    : 31 16-bit code units
+6063a4:                                        |[6063a4] com.vk.clips.tool.view.newsfeed.overlay.ClipEndOverlayView.setupBlurContent:(Lcom/vk/core/tool/view/vkblur/VkBlurContentView;)V
+6063b4: 5520 f610                              |0000: iget-boolean v0, v2, Lcom/vk/clips/tool/view/newsfeed/overlay/ClipEndOverlayView;.a:Z // field@10f6
+6063b8: 3900 0300                              |0002: if-nez v0, 0005 // +0003
+6063bc: 0e00                                   |0004: return-void
+6063be: 6e10 da29 0200                         |0005: invoke-virtual {v2}, Lcom/vk/clips/tool/view/newsfeed/overlay/ClipEndOverlayView;.c:()V // method@29da
+6063c4: 7010 e029 0200                         |0008: invoke-direct {v2}, Lcom/vk/clips/tool/view/newsfeed/overlay/ClipEndOverlayView;.getBlurView:()Lcom/vk/core/tool/view/vkblur/VkBlurView; // method@29e0
+6063ca: 0c00                                   |000b: move-result-object v0
+6063cc: 1501 a041                              |000c: const/high16 v1, #int 1101004800 // #41a0
+6063d0: 6e20 4d31 1000                         |000e: invoke-virtual {v0, v1}, Lcom/vk/core/tool/view/vkblur/VkBlurView;.setBlurRadius:(F)V // method@314d
+6063d6: 6e20 5631 3000                         |0011: invoke-virtual {v0, v3}, Lcom/vk/core/tool/view/vkblur/VkBlurView;.setupWithContent:(Lcom/vk/core/tool/view/vkblur/VkBlurContentView;)V // method@3156
+6063dc: 2203 cf01                              |0014: new-instance v3, Lad3/a; // type@01cf
+6063e0: 1301 1200                              |0016: const/16 v1, #int 18 // #12
+6063e4: 7040 0703 1320                         |0018: invoke-direct {v3, v1, v0, v2}, Lad3/a;.<init>:(ILjava/lang/Object;Ljava/lang/Object;)V // method@0307
+6063ea: 7120 a4d5 3000                         |001b: invoke-static {v0, v3}, Lph2/c0;.Q:(Landroid/view/View;Lkotlin/jvm/functions/Function1;)V // method@d5a4
+6063f0: 0e00                                   |001e: return-void
+
+===== Lcom/vk/api/generated/shortVideo/dto/ShortVideoRecomFeedItemDto$Deserializer; =====
+  Static fields     -
+  Instance fields   -
+  Direct methods    -
+
+    #0              : (in Lcom/vk/api/generated/shortVideo/dto/ShortVideoRecomFeedItemDto$Deserializer;)
+      name          : '<init>'
+      type          : '()V'
+      access        : 0x10001 (PUBLIC CONSTRUCTOR)
+      registers     : 1
+      ins           : 1
+      outs          : 1
+      insns size    : 4 16-bit code units
+880214:                                        |[880214] com.vk.api.generated.shortVideo.dto.ShortVideoRecomFeedItemDto$Deserializer.<init>:()V
+880224: 7010 fecc 0000                         |0000: invoke-direct {v0}, Ljava/lang/Object;.<init>:()V // method@ccfe
+88022a: 0e00                                   |0003: return-void
+  Virtual methods   -
+
+    #0              : (in Lcom/vk/api/generated/shortVideo/dto/ShortVideoRecomFeedItemDto$Deserializer;)
+      name          : 'b'
+      type          : '(Lcom/google/gson/h;Lcom/google/gson/f;)Ljava/lang/Object;'
+      access        : 0x0011 (PUBLIC FINAL)
+      registers     : 5
+      ins           : 3
+      outs          : 3
+      insns size    : 320 16-bit code units
+88022c:                                        |[88022c] com.vk.api.generated.shortVideo.dto.ShortVideoRecomFeedItemDto$Deserializer.b:(Lcom/google/gson/h;Lcom/google/gson/f;)Ljava/lang/Object;
+88023c: 1b00 9a09 0100                         |0000: const-string/jumbo v0, "type" // string@0001099a
+880242: 7120 824a 0300                         |0003: invoke-static {v3, v0}, Laz2/a;.b:(Lcom/google/gson/h;Ljava/lang/String;)Ljava/lang/String; // method@4a82
+880248: 0c00                                   |0006: move-result-object v0
+88024a: 3800 fb00                              |0007: if-eqz v0, 0102 // +00fb
+88024e: 6e10 3bcd 0000                         |0009: invoke-virtual {v0}, Ljava/lang/String;.hashCode:()I // method@cd3b
+880254: 0a01                                   |000c: move-result v1
+880256: 2c01 0101 0000                         |000d: sparse-switch v1, 0000010e // +00000101
+88025c: 2900 f200                              |0010: goto/16 0102 // +00f2
+880260: 1b01 4303 0100                         |0012: const-string/jumbo v1, "short_video_full" // string@00010343
+880266: 6e20 33cd 1000                         |0015: invoke-virtual {v0, v1}, Ljava/lang/String;.equals:(Ljava/lang/Object;)Z // method@cd33
+88026c: 0a01                                   |0018: move-result v1
+88026e: 3801 e900                              |0019: if-eqz v1, 0102 // +00e9
+880272: 1c00 a326                              |001b: const-class v0, Lcom/vk/api/generated/shortVideo/dto/ShortVideoRecomFeedItemDto$ShortVideoFeedItemShortVideoFullDto; // type@26a3
+880276: 1f04 8c1d                              |001d: check-cast v4, Lcom/google/gson/internal/bind/TreeTypeAdapter$a; // type@1d8c
+88027a: 6e30 216f 3400                         |001f: invoke-virtual {v4, v3, v0}, Lcom/google/gson/internal/bind/TreeTypeAdapter$a;.a:(Lcom/google/gson/h;Ljava/lang/reflect/Type;)Ljava/lang/Object; // method@6f21
+880280: 0c03                                   |0022: move-result-object v3
+880282: 1f03 ad26                              |0023: check-cast v3, Lcom/vk/api/generated/shortVideo/dto/ShortVideoRecomFeedItemDto; // type@26ad
+880286: 1103                                   |0025: return-object v3
+880288: 1b01 5003 0100                         |0026: const-string/jumbo v1, "short_video_shops_grid" // string@00010350
+88028e: 6e20 33cd 1000                         |0029: invoke-virtual {v0, v1}, Ljava/lang/String;.equals:(Ljava/lang/Object;)Z // method@cd33
+880294: 0a01                                   |002c: move-result v1
+880296: 3801 d500                              |002d: if-eqz v1, 0102 // +00d5
+88029a: 1c00 a126                              |002f: const-class v0, Lcom/vk/api/generated/shortVideo/dto/ShortVideoRecomFeedItemDto$ShortVideoFeedItemShopsGridDto; // type@26a1
+88029e: 1f04 8c1d                              |0031: check-cast v4, Lcom/google/gson/internal/bind/TreeTypeAdapter$a; // type@1d8c
+8802a2: 6e30 216f 3400                         |0033: invoke-virtual {v4, v3, v0}, Lcom/google/gson/internal/bind/TreeTypeAdapter$a;.a:(Lcom/google/gson/h;Ljava/lang/reflect/Type;)Ljava/lang/Object; // method@6f21
+8802a8: 0c03                                   |0036: move-result-object v3
+8802aa: 1f03 ad26                              |0037: check-cast v3, Lcom/vk/api/generated/shortVideo/dto/ShortVideoRecomFeedItemDto; // type@26ad
+
