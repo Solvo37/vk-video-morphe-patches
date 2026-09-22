@@ -4,7 +4,7 @@ on:
   workflow_dispatch:
     inputs:
       force_rebuild:
-        description: 'Rebuild and replace the current release even if this VK Video version already exists'
+        description: 'Rebuild the newest verified upstream even if its release already exists'
         required: false
         default: false
         type: boolean
@@ -14,10 +14,10 @@ on:
     branches: [main]
     paths:
       - 'patches/**'
+      - 'ci/**'
       - 'gradle/**'
       - 'settings.gradle.kts'
       - 'gradle.properties'
-      - 'ci/gplaydl-api-key.enc'
       - '.github/workflows/auto-update.yml'
 
 permissions:
@@ -31,9 +31,8 @@ concurrency:
 
 env:
   PACKAGE_NAME: com.vk.vkvideo
-  BASELINE_VERSION: '1.163'
-  BASELINE_VERSION_CODE: '51920'
   EXPECTED_CERT_SHA256: 057d974412032066f1b5edb1fdb550f71854189815c806b27c4d486fb4f1ef32
+  PROJECT_CERT_SHA256: d41f492f0e2a2e3990ac7f8e75cc5d4b14895f7b46c0b6113b7882c48aa5d40a
 
   GPLAYDL_VERSION: '4.2.1'
   APKEEP_VERSION: '1.0.0'
@@ -56,28 +55,71 @@ jobs:
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v7
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
 
       - name: Setup Java 21
-        uses: actions/setup-java@v6
+        uses: actions/setup-java@de7274f081f381c8f8158605e0321c36c376e2e6 # v6
         with:
           distribution: temurin
           java-version: '21'
 
       - name: Setup Python
-        uses: actions/setup-python@v6
+        uses: actions/setup-python@ece7cb06caefa5fff74198d8649806c4678c61a1 # v6
         with:
           python-version: '3.12'
 
       - name: Setup Gradle
-        uses: gradle/actions/setup-gradle@v6
+        uses: gradle/actions/setup-gradle@9c971963bec38e04b3d30dcc455b5382be2fdbfb # v6.3.0
         with:
           gradle-version: '9.7.1'
 
       - name: Install Android verification tools
         run: |
+          set -euo pipefail
           sudo apt-get update
           sudo apt-get install -y apksigner aapt zipalign jq unzip zip
+
+      - name: Resolve release baseline
+        id: baseline
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+
+          BASELINE_VERSION="$(jq -r '.version_name' ci/baseline.json)"
+          BASELINE_VERSION_CODE="$(jq -r '.version_code' ci/baseline.json)"
+          BASELINE_TAG="$(jq -r '.release_tag' ci/baseline.json)"
+
+          mkdir -p .baseline-release
+
+          LATEST_TAG="$(
+            gh release list               --repo "$GITHUB_REPOSITORY"               --limit 100               --json tagName,isDraft,isPrerelease,publishedAt               --jq '[.[] |
+                select(.isDraft == false) |
+                select(.isPrerelease == false) |
+                select(.tagName | test("^[0-9]+\\.[0-9]+(?:\\.[0-9]+)?(?:-[0-9]+)?$"))
+              ] | sort_by(.publishedAt) | last | .tagName // empty'
+          )"
+
+          if [[ -n "$LATEST_TAG" ]]; then
+            rm -rf .baseline-release/*
+            if gh release download "$LATEST_TAG"                 --repo "$GITHUB_REPOSITORY"                 --pattern 'upstream.json'                 --dir .baseline-release >/dev/null 2>&1; then
+
+              RELEASE_VERSION="$(jq -r '.selected.version_name // .version_name // empty' .baseline-release/upstream.json)"
+              RELEASE_CODE="$(jq -r '.selected.version_code // .version_code // empty' .baseline-release/upstream.json)"
+
+              if [[ "$RELEASE_CODE" =~ ^[0-9]+$ ]] && (( RELEASE_CODE >= BASELINE_VERSION_CODE )); then
+                BASELINE_VERSION="$RELEASE_VERSION"
+                BASELINE_VERSION_CODE="$RELEASE_CODE"
+                BASELINE_TAG="$LATEST_TAG"
+              fi
+            fi
+          fi
+
+          echo "Baseline: $BASELINE_VERSION ($BASELINE_VERSION_CODE), tag $BASELINE_TAG"
+
+          echo "version=$BASELINE_VERSION" >> "$GITHUB_OUTPUT"
+          echo "version_code=$BASELINE_VERSION_CODE" >> "$GITHUB_OUTPUT"
+          echo "tag=$BASELINE_TAG" >> "$GITHUB_OUTPUT"
 
       - name: Load linked Google Play credential
         env:
@@ -85,24 +127,19 @@ jobs:
         run: |
           set -euo pipefail
 
-          # A manually configured repository secret wins.
           if [[ -n "${GPLAYDL_API_KEY:-}" ]]; then
             echo "Using GPLAYDL_API_KEY repository secret."
             exit 0
           fi
 
           if [[ ! -s ci/gplaydl-api-key.enc ]]; then
-            echo "No linked Google Play credential found; public fallbacks will be used."
+            echo "No linked Google Play credential found; Google Play source will be skipped."
             exit 0
           fi
 
           KEY="$(openssl enc -d -aes-256-cbc -pbkdf2 -a -A             -in ci/gplaydl-api-key.enc             -pass env:ENC_PASSWORD)"
 
-          if [[ -z "$KEY" ]]; then
-            echo "Could not decrypt linked Google Play credential." >&2
-            exit 1
-          fi
-
+          [[ -n "$KEY" ]]
           echo "::add-mask::$KEY"
           echo "GPLAYDL_API_KEY=$KEY" >> "$GITHUB_ENV"
           unset KEY
@@ -124,183 +161,100 @@ jobs:
           tar -xzf rustore-downloader.tar.gz -C tools/rustore
           chmod +x tools/rustore/rustore_apk_downloader
 
-      - name: Download newest available upstream
-        id: download
+      - name: Download all available upstream candidates
         run: |
           set -euo pipefail
           rm -rf upstream
-          mkdir -p upstream
+          mkdir -p upstream/rustore upstream/google-play upstream/apkpure
 
-          SOURCE=""
-
-          # Primary: RuStore. VK Video releases are expected to appear here first.
-          # Query metadata before downloading so an unexpectedly stale RuStore build
-          # can still fall through to the secondary sources instead of downgrading.
-          echo "Checking RuStore first..."
+          echo "=== RuStore ==="
           if tools/rustore/rustore_apk_downloader -j "${PACKAGE_NAME}" > rustore-meta.json 2>/dev/null; then
-            RUSTORE_VERSION="$(jq -r '.version_name // empty' rustore-meta.json)"
-            RUSTORE_VERSION_CODE="$(jq -r '.version_code // empty' rustore-meta.json)"
             RUSTORE_CERT="$(jq -r '.signature // empty' rustore-meta.json | tr '[:upper:]' '[:lower:]')"
-
-            echo "RuStore reports: ${RUSTORE_VERSION:-unknown} (${RUSTORE_VERSION_CODE:-unknown})"
-
-            if [[ -n "$RUSTORE_VERSION_CODE" ]] \
-              && [[ "$RUSTORE_VERSION_CODE" =~ ^[0-9]+$ ]] \
-              && (( RUSTORE_VERSION_CODE >= BASELINE_VERSION_CODE )) \
-              && [[ "$RUSTORE_CERT" == "${EXPECTED_CERT_SHA256}" ]]; then
-              echo "Using RuStore as upstream."
-              mkdir -p upstream/rustore
-              if tools/rustore/rustore_apk_downloader "${PACKAGE_NAME}" upstream/rustore; then
-                SOURCE="rustore"
-              else
-                echo "::warning::RuStore metadata was valid but APK download failed; trying Google Play."
-                rm -rf upstream/rustore
-              fi
+            echo "RuStore reports: $(jq -r '.version_name // "unknown"' rustore-meta.json) ($(jq -r '.version_code // "unknown"' rustore-meta.json))"
+            if [[ "$RUSTORE_CERT" == "${EXPECTED_CERT_SHA256}" ]]; then
+              tools/rustore/rustore_apk_downloader "${PACKAGE_NAME}" upstream/rustore                 || echo "::warning::RuStore APK download failed."
             else
-              echo "::warning::RuStore build is below baseline or metadata/signature is invalid; trying secondary sources."
+              echo "::warning::RuStore metadata certificate is missing or unexpected; source skipped."
             fi
           else
-            echo "::warning::RuStore metadata query failed; trying secondary sources."
+            echo "::warning::RuStore metadata query failed."
           fi
 
-          # Fallback 1: Google Play.
-          if [[ -z "$SOURCE" && -n "${GPLAYDL_API_KEY:-}" ]]; then
-            echo "Trying Google Play via gplaydl..."
-            mkdir -p upstream/google-play
-            if gplaydl download "${PACKAGE_NAME}" \
-                --arch arm64 \
-                --no-extras \
-                -o upstream/google-play; then
-              SOURCE="google-play"
-            else
-              echo "::warning::Google Play download failed; trying APKPure."
-              rm -rf upstream/google-play
-            fi
-          elif [[ -z "$SOURCE" ]]; then
-            echo "::notice::Google Play credential is not configured; trying APKPure."
+          echo "=== Google Play ==="
+          if [[ -n "${GPLAYDL_API_KEY:-}" ]]; then
+            gplaydl download "${PACKAGE_NAME}"               --arch arm64               --no-extras               -o upstream/google-play               || echo "::warning::Google Play download failed."
+          else
+            echo "::notice::Google Play credential unavailable; source skipped."
           fi
 
-          # Fallback 2: APKPure.
-          if [[ -z "$SOURCE" ]]; then
-            echo "Trying APKPure via apkeep..."
-            mkdir -p upstream/apkpure
-            if ./apkeep -a "${PACKAGE_NAME}" -d apk-pure upstream/apkpure; then
-              SOURCE="apkpure"
-            else
-              echo "::error::All upstream sources failed."
-              rm -rf upstream/apkpure
-              exit 1
-            fi
-          fi
+          echo "=== APKPure ==="
+          ./apkeep -a "${PACKAGE_NAME}" -d apk-pure upstream/apkpure             || echo "::warning::APKPure download failed."
 
-          SOURCE_DIR="upstream/$SOURCE"
+          # Flatten APK/XAPK/APKS/APKM containers inside their source directory.
+          for source_dir in upstream/rustore upstream/google-play upstream/apkpure; do
+            while IFS= read -r archive; do
+              [[ -z "$archive" ]] && continue
+              tmp="${archive}.dir"
+              rm -rf "$tmp"
+              mkdir -p "$tmp"
+              unzip -q "$archive" -d "$tmp"
+              find "$tmp" -type f -name '*.apk' -exec cp -f {} "$source_dir"/ \;
+              rm -rf "$tmp" "$archive"
+            done < <(find "$source_dir" -maxdepth 1 -type f \( -name '*.xapk' -o -name '*.apks' -o -name '*.apkm' \) -print)
+          done
 
-          # Expand XAPK/APKS archives if a fallback returned one.
-          while IFS= read -r archive; do
-            [[ -z "$archive" ]] && continue
-            echo "Extracting $archive"
-            tmp="${archive}.dir"
-            mkdir -p "$tmp"
-            unzip -q "$archive" -d "$tmp"
-            find "$tmp" -type f -name '*.apk' -exec cp {} "$SOURCE_DIR"/ \;
-            rm -rf "$tmp" "$archive"
-          done < <(find "$SOURCE_DIR" -maxdepth 1 -type f \( -name '*.xapk' -o -name '*.apks' -o -name '*.apkm' \) -print)
+          echo "Downloaded candidates:"
+          find upstream -maxdepth 2 -type f -printf '%p\n' | sort
 
-          echo "Selected upstream source: $SOURCE"
-          find "$SOURCE_DIR" -maxdepth 1 -type f -printf '%f\n' | sort
-
-          echo "source=$SOURCE" >> "$GITHUB_OUTPUT"
-          echo "dir=$SOURCE_DIR" >> "$GITHUB_OUTPUT"
-
-      - name: Locate and verify base APK
+      - name: Select newest verified upstream
         id: upstream
-        env:
-          SOURCE: ${{ steps.download.outputs.source }}
-          SOURCE_DIR: ${{ steps.download.outputs.dir }}
         run: |
           set -euo pipefail
-
-          BASE_APK=""
-          while IFS= read -r candidate; do
-            BADGING="$(aapt dump badging "$candidate" 2>/dev/null | head -n1 || true)"
-            [[ "$BADGING" == package:* ]] || continue
-
-            PKG="$(grep -o "name='[^']*'" <<< "$BADGING" | head -n1 | cut -d"'" -f2)"
-            [[ "$PKG" == "${PACKAGE_NAME}" ]] || continue
-
-            if ! grep -q " split='" <<< "$BADGING"; then
-              BASE_APK="$candidate"
-              break
-            fi
-          done < <(find "$SOURCE_DIR" -maxdepth 1 -type f -name '*.apk' -print | sort)
-
-          if [[ -z "$BASE_APK" ]]; then
-            echo "Could not locate base APK" >&2
-            exit 1
-          fi
-
-          BADGING="$(aapt dump badging "$BASE_APK" | head -n1)"
-          echo "$BADGING"
-
-          VERSION="$(grep -o "versionName='[^']*'" <<< "$BADGING" | head -n1 | cut -d"'" -f2)"
-          VERSION_CODE="$(grep -o "versionCode='[^']*'" <<< "$BADGING" | head -n1 | cut -d"'" -f2)"
-          PKG="$(grep -o "name='[^']*'" <<< "$BADGING" | head -n1 | cut -d"'" -f2)"
-
-          [[ "$PKG" == "${PACKAGE_NAME}" ]]
-          [[ -n "$VERSION" ]]
-          [[ -n "$VERSION_CODE" ]]
-
-          CERT="$(apksigner verify --print-certs "$BASE_APK"             | sed -n 's/^Signer #1 certificate SHA-256 digest: //p'             | head -n1 | tr '[:upper:]' '[:lower:]')"
-
-          echo "Upstream source: $SOURCE"
-          echo "VK Video: $VERSION ($VERSION_CODE)"
-          echo "Certificate: $CERT"
-
-          [[ "$CERT" == "${EXPECTED_CERT_SHA256}" ]]
-
-          SHA256="$(sha256sum "$BASE_APK" | awk '{print $1}')"
-          jq -n             --arg source "$SOURCE"             --arg package "${PACKAGE_NAME}"             --arg version "$VERSION"             --arg version_code "$VERSION_CODE"             --arg certificate_sha256 "$CERT"             --arg base_apk_sha256 "$SHA256"             '{
-              source: $source,
-              package: $package,
-              version_name: $version,
-              version_code: $version_code,
-              certificate_sha256: $certificate_sha256,
-              base_apk_sha256: $base_apk_sha256
-            }' > upstream.json
-
-          echo "base=$BASE_APK" >> "$GITHUB_OUTPUT"
-          echo "version=$VERSION" >> "$GITHUB_OUTPUT"
-          echo "version_code=$VERSION_CODE" >> "$GITHUB_OUTPUT"
+          python ci/select_upstream.py             --root upstream             --package "${PACKAGE_NAME}"             --certificate "${EXPECTED_CERT_SHA256}"             --output upstream.json             --github-output "$GITHUB_OUTPUT"
 
       - name: Decide whether to build
         id: decision
         env:
           GH_TOKEN: ${{ github.token }}
           VERSION: ${{ steps.upstream.outputs.version }}
+          VERSION_CODE: ${{ steps.upstream.outputs.version_code }}
+          BASELINE_VERSION: ${{ steps.baseline.outputs.version }}
+          BASELINE_VERSION_CODE: ${{ steps.baseline.outputs.version_code }}
+          BASELINE_TAG: ${{ steps.baseline.outputs.tag }}
           FORCE_REBUILD: ${{ inputs.force_rebuild || false }}
         run: |
           set -euo pipefail
 
-          LOWEST="$(printf '%s\n%s\n' "${BASELINE_VERSION}" "$VERSION" | sort -V | head -n1)"
-          if [[ "$LOWEST" == "$VERSION" && "$VERSION" != "${BASELINE_VERSION}" ]]; then
+          if (( VERSION_CODE < BASELINE_VERSION_CODE )); then
             echo "build=false" >> "$GITHUB_OUTPUT"
-            echo "::warning::Newest available source is $VERSION, older than baseline ${BASELINE_VERSION}; refusing downgrade."
+            echo "::warning::Newest verified source is $VERSION ($VERSION_CODE), below baseline $BASELINE_VERSION ($BASELINE_VERSION_CODE)."
             exit 0
           fi
 
-          if gh release view "$VERSION" --repo "$GITHUB_REPOSITORY" >/dev/null 2>&1; then
-            if [[ "$FORCE_REBUILD" == "true" ]]; then
-              echo "build=true" >> "$GITHUB_OUTPUT"
-              echo "Release $VERSION exists, but force_rebuild=true."
-              exit 0
-            fi
+          TAG="$VERSION"
+          if (( VERSION_CODE == BASELINE_VERSION_CODE )) && [[ "$VERSION" == "$BASELINE_VERSION" ]]; then
+            TAG="$BASELINE_TAG"
+          elif gh release view "$TAG" --repo "$GITHUB_REPOSITORY" >/dev/null 2>&1; then
+            # Same versionName can exist with a newer versionCode.
+            TAG="${VERSION}-${VERSION_CODE}"
+          fi
 
+          echo "tag=$TAG" >> "$GITHUB_OUTPUT"
+
+          if (( VERSION_CODE == BASELINE_VERSION_CODE )) && [[ "$FORCE_REBUILD" != "true" ]]; then
             echo "build=false" >> "$GITHUB_OUTPUT"
-            echo "Release $VERSION already exists."
+            echo "Baseline build already released."
+            exit 0
+          fi
+
+          if gh release view "$TAG" --repo "$GITHUB_REPOSITORY" >/dev/null 2>&1 && [[ "$FORCE_REBUILD" != "true" ]]; then
+            echo "build=false" >> "$GITHUB_OUTPUT"
+            echo "Release $TAG already exists."
             exit 0
           fi
 
           echo "build=true" >> "$GITHUB_OUTPUT"
+          echo "Will build VK Video $VERSION ($VERSION_CODE) as tag $TAG."
 
       - name: Build Morphe patch bundle
         if: steps.decision.outputs.build == 'true'
@@ -317,89 +271,114 @@ jobs:
           test -n "$MPP"
           echo "path=$MPP" >> "$GITHUB_OUTPUT"
 
-      - name: Install pinned Morphe Desktop
+      - name: Install pinned Morphe Desktop and APKEditor
         if: steps.decision.outputs.build == 'true'
         run: |
           set -euo pipefail
+
           curl -fL --retry 4             -o morphe.jar             "https://github.com/MorpheApp/morphe-desktop/releases/download/${MORPHE_VERSION}/morphe-desktop-${MORPHE_VERSION#v}-all.jar"
           echo "${MORPHE_SHA256}  morphe.jar" | sha256sum -c -
 
-      - name: Patch base APK
+          curl -fL --retry 4             -o APKEditor.jar             "https://github.com/REAndroid/APKEditor/releases/download/V${APKEDITOR_VERSION}/APKEditor-${APKEDITOR_VERSION}.jar"
+
+      - name: Prepare universal upstream APK
+        if: steps.decision.outputs.build == 'true'
+        env:
+          SOURCE_DIR: ${{ steps.upstream.outputs.dir }}
+          BASE_APK: ${{ steps.upstream.outputs.base }}
+        run: |
+          set -euo pipefail
+          mkdir -p dist merge-upstream
+
+          while IFS= read -r apk; do
+            cp "$apk" "merge-upstream/$(basename "$apk")"
+          done < <(find "$SOURCE_DIR" -maxdepth 1 -type f -name '*.apk' -print | sort)
+
+          COUNT="$(find merge-upstream -maxdepth 1 -type f -name '*.apk' | wc -l)"
+          echo "Upstream APK count: $COUNT"
+
+          if [[ "$COUNT" -gt 1 ]]; then
+            "$JAVA_HOME/bin/java" -jar APKEditor.jar m               -i merge-upstream               -o dist/upstream-universal.apk
+          else
+            cp "$BASE_APK" dist/upstream-universal.apk
+          fi
+
+          BADGING="$(aapt dump badging dist/upstream-universal.apk | head -n1)"
+          echo "$BADGING"
+          grep -q "name='${PACKAGE_NAME}'" <<< "$BADGING"
+          grep -q "versionName='${{ steps.upstream.outputs.version }}'" <<< "$BADGING"
+
+      - name: Apply required patches
         if: steps.decision.outputs.build == 'true'
         id: patch
         continue-on-error: true
         env:
-          BASE_APK: ${{ steps.upstream.outputs.base }}
           MPP: ${{ steps.mpp.outputs.path }}
         run: |
           set -euo pipefail
-          mkdir -p dist
 
-          "$JAVA_HOME/bin/java" -jar morphe.jar patch             -p "$MPP"             --force             --exclusive             -e "Fix install conflict with stock VK"             -e "Bypass native signature check"             -e "Disable in-app update"             -e "Remove video ads"             -e "Hide promoted banner content"             -e "Disable ad pixel tracking"             --bytecode-mode STRIP_FAST             --unsigned             -r dist/patch-result.json             -o dist/patched-base.apk             "$BASE_APK"
+          "$JAVA_HOME/bin/java" -jar morphe.jar patch             -p "$MPP"             --force             --exclusive             -e "Fix install conflict with stock VK"             -e "Bypass native signature check"             -e "Disable in-app update"             -e "Remove video ads"             -e "Hide promoted banner content"             -e "Disable ad pixel tracking"             --bytecode-mode STRIP_FAST             --unsigned             -r dist/patch-result.json             -o dist/unsigned-patched.apk             dist/upstream-universal.apk
 
-      - name: Open compatibility issue on patch failure
-        if: steps.decision.outputs.build == 'true' && steps.patch.outcome == 'failure'
+      - name: Validate Morphe result and patched payload
+        if: steps.decision.outputs.build == 'true' && steps.patch.outcome == 'success'
+        id: static_gate
+        continue-on-error: true
+        run: |
+          set -euo pipefail
+
+          jq -e '.success == true and (.failedPatches | length == 0)' dist/patch-result.json >/dev/null
+
+          for patch in             "Fix install conflict with stock VK"             "Bypass native signature check"             "Disable in-app update"             "Remove video ads"             "Hide promoted banner content"             "Disable ad pixel tracking"; do
+            jq -e --arg patch "$patch"               'any(.appliedPatches[]?; .name == $patch)'               dist/patch-result.json >/dev/null               || { echo "Required patch missing from Morphe report: $patch" >&2; exit 1; }
+          done
+
+          aapt dump xmltree dist/unsigned-patched.apk AndroidManifest.xml > dist/manifest-xmltree.txt
+          python ci/verify_manifest.py dist/manifest-xmltree.txt
+          python ci/verify_patched_apk.py             dist/unsigned-patched.apk             --json-out dist/static-gate.json
+
+      - name: Open compatibility issue on gate failure
+        if: steps.decision.outputs.build == 'true' && (steps.patch.outcome == 'failure' || steps.static_gate.outcome == 'failure')
         env:
           GH_TOKEN: ${{ github.token }}
           VERSION: ${{ steps.upstream.outputs.version }}
           VERSION_CODE: ${{ steps.upstream.outputs.version_code }}
+          PATCH_OUTCOME: ${{ steps.patch.outcome }}
+          STATIC_OUTCOME: ${{ steps.static_gate.outcome }}
         run: |
           set -euo pipefail
+
           TITLE="Compatibility: VK Video $VERSION ($VERSION_CODE)"
-          EXISTING="$(gh issue list --repo "$GITHUB_REPOSITORY" --state open             --search "$TITLE in:title" --json number --jq '.[0].number // empty')"
+          EXISTING="$(gh issue list             --repo "$GITHUB_REPOSITORY"             --state open             --search "$TITLE in:title"             --json number             --jq '.[0].number // empty')"
 
-          BODY="Automated Morphe patching failed for VK Video **$VERSION** (versionCode **$VERSION_CODE**).
+          BODY="Automated compatibility gate failed for VK Video **$VERSION** (versionCode **$VERSION_CODE**).
 
-          Source APK passed package and VK-certificate verification, but one or more required fingerprints no longer apply.
+          Morphe patch step: **$PATCH_OUTCOME**
+          Static post-patch gate: **$STATIC_OUTCOME**
+
+          The upstream package and VK signing certificate were verified before patching. No APK release was published.
 
           Workflow: $GITHUB_SERVER_URL/$GITHUB_REPOSITORY/actions/runs/$GITHUB_RUN_ID"
 
           if [[ -n "$EXISTING" ]]; then
             gh issue comment "$EXISTING" --repo "$GITHUB_REPOSITORY" --body "$BODY"
           else
-            gh issue create "$TITLE" --repo "$GITHUB_REPOSITORY" --body "$BODY"
+            gh issue create --repo "$GITHUB_REPOSITORY" --title "$TITLE" --body "$BODY"
           fi
 
-      - name: Stop after incompatible update
-        if: steps.decision.outputs.build == 'true' && steps.patch.outcome == 'failure'
+      - name: Stop after compatibility failure
+        if: steps.decision.outputs.build == 'true' && (steps.patch.outcome == 'failure' || steps.static_gate.outcome == 'failure')
         run: exit 1
 
-      - name: Merge Google Play / XAPK splits
-        if: steps.decision.outputs.build == 'true' && steps.patch.outcome == 'success'
-        env:
-          SOURCE_DIR: ${{ steps.download.outputs.dir }}
-          BASE_APK: ${{ steps.upstream.outputs.base }}
-        run: |
-          set -euo pipefail
-
-          mkdir -p merge
-          cp dist/patched-base.apk merge/base.apk
-
-          while IFS= read -r split; do
-            [[ "$split" == "$BASE_APK" ]] && continue
-            cp "$split" "merge/$(basename "$split")"
-          done < <(find "$SOURCE_DIR" -maxdepth 1 -type f -name '*.apk' -print)
-
-          COUNT="$(find merge -maxdepth 1 -type f -name '*.apk' | wc -l)"
-          echo "APK files to merge: $COUNT"
-
-          if [[ "$COUNT" -gt 1 ]]; then
-            curl -fL --retry 4               -o APKEditor.jar               "https://github.com/REAndroid/APKEditor/releases/download/V${APKEDITOR_VERSION}/APKEditor-${APKEDITOR_VERSION}.jar"
-
-            java -jar APKEditor.jar m -i merge -o dist/unsigned-universal.apk
-          else
-            cp dist/patched-base.apk dist/unsigned-universal.apk
-          fi
-
       - name: Decode signing keystore
-        if: steps.decision.outputs.build == 'true' && steps.patch.outcome == 'success' && env.HAS_SIGNING == 'true'
+        if: steps.decision.outputs.build == 'true' && steps.patch.outcome == 'success' && steps.static_gate.outcome == 'success' && env.HAS_SIGNING == 'true'
         run: |
           set -euo pipefail
           printf '%s' "${{ secrets.ANDROID_KEYSTORE_B64 }}" | base64 -d > signing.jks
           test -s signing.jks
 
-      - name: Sign universal APK
-        if: steps.decision.outputs.build == 'true' && steps.patch.outcome == 'success' && env.HAS_SIGNING == 'true'
+      - name: Sign and verify final APK
+        if: steps.decision.outputs.build == 'true' && steps.patch.outcome == 'success' && steps.static_gate.outcome == 'success' && env.HAS_SIGNING == 'true'
+        id: signed
         env:
           VERSION: ${{ steps.upstream.outputs.version }}
           STORE_PASSWORD: ${{ secrets.ANDROID_KEYSTORE_PASSWORD }}
@@ -409,89 +388,133 @@ jobs:
           set -euo pipefail
 
           OUT="dist/VK-Video-${VERSION}-patched.apk"
-          ALIGNED="dist/aligned-universal.apk"
+          ALIGNED="dist/aligned-patched.apk"
 
-          zipalign -f -p 4 dist/unsigned-universal.apk "$ALIGNED"
+          zipalign -f -p 4 dist/unsigned-patched.apk "$ALIGNED"
 
-          apksigner sign \
-            --ks signing.jks \
-            --ks-pass env:STORE_PASSWORD \
-            --ks-key-alias "$KEY_ALIAS" \
-            --key-pass env:KEY_PASSWORD \
-            --v1-signing-enabled false \
-            --v2-signing-enabled false \
-            --v3-signing-enabled true \
-            --v4-signing-enabled false \
-            --out "$OUT" \
-            "$ALIGNED"
+          apksigner sign             --ks signing.jks             --ks-pass env:STORE_PASSWORD             --ks-key-alias "$KEY_ALIAS"             --key-pass env:KEY_PASSWORD             --v1-signing-enabled false             --v2-signing-enabled false             --v3-signing-enabled true             --v4-signing-enabled false             --out "$OUT"             "$ALIGNED"
 
           zipalign -c -p 4 "$OUT"
           apksigner verify --verbose --print-certs "$OUT"
+
+          CERT="$(apksigner verify --print-certs "$OUT"             | sed -n 's/^Signer #1 certificate SHA-256 digest: //p'             | head -n1 | tr '[:upper:]' '[:lower:]' | tr -d ':')"
+          [[ "$CERT" == "${PROJECT_CERT_SHA256}" ]]
 
           BADGING="$(aapt dump badging "$OUT" | head -n1)"
           echo "$BADGING"
           grep -q "name='${PACKAGE_NAME}'" <<< "$BADGING"
           grep -q "versionName='${VERSION}'" <<< "$BADGING"
 
+          # Repeat the static gate on the exact signed bytes that will be published.
+          python ci/verify_patched_apk.py             "$OUT"             --json-out dist/final-gate.json
+
           sha256sum "$OUT" | tee "dist/VK-Video-${VERSION}-patched.sha256"
+          echo "apk=$OUT" >> "$GITHUB_OUTPUT"
+
+      - name: Build release metadata
+        if: steps.decision.outputs.build == 'true' && steps.patch.outcome == 'success' && steps.static_gate.outcome == 'success'
+        env:
+          VERSION: ${{ steps.upstream.outputs.version }}
+          VERSION_CODE: ${{ steps.upstream.outputs.version_code }}
+          SOURCE: ${{ steps.upstream.outputs.source }}
+        run: |
+          set -euo pipefail
+
+          PATCH_VERSION="$(sed -n 's/^version[[:space:]]*=[[:space:]]*//p' gradle.properties | head -n1)"
+
+          jq -n             --arg package "${PACKAGE_NAME}"             --arg version "$VERSION"             --argjson version_code "$VERSION_CODE"             --arg source "$SOURCE"             --arg patch_bundle_version "$PATCH_VERSION"             --arg morphe_version "${MORPHE_VERSION}"             --arg apkeditor_version "${APKEDITOR_VERSION}"             --arg project_certificate_sha256 "${PROJECT_CERT_SHA256}"             --arg workflow_run "$GITHUB_SERVER_URL/$GITHUB_REPOSITORY/actions/runs/$GITHUB_RUN_ID"             '{
+              package: $package,
+              version_name: $version,
+              version_code: $version_code,
+              upstream_source: $source,
+              patch_bundle_version: $patch_bundle_version,
+              bytecode_mode: "STRIP_FAST",
+              native_target: "arm64-v8a/libvkcore.so",
+              signing: {
+                scheme_v1: false,
+                scheme_v2: false,
+                scheme_v3: true,
+                scheme_v4: false,
+                certificate_sha256: $project_certificate_sha256
+              },
+              tools: {
+                morphe: $morphe_version,
+                apkeditor: $apkeditor_version
+              },
+              workflow_run: $workflow_run
+            }' > dist/build-metadata.json
 
       - name: Upload build diagnostics
         if: steps.decision.outputs.build == 'true' && always()
-        uses: actions/upload-artifact@v7
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7
         with:
-          name: vk-video-${{ steps.upstream.outputs.version }}-build
+          name: vk-video-${{ steps.upstream.outputs.version }}-${{ steps.upstream.outputs.version_code }}-build
           path: |
             upstream.json
+            dist/build-metadata.json
             dist/patch-result.json
+            dist/static-gate.json
+            dist/final-gate.json
+            dist/manifest-xmltree.txt
             dist/VK-Video-*-patched.sha256
             patches/build/libs/*.mpp
           if-no-files-found: warn
 
       - name: Publish GitHub Release for Obtainium
-        if: steps.decision.outputs.build == 'true' && steps.patch.outcome == 'success' && env.HAS_SIGNING == 'true'
+        if: steps.decision.outputs.build == 'true' && steps.patch.outcome == 'success' && steps.static_gate.outcome == 'success' && env.HAS_SIGNING == 'true'
         env:
           GH_TOKEN: ${{ github.token }}
           VERSION: ${{ steps.upstream.outputs.version }}
           VERSION_CODE: ${{ steps.upstream.outputs.version_code }}
-          SOURCE: ${{ steps.download.outputs.source }}
+          SOURCE: ${{ steps.upstream.outputs.source }}
+          TAG: ${{ steps.decision.outputs.tag }}
           MPP: ${{ steps.mpp.outputs.path }}
+          APK: ${{ steps.signed.outputs.apk }}
         run: |
           set -euo pipefail
 
-          APK="dist/VK-Video-${VERSION}-patched.apk"
           SHA="dist/VK-Video-${VERSION}-patched.sha256"
 
-          NOTES="Automated VK Video build.
+          cat > dist/release-notes.md <<EOF
+          ## VK Video $VERSION ($VERSION_CODE) patched
 
-          Upstream: $SOURCE
-          VK Video: $VERSION ($VERSION_CODE)
-          Upstream package and VK signing certificate were verified before patching.
-          The final APK includes the native VK signature-check bypass, Morphe patches, split merge when needed, zipalign, and v3-only signing with the project's persistent release key."
+          Automated ARM64 build.
 
-          if gh release view "$VERSION" --repo "$GITHUB_REPOSITORY" >/dev/null 2>&1; then
-            echo "Updating existing release $VERSION..."
-            gh release upload "$VERSION" \
-              "$APK" "$SHA" "$MPP" "upstream.json" \
-              --clobber \
-              --repo "$GITHUB_REPOSITORY"
+          - upstream source: **$SOURCE**
+          - package and original VK certificate verified before patching
+          - stock-VK coexistence fix
+          - native `libvkcore.so` signature-check bypass
+          - in-app update disabled
+          - client-side video ad toggles disabled
+          - promoted Discover banner disabled
+          - ad pixel tracker disabled
+          - Morphe **STRIP_FAST**
+          - **zipalign**
+          - APK Signature Scheme **v3 only**
+          - static post-build gates passed
 
-            gh release edit "$VERSION" \
-              --repo "$GITHUB_REPOSITORY" \
-              --title "VK Video $VERSION patched" \
-              --notes "$NOTES"
+          The regular VK app can remain installed. The official VK Video app must be removed before the first project-signed install.
+
+          See `build-metadata.json` and `upstream.json` for machine-readable build provenance.
+          EOF
+
+          ASSETS=(
+            "$APK"
+            "$SHA"
+            "$MPP"
+            "upstream.json"
+            "dist/build-metadata.json"
+            "dist/patch-result.json"
+          )
+
+          if gh release view "$TAG" --repo "$GITHUB_REPOSITORY" >/dev/null 2>&1; then
+            gh release upload "$TAG" "${ASSETS[@]}" --clobber --repo "$GITHUB_REPOSITORY"
+            gh release edit "$TAG"               --repo "$GITHUB_REPOSITORY"               --title "VK Video $VERSION ($VERSION_CODE) patched"               --notes-file dist/release-notes.md               --latest
           else
-            echo "Creating release $VERSION..."
-            gh release create "$VERSION" \
-              "$APK#VK Video $VERSION patched APK" \
-              "$SHA#SHA-256" \
-              "$MPP#Morphe patch bundle" \
-              "upstream.json#Upstream build metadata" \
-              --repo "$GITHUB_REPOSITORY" \
-              --title "VK Video $VERSION patched" \
-              --notes "$NOTES"
+            gh release create "$TAG" "${ASSETS[@]}"               --repo "$GITHUB_REPOSITORY"               --title "VK Video $VERSION ($VERSION_CODE) patched"               --notes-file dist/release-notes.md               --latest
           fi
 
       - name: Signing setup reminder
-        if: steps.decision.outputs.build == 'true' && steps.patch.outcome == 'success' && env.HAS_SIGNING != 'true'
+        if: steps.decision.outputs.build == 'true' && steps.patch.outcome == 'success' && steps.static_gate.outcome == 'success' && env.HAS_SIGNING != 'true'
         run: |
-          echo "::warning::Patching succeeded, but Android signing secrets are not configured. No public APK release was created."
+          echo "::warning::All compatibility gates passed, but Android signing secrets are not configured. No public APK release was created."
