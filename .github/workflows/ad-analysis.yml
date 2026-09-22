@@ -1,0 +1,95 @@
+name: Analyze VK Video ad paths
+
+on:
+  push:
+    branches:
+      - ad-analysis-1.163
+    paths:
+      - '.github/workflows/ad-analysis.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  analyze:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout analysis branch
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+        with:
+          ref: ad-analysis-1.163
+
+      - name: Setup Java 21
+        uses: actions/setup-java@de7274f081f381c8f8158605e0321c36c376e2e6 # v6
+        with:
+          distribution: temurin
+          java-version: '21'
+
+      - name: Download released APK
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          rm -rf work
+          mkdir -p work
+          gh release download 1.163             --repo "$GITHUB_REPOSITORY"             --pattern 'VK-Video-1.163-patched.apk'             --dir work
+
+      - name: Install JADX
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          URL="$(gh api repos/skylot/jadx/releases/latest             --jq '.assets[] | select(.name | test("^jadx-[0-9].*\\.zip$")) | .browser_download_url'             | head -n1)"
+          test -n "$URL"
+          curl -fL --retry 4 "$URL" -o work/jadx.zip
+          unzip -q work/jadx.zip -d work/jadx-bin
+          chmod +x work/jadx-bin/bin/jadx
+          work/jadx-bin/bin/jadx --version
+
+      - name: Decompile and scan advertising paths
+        run: |
+          set -euo pipefail
+          APK='work/VK-Video-1.163-patched.apk'
+          OUT='work/jadx-out'
+          REPORT='docs/ad-analysis-1.163.txt'
+          mkdir -p docs
+
+          work/jadx-bin/bin/jadx             --no-res             --threads-count 4             -d "$OUT"             "$APK"
+
+          {
+            echo '# VK Video 1.163 advertising-path scan'
+            echo
+            echo 'APK: VK-Video-1.163-patched.apk'
+            echo "JADX: $(work/jadx-bin/bin/jadx --version)"
+            echo
+            echo '## Direct textual matches'
+            echo
+            rg -n -i -C 8               'mytarget|instreamads|instream|preroll|pre[_ -]?roll|midroll|mid[_ -]?roll|postroll|post[_ -]?roll|vast|vmap|adbreak|ad_break|adtag|ad_tag|clip.{0,30}ad|ad.{0,30}clip'               "$OUT/sources"               | head -n 12000 || true
+
+            echo
+            echo '## Matching source files'
+            rg -l -i               'mytarget|instreamads|instream|preroll|pre[_ -]?roll|midroll|mid[_ -]?roll|postroll|post[_ -]?roll|vast|vmap|adbreak|ad_break|adtag|ad_tag|clip.{0,30}ad|ad.{0,30}clip'               "$OUT/sources"               | sort | head -n 500 || true
+
+            echo
+            echo '## APK/Dex strings'
+            unzip -Z1 "$APK" | grep -E '^classes[0-9]*\\.dex$' | while read -r dex; do
+              echo "### $dex"
+              unzip -p "$APK" "$dex"                 | strings -n 5                 | grep -Eai 'mytarget|instream|preroll|midroll|postroll|vast|vmap|adbreak|adtag|clip.{0,30}ad|ad.{0,30}clip'                 | sort -u | head -n 1000 || true
+            done
+          } > "$REPORT"
+
+          echo "Report lines: $(wc -l < "$REPORT")"
+          echo "Report bytes: $(wc -c < "$REPORT")"
+
+      - name: Commit analysis report
+        run: |
+          set -euo pipefail
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add docs/ad-analysis-1.163.txt
+          if git diff --cached --quiet; then
+            echo 'No report changes.'
+            exit 0
+          fi
+          git commit -m 'analysis: scan VK Video 1.163 ad paths'
+          git push origin HEAD:ad-analysis-1.163
