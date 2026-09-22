@@ -18,6 +18,7 @@ on:
       - 'gradle/**'
       - 'settings.gradle.kts'
       - 'gradle.properties'
+      - 'patches-list.json'
       - '.github/workflows/auto-update.yml'
 
 permissions:
@@ -56,6 +57,29 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+
+      - name: Detect patch-profile changes
+        id: patch_change
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          CHANGED=false
+
+          if [[ "$GITHUB_EVENT_NAME" == "push" ]]; then
+            BEFORE="$(jq -r '.before // empty' "$GITHUB_EVENT_PATH")"
+            ZERO="0000000000000000000000000000000000000000"
+
+            if [[ -n "$BEFORE" && "$BEFORE" != "$ZERO" ]]; then
+              FILES="$(gh api "repos/$GITHUB_REPOSITORY/compare/$BEFORE...$GITHUB_SHA" --jq '.files[].filename')"
+              if grep -Eq '^(patches/|gradle\.properties$|patches-list\.json$)' <<< "$FILES"; then
+                CHANGED=true
+              fi
+            fi
+          fi
+
+          echo "changed=$CHANGED" >> "$GITHUB_OUTPUT"
+          echo "Patch profile changed: $CHANGED"
 
       - name: Setup Java 21
         uses: actions/setup-java@de7274f081f381c8f8158605e0321c36c376e2e6 # v6
@@ -221,9 +245,16 @@ jobs:
           BASELINE_VERSION: ${{ steps.baseline.outputs.version }}
           BASELINE_VERSION_CODE: ${{ steps.baseline.outputs.version_code }}
           BASELINE_TAG: ${{ steps.baseline.outputs.tag }}
-          FORCE_REBUILD: ${{ inputs.force_rebuild || false }}
+          USER_FORCE_REBUILD: ${{ inputs.force_rebuild || false }}
+          PATCH_PROFILE_CHANGED: ${{ steps.patch_change.outputs.changed }}
         run: |
           set -euo pipefail
+
+          FORCE_REBUILD=false
+          if [[ "$USER_FORCE_REBUILD" == "true" || "$PATCH_PROFILE_CHANGED" == "true" ]]; then
+            FORCE_REBUILD=true
+          fi
+          echo "Force rebuild: $FORCE_REBUILD (manual=$USER_FORCE_REBUILD, patch-profile=$PATCH_PROFILE_CHANGED)"
 
           if (( VERSION_CODE < BASELINE_VERSION_CODE )); then
             echo "build=false" >> "$GITHUB_OUTPUT"
@@ -338,7 +369,7 @@ jobs:
         run: |
           set -euo pipefail
 
-          "$JAVA_HOME/bin/java" -jar morphe.jar patch             -p "$MPP"             --force             --exclusive             -e "Fix install conflict with stock VK"             -e "Bypass native signature check"             -e "Disable in-app update"             -e "Remove video ads"             -e "Hide promoted banner content"             -e "Disable ad pixel tracking"             --bytecode-mode STRIP_FAST             --unsigned             -r dist/patch-result.json             -o dist/unsigned-patched.apk             dist/upstream-universal.apk
+          "$JAVA_HOME/bin/java" -jar morphe.jar patch             -p "$MPP"             --force             --exclusive             -e "Fix install conflict with stock VK"             -e "Bypass native signature check"             -e "Disable in-app update"             -e "Remove video ads"             -e "Remove clip ads"             -e "Hide promoted banner content"             -e "Disable ad pixel tracking"             --bytecode-mode STRIP_FAST             --unsigned             -r dist/patch-result.json             -o dist/unsigned-patched.apk             dist/upstream-universal.apk
 
       - name: Validate Morphe result and patched payload
         if: steps.decision.outputs.build == 'true' && steps.patch.outcome == 'success'
@@ -349,7 +380,7 @@ jobs:
 
           jq -e '.success == true and (.failedPatches | length == 0)' dist/patch-result.json >/dev/null
 
-          for patch in             "Fix install conflict with stock VK"             "Bypass native signature check"             "Disable in-app update"             "Remove video ads"             "Hide promoted banner content"             "Disable ad pixel tracking"; do
+          for patch in             "Fix install conflict with stock VK"             "Bypass native signature check"             "Disable in-app update"             "Remove video ads"             "Remove clip ads"             "Hide promoted banner content"             "Disable ad pixel tracking"; do
             jq -e --arg patch "$patch"               'any(.appliedPatches[]?; .name == $patch)'               dist/patch-result.json >/dev/null               || { echo "Required patch missing from Morphe report: $patch" >&2; exit 1; }
           done
 
@@ -534,7 +565,10 @@ jobs:
           - stock-VK coexistence fix
           - native `libvkcore.so` signature-check bypass
           - in-app update disabled
-          - client-side video ad toggles disabled
+          - video player ad feature gates disabled
+          - server-provided instream/mobile/sport/banner ad payloads stripped
+          - preroll/midroll/postroll instream sections stripped
+          - VK Clips ad feature/config/SDK paths disabled
           - promoted Discover banner disabled
           - ad pixel tracker disabled
           - Morphe **STRIP_FAST**
