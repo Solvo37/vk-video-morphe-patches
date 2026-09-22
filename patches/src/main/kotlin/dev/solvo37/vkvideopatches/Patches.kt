@@ -262,28 +262,28 @@ val filterClipServerFeedAdsPatch = bytecodePatch(
                     invoke-interface {v1}, Ljava/util/Iterator;->next()Ljava/lang/Object;
                     move-result-object v2
 
-                    instance-of v3, v2, Lcom/vk/api/generated/shortVideo/dto/ShortVideoRecomFeedItemDto$ShortVideoFeedItemShortVideoStaticAdDto;
+                    instance-of v3, v2, Lcom/vk/api/generated/shortVideo/dto/ShortVideoRecomFeedItemDto${'$'}ShortVideoFeedItemShortVideoStaticAdDto;
                     if-nez v3, :clip_remove_ad
 
-                    instance-of v3, v2, Lcom/vk/api/generated/shortVideo/dto/ShortVideoRecomFeedItemDto$ShortVideoFeedItemShortVideoMarketAdDto;
+                    instance-of v3, v2, Lcom/vk/api/generated/shortVideo/dto/ShortVideoRecomFeedItemDto${'$'}ShortVideoFeedItemShortVideoMarketAdDto;
                     if-nez v3, :clip_remove_ad
 
-                    instance-of v3, v2, Lcom/vk/api/generated/shortVideo/dto/ShortVideoRecomFeedItemDto$ShortVideoFeedItemShortVideoFloatingAdDto;
+                    instance-of v3, v2, Lcom/vk/api/generated/shortVideo/dto/ShortVideoRecomFeedItemDto${'$'}ShortVideoFeedItemShortVideoFloatingAdDto;
                     if-nez v3, :clip_remove_ad
 
-                    instance-of v3, v2, Lcom/vk/api/generated/shortVideo/dto/ShortVideoRecomFeedItemDto$ShortVideoFeedItemShortVideoMytargetSdkAdDto;
+                    instance-of v3, v2, Lcom/vk/api/generated/shortVideo/dto/ShortVideoRecomFeedItemDto${'$'}ShortVideoFeedItemShortVideoMytargetSdkAdDto;
                     if-nez v3, :clip_remove_ad
 
-                    instance-of v3, v2, Lcom/vk/api/generated/shortVideo/dto/ShortVideoRecomFeedItemDto$ShortVideoFeedItemShortVideoMytargetSdkStaticDto;
+                    instance-of v3, v2, Lcom/vk/api/generated/shortVideo/dto/ShortVideoRecomFeedItemDto${'$'}ShortVideoFeedItemShortVideoMytargetSdkStaticDto;
                     if-nez v3, :clip_remove_ad
 
-                    instance-of v3, v2, Lcom/vk/api/generated/shortVideo/dto/ShortVideoRecomFeedItemDto$ShortVideoFeedItemShortVideoMytargetSdkVideoDto;
+                    instance-of v3, v2, Lcom/vk/api/generated/shortVideo/dto/ShortVideoRecomFeedItemDto${'$'}ShortVideoFeedItemShortVideoMytargetSdkVideoDto;
                     if-nez v3, :clip_remove_ad
 
-                    instance-of v3, v2, Lcom/vk/api/generated/shortVideo/dto/ShortVideoRecomFeedItemDto$ShortVideoFeedItemShortVideoMytargetSdkCarouselDto;
+                    instance-of v3, v2, Lcom/vk/api/generated/shortVideo/dto/ShortVideoRecomFeedItemDto${'$'}ShortVideoFeedItemShortVideoMytargetSdkCarouselDto;
                     if-nez v3, :clip_remove_ad
 
-                    instance-of v3, v2, Lcom/vk/api/generated/shortVideo/dto/ShortVideoRecomFeedItemDto$ShortVideoFeedItemShortVideoMytargetSdkPromoDto;
+                    instance-of v3, v2, Lcom/vk/api/generated/shortVideo/dto/ShortVideoRecomFeedItemDto${'$'}ShortVideoFeedItemShortVideoMytargetSdkPromoDto;
                     if-nez v3, :clip_remove_ad
 
                     goto :clip_filter_loop
