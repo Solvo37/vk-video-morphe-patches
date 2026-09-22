@@ -1,5 +1,15 @@
 # Changelog
 
+## 0.2.1 — 2026-09-22
+
+Расширенное удаление рекламы для VK Видео 1.163:
+
+- **Remove video ads** теперь не ограничивается тремя `VideoFeatures`: рекламные поля `instream`, `mobileInstream`, `sport` и `banners` обнуляются в `VideoGetAdsResponseDto`;
+- списки `preroll`, `midroll` и `postroll` дополнительно обнуляются в `VideoVideoAdsInstreamSectionsDto`;
+- добавлен отдельный **Remove clip ads** для рекламного стека VK Клипов: Clips feature gates, конкретный provider/config слой и `SdkClipsAdsFeaturesParams`;
+- patch profile остаётся fail-closed: несовпавший fingerprint останавливает публикацию вместо молчаливого пропуска;
+- изменение patch profile на `main` теперь принудительно создаёт новый immutable APK revision для того же upstream versionCode вместо пропуска как уже опубликованной версии.
+
 ## 0.2.0 — 2026-09-22
 
 Release-pipeline hardening on the road to 1.0:
