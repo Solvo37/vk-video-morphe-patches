@@ -64,7 +64,7 @@ jobs:
       - name: Apply only new runtime ad patches
         run: |
           set -euo pipefail
-          java -jar work/morphe.jar patch \
+          "$JAVA_HOME/bin/java" -jar work/morphe.jar patch \
             -p work/runtime-ads-0.2.2.mpp \
             --force --exclusive \
             -e "Filter clip feed ads" \
