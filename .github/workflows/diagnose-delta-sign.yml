@@ -58,7 +58,7 @@ jobs:
             -o work/delta-unsigned.apk \
             work/VK-Video-1.163-patched.apk
           cat work/delta-result.json
-          jq -e '.success == true and (.failedPatches | length == 0)' work/delta-result.json >/dev/null
+          jq -e 'all(.patchingSteps[]?; .success == true) and ((.failedPatches // []) | length == 0) and (any(.appliedPatches[]?; .name == "Remove video ads")) and (any(.appliedPatches[]?; .name == "Remove clip ads"))' work/delta-result.json >/dev/null
 
       - name: Sign with temporary key and diagnose
         run: |
