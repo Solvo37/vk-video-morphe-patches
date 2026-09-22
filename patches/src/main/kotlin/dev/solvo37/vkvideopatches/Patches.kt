@@ -340,7 +340,7 @@ val filterClipSdkAdsPatch = bytecodePatch(
 
     execute {
         val returnNullForSdkAd = """
-            invoke-static {p1}, Lc01/c;->f:(Lcom/vk/clips/sdk/shared/api/deps/video/SdkVideoFile;)Z
+            invoke-static {p1}, Lc01/c;->f(Lcom/vk/clips/sdk/shared/api/deps/video/SdkVideoFile;)Z
             move-result v0
             if-eqz v0, :original
 
