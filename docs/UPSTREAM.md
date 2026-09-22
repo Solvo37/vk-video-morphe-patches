@@ -20,7 +20,7 @@ Before any release can be produced:
 2. `versionName` and `versionCode` must be readable from the base APK;
 3. source APK certificate SHA-256 must equal the expected VK certificate;
 4. version must not be below the project baseline;
-5. every mandatory Morphe patch must apply successfully.
+5. every mandatory Morphe patch, including the native `libvkcore.so` signature-check bypass, must apply successfully.
 
 Expected upstream VK certificate:
 
