@@ -1,0 +1,54 @@
+name: Trace VK Clips ad DTO xrefs
+
+on:
+  push:
+    branches:
+      - ad-analysis-1.163
+    paths:
+      - '.github/workflows/clips-ad-xrefs.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  xrefs:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+        with:
+          ref: ad-analysis-1.163
+
+      - name: Download APK
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          rm -rf xrefs
+          mkdir -p xrefs/dex docs
+          gh release download 1.163 --repo "$GITHUB_REPOSITORY" --pattern 'VK-Video-1.163-patched.apk' --dir xrefs
+          cd xrefs/dex
+          unzip -q ../VK-Video-1.163-patched.apk 'classes*.dex'
+
+      - name: Trace DTO references
+        run: |
+          set -euo pipefail
+          DEXDUMP="$(find "$ANDROID_SDK_ROOT/build-tools" -type f \( -name dexdump -o -name dexdump.exe \) | sort -V | tail -n1)"
+          OUT='docs/clips-ad-xrefs-1.163.txt'
+          : > "$OUT"
+          for dex in xrefs/dex/classes*.dex; do
+            echo "===== $dex =====" >> "$OUT"
+            "$DEXDUMP" -d "$dex" 2>/dev/null |               grep -E -B 40 -A 65               'ShortVideoRecomFeedItemDto\$ShortVideoFeedItemShortVideo(MytargetSdk|MarketAd|StaticAd|FloatingAd)|VideoAdvertisementsComponent|ClipEndOverlayAdWrapperView'               | head -n 20000 >> "$OUT" || true
+          done
+          wc -l "$OUT"
+          wc -c "$OUT"
+
+      - name: Commit xrefs
+        run: |
+          set -euo pipefail
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add docs/clips-ad-xrefs-1.163.txt
+          git commit -m 'analysis: trace VK Clips ad DTO xrefs' || exit 0
+          git pull --rebase origin ad-analysis-1.163
+          git push origin HEAD:ad-analysis-1.163
