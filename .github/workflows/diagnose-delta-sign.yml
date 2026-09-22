@@ -1,0 +1,100 @@
+name: Diagnose delta APK signing
+
+on:
+  push:
+    branches: [ad-analysis-1.163]
+    paths:
+      - '.github/workflows/diagnose-delta-sign.yml'
+
+permissions:
+  contents: read
+
+jobs:
+  diagnose:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+        with:
+          ref: ad-analysis-1.163
+
+      - name: Setup Java 21
+        uses: actions/setup-java@de7274f081f381c8f8158605e0321c36c376e2e6 # v6
+        with:
+          distribution: temurin
+          java-version: '21'
+
+      - name: Install Android tools
+        run: |
+          set -euo pipefail
+          sudo apt-get update
+          sudo apt-get install -y apksigner aapt zipalign jq unzip zip
+
+      - name: Download stable base and patch bundle
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          mkdir -p work
+          gh release download 1.163 --repo "$GITHUB_REPOSITORY" \
+            --pattern 'VK-Video-1.163-patched.apk' --dir work
+          gh release download patches-v0.2.1 --repo "$GITHUB_REPOSITORY" \
+            --pattern 'vk-video-morphe-patches-0.2.1.mpp' --dir work
+          curl -fL --retry 4 -o work/morphe.jar \
+            "https://github.com/MorpheApp/morphe-desktop/releases/download/v1.16.0/morphe-desktop-1.16.0-all.jar"
+          echo "82a0df2ff881d83d5ca8b4f9a6ce196bd4ac3b87ff147fe37845c296b436806c  work/morphe.jar" | sha256sum -c -
+
+      - name: Apply delta ad patches
+        run: |
+          set -euo pipefail
+          java -jar work/morphe.jar patch \
+            -p work/vk-video-morphe-patches-0.2.1.mpp \
+            --force --exclusive \
+            -e "Remove video ads" \
+            -e "Remove clip ads" \
+            --bytecode-mode STRIP_FAST \
+            --unsigned \
+            -r work/delta-result.json \
+            -o work/delta-unsigned.apk \
+            work/VK-Video-1.163-patched.apk
+          cat work/delta-result.json
+          jq -e '.success == true and (.failedPatches | length == 0)' work/delta-result.json >/dev/null
+
+      - name: Sign with temporary key and diagnose
+        run: |
+          set -u
+          keytool -genkeypair -noprompt \
+            -keystore work/test.jks -storepass testpass -keypass testpass \
+            -alias test -keyalg RSA -keysize 2048 -validity 1000 \
+            -dname "CN=Delta Test,O=Test,C=US"
+
+          zipalign -f -p 4 work/delta-unsigned.apk work/delta-aligned.apk
+          echo "== sign =="
+          set +e
+          apksigner sign \
+            --ks work/test.jks --ks-pass pass:testpass \
+            --ks-key-alias test --key-pass pass:testpass \
+            --v1-signing-enabled false \
+            --v2-signing-enabled false \
+            --v3-signing-enabled true \
+            --v4-signing-enabled false \
+            --out work/delta-test-signed.apk \
+            work/delta-aligned.apk
+          SIGN_RC=$?
+          echo "sign rc=$SIGN_RC"
+
+          echo "== verify =="
+          VERIFY="$(apksigner verify --verbose --print-certs work/delta-test-signed.apk 2>&1)"
+          VERIFY_RC=$?
+          printf '%s\n' "$VERIFY"
+          echo "verify rc=$VERIFY_RC"
+
+          echo "== zipalign =="
+          zipalign -c -p 4 work/delta-test-signed.apk
+          ALIGN_RC=$?
+          echo "zipalign rc=$ALIGN_RC"
+
+          echo "== badging =="
+          aapt dump badging work/delta-test-signed.apk | head -n 5
+
+          exit "$VERIFY_RC"
