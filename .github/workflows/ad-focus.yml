@@ -1,0 +1,59 @@
+name: Focus VK Video ad dex classes
+
+on:
+  push:
+    branches:
+      - ad-analysis-1.163
+    paths:
+      - '.github/workflows/ad-focus.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  focus:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+        with:
+          ref: ad-analysis-1.163
+
+      - name: Extract focused DEX contexts
+        run: |
+          set -euo pipefail
+          SRC='docs/ad-fast-scan-1.163.txt'
+          OUT='docs/ad-focus-1.163.txt'
+          : > "$OUT"
+
+          patterns=(
+            'Lcom/vk/mytarget/di/AdsSdkComponentImpl'
+            'Lcom/vk/libvideo/api/di/VideoAdvertisementsComponent'
+            'Lcom/vk/clips/tool/view/newsfeed/mytarget/ClipEndOverlayAdWrapperView'
+            'Lcom/vk/clips/tool/view/newsfeed/overlay/ClipEndOverlayView'
+            'ShortVideoRecomFeedItemDto'
+            'VideoVideoAdsInstreamSectionsDto'
+            'VideoVideoAdsInstreamSectionDto'
+            'Lcom/vk/libvideo/ad/MyTargetAdLoadingState'
+            'short_video_mytarget_sdk_static'
+            'short_video_mytarget_sdk_carousel'
+          )
+
+          for p in "${patterns[@]}"; do
+            echo "===== $p =====" >> "$OUT"
+            grep -F -n -B 25 -A 70 "$p" "$SRC" | head -n 900 >> "$OUT" || true
+            echo >> "$OUT"
+          done
+
+          wc -c "$OUT"
+          wc -l "$OUT"
+
+      - name: Commit focus report
+        run: |
+          set -euo pipefail
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add docs/ad-focus-1.163.txt
+          git commit -m 'analysis: focus VK Video ad DEX call sites' || exit 0
+          git pull --rebase origin ad-analysis-1.163
+          git push origin HEAD:ad-analysis-1.163
