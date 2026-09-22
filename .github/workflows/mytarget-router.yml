@@ -1,0 +1,68 @@
+name: Inspect VK MyTarget router
+
+on:
+  push:
+    branches:
+      - ad-analysis-1.163
+    paths:
+      - '.github/workflows/mytarget-router.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  inspect:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+        with:
+          ref: ad-analysis-1.163
+      - uses: actions/setup-java@de7274f081f381c8f8158605e0321c36c376e2e6 # v6
+        with:
+          distribution: temurin
+          java-version: '21'
+      - name: Download inputs
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          rm -rf router
+          mkdir -p router/out docs
+          gh release download 1.163 --repo "$GITHUB_REPOSITORY" --pattern 'VK-Video-1.163-patched.apk' --dir router
+          URL="$(gh api repos/skylot/jadx/releases/latest --jq '.assets[] | select(.name | test("^jadx-[0-9].*\\.zip$")) | .browser_download_url' | head -n1)"
+          curl -fL --retry 4 "$URL" -o router/jadx.zip
+          unzip -q router/jadx.zip -d router/jadx
+          chmod +x router/jadx/bin/jadx
+      - name: Decompile router classes
+        run: |
+          set -euo pipefail
+          APK='router/VK-Video-1.163-patched.apk'
+          J='router/jadx/bin/jadx'
+          OUT='docs/mytarget-router-1.163.txt'
+          : > "$OUT"
+          classes=(
+            'j04.b'
+            'hw5.j'
+            'com.vk.mytarget.AdsSdkComponent'
+            'com.vk.mytarget.AdsSdkRouter'
+          )
+          n=0
+          for cls in "${classes[@]}"; do
+            n=$((n+1))
+            echo "===== $cls =====" >> "$OUT"
+            if "$J" --no-res --single-class "$cls" --single-class-output "router/out/$n.java" "$APK" >/dev/null 2>&1; then
+              cat "router/out/$n.java" >> "$OUT"
+            else
+              echo DECOMPILE_FAILED >> "$OUT"
+            fi
+            echo >> "$OUT"
+          done
+      - name: Commit report
+        run: |
+          set -euo pipefail
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add docs/mytarget-router-1.163.txt
+          git commit -m 'analysis: inspect VK MyTarget router' || exit 0
+          git pull --rebase origin ad-analysis-1.163
+          git push origin HEAD:ad-analysis-1.163
