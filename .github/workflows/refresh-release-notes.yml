@@ -1,0 +1,53 @@
+name: Refresh public release notes
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/refresh-release-notes.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Update VK Video 1.163 release notes
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          cat > /tmp/release-notes.md <<'EOF'
+          ## VK Video 1.163 patched
+
+          Проверенная рабочая сборка для Android ARM64.
+
+          ### Включено
+
+          - совместная установка с обычным VK (`com.vkontakte.android`);
+          - native `libvkcore.so` signature-check bypass для переподписанного APK;
+          - отключение встроенного update prompt;
+          - отключение client-side instream / overlay / motion video ads;
+          - скрытие promoted banner в Discover;
+          - отключение отдельного ad pixel tracker.
+
+          ### Сборка
+
+          - VK Video: **1.163**
+          - versionCode: **51920**
+          - Morphe bytecode mode: **STRIP_FAST**
+          - ABI: **ARM64 / arm64-v8a**
+          - alignment: **zipalign**
+          - APK signing: **v3 only**
+          - project certificate SHA-256:
+            `D4:1F:49:2F:0E:2A:2E:39:90:AC:7F:8E:75:CC:5D:4B:14:89:5F:7B:46:C0:B6:11:3B:78:82:C4:8A:A5:D4:0A`
+
+          Перед первой установкой удалите только официальный **VK Видео**. Обычный **VK** удалять не нужно.
+
+          Для автоматических обновлений используйте Obtainium с репозиторием:
+          `https://github.com/Solvo37/vk-video-morphe-patches`
+
+          Проект не связан с VK и не одобрен VK.
+          EOF
+
+          gh release edit 1.163             --repo "$GITHUB_REPOSITORY"             --title "VK Video 1.163 patched"             --notes-file /tmp/release-notes.md
