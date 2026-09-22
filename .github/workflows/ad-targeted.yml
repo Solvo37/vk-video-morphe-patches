@@ -1,0 +1,92 @@
+name: Targeted VK Video ad decompile
+
+on:
+  push:
+    branches:
+      - ad-analysis-1.163
+    paths:
+      - '.github/workflows/ad-targeted.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  targeted:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+        with:
+          ref: ad-analysis-1.163
+
+      - name: Setup Java 21
+        uses: actions/setup-java@de7274f081f381c8f8158605e0321c36c376e2e6 # v6
+        with:
+          distribution: temurin
+          java-version: '21'
+
+      - name: Download APK and JADX
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          rm -rf targeted
+          mkdir -p targeted/out
+          gh release download 1.163 --repo "$GITHUB_REPOSITORY" --pattern 'VK-Video-1.163-patched.apk' --dir targeted
+          URL="$(gh api repos/skylot/jadx/releases/latest --jq '.assets[] | select(.name | test("^jadx-[0-9].*\\.zip$")) | .browser_download_url' | head -n1)"
+          curl -fL --retry 4 "$URL" -o targeted/jadx.zip
+          unzip -q targeted/jadx.zip -d targeted/jadx
+          chmod +x targeted/jadx/bin/jadx
+
+      - name: Decompile selected advertising classes
+        run: |
+          set -euo pipefail
+          APK='targeted/VK-Video-1.163-patched.apk'
+          JADX='targeted/jadx/bin/jadx'
+          REPORT='docs/ad-targeted-1.163.txt'
+          mkdir -p docs targeted/out
+
+          classes=(
+            'com.vk.mytarget.di.AdsSdkComponentImpl'
+            'com.vk.auth.main.b1'
+            'com.vk.libvideo.api.di.VideoAdvertisementsComponent'
+            'com.vk.api.generated.video.dto.VideoVideoAdsInstreamSectionsDto'
+            'com.vk.api.generated.video.dto.VideoVideoAdsInstreamSectionDto'
+            'com.vk.clips.tool.view.newsfeed.mytarget.ClipEndOverlayAdWrapperView'
+            'com.vk.clips.tool.view.newsfeed.overlay.ClipEndOverlayView'
+            'com.vk.api.generated.shortVideo.dto.ShortVideoRecomFeedItemDto$Deserializer'
+            'com.vk.api.generated.shortVideo.dto.ShortVideoRecomFeedItemDto'
+            'com.vk.libvideo.ad.MyTargetAdLoadingState'
+          )
+
+          : > "$REPORT"
+          echo "# Targeted VK Video 1.163 ad decompile" >> "$REPORT"
+          echo "JADX: $($JADX --version)" >> "$REPORT"
+
+          n=0
+          for cls in "${classes[@]}"; do
+            n=$((n+1))
+            outfile="targeted/out/$n.java"
+            {
+              echo
+              echo "===== $cls ====="
+            } >> "$REPORT"
+            if "$JADX" --no-res --single-class "$cls" --single-class-output "$outfile" "$APK" >/dev/null 2>&1; then
+              cat "$outfile" >> "$REPORT"
+            else
+              echo "DECOMPILE_FAILED" >> "$REPORT"
+            fi
+          done
+
+          wc -c "$REPORT"
+          wc -l "$REPORT"
+
+      - name: Commit targeted report
+        run: |
+          set -euo pipefail
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add docs/ad-targeted-1.163.txt
+          git commit -m 'analysis: decompile targeted VK Video ad classes' || exit 0
+          git pull --rebase origin ad-analysis-1.163
+          git push origin HEAD:ad-analysis-1.163
