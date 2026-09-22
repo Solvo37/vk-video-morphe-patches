@@ -96,7 +96,7 @@ jobs:
             gh release list               --repo "$GITHUB_REPOSITORY"               --limit 100               --json tagName,isDraft,isPrerelease,publishedAt               --jq '[.[] |
                 select(.isDraft == false) |
                 select(.isPrerelease == false) |
-                select(.tagName | test("^[0-9]+\\.[0-9]+(?:\\.[0-9]+)?(?:-[0-9]+)?$"))
+                select(.tagName | test("^[0-9]+(?:\\.[0-9]+){1,3}(?:-[0-9]+)?$"))
               ] | sort_by(.publishedAt) | last | .tagName // empty'
           )"
 
@@ -231,30 +231,51 @@ jobs:
             exit 0
           fi
 
-          TAG="$VERSION"
+          next_revision_tag() {
+            local base="$1"
+            local revision=1
+            local candidate
+            while true; do
+              candidate="${base}.${revision}"
+              if ! gh release view "$candidate" --repo "$GITHUB_REPOSITORY" >/dev/null 2>&1; then
+                printf '%s\n' "$candidate"
+                return 0
+              fi
+              revision=$((revision + 1))
+            done
+          }
+
           if (( VERSION_CODE == BASELINE_VERSION_CODE )) && [[ "$VERSION" == "$BASELINE_VERSION" ]]; then
-            TAG="$BASELINE_TAG"
-          elif gh release view "$TAG" --repo "$GITHUB_REPOSITORY" >/dev/null 2>&1; then
-            # Same versionName can exist with a newer versionCode.
-            TAG="${VERSION}-${VERSION_CODE}"
+            if [[ "$FORCE_REBUILD" != "true" ]]; then
+              echo "build=false" >> "$GITHUB_OUTPUT"
+              echo "Baseline build already released."
+              exit 0
+            fi
+
+            # Never replace assets inside an existing release. Obtainium and other
+            # clients can cache GitHub asset IDs, which become 404 after --clobber.
+            TAG="$(next_revision_tag "$VERSION")"
+          else
+            TAG="$VERSION"
+
+            if gh release view "$TAG" --repo "$GITHUB_REPOSITORY" >/dev/null 2>&1; then
+              # Same versionName can exist with a newer versionCode.
+              TAG="${VERSION}-${VERSION_CODE}"
+            fi
+
+            if gh release view "$TAG" --repo "$GITHUB_REPOSITORY" >/dev/null 2>&1; then
+              if [[ "$FORCE_REBUILD" != "true" ]]; then
+                echo "build=false" >> "$GITHUB_OUTPUT"
+                echo "Release $TAG already exists."
+                exit 0
+              fi
+              TAG="$(next_revision_tag "$VERSION")"
+            fi
           fi
 
           echo "tag=$TAG" >> "$GITHUB_OUTPUT"
-
-          if (( VERSION_CODE == BASELINE_VERSION_CODE )) && [[ "$FORCE_REBUILD" != "true" ]]; then
-            echo "build=false" >> "$GITHUB_OUTPUT"
-            echo "Baseline build already released."
-            exit 0
-          fi
-
-          if gh release view "$TAG" --repo "$GITHUB_REPOSITORY" >/dev/null 2>&1 && [[ "$FORCE_REBUILD" != "true" ]]; then
-            echo "build=false" >> "$GITHUB_OUTPUT"
-            echo "Release $TAG already exists."
-            exit 0
-          fi
-
           echo "build=true" >> "$GITHUB_OUTPUT"
-          echo "Will build VK Video $VERSION ($VERSION_CODE) as tag $TAG."
+          echo "Will build VK Video $VERSION ($VERSION_CODE) as immutable release tag $TAG."
 
       - name: Build Morphe patch bundle
         if: steps.decision.outputs.build == 'true'
@@ -536,11 +557,11 @@ jobs:
           )
 
           if gh release view "$TAG" --repo "$GITHUB_REPOSITORY" >/dev/null 2>&1; then
-            gh release upload "$TAG" "${ASSETS[@]}" --clobber --repo "$GITHUB_REPOSITORY"
-            gh release edit "$TAG"               --repo "$GITHUB_REPOSITORY"               --title "VK Video $VERSION ($VERSION_CODE) patched"               --notes-file dist/release-notes.md               --latest
-          else
-            gh release create "$TAG" "${ASSETS[@]}"               --repo "$GITHUB_REPOSITORY"               --title "VK Video $VERSION ($VERSION_CODE) patched"               --notes-file dist/release-notes.md               --latest
+            echo "::error::Release $TAG already exists. Refusing to replace release assets because update clients may cache immutable GitHub asset IDs."
+            exit 1
           fi
+
+          gh release create "$TAG" "${ASSETS[@]}"             --repo "$GITHUB_REPOSITORY"             --title "VK Video $VERSION ($VERSION_CODE) patched"             --notes-file dist/release-notes.md             --latest
 
       - name: Signing setup reminder
         if: steps.decision.outputs.build == 'true' && steps.patch.outcome == 'success' && steps.static_gate.outcome == 'success' && env.HAS_SIGNING != 'true'
