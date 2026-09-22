@@ -9,6 +9,7 @@ import app.morphe.patcher.util.smali.ExternalLabel
 import dev.solvo37.vkvideopatches.Constants.VK_VIDEO
 
 private const val VIDEO_FEATURES = "Lcom/vk/toggle/features/VideoFeatures;"
+private const val CLIPS_FEATURES = "Lcom/vk/toggle/features/ClipsFeatures;"
 private const val EMPTY_DISPOSABLE = "Lio/reactivex/rxjava3/internal/disposables/EmptyDisposable;"
 
 @Suppress("unused")
@@ -65,6 +66,138 @@ val removeVideoAdsPatch = bytecodePatch(
                 ExternalLabel("original", getInstruction(0))
             )
         }
+    }
+}
+
+@Suppress("unused")
+val removeClipAdsPatch = bytecodePatch(
+    name = "Remove clip ads",
+    description = "Disables VK Clips ad feature gates, ad configs, and SDK ad feature parameters.",
+    default = true
+) {
+    compatibleWith(VK_VIDEO)
+
+    execute {
+        // Clips have a separate ad stack from the regular video player. Disable
+        // direct ClipsFeatures callers first, then the concrete config provider
+        // used by the feed mapper / Clips SDK in VK Video 1.163.
+        ClipsFeaturesEnabledFingerprint.method.apply {
+            check(implementation!!.registerCount >= 2) {
+                "ClipsFeatures.a() has no free local register; fingerprint needs updating"
+            }
+
+            addInstructionsWithLabels(
+                0,
+                """
+                    sget-object v0, $CLIPS_FEATURES->CLIPS_YANDEX_AD_PARAMS:$CLIPS_FEATURES
+                    if-eq p0, v0, :force_disabled
+
+                    sget-object v0, $CLIPS_FEATURES->CLIPS_MARKET_AD:$CLIPS_FEATURES
+                    if-eq p0, v0, :force_disabled
+
+                    sget-object v0, $CLIPS_FEATURES->CLIPS_MARKET_AD_CHOICES:$CLIPS_FEATURES
+                    if-eq p0, v0, :force_disabled
+
+                    sget-object v0, $CLIPS_FEATURES->CLIPS_AD_BANNER_COMPANION:$CLIPS_FEATURES
+                    if-eq p0, v0, :force_disabled
+
+                    sget-object v0, $CLIPS_FEATURES->CLIPS_AD_BANNER_COMPANION_FOR_SELLERS:$CLIPS_FEATURES
+                    if-eq p0, v0, :force_disabled
+
+                    sget-object v0, $CLIPS_FEATURES->CLIPS_ADS_SDK_VIDEO:$CLIPS_FEATURES
+                    if-eq p0, v0, :force_disabled
+
+                    sget-object v0, $CLIPS_FEATURES->CLIPS_ADS_SDK_STATIC_AD:$CLIPS_FEATURES
+                    if-eq p0, v0, :force_disabled
+
+                    sget-object v0, $CLIPS_FEATURES->CLIPS_ADS_SDK_CAROUSEL:$CLIPS_FEATURES
+                    if-eq p0, v0, :force_disabled
+
+                    sget-object v0, $CLIPS_FEATURES->CLIPS_ADS_SDK_PROMO:$CLIPS_FEATURES
+                    if-eq p0, v0, :force_disabled
+
+                    sget-object v0, $CLIPS_FEATURES->CLIPS_ADS_SDK_VIDEO_OWNER:$CLIPS_FEATURES
+                    if-eq p0, v0, :force_disabled
+
+                    sget-object v0, $CLIPS_FEATURES->CLIPS_ADS_SDK_LABEL:$CLIPS_FEATURES
+                    if-eq p0, v0, :force_disabled
+
+                    sget-object v0, $CLIPS_FEATURES->FEED_END_REWATCH_NEW_AD:$CLIPS_FEATURES
+                    if-eq p0, v0, :force_disabled
+
+                    sget-object v0, $CLIPS_FEATURES->CLIPS_MARKET_AD_HEADER_CLICKS:$CLIPS_FEATURES
+                    if-eq p0, v0, :force_disabled
+
+                    goto :original
+
+                    :force_disabled
+                    const/4 v0, 0x0
+                    return v0
+                """,
+                ExternalLabel("original", getInstruction(0))
+            )
+        }
+
+        val returnFalse = """
+            const/4 v0, 0x0
+            return v0
+        """.trimIndent()
+
+        listOf(
+            ClipAdsPromoProviderFingerprint.method,
+            ClipAdsStaticProviderFingerprint.method,
+            ClipAdsLabelProviderFingerprint.method,
+            ClipMarketAdProviderFingerprint.method,
+            ClipMarketAdChoicesProviderFingerprint.method,
+            ClipAdsVideoOwnerProviderFingerprint.method,
+            ClipFeedEndRewatchAdProviderFingerprint.method,
+            ClipAdsVideoProviderFingerprint.method,
+            ClipAdsCarouselProviderFingerprint.method,
+        ).forEach { method ->
+            check(method.implementation!!.registerCount >= 2) {
+                "Clips ad provider method ${method.name} has no free local register"
+            }
+            method.addInstructions(0, returnFalse)
+        }
+
+        ClipYandexAdParamsProviderFingerprint.method.addInstructions(
+            0,
+            """
+                sget-object v0, Lwo0/k;->b:Lwo0/k;
+                return-object v0
+            """
+        )
+
+        ClipMarketAdHeaderClicksProviderFingerprint.method.addInstructions(
+            0,
+            """
+                sget-object v0, Lcom/vk/clips/sdk/shared/viewer/experiments/models/ClipsMarketAdHeaderClickConfig;->c:Lcom/vk/clips/sdk/shared/viewer/experiments/models/ClipsMarketAdHeaderClickConfig;
+                return-object v0
+            """
+        )
+
+        val returnDisabledBannerCompanion = """
+            sget-object v0, Lcom/vk/clips/sdk/shared/viewer/experiments/models/ClipsBannerCompanionConfig;->d:Lcom/vk/clips/sdk/shared/viewer/experiments/models/ClipsBannerCompanionConfig;
+            return-object v0
+        """.trimIndent()
+
+        ClipSellerBannerCompanionProviderFingerprint.method.addInstructions(
+            0,
+            returnDisabledBannerCompanion
+        )
+        ClipBannerCompanionProviderFingerprint.method.addInstructions(
+            0,
+            returnDisabledBannerCompanion
+        )
+
+        // ClipVideoFileAdapter already treats null as "no server ad feature params".
+        ClipVideoFileAdsFeaturesParamsFingerprint.method.addInstructions(
+            0,
+            """
+                const/4 v0, 0x0
+                return-object v0
+            """
+        )
     }
 }
 
