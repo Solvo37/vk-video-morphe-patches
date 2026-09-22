@@ -75,6 +75,38 @@ Lcom/vk/toggle/features/VideoFeatures;
 
 Общий boolean evaluator патчится только для этих enum values; остальные video feature toggles продолжают использовать оригинальную логику.
 
+### Server-driven video ad payload
+
+В 1.163 отдельно присутствует серверный рекламный DTO:
+
+```text
+Lcom/vk/api/generated/video/dto/VideoGetAdsResponseDto;
+```
+
+Его основной constructor принимает четыре рекламных payload:
+
+- `VideoVideoAdsInstreamDto`;
+- `VideoVideoAdsSportDto`;
+- `VideoVideoAdsMobileDto`;
+- `VideoVideoAdsBannersDto`.
+
+Patch обнуляет все четыре параметра до записи в поля объекта. Дополнительно constructor
+`VideoVideoAdsInstreamSectionsDto(List, List, List)` получает `null` вместо трёх списков:
+`preroll`, `midroll`, `postroll`. Это закрывает второй путь, который может активироваться
+серверной/аккаунтной конфигурацией независимо от трёх `VideoFeatures`.
+
+## Clips ads
+
+Клипы используют отдельный рекламный стек. В 1.163 найдены отдельные типы short-video feed,
+MyTarget SDK и Clips feature/config параметры. **Remove clip ads**:
+
+- forced-false для рекламных значений `ClipsFeatures`;
+- forced-disabled значения в конкретном R8 provider `Lyo0/g;`;
+- `ClipVideoFileAdapter.A3()` возвращает `null` вместо `SdkClipsAdsFeaturesParams`.
+
+Патч намеренно не отключает весь MyTarget component или DI/auth bootstrap: это уменьшает риск
+затронуть вход, нерекламные зависимости или обычное воспроизведение.
+
 ## Promoted banner
 
 DTO:
