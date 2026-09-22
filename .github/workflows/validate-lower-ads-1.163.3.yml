@@ -53,7 +53,7 @@ jobs:
       - name: Apply only new lower-layer patches
         run: |
           set -euo pipefail
-          java -jar morphe.jar patch \
+          "$JAVA_HOME/bin/java" -jar morphe.jar patch \
             -p work.mpp \
             --force --exclusive \
             -e "Filter Clips SDK ads" \
