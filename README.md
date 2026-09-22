@@ -13,7 +13,7 @@
 
 - ✅ Проверенная версия приложения: **VK Видео 1.163 / versionCode 51920**
 - ✅ Готовый APK: [Latest stable release](https://github.com/Solvo37/vk-video-morphe-patches/releases/latest)
-- ✅ Текущий bundle патчей: **v0.2.1**
+- ✅ Текущий bundle патчей: **v0.2.2**
 - ✅ Полный patch profile проверен запуском на реальном ARM64-устройстве с установленным обычным VK; точный release APK дополнительно проходит автоматические 0.2 static gates
 - ✅ Сборка: **Morphe STRIP_FAST → zipalign → APK Signature Scheme v3**
 - ⚠️ Native bypass сейчас рассчитан на **ARM64 / arm64-v8a**
@@ -29,10 +29,12 @@
 | **Disable in-app update** | отключает встроенную проверку и предложение обновить VK Видео | пользовательский |
 | **Remove video ads** | отключает video ad feature gates и обнуляет серверные instream/mobile/sport/banner payloads, включая preroll/midroll/postroll | пользовательский |
 | **Remove clip ads** | отключает отдельные рекламные feature/config/SDK-пути VK Клипов | пользовательский |
+| **Filter clip feed ads** | удаляет серверные рекламные элементы Клипов (StaticAd / MarketAd / MyTarget / FloatingAd) до преобразования в ленту и CTA «Установить» | пользовательский |
+| **Block midroll ads** | блокирует runtime MIDROLL до переключения основного видео на instream-рекламу | пользовательский |
 | **Hide promoted banner content** | выключает показ рекламного баннера в Discover | пользовательский |
 | **Disable ad pixel tracking** | останавливает отдельный рекламный pixel tracker | пользовательский |
 
-В 1.163 патчи перекрывают найденные клиентские feature gates и найденный серверный рекламный payload для обычного видео, а также отдельный рекламный стек Клипов. Совершенно новый серверный путь в будущих версиях приложения потребует повторного reverse engineering.
+В 1.163 патчи перекрывают найденные клиентские feature gates, серверный рекламный payload обычного видео, runtime MIDROLL и серверные рекламные feed-item Клипов до их преобразования в SDK-элементы. Совершенно новый серверный путь в будущих версиях приложения потребует повторного reverse engineering.
 
 ## Установка
 
@@ -81,8 +83,8 @@ https://github.com/Solvo37/vk-video-morphe-patches
 Bundle публикуется отдельным release:
 
 ```text
-patches-v0.2.1
-vk-video-morphe-patches-0.2.1.mpp
+patches-v0.2.2
+vk-video-morphe-patches-0.2.2.mpp
 ```
 
 Для переподписанной сборки **Bypass native signature check** должен оставаться включённым. Без него VK Видео 1.163 завершает процесс на старте после проверки подписи.

@@ -7,8 +7,8 @@ Public **Morphe** patches for the Android **VK Video** app (`com.vk.vkvideo`) wi
 ## Current status
 
 - ✅ Verified app target: **VK Video 1.163 / versionCode 51920**
-- ✅ Prebuilt APK: [Release 1.163](https://github.com/Solvo37/vk-video-morphe-patches/releases/tag/1.163)
-- ✅ Current patch bundle: **v0.2.0**
+- ✅ Prebuilt APK: [Latest stable release](https://github.com/Solvo37/vk-video-morphe-patches/releases/latest)
+- ✅ Current patch bundle: **v0.2.2**
 - ✅ Full patch profile verified on a real ARM64 device alongside the stock VK app; the exact release APK additionally passes automated 0.2 static gates
 - ✅ Build pipeline: **Morphe STRIP_FAST → zipalign → APK Signature Scheme v3**
 - ⚠️ The native bypass currently targets **ARM64 / arm64-v8a**
@@ -20,11 +20,14 @@ Public **Morphe** patches for the Android **VK Video** app (`com.vk.vkvideo`) wi
 | **Fix install conflict with stock VK** | lets the project-signed VK Video coexist with stock `com.vkontakte.android` |
 | **Bypass native signature check** | patches `libvkcore.so` so a re-signed build is not terminated during startup |
 | **Disable in-app update** | disables VK Video's internal update prompt/check |
-| **Remove video ads** | disables client-side instream / overlay / motion ad features |
+| **Remove video ads** | disables video ad feature gates and strips known server instream/mobile/sport/banner payloads |
+| **Remove clip ads** | disables VK Clips ad feature/config/SDK paths |
+| **Filter clip feed ads** | removes server-provided StaticAd / MarketAd / MyTarget / FloatingAd feed items before they become Clips SDK items or install CTAs |
+| **Block midroll ads** | blocks the runtime MIDROLL branch before the main video player switches to instream ads |
 | **Hide promoted banner content** | disables the Discover promoted-banner gate |
 | **Disable ad pixel tracking** | disables the dedicated advertising pixel tracker |
 
-These patches target specific client-side mechanisms. They do not claim to remove every server-controlled promotion, ad surface, or analytics event.
+These patches target the ad paths reverse-engineered in VK Video 1.163, including server feed items and the runtime MIDROLL branch. A newly introduced server/client path in a future version still requires fresh reverse engineering.
 
 ## Install
 
@@ -53,7 +56,7 @@ See [docs/INSTALL.md](./docs/INSTALL.md).
 
 ## Morphe custom source
 
-Use the same repository URL as a Morphe custom source. Standalone patch bundles are published as `patches-v0.1.x` releases.
+Use the same repository URL as a Morphe custom source. Standalone patch bundles are published as `patches-v0.2.x` releases.
 
 For a re-signed VK Video 1.163 build, **Bypass native signature check** is mandatory. Without it, the app terminates during startup after the native signature check.
 

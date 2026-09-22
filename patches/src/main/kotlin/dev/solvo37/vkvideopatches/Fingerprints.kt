@@ -167,6 +167,32 @@ internal object ClipVideoFileAdsFeaturesParamsFingerprint : Fingerprint(
     parameters = emptyList()
 )
 
+// VK Video 1.163 short-video server feed mapper. This is where server-side
+// StaticAd / MarketAd / MyTarget DTOs become Clips SDK feed items.
+internal object ClipServerFeedMapperFingerprint : Fingerprint(
+    definingClass = "Lee1/j;",
+    name = "a",
+    accessFlags = listOf(AccessFlags.PUBLIC, AccessFlags.STATIC, AccessFlags.FINAL),
+    returnType = "Lk01/d;",
+    parameters = listOf(
+        "Lcom/vk/api/generated/shortVideo/dto/ShortVideoGetRecomResponseDto;",
+        "Lve1/q;"
+    )
+)
+
+// Runtime instream gate used by VideoAutoPlay before it switches the player
+// into the MIDROLL ad path.
+internal object MidrollRuntimeGateFingerprint : Fingerprint(
+    definingClass = "Lx13/e;",
+    name = "b",
+    accessFlags = listOf(AccessFlags.PUBLIC, AccessFlags.FINAL),
+    returnType = "Z",
+    parameters = listOf(
+        "Lcom/vk/dto/common/AdSection;",
+        "Ljava/lang/Float;"
+    )
+)
+
 internal object VideoGetAdsResponseConstructorFingerprint : Fingerprint(
     definingClass = "Lcom/vk/api/generated/video/dto/VideoGetAdsResponseDto;",
     name = "<init>",
