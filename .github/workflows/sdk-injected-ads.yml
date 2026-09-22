@@ -1,0 +1,94 @@
+name: Trace SDK-injected ads
+
+on:
+  push:
+    branches:
+      - ad-analysis-1.163
+    paths:
+      - '.github/workflows/sdk-injected-ads.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  trace:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+        with:
+          ref: ad-analysis-1.163
+      - uses: actions/setup-java@de7274f081f381c8f8158605e0321c36c376e2e6 # v6
+        with:
+          distribution: temurin
+          java-version: '21'
+      - name: Download APK and JADX
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          rm -rf sdkads
+          mkdir -p sdkads docs
+          gh release download 1.163.2 --repo "$GITHUB_REPOSITORY" --pattern 'VK-Video-1.163.2-patched.apk' --dir sdkads
+          URL="$(gh api repos/skylot/jadx/releases/latest --jq '.assets[] | select(.name | test("^jadx-[0-9].*\\.zip$")) | .browser_download_url' | head -n1)"
+          curl -fL --retry 4 "$URL" -o sdkads/jadx.zip
+          unzip -q sdkads/jadx.zip -d sdkads/jadx
+          chmod +x sdkads/jadx/bin/jadx
+      - name: Decompile APK
+        run: |
+          set -euo pipefail
+          sdkads/jadx/bin/jadx --no-res --show-bad-code -j 4 -d sdkads/out sdkads/VK-Video-1.163.2-patched.apk >/tmp/jadx-sdkads.log 2>&1 || true
+          tail -n 30 /tmp/jadx-sdkads.log
+          test -d sdkads/out/sources
+      - name: Extract SDK ad injection candidates
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          from pathlib import Path
+          root=Path('sdkads/out/sources')
+          out=Path('docs/sdk-injected-ads-1.163.2.txt')
+          needles=[
+            'AdsSdkComponent','AdsSdkComponentImpl','AdsSdkRouter','MyTargetAdsDataProvider',
+            'com.vk.clips.sdk.shared.item.ads','kz0.a','iz0.a',
+            'ClipEndOverlayAdWrapperView','VideoAdvertisementsComponent','VideoAdvertisementsComponentImpl',
+            'InstreamAdEngine','new w5','new xo.a','AdSection.MIDROLL',
+            'Loading midpoint services','Unable to start ad','handleAdChoicesClick',
+            'short_video_mytarget_sdk','SdkActionLink','getAppPackageName',
+          ]
+          matches=[]
+          for p in root.rglob('*.java'):
+            try: t=p.read_text('utf-8',errors='replace')
+            except: continue
+            hits=[n for n in needles if n in t]
+            if not hits: continue
+            # Favor app/libvideo/clips/mytarget and callers that instantiate ad objects.
+            score=sum(5 for h in hits if h in ('AdsSdkComponentImpl','MyTargetAdsDataProvider','InstreamAdEngine','com.vk.clips.sdk.shared.item.ads'))
+            score+=sum(t.count(h) for h in hits)
+            matches.append((score,p,t,hits))
+          matches.sort(key=lambda x:(-x[0],str(x[1])))
+          with out.open('w',encoding='utf-8') as f:
+            f.write(f'# files={len(matches)}\n\n')
+            for score,p,t,hits in matches[:180]:
+              lines=t.splitlines()
+              f.write(f'===== {p.relative_to(root)} score={score} =====\nHITS: {", ".join(hits)}\n')
+              idxs=[i for i,l in enumerate(lines) if any(h in l for h in hits)]
+              windows=[]
+              for i in idxs:
+                a,b=max(0,i-35),min(len(lines),i+70)
+                if windows and a<=windows[-1][1]+5: windows[-1]=(windows[-1][0],max(windows[-1][1],b))
+                else: windows.append((a,b))
+              for a,b in windows[:16]:
+                f.write(f'--- lines {a+1}-{b} ---\n')
+                for j in range(a,b):
+                  f.write(f'{j+1:05d}: {lines[j]}\n')
+              f.write('\n')
+          print(out, out.stat().st_size)
+          PY
+      - name: Commit report
+        run: |
+          set -euo pipefail
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add docs/sdk-injected-ads-1.163.2.txt
+          git commit -m 'analysis: trace SDK-injected clip and instream ads' || exit 0
+          git pull --rebase origin ad-analysis-1.163
+          git push origin HEAD:ad-analysis-1.163
