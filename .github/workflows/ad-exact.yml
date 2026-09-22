@@ -1,0 +1,109 @@
+name: Extract exact VK Video ad classes
+
+on:
+  push:
+    branches:
+      - ad-analysis-1.163
+    paths:
+      - '.github/workflows/ad-exact.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  extract:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+        with:
+          ref: ad-analysis-1.163
+
+      - name: Download APK
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          rm -rf exact
+          mkdir -p exact/dex docs
+          gh release download 1.163 --repo "$GITHUB_REPOSITORY" --pattern 'VK-Video-1.163-patched.apk' --dir exact
+          cd exact/dex
+          unzip -q ../VK-Video-1.163-patched.apk 'classes*.dex'
+
+      - name: Extract exact class blocks
+        run: |
+          set -euo pipefail
+          DEXDUMP="$(find "$ANDROID_SDK_ROOT/build-tools" -type f \( -name dexdump -o -name dexdump.exe \) | sort -V | tail -n1)"
+          export DEXDUMP
+          python - <<'PY'
+          import os, re, subprocess
+          from pathlib import Path
+
+          wanted_exact = {
+              'Lcom/vk/api/generated/video/dto/VideoVideoAdsInstreamSectionsDto;',
+              'Lcom/vk/api/generated/video/dto/VideoVideoAdsInstreamSectionDto;',
+              'Lcom/vk/api/generated/video/dto/VideoVideoAdsInstreamDto;',
+              'Lcom/vk/api/generated/video/dto/VideoGetAdsResponseDto;',
+              'Lcom/vk/api/generated/video/dto/VideoVideoAdsMobileInstreamadsDto;',
+              'Lcom/vk/mytarget/di/AdsSdkComponentImpl;',
+              'Lcom/vk/mytarget/di/AdsSdkComponentImpl$a;',
+              'Lcom/vk/clips/tool/view/newsfeed/mytarget/ClipEndOverlayAdWrapperView;',
+              'Lcom/vk/clips/tool/view/newsfeed/overlay/ClipEndOverlayView;',
+              'Lcom/vk/api/generated/shortVideo/dto/ShortVideoRecomFeedItemDto$Deserializer;',
+          }
+          needles = (
+              'InstreamAdEngine:',
+              'short_video_mytarget_sdk_static',
+              'short_video_mytarget_sdk_carousel',
+              'ShortVideoFeedItemShortVideoMytargetSdkAdDto',
+              'VideoVideoAdsInstreamSectionsDto',
+          )
+          dex_dump = os.environ['DEXDUMP']
+          out = Path('docs/ad-exact-classes-1.163.txt')
+          selected = []
+          desc_re = re.compile(r"Class descriptor\s*:\s*'([^']+)'")
+
+          for dex in sorted(Path('exact/dex').glob('classes*.dex')):
+              proc = subprocess.Popen([dex_dump, '-d', str(dex)], stdout=subprocess.PIPE, stderr=subprocess.DEVNULL,
+                                      text=True, encoding='utf-8', errors='replace')
+              block = []
+              for line in proc.stdout:
+                  if line.startswith('Class #') and block:
+                      text = ''.join(block)
+                      m = desc_re.search(text)
+                      desc = m.group(1) if m else ''
+                      if desc in wanted_exact or any(n in text for n in needles):
+                          selected.append((dex.name, desc, text))
+                      block = [line]
+                  else:
+                      block.append(line)
+              if block:
+                  text = ''.join(block)
+                  m = desc_re.search(text)
+                  desc = m.group(1) if m else ''
+                  if desc in wanted_exact or any(n in text for n in needles):
+                      selected.append((dex.name, desc, text))
+              proc.wait()
+              if proc.returncode:
+                  raise SystemExit(f'dexdump failed for {dex}: {proc.returncode}')
+
+          with out.open('w', encoding='utf-8') as f:
+              f.write('# Exact VK Video 1.163 ad-related DEX classes\n')
+              f.write(f'Selected blocks: {len(selected)}\n\n')
+              for dex, desc, text in selected:
+                  f.write(f'===== {dex} :: {desc} =====\n')
+                  f.write(text)
+                  f.write('\n')
+
+          print(f'{len(selected)} blocks, {out.stat().st_size} bytes')
+          PY
+
+      - name: Commit exact report
+        run: |
+          set -euo pipefail
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add docs/ad-exact-classes-1.163.txt
+          git commit -m 'analysis: extract exact VK Video ad DEX classes' || exit 0
+          git pull --rebase origin ad-analysis-1.163
+          git push origin HEAD:ad-analysis-1.163
