@@ -12,13 +12,13 @@
 ## Текущий статус
 
 - ✅ Проверенная версия приложения: **VK Видео 1.163 / versionCode 51920**
-- ✅ Готовый APK: [Release 1.163](https://github.com/Solvo37/vk-video-morphe-patches/releases/tag/1.163)
-- ✅ Текущий bundle патчей: **v0.2.0**
+- ✅ Готовый APK: [Latest stable release](https://github.com/Solvo37/vk-video-morphe-patches/releases/latest)
+- ✅ Текущий bundle патчей: **v0.2.1**
 - ✅ Полный patch profile проверен запуском на реальном ARM64-устройстве с установленным обычным VK; точный release APK дополнительно проходит автоматические 0.2 static gates
 - ✅ Сборка: **Morphe STRIP_FAST → zipalign → APK Signature Scheme v3**
 - ⚠️ Native bypass сейчас рассчитан на **ARM64 / arm64-v8a**
 
-Готовый релиз `1.163` использует тот же рабочий patch profile, который прошёл реальный launch-test. Сам опубликованный APK дополнительно проверяется по package/version, подписи, zipalign, manifest coexistence, DEX class definition и native binary pattern. Старые экспериментальные сборки до native bypass могли закрываться сразу после запуска.
+Базовый профиль `1.163` прошёл реальный launch-test. Изменения рекламного профиля 0.2.1 дополнительно проходят сборку Morphe и fail-closed static gates; опубликованный APK проверяется по package/version, подписи, zipalign, manifest coexistence, DEX class definition и native binary pattern.
 
 ## Что патчится
 
@@ -27,11 +27,12 @@
 | **Fix install conflict with stock VK** | позволяет переподписанному VK Видео устанавливаться рядом с обычным `com.vkontakte.android` | обязательный compatibility fix |
 | **Bypass native signature check** | изменяет проверку в `libvkcore.so`, которая завершала переподписанное приложение через native exit | обязательный compatibility fix |
 | **Disable in-app update** | отключает встроенную проверку и предложение обновить VK Видео | пользовательский |
-| **Remove video ads** | отключает клиентские instream / overlay / motion ad-фичи плеера | пользовательский |
+| **Remove video ads** | отключает video ad feature gates и обнуляет серверные instream/mobile/sport/banner payloads, включая preroll/midroll/postroll | пользовательский |
+| **Remove clip ads** | отключает отдельные рекламные feature/config/SDK-пути VK Клипов | пользовательский |
 | **Hide promoted banner content** | выключает показ рекламного баннера в Discover | пользовательский |
 | **Disable ad pixel tracking** | останавливает отдельный рекламный pixel tracker | пользовательский |
 
-Патчи не обещают удалить рекламу или аналитику, полностью формируемые сервером. Они меняют только конкретные клиентские механизмы, найденные в APK.
+В 1.163 патчи перекрывают найденные клиентские feature gates и найденный серверный рекламный payload для обычного видео, а также отдельный рекламный стек Клипов. Совершенно новый серверный путь в будущих версиях приложения потребует повторного reverse engineering.
 
 ## Установка
 
@@ -80,8 +81,8 @@ https://github.com/Solvo37/vk-video-morphe-patches
 Bundle публикуется отдельным release:
 
 ```text
-patches-v0.2.0
-vk-video-morphe-patches-0.2.0.mpp
+patches-v0.2.1
+vk-video-morphe-patches-0.2.1.mpp
 ```
 
 Для переподписанной сборки **Bypass native signature check** должен оставаться включённым. Без него VK Видео 1.163 завершает процесс на старте после проверки подписи.
