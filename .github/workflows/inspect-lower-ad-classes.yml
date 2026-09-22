@@ -1,0 +1,73 @@
+name: Inspect lower ad injection classes
+
+on:
+  push:
+    branches: [ad-analysis-1.163]
+    paths:
+      - '.github/workflows/inspect-lower-ad-classes.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  inspect:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+        with:
+          ref: ad-analysis-1.163
+      - uses: actions/setup-java@de7274f081f381c8f8158605e0321c36c376e2e6 # v6
+        with:
+          distribution: temurin
+          java-version: '21'
+      - name: Download inputs
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          rm -rf lowerads
+          mkdir -p lowerads/out docs
+          gh release download 1.163.2 --repo "$GITHUB_REPOSITORY" --pattern 'VK-Video-1.163.2-patched.apk' --dir lowerads
+          URL="$(gh api repos/skylot/jadx/releases/latest --jq '.assets[] | select(.name | test("^jadx-[0-9].*\\.zip$")) | .browser_download_url' | head -n1)"
+          curl -fL --retry 4 "$URL" -o lowerads/jadx.zip
+          unzip -q lowerads/jadx.zip -d lowerads/jadx
+          chmod +x lowerads/jadx/bin/jadx
+      - name: Decompile target classes
+        run: |
+          set -euo pipefail
+          APK='lowerads/VK-Video-1.163.2-patched.apk'
+          J='lowerads/jadx/bin/jadx'
+          OUT='docs/lower-ad-classes-1.163.2.txt'
+          : > "$OUT"
+          classes=(
+            'r11.d'
+            'wg1.k'
+            'j31.b'
+            'kz0.a'
+            'iz0.a'
+            'se1.c'
+            'com.vk.mytarget.di.AdsSdkComponentImpl'
+            'n33.t'
+          )
+          n=0
+          for cls in "${classes[@]}"; do
+            n=$((n+1))
+            echo "===== $cls =====" >> "$OUT"
+            if "$J" --no-res --show-bad-code --single-class "$cls" --single-class-output "lowerads/out/$n.java" "$APK" >/tmp/jadx-one.log 2>&1; then
+              cat "lowerads/out/$n.java" >> "$OUT"
+            else
+              echo DECOMPILE_FAILED >> "$OUT"
+              tail -n 20 /tmp/jadx-one.log >> "$OUT"
+            fi
+            echo >> "$OUT"
+          done
+          wc -c "$OUT"
+      - name: Commit report
+        run: |
+          set -euo pipefail
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add docs/lower-ad-classes-1.163.2.txt
+          git commit -m 'analysis: inspect lower ad injection classes' || exit 0
+          git pull --rebase origin ad-analysis-1.163
+          git push origin HEAD:ad-analysis-1.163
