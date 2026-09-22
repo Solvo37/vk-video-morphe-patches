@@ -32,7 +32,7 @@ jobs:
       - name: Extract exact class bytecode
         run: |
           set -euo pipefail
-          DEXDUMP="$(find "$ANDROID_SDK_ROOT/build-tools" -type f \( -name dexdump -o -name dexdump.exe \) | sort -V | tail -n1)"
+          DEXDUMP="$(find "$ANDROID_SDK_ROOT/build-tools" -type f \\( -name dexdump -o -name dexdump.exe \\) | sort -V | tail -n1)"
           export DEXDUMP
           python - <<'PY'
           from pathlib import Path
@@ -43,45 +43,33 @@ jobs:
             'Lx13/e;',
             'Ln33/t;',
             'Lcom/vk/api/generated/shortVideo/dto/ShortVideoGetRecomResponseDto;',
-            'Lcom/vk/api/generated/shortVideo/dto/ShortVideoRecomFeedDto;',
           }
           out=Path('docs/remaining-ad-bytecode-1.163.txt')
           desc_re=re.compile(r"Class descriptor\s*:\s*'([^']+)'")
           dexdump=os.environ['DEXDUMP']
           found=set()
+
           with out.open('w',encoding='utf-8') as f:
             for dex in sorted(Path('bytecode-rem/dex').glob('classes*.dex')):
-              p=subprocess.Popen([dexdump,'-d',str(dex)],stdout=subprocess.PIPE,stderr=subprocess.DEVNULL,
-                                 text=True,encoding='utf-8',errors='replace')
-              block=[]
-              current=None
-              keep=False
-              def flush():
-                nonlocal block,current,keep
-                if keep and block:
-                  f.write(f'===== {dex.name} :: {current} =====\n')
-                  f.writelines(block)
+              text=subprocess.check_output([dexdump,'-d',str(dex)],stderr=subprocess.DEVNULL,
+                                           text=True,encoding='utf-8',errors='replace')
+              blocks=re.split(r'(?=^Class #)', text, flags=re.M)
+              for block in blocks:
+                m=desc_re.search(block)
+                if not m:
+                  continue
+                desc=m.group(1)
+                if desc in wanted:
+                  found.add(desc)
+                  f.write(f'===== {dex.name} :: {desc} =====\n')
+                  f.write(block)
                   f.write('\n')
-                  found.add(current)
-                block=[]
-                current=None
-                keep=False
-              for line in p.stdout:
-                if line.startswith('Class #'):
-                  flush()
-                block.append(line)
-                m=desc_re.search(line)
-                if m:
-                  current=m.group(1)
-                  keep=current in wanted
-              flush()
-              p.wait()
-              if p.returncode:
-                raise SystemExit(p.returncode)
+
           print('found',sorted(found),'bytes',out.stat().st_size)
           missing=wanted-found
           if missing:
             print('missing',sorted(missing))
+            raise SystemExit(1)
           PY
 
       - name: Commit
