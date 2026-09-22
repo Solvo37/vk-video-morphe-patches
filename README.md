@@ -88,11 +88,7 @@ vk-video-morphe-patches-0.2.0.mpp
 
 ## Автоматические обновления
 
-Workflow `VK Video auto build` периодически проверяет upstream в таком порядке:
-
-1. **RuStore**
-2. **Google Play через gplaydl**
-3. **APKPure через apkeep**
+Workflow `VK Video auto build` периодически опрашивает **все доступные upstream-источники** — RuStore, Google Play через gplaydl и APKPure через apkeep — проверяет каждый скачанный base APK и выбирает кандидат с **максимальным подтверждённым `versionCode`**. Если `versionCode` одинаковый, приоритет используется только как tie-breaker: RuStore → Google Play → APKPure.
 
 Перед патчингом проверяются:
 
@@ -104,7 +100,7 @@ Workflow `VK Video auto build` периодически проверяет upstr
 
 Если новая версия несовместима, APK не публикуется: workflow останавливается и создаёт compatibility issue.
 
-После успешного патчинга сборка проходит `STRIP_FAST`, при необходимости merge split APK, `zipalign`, затем подписывается постоянным ключом проекта только APK Signature Scheme v3.
+Split APK сначала объединяются в universal upstream, затем применяются Morphe `STRIP_FAST` и native patch. После статических compatibility gates итоговый APK проходит `zipalign` и подписывается постоянным ключом проекта только APK Signature Scheme v3. В app release публикуются APK, SHA-256, `.mpp`, `upstream.json`, build metadata и Morphe report.
 
 Подробнее: [docs/UPSTREAM.md](./docs/UPSTREAM.md).
 
