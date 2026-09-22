@@ -1,5 +1,15 @@
 # Changelog
 
+## 0.2.3 — 2026-09-22
+
+Lower-layer ad blocking for VK Видео 1.163 after real-account testing of 1.163.2:
+
+- added **Filter Clips SDK ads** below the server response mapper: the app's own `c01.c.f(video)` ad predicate now causes `r11.d.g(...)` and its default/MyTarget overload to return `null`, which existing callers already skip;
+- the same patch filters `k01.e$d` (StaticAds) and `k01.e$b` (MarketAds) before `r11.d.f(...)` can turn them into final Clips SDK feed items / install CTAs;
+- added **Block deep midroll ads**: the dedicated `request_midroll` Runnable `n33.t.run()` exits immediately before the main player is paused or handed to InstreamAdEngine;
+- midpoint configuration in `xo.a.d(float)` is disabled, and direct `xo.a.c("midroll")` starts are rejected as defense in depth;
+- these are separate delta patches so the signed 1.163.2 build can be upgraded without reapplying earlier bytecode changes.
+
 ## 0.2.2 — 2026-09-22
 
 Runtime ad removal hardening for VK Видео 1.163:
