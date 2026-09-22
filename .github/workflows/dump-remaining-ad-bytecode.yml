@@ -32,7 +32,7 @@ jobs:
       - name: Extract exact class bytecode
         run: |
           set -euo pipefail
-          DEXDUMP="$(find "$ANDROID_SDK_ROOT/build-tools" -type f \\( -name dexdump -o -name dexdump.exe \\) | sort -V | tail -n1)"
+          DEXDUMP="$(find "$ANDROID_SDK_ROOT/build-tools" -type f -name dexdump | sort -V | tail -n1)"
           export DEXDUMP
           python - <<'PY'
           from pathlib import Path
