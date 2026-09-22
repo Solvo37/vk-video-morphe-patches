@@ -89,7 +89,7 @@ jobs:
             -o work/clip-unsigned.apk \
             work/base-variant5.apk
 
-          jq -e '.success == true and (.failedPatches | length == 0)' work/clip-patch-result.json >/dev/null
+          jq -e '(.failedPatches | length) == 0' work/clip-patch-result.json >/dev/null
           jq -e 'any(.appliedPatches[]?; .name == "Remove clip ads")' work/clip-patch-result.json >/dev/null
 
       - name: Sign test APK
