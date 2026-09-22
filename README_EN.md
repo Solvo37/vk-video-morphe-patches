@@ -8,7 +8,7 @@ Public **Morphe** patches for the Android **VK Video** app (`com.vk.vkvideo`) wi
 
 - ✅ Verified app target: **VK Video 1.163 / versionCode 51920**
 - ✅ Prebuilt APK: [Latest stable release](https://github.com/Solvo37/vk-video-morphe-patches/releases/latest)
-- ✅ Current patch bundle: **v0.2.2**
+- ✅ Current patch bundle: **v0.2.3**
 - ✅ Full patch profile verified on a real ARM64 device alongside the stock VK app; the exact release APK additionally passes automated 0.2 static gates
 - ✅ Build pipeline: **Morphe STRIP_FAST → zipalign → APK Signature Scheme v3**
 - ⚠️ The native bypass currently targets **ARM64 / arm64-v8a**
@@ -24,6 +24,8 @@ Public **Morphe** patches for the Android **VK Video** app (`com.vk.vkvideo`) wi
 | **Remove clip ads** | disables VK Clips ad feature/config/SDK paths |
 | **Filter clip feed ads** | removes server-provided StaticAd / MarketAd / MyTarget / FloatingAd feed items before they become Clips SDK items or install CTAs |
 | **Block midroll ads** | blocks the runtime MIDROLL branch before the main video player switches to instream ads |
+| **Filter Clips SDK ads** | drops ad-marked SDK videos and StaticAds/MarketAds inside the Clips SDK, including client-injected install CTAs |
+| **Block deep midroll ads** | disables the dedicated `request_midroll` runnable, midpoint setup, and direct `midroll` section starts |
 | **Hide promoted banner content** | disables the Discover promoted-banner gate |
 | **Disable ad pixel tracking** | disables the dedicated advertising pixel tracker |
 

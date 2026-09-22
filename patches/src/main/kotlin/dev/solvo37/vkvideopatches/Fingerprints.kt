@@ -193,6 +193,68 @@ internal object MidrollRuntimeGateFingerprint : Fingerprint(
     )
 )
 
+
+// Lower Clips SDK converter. These fingerprints sit below the API response
+// mapper, so they also catch ads injected client-side after feed parsing.
+internal object ClipSdkAdVideoMapperFingerprint : Fingerprint(
+    definingClass = "Lr11/d;",
+    name = "g",
+    accessFlags = listOf(AccessFlags.PUBLIC, AccessFlags.FINAL),
+    returnType = "Lcom/vk/clips/sdk/shared/feed/model/FeedItem\$d;",
+    parameters = listOf(
+        "Lcom/vk/clips/sdk/shared/api/deps/video/SdkVideoFile;",
+        "Lcom/vk/clips/sdk/shared/api/routing/models/ClipFeedCacheInfo;"
+    )
+)
+
+internal object ClipSdkAdVideoDefaultMapperFingerprint : Fingerprint(
+    definingClass = "Lr11/d;",
+    name = "d",
+    accessFlags = listOf(AccessFlags.PUBLIC, AccessFlags.STATIC),
+    returnType = "Lcom/vk/clips/sdk/shared/feed/model/FeedItem\$d;",
+    parameters = listOf(
+        "Lr11/d;",
+        "Lcom/vk/clips/sdk/shared/api/deps/video/SdkVideoFile;",
+        "Liz0/a;",
+        "I"
+    )
+)
+
+internal object ClipSdkIntermediateListFingerprint : Fingerprint(
+    definingClass = "Lr11/d;",
+    name = "f",
+    accessFlags = listOf(AccessFlags.PUBLIC, AccessFlags.FINAL),
+    returnType = "Ljava/util/ArrayList;",
+    parameters = listOf("Ljava/util/List;")
+)
+
+// Dedicated runtime path that requests an in-player midroll.
+internal object MidrollRequestRunnableFingerprint : Fingerprint(
+    definingClass = "Ln33/t;",
+    name = "run",
+    accessFlags = listOf(AccessFlags.PUBLIC, AccessFlags.FINAL),
+    returnType = "V",
+    parameters = emptyList()
+)
+
+// Instream facade midpoint setup: reads the "midroll" section and calculates
+// the time points stored into the ad engine.
+internal object InstreamMidpointConfigFingerprint : Fingerprint(
+    definingClass = "Lxo/a;",
+    name = "d",
+    accessFlags = listOf(AccessFlags.PUBLIC, AccessFlags.FINAL),
+    returnType = "V",
+    parameters = listOf("F")
+)
+
+// Direct named-section entry point for instream ads.
+internal object InstreamNamedSectionStartFingerprint : Fingerprint(
+    definingClass = "Lxo/a;",
+    name = "c",
+    accessFlags = listOf(AccessFlags.PUBLIC, AccessFlags.FINAL),
+    returnType = "V",
+    parameters = listOf("Ljava/lang/String;")
+)
 internal object VideoGetAdsResponseConstructorFingerprint : Fingerprint(
     definingClass = "Lcom/vk/api/generated/video/dto/VideoGetAdsResponseDto;",
     name = "<init>",

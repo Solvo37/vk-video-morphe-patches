@@ -329,6 +329,121 @@ val blockMidrollRuntimeAdsPatch = bytecodePatch(
     }
 }
 
+
+@Suppress("unused")
+val filterClipSdkAdsPatch = bytecodePatch(
+    name = "Filter Clips SDK ads",
+    description = "Drops client-side Clips SDK ad videos plus StaticAds/MarketAds before they enter the rendered feed.",
+    default = true
+) {
+    compatibleWith(VK_VIDEO)
+
+    execute {
+        val returnNullForSdkAd = """
+            invoke-static {p1}, Lc01/c;->f(Lcom/vk/clips/sdk/shared/api/deps/video/SdkVideoFile;)Z
+            move-result v0
+            if-eqz v0, :original
+
+            const/4 v0, 0x0
+            return-object v0
+        """.trimIndent()
+
+        ClipSdkAdVideoMapperFingerprint.method.apply {
+            check(implementation!!.registerCount >= 4) {
+                "Clips SDK ad mapper has no safe local register"
+            }
+            addInstructionsWithLabels(
+                0,
+                returnNullForSdkAd,
+                ExternalLabel("original", getInstruction(0))
+            )
+        }
+
+        ClipSdkAdVideoDefaultMapperFingerprint.method.apply {
+            check(implementation!!.registerCount >= 5) {
+                "Clips SDK default ad mapper has no safe local register"
+            }
+            addInstructionsWithLabels(
+                0,
+                returnNullForSdkAd,
+                ExternalLabel("original", getInstruction(0))
+            )
+        }
+
+        // r11.d.f(): e$d = StaticAds and e$b = MarketAds.
+        val staticAdIntermediate = "Lk01/e\$d;"
+        val marketAdIntermediate = "Lk01/e\$b;"
+
+        ClipSdkIntermediateListFingerprint.method.apply {
+            check(implementation!!.registerCount >= 7) {
+                "Clips SDK list mapper has insufficient local registers"
+            }
+            addInstructionsWithLabels(
+                0,
+                """
+                    new-instance v0, Ljava/util/ArrayList;
+                    invoke-direct {v0}, Ljava/util/ArrayList;-><init>()V
+
+                    invoke-interface {p1}, Ljava/util/List;->iterator()Ljava/util/Iterator;
+                    move-result-object v1
+
+                    :sdk_clip_filter_loop
+                    invoke-interface {v1}, Ljava/util/Iterator;->hasNext()Z
+                    move-result v2
+                    if-eqz v2, :sdk_clip_filter_done
+
+                    invoke-interface {v1}, Ljava/util/Iterator;->next()Ljava/lang/Object;
+                    move-result-object v3
+
+                    instance-of v4, v3, $staticAdIntermediate
+                    if-nez v4, :sdk_clip_filter_loop
+
+                    instance-of v4, v3, $marketAdIntermediate
+                    if-nez v4, :sdk_clip_filter_loop
+
+                    invoke-virtual {v0, v3}, Ljava/util/ArrayList;->add(Ljava/lang/Object;)Z
+                    goto :sdk_clip_filter_loop
+
+                    :sdk_clip_filter_done
+                    move-object p1, v0
+                """,
+                ExternalLabel("original", getInstruction(0))
+            )
+        }
+    }
+}
+
+@Suppress("unused")
+val blockDeepMidrollAdsPatch = bytecodePatch(
+    name = "Block deep midroll ads",
+    description = "Disables the dedicated request_midroll runnable, midpoint configuration, and direct named midroll starts.",
+    default = true
+) {
+    compatibleWith(VK_VIDEO)
+
+    execute {
+        MidrollRequestRunnableFingerprint.method.addInstruction(0, "return-void")
+        InstreamMidpointConfigFingerprint.method.addInstruction(0, "return-void")
+
+        InstreamNamedSectionStartFingerprint.method.apply {
+            check(implementation!!.registerCount >= 3) {
+                "Instream named-section start has no safe local register"
+            }
+            addInstructionsWithLabels(
+                0,
+                """
+                    const-string v0, "midroll"
+                    invoke-virtual {p1, v0}, Ljava/lang/String;->equals(Ljava/lang/Object;)Z
+                    move-result v0
+                    if-eqz v0, :original
+
+                    return-void
+                """,
+                ExternalLabel("original", getInstruction(0))
+            )
+        }
+    }
+}
 @Suppress("unused")
 val hidePromotedBannerPatch = bytecodePatch(
     name = "Hide promoted banner content",
