@@ -1,0 +1,53 @@
+name: Analyze current 1.163 release
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/analyze-release.yml'
+
+permissions:
+  contents: read
+
+jobs:
+  analyze:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Download current release APK
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          mkdir -p work
+          gh release download 1.163             --repo "$GITHUB_REPOSITORY"             --pattern 'VK-Video-1.163-patched.apk'             --dir work
+
+      - name: Hash ZIP entries
+        run: |
+          python - <<'PY'
+          import hashlib, json, zipfile, os
+          apk='work/VK-Video-1.163-patched.apk'
+          out={}
+          with zipfile.ZipFile(apk) as z:
+              for i in z.infolist():
+                  if i.is_dir():
+                      continue
+                  d=z.read(i.filename)
+                  out[i.filename]={
+                      'size':len(d),
+                      'sha256':hashlib.sha256(d).hexdigest(),
+                      'compress_type':i.compress_type,
+                      'compress_size':i.compress_size,
+                  }
+          with open('work/entries.json','w') as f:
+              json.dump(out,f,sort_keys=True,separators=(',',':'))
+          print('entries',len(out))
+          print('apk_size',os.path.getsize(apk))
+          print('apk_sha256',hashlib.sha256(open(apk,'rb').read()).hexdigest())
+          PY
+
+      - name: Upload metadata
+        uses: actions/upload-artifact@v7
+        with:
+          name: current-release-entry-hashes
+          path: work/entries.json
+          retention-days: 1
