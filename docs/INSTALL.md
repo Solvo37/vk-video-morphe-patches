@@ -1,26 +1,43 @@
-# Installation
+# Установка
 
-## 1. Ready-to-install APK
+## Готовый APK
 
-Open the repository's **Releases** page and look for an asset named:
+Готовые сборки находятся в [GitHub Releases](https://github.com/Solvo37/vk-video-morphe-patches/releases).
+
+Нужный asset имеет имя:
 
 ```text
 VK-Video-<version>-patched.apk
 ```
 
-Before installing the first patched build, uninstall the official VK Video app if it uses the same package name. Android does not allow an APK signed by a different certificate to update the stock installation.
+Для текущей проверенной версии:
 
-After the first patched install, future project releases can update it as long as they are signed with the same project key.
+```text
+VK-Video-1.163-patched.apk
+```
 
-## 2. Obtainium
+## Первая установка
 
-Add:
+Проект подписывает APK собственным постоянным Android-ключом. Поэтому проектный APK нельзя установить обновлением поверх официального VK Видео с подписью VK.
+
+Порядок первой установки:
+
+1. удалить только официальный **VK Видео** (`com.vk.vkvideo`);
+2. обычный **VK** (`com.vkontakte.android`) можно оставить;
+3. установить `VK-Video-1.163-patched.apk`;
+4. разрешить установку APK из используемого браузера/файлового менеджера, если Android попросит.
+
+После этого следующие релизы проекта, подписанные тем же ключом, смогут ставиться поверх предыдущего проектного APK без удаления данных приложения.
+
+## Obtainium
+
+Добавьте:
 
 ```text
 https://github.com/Solvo37/vk-video-morphe-patches
 ```
 
-Recommended settings:
+Рекомендуемые фильтры:
 
 ```text
 Release title filter:
@@ -30,38 +47,51 @@ APK asset filter:
 ^VK-Video-.*-patched\.apk$
 ```
 
-The release-title filter prevents patch-bundle-only releases from being treated as application updates.
+Фильтр release title нужен потому, что в этом же репозитории публикуются отдельные Morphe bundle-релизы вида `patches-v0.1.x`.
 
-## 3. Morphe custom source
+После добавления записи Obtainium должен видеть APK-релизы приложения, например `VK Video 1.163 patched`.
 
-If you prefer to patch the official APK yourself, add the same repository URL as a Morphe source:
+## Обновления
 
-```text
-https://github.com/Solvo37/vk-video-morphe-patches
-```
+Не удаляйте проектный VK Видео перед обычным обновлением: новый APK должен ставиться поверх старого, если оба подписаны постоянным release key проекта.
 
-Select the VK Video APK, enable the patches you want and run Morphe.
+Если Android пишет о несовместимой подписи, сначала проверьте сертификат APK. Не переустанавливайте приложение вслепую, если отпечаток отличается от опубликованного ниже.
 
-Current patches are independent:
+## Проверка подписи
 
-- Disable in-app update
-- Remove video ads
-- Hide promoted banner content
-- Disable ad pixel tracking
-
-## Signature verification
-
-Expected project release certificate SHA-256:
+Ожидаемый сертификат проектных APK:
 
 ```text
 D4:1F:49:2F:0E:2A:2E:39:90:AC:7F:8E:75:CC:5D:4B:
 14:89:5F:7B:46:C0:B6:11:3B:78:82:C4:8A:A5:D4:0A
 ```
 
-With Android build-tools:
+Проверка через Android build-tools:
 
 ```bash
-apksigner verify --print-certs VK-Video-*-patched.apk
+apksigner verify --verbose --print-certs VK-Video-*-patched.apk
 ```
 
-Never install a file claiming to be from this project if the certificate fingerprint does not match.
+Текущий pipeline использует `zipalign` и APK Signature Scheme **v3 only**.
+
+## Самостоятельный патч через Morphe
+
+Репозиторий можно использовать как custom source:
+
+```text
+https://github.com/Solvo37/vk-video-morphe-patches
+```
+
+Обязательные патчи для переподписанного VK Видео:
+
+- **Bypass native signature check** — без него 1.163 завершается на старте;
+- **Fix install conflict with stock VK** — нужен для нормальной совместной установки с обычным VK.
+
+Дополнительные патчи:
+
+- Disable in-app update
+- Remove video ads
+- Hide promoted banner content
+- Disable ad pixel tracking
+
+Native bypass текущей версии рассчитан на ARM64.
