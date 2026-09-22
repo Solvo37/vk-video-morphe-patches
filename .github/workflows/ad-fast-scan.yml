@@ -1,0 +1,67 @@
+name: Fast scan VK Video ad dex
+
+on:
+  push:
+    branches:
+      - ad-analysis-1.163
+    paths:
+      - '.github/workflows/ad-fast-scan.yml'
+  pull_request:
+    branches:
+      - main
+    paths:
+      - '.github/workflows/ad-fast-scan.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  scan:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout analysis branch
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+        with:
+          ref: ad-analysis-1.163
+
+      - name: Download released APK
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          rm -rf work-fast
+          mkdir -p work-fast/dex
+          gh release download 1.163 --repo "$GITHUB_REPOSITORY" --pattern 'VK-Video-1.163-patched.apk' --dir work-fast
+          cd work-fast/dex
+          unzip -q ../VK-Video-1.163-patched.apk 'classes*.dex'
+
+      - name: Scan dex disassembly and strings
+        run: |
+          set -euo pipefail
+          REPORT='docs/ad-fast-scan-1.163.txt'
+          mkdir -p docs
+          DEXDUMP="$(find "$ANDROID_SDK_ROOT/build-tools" -type f -name dexdump -o -name dexdump.exe | sort -V | tail -n1)"
+          test -x "$DEXDUMP"
+          {
+            echo '# VK Video 1.163 fast DEX advertising scan'
+            echo "dexdump: $DEXDUMP"
+            echo
+            for dex in work-fast/dex/classes*.dex; do
+              echo "===== $dex : focused dexdump ====="
+              "$DEXDUMP" -d "$dex" 2>/dev/null                 | grep -Eai -B 100 -A 140 'my[./ _-]?target|instream|pre[_ -]?roll|mid[_ -]?roll|post[_ -]?roll|vast|vmap|ad[_ -]?break|ad[_ -]?tag|clip.{0,40}ad|ad.{0,40}clip'                 | head -n 16000 || true
+              echo
+              echo "===== $dex : strings ====="
+              strings -n 5 "$dex"                 | grep -Eai 'my[./ _-]?target|instream|pre[_ -]?roll|mid[_ -]?roll|post[_ -]?roll|vast|vmap|ad[_ -]?break|ad[_ -]?tag|clip.{0,40}ad|ad.{0,40}clip'                 | sort -u | head -n 4000 || true
+              echo
+            done
+          } > "$REPORT"
+
+      - name: Commit fast scan
+        run: |
+          set -euo pipefail
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add docs/ad-fast-scan-1.163.txt
+          git commit -m 'analysis: add fast VK Video 1.163 ad dex scan' || exit 0
+          git pull --rebase origin ad-analysis-1.163
+          git push origin HEAD:ad-analysis-1.163
