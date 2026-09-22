@@ -1,0 +1,88 @@
+name: Validate lower ad blockers 1.163.3
+
+on:
+  push:
+    branches: [fix/lower-ad-blockers-1.163.3]
+    paths:
+      - '.github/workflows/validate-lower-ads-1.163.3.yml'
+
+permissions:
+  contents: read
+  packages: read
+
+env:
+  MORPHE_VERSION: v1.16.0
+  MORPHE_SHA256: 82a0df2ff881d83d5ca8b4f9a6ce196bd4ac3b87ff147fe37845c296b436806c
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+        with:
+          ref: fix/lower-ad-blockers-1.163.3
+      - uses: actions/setup-java@de7274f081f381c8f8158605e0321c36c376e2e6 # v6
+        with:
+          distribution: temurin
+          java-version: '21'
+      - uses: gradle/actions/setup-gradle@9c971963bec38e04b3d30dcc455b5382be2fdbfb # v6.3.0
+        with:
+          gradle-version: '9.7.1'
+      - name: Install verification tools
+        run: |
+          set -euo pipefail
+          sudo apt-get update
+          sudo apt-get install -y apksigner aapt zipalign jq unzip
+      - name: Build 0.2.3 bundle
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          gradle :patches:buildAndroid --no-daemon
+          MPP="$(find patches/build/libs -maxdepth 1 -type f -name '*.mpp' ! -name '*sources*' ! -name '*javadoc*' -print -quit)"
+          test -n "$MPP"
+          cp "$MPP" work.mpp
+      - name: Download 1.163.2 base and Morphe
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          gh release download 1.163.2 --repo "$GITHUB_REPOSITORY" --pattern 'VK-Video-1.163.2-patched.apk'
+          curl -fL --retry 4 -o morphe.jar "https://github.com/MorpheApp/morphe-desktop/releases/download/${MORPHE_VERSION}/morphe-desktop-${MORPHE_VERSION#v}-all.jar"
+          echo "${MORPHE_SHA256}  morphe.jar" | sha256sum -c -
+      - name: Apply only new lower-layer patches
+        run: |
+          set -euo pipefail
+          java -jar morphe.jar patch \
+            -p work.mpp \
+            --force --exclusive \
+            -e "Filter Clips SDK ads" \
+            -e "Block deep midroll ads" \
+            --bytecode-mode STRIP_FAST \
+            --unsigned \
+            -r patch-result.json \
+            -o lower-ads-unsigned.apk \
+            VK-Video-1.163.2-patched.apk
+
+          cat patch-result.json
+          jq -e '
+            all(.patchingSteps[]?; .success == true)
+            and ((.failedPatches // []) | length == 0)
+            and any(.appliedPatches[]?; .name == "Filter Clips SDK ads")
+            and any(.appliedPatches[]?; .name == "Block deep midroll ads")
+          ' patch-result.json >/dev/null
+      - name: Validate patched APK
+        run: |
+          set -euo pipefail
+          unzip -t lower-ads-unsigned.apk >/dev/null
+          zipalign -c -p 4 lower-ads-unsigned.apk
+          BADGING="$(aapt dump badging lower-ads-unsigned.apk | head -n1)"
+          echo "$BADGING"
+          grep -q "name='com.vk.vkvideo'" <<< "$BADGING"
+          grep -q "versionCode='51920'" <<< "$BADGING"
+          grep -q "versionName='1.163'" <<< "$BADGING"
+
+          aapt dump xmltree lower-ads-unsigned.apk AndroidManifest.xml > manifest.txt
+          python ci/verify_manifest.py manifest.txt
+          python ci/verify_patched_apk.py lower-ads-unsigned.apk --json-out static-gate.json
+          cat static-gate.json
