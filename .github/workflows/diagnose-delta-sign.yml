@@ -68,9 +68,31 @@ jobs:
             -alias test -keyalg RSA -keysize 2048 -validity 1000 \
             -dname "CN=Delta Test,O=Test,C=US"
 
-          zipalign -f -p 4 work/delta-unsigned.apk work/delta-aligned.apk
-          echo "== sign =="
           set +e
+          echo "== unsigned archive test =="
+          unzip -t work/delta-unsigned.apk >/tmp/unzip-test.log 2>&1
+          UNZIP_RC=$?
+          tail -n 10 /tmp/unzip-test.log
+          echo "unzip rc=$UNZIP_RC"
+
+          echo "== unsigned alignment check =="
+          zipalign -c -v -p 4 work/delta-unsigned.apk >/tmp/align-check.log 2>&1
+          CHECK_RC=$?
+          tail -n 20 /tmp/align-check.log
+          echo "unsigned alignment rc=$CHECK_RC"
+
+          if [[ "$CHECK_RC" -eq 0 ]]; then
+            cp work/delta-unsigned.apk work/delta-aligned.apk
+            ALIGN_RC=0
+          else
+            echo "== realign =="
+            zipalign -f -v -p 4 work/delta-unsigned.apk work/delta-aligned.apk >/tmp/realign.log 2>&1
+            ALIGN_RC=$?
+            tail -n 30 /tmp/realign.log
+            echo "realign rc=$ALIGN_RC"
+          fi
+
+          echo "== sign =="
           apksigner sign \
             --ks work/test.jks --ks-pass pass:testpass \
             --ks-key-alias test --key-pass pass:testpass \
@@ -89,12 +111,17 @@ jobs:
           printf '%s\n' "$VERIFY"
           echo "verify rc=$VERIFY_RC"
 
-          echo "== zipalign =="
-          zipalign -c -p 4 work/delta-test-signed.apk
-          ALIGN_RC=$?
-          echo "zipalign rc=$ALIGN_RC"
+          echo "== signed alignment =="
+          zipalign -c -v -p 4 work/delta-test-signed.apk >/tmp/signed-align.log 2>&1
+          SIGNED_ALIGN_RC=$?
+          tail -n 20 /tmp/signed-align.log
+          echo "signed alignment rc=$SIGNED_ALIGN_RC"
 
           echo "== badging =="
           aapt dump badging work/delta-test-signed.apk | head -n 5
+          BADGING_RC=$?
+          echo "badging rc=$BADGING_RC"
 
-          exit "$VERIFY_RC"
+          if [[ "$UNZIP_RC" -ne 0 || "$ALIGN_RC" -ne 0 || "$SIGN_RC" -ne 0 || "$VERIFY_RC" -ne 0 || "$SIGNED_ALIGN_RC" -ne 0 || "$BADGING_RC" -ne 0 ]]; then
+            exit 1
+          fi
