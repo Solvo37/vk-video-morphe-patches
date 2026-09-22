@@ -1,0 +1,65 @@
+name: Verify current stable APK
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/verify-current-stable.yml'
+
+permissions:
+  contents: read
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+
+      - name: Install Android tools
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y apksigner aapt zipalign
+
+      - name: Download stable APK
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          mkdir -p verify
+          gh release download 1.163             --repo "$GITHUB_REPOSITORY"             --pattern 'VK-Video-1.163-patched.apk'             --dir verify
+
+      - name: Run release gates
+        run: |
+          set -euo pipefail
+          APK=verify/VK-Video-1.163-patched.apk
+
+          zipalign -c -p 4 "$APK"
+          apksigner verify --verbose --print-certs "$APK"
+
+          CERT="$(apksigner verify --print-certs "$APK"             | sed -n 's/^Signer #1 certificate SHA-256 digest: //p'             | head -n1 | tr '[:upper:]' '[:lower:]' | tr -d ':')"
+          [[ "$CERT" == 'd41f492f0e2a2e3990ac7f8e75cc5d4b14895f7b46c0b6113b7882c48aa5d40a' ]]
+
+          aapt dump xmltree "$APK" AndroidManifest.xml > verify/manifest.txt
+          python ci/verify_manifest.py verify/manifest.txt
+          python ci/verify_patched_apk.py "$APK" --json-out verify/static-gate.json
+
+          python - <<'PY'
+          import hashlib, json, zipfile
+          apk='verify/VK-Video-1.163-patched.apk'
+          out={}
+          with zipfile.ZipFile(apk) as z:
+              for i in z.infolist():
+                  if i.is_dir():
+                      continue
+                  b=z.read(i.filename)
+                  out[i.filename]=hashlib.sha256(b).hexdigest()
+          with open('verify/entries.json','w') as f:
+              json.dump(out,f,sort_keys=True)
+          PY
+
+      - name: Upload verification
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7
+        with:
+          name: stable-1.163-verification
+          path: verify/
+          retention-days: 1
