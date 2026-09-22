@@ -1,0 +1,801 @@
+===== r11.d =====
+package r11;
+
+import c01.h;
+import com.vk.clips.sdk.models.ImageUrl;
+import com.vk.clips.sdk.models.SdkArtist;
+import com.vk.clips.sdk.models.SdkMusicTrack;
+import com.vk.clips.sdk.shared.api.decoration.RecommendationDecorationPayload;
+import com.vk.clips.sdk.shared.api.deps.video.SdkClipVideoFile;
+import com.vk.clips.sdk.shared.api.deps.video.SdkVideoFile;
+import com.vk.clips.sdk.shared.api.routing.models.ClipFeedCacheInfo;
+import com.vk.clips.sdk.shared.api.routing.models.ClipFeedTab;
+import com.vk.clips.sdk.shared.decoration.ClipsFeedDecorationPayload;
+import com.vk.clips.sdk.shared.feed.controller.mvi.model.NoDecoration;
+import com.vk.clips.sdk.shared.feed.model.FeedItem;
+import com.vk.clips.sdk.stats.pixels.models.AdStatPixel;
+import com.vk.dto.common.ClipVideoFile;
+import com.vk.dto.common.VideoFile;
+import ee1.y;
+import f11.e;
+import g07.j;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
+import kotlin.NoWhenBranchMatchedException;
+import kotlin.Pair;
+import kotlin.collections.EmptyList;
+import kotlin.collections.q;
+import kotlin.collections.u;
+import w13.o0;
+import wg1.p;
+
+/* JADX INFO: compiled from: ClipFeedListProducer.kt */
+/* JADX INFO: loaded from: classes12.dex */
+public final class d {
+
+    /* JADX INFO: renamed from: a, reason: collision with root package name */
+    public final e f180792a;
+
+    /* JADX INFO: renamed from: b, reason: collision with root package name */
+    public final f11.d f180793b;
+
+    /* JADX INFO: renamed from: c, reason: collision with root package name */
+    public final ClipFeedTab f180794c;
+
+    /* JADX INFO: renamed from: d, reason: collision with root package name */
+    public final d01.b f180795d;
+
+    /* JADX INFO: renamed from: e, reason: collision with root package name */
+    public final s81.a f180796e;
+
+    /* JADX INFO: renamed from: f, reason: collision with root package name */
+    public final ConcurrentHashMap<String, h> f180797f = new ConcurrentHashMap<>();
+
+    /* JADX INFO: renamed from: g, reason: collision with root package name */
+    public final ConcurrentHashMap<String, c01.d> f180798g = new ConcurrentHashMap<>();
+
+    public d(e eVar, f11.d dVar, ClipFeedTab clipFeedTab, d01.b bVar, s81.a aVar, p pVar) {
+        this.f180792a = eVar;
+        this.f180793b = dVar;
+        this.f180794c = clipFeedTab;
+        this.f180795d = bVar;
+        this.f180796e = aVar;
+    }
+
+    /* JADX WARN: Code duplicated, block: B:16:0x0021  */
+    /* JADX WARN: Code duplicated, block: B:18:0x0025  */
+    public static FeedItem.d d(d dVar, SdkVideoFile sdkVideoFile, iz0.a aVar, int i16) {
+        iz0.a aVar2 = (i16 & 2) != 0 ? null : aVar;
+        ClipFeedTab clipFeedTab = dVar.f180794c;
+        if (!(clipFeedTab instanceof ClipFeedTab.MusicTemplate)) {
+            ClipFeedTab.CatalogClip catalogClip = clipFeedTab instanceof ClipFeedTab.CatalogClip ? (ClipFeedTab.CatalogClip) clipFeedTab : null;
+            if ((catalogClip != null ? catalogClip.i8() : null) instanceof ClipFeedTab.MusicTemplate) {
+                if (sdkVideoFile instanceof SdkClipVideoFile) {
+                    return dVar.m((SdkClipVideoFile) sdkVideoFile);
+                }
+            }
+        } else if (sdkVideoFile instanceof SdkClipVideoFile) {
+            return dVar.m((SdkClipVideoFile) sdkVideoFile);
+        }
+        if (((clipFeedTab instanceof ClipFeedTab.CatalogClip.TrendingMusicCatalogClip) || (clipFeedTab instanceof ClipFeedTab.CatalogClip.TrendingHashtagCatalogClip)) && (sdkVideoFile instanceof SdkClipVideoFile)) {
+            return dVar.m((SdkClipVideoFile) sdkVideoFile);
+        }
+        boolean z13 = sdkVideoFile instanceof SdkClipVideoFile;
+        if (z13 && c01.c.f(sdkVideoFile)) {
+            SdkClipVideoFile sdkClipVideoFile = (SdkClipVideoFile) sdkVideoFile;
+            FeedItem.j aVar3 = new FeedItem.a(dVar.f180792a.a(), dVar.f180793b.f117608a, dVar.f180794c, sdkClipVideoFile, dVar.c(sdkClipVideoFile), dVar.a(sdkClipVideoFile), dVar.b(sdkClipVideoFile), aVar2);
+            dVar.n(aVar3);
+            return aVar3;
+        }
+        if (!z13) {
+            return sdkVideoFile.k() ? dVar.k(sdkVideoFile) : dVar.k(sdkVideoFile);
+        }
+        FeedItem.j jVarJ = j(dVar, (SdkClipVideoFile) sdkVideoFile, aVar2);
+        dVar.n(jVarJ);
+        return jVarJ;
+    }
+
+    public static FeedItem.e j(d dVar, SdkClipVideoFile sdkClipVideoFile, iz0.a aVar) {
+        ClipFeedTab clipFeedTab = dVar.f180794c;
+        boolean z13 = clipFeedTab instanceof ClipFeedTab.SingleClipWithDecoration;
+        ClipsFeedDecorationPayload recommendationDecorationPayload = NoDecoration.f54663a;
+        if (z13) {
+            ClipFeedTab.SingleClipWithDecoration singleClipWithDecoration = (ClipFeedTab.SingleClipWithDecoration) clipFeedTab;
+            if (kotlin.jvm.internal.h.d(singleClipWithDecoration.f54621a.u0(), sdkClipVideoFile.u0())) {
+                ClipsFeedDecorationPayload clipsFeedDecorationPayload = singleClipWithDecoration.f54625e;
+                if (clipsFeedDecorationPayload != null) {
+                    recommendationDecorationPayload = clipsFeedDecorationPayload;
+                }
+            } else {
+                recommendationDecorationPayload = new RecommendationDecorationPayload(sdkClipVideoFile);
+            }
+        }
+        return dVar.i(sdkClipVideoFile, aVar, recommendationDecorationPayload);
+    }
+
+    /* JADX WARN: Multi-variable type inference failed */
+    /* JADX WARN: Type inference failed for: r1v0 */
+    /* JADX WARN: Type inference failed for: r1v1 */
+    /* JADX WARN: Type inference failed for: r1v2, types: [java.util.List] */
+    /* JADX WARN: Type inference failed for: r1v3, types: [kotlin.collections.EmptyList] */
+    /* JADX WARN: Type inference failed for: r1v4, types: [java.util.ArrayList] */
+    /* JADX WARN: Type inference failed for: r3v0 */
+    /* JADX WARN: Type inference failed for: r3v1 */
+    /* JADX WARN: Type inference failed for: r3v2, types: [java.util.List] */
+    /* JADX WARN: Type inference failed for: r3v3, types: [kotlin.collections.EmptyList] */
+    /* JADX WARN: Type inference failed for: r3v4, types: [java.util.ArrayList] */
+    public static e01.a l(SdkMusicTrack sdkMusicTrack) {
+        ?? arrayList;
+        List<SdkArtist> list = sdkMusicTrack.f54338d;
+        ?? arrayList2 = 0;
+        if (list != null) {
+            List<SdkArtist> list2 = list;
+            arrayList = new ArrayList(q.x(list2, 10));
+            Iterator it = list2.iterator();
+            while (it.hasNext()) {
+                arrayList.add(((SdkArtist) it.next()).f54313a);
+            }
+        } else {
+            arrayList = 0;
+        }
+        if (arrayList == 0) {
+            arrayList = EmptyList.f142703a;
+        }
+        List<SdkArtist> list3 = sdkMusicTrack.f54339e;
+        if (list3 != null) {
+            List<SdkArtist> list4 = list3;
+            arrayList2 = new ArrayList(q.x(list4, 10));
+            Iterator it2 = list4.iterator();
+            while (it2.hasNext()) {
+                arrayList2.add(((SdkArtist) it2.next()).f54313a);
+            }
+        }
+        if (arrayList2 == 0) {
+            arrayList2 = EmptyList.f142703a;
+        }
+        return new e01.a(arrayList, arrayList2, sdkMusicTrack.f54340f);
+    }
+
+    public final c01.d a(SdkVideoFile sdkVideoFile) {
+        Map<AdStatPixel.Type, List<AdStatPixel>> map;
+        String strP0 = sdkVideoFile.P0();
+        ConcurrentHashMap<String, c01.d> concurrentHashMap = this.f180798g;
+        c01.d dVar = concurrentHashMap.get(strP0);
+        if (dVar == null) {
+            j jVar = com.vk.libvideo.autoplay.b.B;
+            n33.a aVarD = com.vk.libvideo.autoplay.b.C1314b.a().d(com.vk.movika.sdk.utils.a.q(sdkVideoFile), null);
+            aVarD.k0();
+            VideoFile videoFileQ = com.vk.movika.sdk.utils.a.q(sdkVideoFile);
+            ClipVideoFile clipVideoFile = videoFileQ instanceof ClipVideoFile ? (ClipVideoFile) videoFileQ : null;
+            if (clipVideoFile != null && (map = clipVideoFile.f68902r2) != null) {
+                ArrayList arrayList = new ArrayList();
+                Iterator<Map.Entry<AdStatPixel.Type, List<AdStatPixel>>> it = map.entrySet().iterator();
+                while (it.hasNext()) {
+                    u.B(it.next().getValue(), arrayList);
+                }
+                ArrayList arrayList2 = new ArrayList();
+                for (Object obj : arrayList) {
+                    if (obj instanceof AdStatPixel.b) {
+                        arrayList2.add(obj);
+                    }
+                }
+                aVarD.w0(arrayList2);
+            }
+            ee1.c cVar = new ee1.c(aVarD);
+            c01.d dVarPutIfAbsent = concurrentHashMap.putIfAbsent(strP0, cVar);
+            dVar = dVarPutIfAbsent == null ? cVar : dVarPutIfAbsent;
+        }
+        return dVar;
+    }
+
+    public final c01.a b(SdkVideoFile sdkVideoFile) {
+        return new c01.a(this.f180792a.a(), this.f180793b.f117608a, sdkVideoFile.r());
+    }
+
+    public final h c(SdkVideoFile sdkVideoFile) {
+        String strP0 = sdkVideoFile.P0();
+        ConcurrentHashMap<String, h> concurrentHashMap = this.f180797f;
+        h yVar = concurrentHashMap.get(strP0);
+        if (yVar == null) {
+            yVar = new y(new o0(com.vk.movika.sdk.utils.a.q(sdkVideoFile), this.f180792a.a(), this.f180793b.f117608a));
+            h hVarPutIfAbsent = concurrentHashMap.putIfAbsent(strP0, yVar);
+            if (hVarPutIfAbsent != null) {
+                yVar = hVarPutIfAbsent;
+            }
+        }
+        h hVar = yVar;
+        hVar.e(sdkVideoFile);
+        return hVar;
+    }
+
+    public final ArrayList e(List list) {
+        ArrayList arrayList = new ArrayList();
+        Iterator it = list.iterator();
+        while (it.hasNext()) {
+            Pair pair = (Pair) it.next();
+            SdkVideoFile sdkVideoFile = (SdkVideoFile) pair.d();
+            FeedItem.e eVarI = null;
+            if (sdkVideoFile instanceof SdkClipVideoFile) {
+                eVarI = i((SdkClipVideoFile) sdkVideoFile, null, (ClipsFeedDecorationPayload) pair.e());
+                n(eVarI);
+            }
+            if (eVarI != null) {
+                arrayList.add(eVarI);
+            }
+        }
+        return arrayList;
+    }
+
+    /* JADX WARN: Multi-variable type inference failed */
+    /* JADX WARN: Type inference failed for: r1v7, types: [java.lang.Object, java.util.Map] */
+    /* JADX WARN: Type inference fix 'apply assigned field type' failed
+    java.lang.UnsupportedOperationException: ArgType.getObject(), call class: class jadx.core.dex.instructions.args.ArgType$UnknownArg
+    	at jadx.core.dex.instructions.args.ArgType.getObject(ArgType.java:596)
+    	at jadx.core.dex.attributes.nodes.ClassTypeVarsAttr.getTypeVarsMapFor(ClassTypeVarsAttr.java:35)
+    	at jadx.core.dex.nodes.utils.TypeUtils.replaceClassGenerics(TypeUtils.java:177)
+    	at jadx.core.dex.visitors.typeinference.FixTypesVisitor.insertExplicitUseCast(FixTypesVisitor.java:397)
+    	at jadx.core.dex.visitors.typeinference.FixTypesVisitor.tryFieldTypeWithNewCasts(FixTypesVisitor.java:359)
+    	at jadx.core.dex.visitors.typeinference.FixTypesVisitor.applyFieldType(FixTypesVisitor.java:309)
+    	at jadx.core.dex.visitors.typeinference.FixTypesVisitor.visit(FixTypesVisitor.java:94)
+     */
+    public final ArrayList f(List list) {
+        Object dVar;
+        Object hVar;
+        ArrayList arrayList = new ArrayList();
+        Iterator it = list.iterator();
+        while (it.hasNext()) {
+            k01.e eVar = (k01.e) it.next();
+            if (eVar instanceof k01.e.a) {
+                dVar = g(((k01.e.a) eVar).f139526a, null);
+            } else {
+                boolean z13 = eVar instanceof k01.e.d;
+                s81.a aVar = this.f180796e;
+                if (z13) {
+                    k01.e.d dVar2 = (k01.e.d) eVar;
+                    String str = dVar2.f139550a;
+                    ImageUrl imageUrl = dVar2.f139551b;
+                    k01.e.d.a aVar2 = dVar2.f139552c;
+                    hVar = new FeedItem.k(imageUrl, dVar2.f139553d, null, str, dVar2.f139554e, dVar2.f139555f, aVar2);
+                    Map<AdStatPixel.Type, List<AdStatPixel>> map = aVar2.f139564i;
+                    if (!map.isEmpty()) {
+                        aVar.g(map);
+                    }
+                } else if (eVar instanceof k01.e.b) {
+                    k01.e.b bVar = (k01.e.b) eVar;
+                    String str2 = bVar.f139527a;
+                    ArrayList arrayList2 = bVar.f139528b;
+                    ImageUrl imageUrl2 = bVar.f139529c;
+                    k01.e.b.a aVar3 = bVar.f139530d;
+                    hVar = new FeedItem.h(imageUrl2, bVar.f139531e, str2, bVar.f139532f, bVar.f139533g, arrayList2, aVar3);
+                    ?? r18 = aVar3.f139544k;
+                    if (!r18.isEmpty()) {
+                        aVar.g(r18);
+                    }
+                } else {
+                    if (!(eVar instanceof k01.e.c)) {
+                        throw new NoWhenBranchMatchedException();
+                    }
+                    k01.e.c cVar = (k01.e.c) eVar;
+                    dVar = new u11.d(cVar.f139546a, cVar.f139548c, cVar.f139549d, cVar.f139547b);
+                }
+                dVar = hVar;
+            }
+            if (dVar != null) {
+                arrayList.add(dVar);
+            }
+        }
+        return arrayList;
+    }
+
+    /* JADX WARN: Code duplicated, block: B:13:0x001c  */
+    /* JADX WARN: Code duplicated, block: B:15:0x0020  */
+    public final FeedItem.d g(SdkVideoFile sdkVideoFile, ClipFeedCacheInfo clipFeedCacheInfo) {
+        int iIndexOf;
+        ClipFeedTab clipFeedTab = this.f180794c;
+        if (!(clipFeedTab instanceof ClipFeedTab.MusicTemplate)) {
+            ClipFeedTab.CatalogClip catalogClip = clipFeedTab instanceof ClipFeedTab.CatalogClip ? (ClipFeedTab.CatalogClip) clipFeedTab : null;
+            if ((catalogClip != null ? catalogClip.i8() : null) instanceof ClipFeedTab.MusicTemplate) {
+                if (sdkVideoFile instanceof SdkClipVideoFile) {
+                    return m((SdkClipVideoFile) sdkVideoFile);
+                }
+            }
+        } else if (sdkVideoFile instanceof SdkClipVideoFile) {
+            return m((SdkClipVideoFile) sdkVideoFile);
+        }
+        if (((clipFeedTab instanceof ClipFeedTab.CatalogClip.TrendingMusicCatalogClip) || (clipFeedTab instanceof ClipFeedTab.CatalogClip.TrendingHashtagCatalogClip)) && (sdkVideoFile instanceof SdkClipVideoFile)) {
+            return m((SdkClipVideoFile) sdkVideoFile);
+        }
+        boolean z13 = sdkVideoFile instanceof SdkClipVideoFile;
+        if (z13 && c01.c.f(sdkVideoFile)) {
+            SdkClipVideoFile sdkClipVideoFile = (SdkClipVideoFile) sdkVideoFile;
+            FeedItem.j aVar = new FeedItem.a(this.f180792a.a(), this.f180793b.f117608a, this.f180794c, sdkClipVideoFile, c(sdkClipVideoFile), a(sdkClipVideoFile), b(sdkClipVideoFile), null);
+            n(aVar);
+            return aVar;
+        }
+        if (!z13) {
+            if (sdkVideoFile.k()) {
+                return k(sdkVideoFile);
+            }
+            return null;
+        }
+        FeedItem.e eVarJ = j(this, (SdkClipVideoFile) sdkVideoFile, null);
+        if (clipFeedCacheInfo != null && (iIndexOf = clipFeedCacheInfo.f54518a.indexOf(eVarJ.f54682d.P0())) >= 0) {
+            eVarJ = FeedItem.e.a(eVarJ, null, new u11.e(iIndexOf, clipFeedCacheInfo.f54519b), null, 2031);
+        }
+        n(eVarJ);
+        return eVarJ;
+    }
+
+    public final ArrayList h(List list, ClipFeedCacheInfo clipFeedCacheInfo) {
+        ArrayList arrayList = new ArrayList();
+        Iterator it = list.iterator();
+        while (it.hasNext()) {
+            FeedItem.d dVarG = g((SdkVideoFile) it.next(), clipFeedCacheInfo);
+            if (dVarG != null) {
+                arrayList.add(dVarG);
+            }
+        }
+        return arrayList;
+    }
+
+    public final FeedItem.e i(SdkClipVideoFile sdkClipVideoFile, iz0.a aVar, ClipsFeedDecorationPayload clipsFeedDecorationPayload) {
+        SdkMusicTrack sdkMusicTrackB0 = sdkClipVideoFile.B0();
+        String str = sdkMusicTrackB0 != null ? sdkMusicTrackB0.f54335a : null;
+        d01.b bVar = this.f180795d;
+        sdkClipVideoFile.t6(bVar.b(str));
+        SdkMusicTrack sdkMusicTrackB1 = sdkClipVideoFile.B0();
+        sdkClipVideoFile.v6(bVar.d(sdkMusicTrackB1 != null ? l(sdkMusicTrackB1) : null));
+        return new FeedItem.e(this.f180792a.a(), this.f180793b.f117608a, this.f180794c, sdkClipVideoFile, null, c(sdkClipVideoFile), a(sdkClipVideoFile), b(sdkClipVideoFile), aVar, null, clipsFeedDecorationPayload);
+    }
+
+    public final FeedItem.g k(SdkVideoFile sdkVideoFile) {
+        return new FeedItem.g(this.f180792a.a(), this.f180793b.f117608a, sdkVideoFile, c(sdkVideoFile), a(sdkVideoFile), b(sdkVideoFile), this.f180794c instanceof ClipFeedTab.TopVideo);
+    }
+
+    public final FeedItem.i m(SdkClipVideoFile sdkClipVideoFile) {
+        SdkMusicTrack sdkMusicTrackB0 = sdkClipVideoFile.B0();
+        String str = sdkMusicTrackB0 != null ? sdkMusicTrackB0.f54335a : null;
+        d01.b bVar = this.f180795d;
+        sdkClipVideoFile.t6(bVar.b(str));
+        SdkMusicTrack sdkMusicTrackB1 = sdkClipVideoFile.B0();
+        sdkClipVideoFile.v6(bVar.d(sdkMusicTrackB1 != null ? l(sdkMusicTrackB1) : null));
+        return new FeedItem.i(this.f180792a.a(), this.f180793b.f117608a, this.f180794c, sdkClipVideoFile, null, c(sdkClipVideoFile), a(sdkClipVideoFile), b(sdkClipVideoFile));
+    }
+
+    public final void n(FeedItem.j jVar) {
+        Map<AdStatPixel.Type, List<AdStatPixel>> mapX7 = jVar.c().X7();
+        if (mapX7.isEmpty()) {
+            return;
+        }
+        this.f180796e.g(mapX7);
+    }
+}
+
+===== wg1.k =====
+DECOMPILE_FAILED
+INFO  - loading ...
+INFO  - Saving class 'wg1.k' to file '/home/runner/work/vk-video-morphe-patches/vk-video-morphe-patches/lowerads/out/2.java'
+ERROR - finished with errors, count: 1
+
+===== j31.b =====
+package j31;
+
+import android.content.Context;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.FrameLayout;
+import c01.d;
+import c01.h;
+import c01.i;
+import com.vk.clips.sdk.shared.api.deps.video.SdkClipVideoFile;
+import com.vk.clips.sdk.shared.api.deps.video.SdkVideoFile;
+import com.vk.clips.sdk.shared.feed.model.FeedItem;
+import com.vk.video.screens.onboarding.twostep.ui.view.value.j;
+import com.vk.video.ui.discovery.minimizable.dialog.related_videos.t;
+import eh1.e;
+import g07.g;
+import java.util.List;
+import kotlin.LazyThreadSafetyMode;
+import kotlin.jvm.functions.Function0;
+import xg1.f;
+import yz1.l;
+
+/* JADX INFO: compiled from: AdsItemMviViewHolder.kt */
+/* JADX INFO: loaded from: classes12.dex */
+public final class b extends l<FeedItem.a> implements r11.a, r11.b, b91.c, e61.a, e61.b, e51.a, n01.c, m01.b {
+    public final Object A;
+    public final Object B;
+    public final a C;
+    public FeedItem.a D;
+
+    /* JADX INFO: renamed from: u, reason: collision with root package name */
+    public final q21.b f135545u;
+
+    /* JADX INFO: renamed from: v, reason: collision with root package name */
+    public final Function0<Integer> f135546v;
+
+    /* JADX INFO: renamed from: w, reason: collision with root package name */
+    public final g51.a f135547w;
+    public final p21.a x;
+    public final g51.a y;
+
+    /* JADX INFO: renamed from: z, reason: collision with root package name */
+    public boolean f135548z;
+
+    /* JADX INFO: compiled from: AdsItemMviViewHolder.kt */
+    public final class a implements h.a {
+        public a() {
+        }
+
+        @Override // c01.h.a
+        public final void P2(SdkVideoFile sdkVideoFile, List<? extends i> list) {
+            b bVar = b.this;
+            FeedItem.a aVar = bVar.D;
+            if (aVar != null) {
+                bVar.r3(new FeedItem.a(aVar.f54670a, aVar.f54671b, aVar.f54672c, (SdkClipVideoFile) sdkVideoFile, aVar.f54674e, aVar.f54675f, aVar.f54676g, aVar.f54677h));
+            }
+        }
+
+        @Override // c01.h.a
+        public final void S0(boolean z13) {
+        }
+    }
+
+    public b() {
+        throw null;
+    }
+
+    public b(Context context, q21.b bVar, f fVar, e eVar, tz0.c cVar, k91.a aVar, boolean z13, boolean z15, r11.c cVar2, t tVar, uf1.h hVar, g51.a aVar2, j51.b bVar2, j51.c cVar3, g91.a aVar3) {
+        com.vk.clips.sdk.shared.item.ads.c cVar4 = new com.vk.clips.sdk.shared.item.ads.c(context, bVar, fVar, eVar, cVar2, cVar, aVar, z13, z15, hVar, tVar, bVar2, cVar3, aVar3);
+        FrameLayout frameLayout = new FrameLayout(context);
+        frameLayout.setLayoutParams(new ViewGroup.LayoutParams(-1, -1));
+        frameLayout.addView(cVar4);
+        super(frameLayout);
+        this.f135545u = bVar;
+        this.f135546v = tVar;
+        this.f135547w = aVar2;
+        this.x = cVar4;
+        this.y = aVar2;
+        j jVar = new j(this, 26);
+        LazyThreadSafetyMode lazyThreadSafetyMode = LazyThreadSafetyMode.NONE;
+        this.A = g.b(lazyThreadSafetyMode, jVar);
+        this.B = g.b(lazyThreadSafetyMode, new dx.e(this, 12));
+        this.C = new a();
+    }
+
+    @Override // n01.c
+    public final void E(float f18) {
+        this.x.E(f18);
+    }
+
+    @Override // e61.b
+    public final void I() {
+        this.x.I();
+    }
+
+    @Override // e61.b
+    public final void L() {
+        this.x.L();
+    }
+
+    @Override // e61.a
+    public final List<View> S() {
+        return this.x.getFastFadeViews();
+    }
+
+    /* JADX WARN: Type inference failed for: r0v0, types: [java.lang.Object, kotlin.Lazy] */
+    @Override // b91.c
+    public final b91.a Z0() {
+        return (b91.a) this.B.getValue();
+    }
+
+    @Override // r11.a
+    public final d b() {
+        FeedItem.a aVar = this.D;
+        if (aVar != null) {
+            return aVar.f54675f;
+        }
+        return null;
+    }
+
+    @Override // m01.b
+    public final void c(boolean z13) {
+        this.x.c(z13);
+        g51.a aVar = this.f135547w;
+        if (aVar != null) {
+            aVar.c(z13);
+        }
+    }
+
+    @Override // e51.a
+    public final iz0.a getMyTargetFacade() {
+        FeedItem.a aVar = this.D;
+        if (aVar != null) {
+            return aVar.f54677h;
+        }
+        return null;
+    }
+
+    @Override // yz1.l
+    public final void l3() {
+        h hVar;
+        FeedItem.a aVar = this.D;
+        if (aVar != null && (hVar = aVar.f54674e) != null) {
+            hVar.d(this.C);
+        }
+        g51.a aVar2 = this.f135547w;
+        if (aVar2 != null) {
+            aVar2.b();
+        }
+    }
+
+    @Override // yz1.l
+    public final void m3(yz1.j jVar) {
+        r3((FeedItem.a) jVar);
+    }
+
+    @Override // yz1.l
+    public final void n3() {
+        h hVar;
+        FeedItem.a aVar = this.D;
+        if (aVar != null && (hVar = aVar.f54674e) != null) {
+            hVar.g(this.C);
+        }
+        g51.a aVar2 = this.f135547w;
+        if (aVar2 != null) {
+            aVar2.a();
+        }
+    }
+
+    @Override // r11.a
+    public final g51.a o1() {
+        return this.y;
+    }
+
+    @Override // e61.a
+    public final List<View> q0() {
+        return this.x.getTranslationTransitionViews();
+    }
+
+    @Override // yz1.l
+    public final void q3() {
+        this.x.a();
+    }
+
+    public final void r3(FeedItem.a aVar) {
+        h hVar;
+        FeedItem.a aVar2 = this.D;
+        a aVar3 = this.C;
+        if (aVar2 != null && (hVar = aVar2.f54674e) != null) {
+            hVar.g(aVar3);
+        }
+        SdkClipVideoFile sdkClipVideoFile = aVar.f54673d;
+        h hVar2 = aVar.f54674e;
+        d dVar = aVar.f54675f;
+        this.f135545u.getClass();
+        this.x.d(new v21.a(sdkClipVideoFile, hVar2, dVar, com.vk.libvideo.autoplay.e.b(), aVar.f54677h));
+        this.D = aVar;
+        aVar.f54674e.d(aVar3);
+    }
+
+    @Override // n01.c
+    public final void v() {
+        this.x.v();
+    }
+
+    @Override // e61.a
+    public final List<View> w1() {
+        return this.x.getFadeTransitionViews();
+    }
+
+    @Override // r11.a
+    public final c01.a x0() {
+        FeedItem.a aVar = this.D;
+        if (aVar != null) {
+            return aVar.f54676g;
+        }
+        return null;
+    }
+
+    @Override // r11.b
+    public final void y2() {
+        g51.a aVar = this.f135547w;
+        if (aVar != null) {
+            aVar.d();
+        }
+    }
+}
+
+===== kz0.a =====
+package kz0;
+
+/* JADX INFO: compiled from: MyTargetParcer.kt */
+/* JADX INFO: loaded from: classes12.dex */
+public interface a {
+}
+
+===== iz0.a =====
+package iz0;
+
+/* JADX INFO: compiled from: MyTargetFacade.kt */
+/* JADX INFO: loaded from: classes7.dex */
+public interface a extends c {
+}
+
+===== se1.c =====
+package se1;
+
+import ad4.l;
+import com.vk.api.generated.base.dto.BaseImageDto;
+import com.vk.api.generated.shortVideo.dto.ShortVideoAdActionButtonDto;
+import com.vk.clips.sdk.models.SdkImages;
+import com.vk.dto.common.Image;
+import com.vk.dto.common.ImageSize;
+import g07.g;
+import g07.j;
+import java.util.ArrayList;
+import java.util.List;
+import kotlin.collections.q;
+import li3.f;
+import pq0.e;
+import q12.g2;
+import s74.b0;
+
+/* JADX INFO: compiled from: ClipsRecomFeedItemsToSdkMapperImpl.kt */
+/* JADX INFO: loaded from: classes14.dex */
+public final class c implements r62.a {
+
+    /* JADX INFO: renamed from: a, reason: collision with root package name */
+    public static final c f193733a = new c();
+
+    /* JADX INFO: renamed from: b, reason: collision with root package name */
+    public static final j f193734b = g.a(new o53.g(12));
+
+    /* JADX INFO: renamed from: c, reason: collision with root package name */
+    public static final j f193735c = g.a(new e(7));
+
+    /* JADX INFO: renamed from: d, reason: collision with root package name */
+    public static final j f193736d;
+
+    /* JADX INFO: renamed from: e, reason: collision with root package name */
+    public static final li3.g f193737e;
+
+    /* JADX INFO: renamed from: f, reason: collision with root package name */
+    public static final f f193738f;
+
+    /* JADX INFO: renamed from: g, reason: collision with root package name */
+    public static final ih3.c f193739g;
+
+    /* JADX INFO: renamed from: h, reason: collision with root package name */
+    public static final ih3.b f193740h;
+
+    /* JADX INFO: compiled from: ClipsRecomFeedItemsToSdkMapperImpl.kt */
+    public static final /* synthetic */ class a {
+        public static final /* synthetic */ int[] $EnumSwitchMapping$0;
+
+        static {
+            int[] iArr = new int[ShortVideoAdActionButtonDto.TypeDto.values().length];
+            try {
+                iArr[ShortVideoAdActionButtonDto.TypeDto.LINK.ordinal()] = 1;
+            } catch (NoSuchFieldError unused) {
+            }
+            try {
+                iArr[ShortVideoAdActionButtonDto.TypeDto.SUBSCRIBE.ordinal()] = 2;
+            } catch (NoSuchFieldError unused2) {
+            }
+            try {
+                iArr[ShortVideoAdActionButtonDto.TypeDto.WRITE.ordinal()] = 3;
+            } catch (NoSuchFieldError unused3) {
+            }
+            $EnumSwitchMapping$0 = iArr;
+        }
+    }
+
+    static {
+        new g2(5);
+        f193736d = g.a(new b0(1));
+        f193737e = new li3.g();
+        f193738f = new f();
+        f193739g = new ih3.c();
+        f193740h = new ih3.b();
+        new l(27);
+    }
+
+    public static vo0.a a() {
+        return (vo0.a) f193734b.getValue();
+    }
+
+    public static SdkImages b(List list) {
+        List<BaseImageDto> list2 = list;
+        ArrayList arrayList = new ArrayList(q.x(list2, 10));
+        for (BaseImageDto baseImageDto : list2) {
+            arrayList.add(new ImageSize(baseImageDto.getUrl(), baseImageDto.getWidth(), baseImageDto.getHeight(), baseImageDto.getIsBase(), (char) 0, false, 48, null));
+        }
+        return a13.f.C(new Image(arrayList));
+    }
+}
+
+===== com.vk.mytarget.di.AdsSdkComponentImpl =====
+package com.vk.mytarget.di;
+
+import c17.l;
+import com.vk.ads.stats.api.di.AdPixelStatsComponent;
+import com.vk.di.component.DiUnscopedComponent;
+import com.vk.mytarget.AdsSdkComponent;
+import fh4.f;
+import g07.g;
+import gn5.c0;
+import hw5.j;
+import kotlin.Lazy;
+import kotlin.LazyThreadSafetyMode;
+import kotlin.Metadata;
+import kotlin.jvm.internal.PropertyReference1Impl;
+import kotlin.jvm.internal.k;
+import w62.b;
+import w62.c;
+
+/* JADX INFO: compiled from: AdsSdkComponentImpl.kt */
+/* JADX INFO: loaded from: classes15.dex */
+@Metadata(d1 = {"\u0000\f\n\u0002\u0018\u0002\n\u0002\u0018\u0002\n\u0002\b\u0002\b\u0007\u0018\u00002\u00020\u0001:\u0001\u0002¨\u0006\u0003"}, d2 = {"Lcom/vk/mytarget/di/AdsSdkComponentImpl;", "Lcom/vk/mytarget/AdsSdkComponent;", "a", "impl_release"}, k = 1, mv = {2, 2, 0}, xi = 48)
+public final class AdsSdkComponentImpl implements AdsSdkComponent {
+
+    /* JADX INFO: renamed from: e, reason: collision with root package name */
+    public static final /* synthetic */ l<Object>[] f86597e;
+
+    /* JADX INFO: renamed from: a, reason: collision with root package name */
+    public final c f86598a;
+
+    /* JADX INFO: renamed from: b, reason: collision with root package name */
+    public final b f86599b = new b(new j(this, 4));
+
+    /* JADX INFO: renamed from: c, reason: collision with root package name */
+    public final c f86600c = new c(new jc0.a(this, 3));
+
+    /* JADX INFO: renamed from: d, reason: collision with root package name */
+    public final c f86601d = new c(new k04.b(0));
+
+    /* JADX INFO: compiled from: AdsSdkComponentImpl.kt */
+    public static final class a implements t62.a<AdsSdkComponent> {
+        @Override // t62.a
+        public final DiUnscopedComponent a(z62.c cVar) {
+            return new AdsSdkComponentImpl(g.b(LazyThreadSafetyMode.NONE, new f46.b(cVar, 11)));
+        }
+    }
+
+    static {
+        PropertyReference1Impl propertyReference1Impl = new PropertyReference1Impl(AdsSdkComponentImpl.class, "adPixelStatsComponent", "getAdPixelStatsComponent()Lcom/vk/ads/stats/api/di/AdPixelStatsComponent;", 0);
+        kotlin.jvm.internal.l lVar = k.f142790a;
+        f86597e = new l[]{lVar.i(propertyReference1Impl), c0.a(AdsSdkComponentImpl.class, "adsSdkRouter", "getAdsSdkRouter()Lcom/vk/mytarget/AdsSdkRouter;", 0, lVar), c0.a(AdsSdkComponentImpl.class, "adsChoicesAnalytics", "getAdsChoicesAnalytics()Lcom/vk/mytarget/AdsChoicesAnalytics;", 0, lVar), c0.a(AdsSdkComponentImpl.class, "reportRepository", "getReportRepository()Lcom/vk/mytarget/ReportRepository;", 0, lVar)};
+    }
+
+    public AdsSdkComponentImpl(Lazy<? extends AdPixelStatsComponent> lazy) {
+        this.f86598a = new c(new f(lazy, 8));
+    }
+
+    @Override // com.vk.mytarget.AdsSdkComponent
+    public final j04.c C1() {
+        l<Object> lVar = f86597e[3];
+        return (j04.c) this.f86601d.c();
+    }
+
+    @Override // com.vk.mytarget.AdsSdkComponent
+    public final j04.a G8() {
+        l<Object> lVar = f86597e[2];
+        return (j04.a) this.f86600c.c();
+    }
+
+    @Override // com.vk.mytarget.AdsSdkComponent
+    public final j04.b u8() {
+        l<Object> lVar = f86597e[1];
+        return (j04.b) this.f86599b.c();
+    }
+}
+
+===== n33.t =====
+DECOMPILE_FAILED
+INFO  - loading ...
+ERROR - Incorrect arguments: Input class can't be saved by current jadx settings (marked as DONT_GENERATE)
+
