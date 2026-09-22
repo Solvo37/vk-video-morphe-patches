@@ -245,7 +245,7 @@ val filterClipServerFeedAdsPatch = bytecodePatch(
             addInstructionsWithLabels(
                 0,
                 """
-                    invoke-virtual {p0}, Lcom/vk/api/generated/shortVideo/dto/ShortVideoGetRecomResponseDto;->e()Lcom/vk/api/generated/shortVideo/dto/ShortVideoRecomFeedDto;
+                    invoke-virtual/range {p0 .. p0}, Lcom/vk/api/generated/shortVideo/dto/ShortVideoGetRecomResponseDto;->e()Lcom/vk/api/generated/shortVideo/dto/ShortVideoRecomFeedDto;
                     move-result-object v0
 
                     invoke-virtual {v0}, Lcom/vk/api/generated/shortVideo/dto/ShortVideoRecomFeedDto;->b()Ljava/util/List;
