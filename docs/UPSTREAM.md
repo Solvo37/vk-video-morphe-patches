@@ -1,67 +1,86 @@
-# Upstream version strategy
+# Upstream и автоматические обновления
 
-## Source priority
+## Приоритет источников
 
-The automatic release workflow uses this order:
+`VK Video auto build` проверяет источники в следующем порядке:
 
-1. **RuStore** — primary source for VK Video.
-2. **Google Play via gplaydl** — first fallback.
-3. **APKPure via apkeep** — final fallback.
+1. **RuStore** — основной источник;
+2. **Google Play через gplaydl** — fallback;
+3. **APKPure через apkeep** — последний fallback.
 
-Google Play access is optional in CI. Configure the linked gplaydl credential to enable the fallback. RuStore is always checked first.
+Источники могут отдавать разные rollout-версии. Поэтому сам факт успешного скачивания ещё не означает, что найден самый новый APK или что версия поддерживается.
 
-Every candidate actually used for a build is verified locally before patching.
+## Проверка кандидата
 
-## Required verification
+Перед патчингом обязательны:
 
-Before any release can be produced:
+1. package = `com.vk.vkvideo`;
+2. читаемые `versionName` и `versionCode`;
+3. оригинальный SHA-256 сертификата VK:
+   `057d974412032066f1b5edb1fdb550f71854189815c806b27c4d486fb4f1ef32`;
+4. отсутствие downgrade ниже baseline;
+5. успешное совпадение всех bytecode fingerprints;
+6. успешное совпадение native pattern для `libvkcore.so`.
 
-1. package must be `com.vk.vkvideo`;
-2. `versionName` and `versionCode` must be readable from the base APK;
-3. source APK certificate SHA-256 must equal the expected VK certificate;
-4. version must not be below the project baseline;
-5. every mandatory Morphe patch, including the native `libvkcore.so` signature-check bypass, must apply successfully.
+Если любой gate не проходит, APK release не создаётся.
 
-Expected upstream VK certificate:
-
-```text
-057d974412032066f1b5edb1fdb550f71854189815c806b27c4d486fb4f1ef32
-```
-
-## Split APKs
-
-Google Play may return a base APK plus configuration splits.
-
-The workflow:
-
-1. locates and verifies the base APK;
-2. patches the base with Morphe;
-3. copies all original configuration splits;
-4. merges the patched base + splits into one universal APK with APKEditor;
-5. signs the resulting universal APK with the project's persistent key;
-6. verifies the signed APK before publishing it.
-
-## Baseline protection
-
-Current baseline:
+## Текущая baseline
 
 ```text
-VK Video 1.163
+VK Видео 1.163
 versionCode 51920
 ```
 
-A source that only exposes an older version is reported but never published as a downgrade.
+Эта версия реально проверена на устройстве в полной конфигурации патчей.
 
-## Compatibility gate
+## Обязательные compatibility patches
 
-A newer APK is not considered supported merely because it downloads.
-
-All mandatory patches must apply:
+Для проектной переподписанной сборки включаются:
 
 - Fix install conflict with stock VK
+- Bypass native signature check
+
+Native patch сейчас предназначен для:
+
+```text
+lib/arm64-v8a/libvkcore.so
+```
+
+Он использует fail-closed подход: ожидаемый бинарный pattern должен встретиться ровно один раз. Для новой версии изменение native-кода требует повторной проверки.
+
+## Пользовательские патчи
+
 - Disable in-app update
 - Remove video ads
 - Hide promoted banner content
 - Disable ad pixel tracking
 
-A fingerprint failure stops the release and opens/updates a compatibility issue.
+Если fingerprint одного из обязательных патчей перестаёт совпадать, workflow открывает/обновляет compatibility issue и не публикует новый APK.
+
+## Split APK
+
+Google Play и некоторые другие источники могут возвращать base APK плюс configuration splits.
+
+Pipeline:
+
+1. находит и проверяет base APK;
+2. патчит base через Morphe;
+3. сохраняет нужные splits;
+4. при необходимости объединяет их через APKEditor;
+5. выполняет `zipalign`;
+6. подписывает universal APK project key.
+
+## Signing
+
+Финальный APK подписывается постоянным project key:
+
+- v1: disabled
+- v2: disabled
+- v3: enabled
+- v4: disabled
+
+После подписи запускаются `zipalign -c` и `apksigner verify`.
+
+## Расписание
+
+Проверка upstream запускается по расписанию и вручную. Если доступная версия уже имеет release, новый APK без причины не публикуется. Для диагностической пересборки предусмотрен `force_rebuild`.
