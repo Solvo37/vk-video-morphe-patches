@@ -1,0 +1,125 @@
+name: Summarize VK Video ad dex scan
+
+on:
+  push:
+    branches:
+      - ad-analysis-1.163
+    paths:
+      - '.github/workflows/ad-summarize.yml'
+  pull_request:
+    branches:
+      - main
+    paths:
+      - '.github/workflows/ad-summarize.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  summarize:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout analysis branch
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+        with:
+          ref: ad-analysis-1.163
+          fetch-depth: 1
+
+      - name: Build compact class and method summary
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          import re
+          from collections import defaultdict, deque
+          from pathlib import Path
+
+          src = Path('docs/ad-fast-scan-1.163.txt')
+          out = Path('docs/ad-scan-summary-1.163.txt')
+
+          target = re.compile(r'my[./ _-]?target|instream|pre[_ -]?roll|mid[_ -]?roll|post[_ -]?roll|vast|vmap|ad[_ -]?break|ad[_ -]?tag|clip.{0,40}ad|ad.{0,40}clip', re.I)
+          class_re = re.compile(r"Class descriptor\s*:\s*'([^']+)'")
+          name_re = re.compile(r"^\s*name\s*:\s*'([^']+)'")
+          dex_re = re.compile(r'^=====\s+(.*?)\s+:')
+
+          current_dex = ''
+          current_class = ''
+          current_name = ''
+          recent = deque(maxlen=24)
+          entries = defaultdict(lambda: {'terms': set(), 'contexts': []})
+          string_hits = set()
+
+          for raw in src.open('r', encoding='utf-8', errors='replace'):
+              line = raw.rstrip('\n')
+              dm = dex_re.search(line)
+              if dm:
+                  current_dex = dm.group(1)
+                  current_class = ''
+                  current_name = ''
+                  recent.clear()
+
+              cm = class_re.search(line)
+              if cm:
+                  current_class = cm.group(1)
+                  current_name = ''
+
+              nm = name_re.search(line)
+              if nm:
+                  current_name = nm.group(1)
+
+              if target.search(line):
+                  if current_class:
+                      key = (current_dex, current_class, current_name)
+                      rec = entries[key]
+                      rec['terms'].add(line.strip())
+                      if len(rec['contexts']) < 3:
+                          rec['contexts'].append('\n'.join(list(recent)[-10:] + [line]))
+                  else:
+                      string_hits.add(line.strip())
+
+              recent.append(line)
+
+          def priority(item):
+              (dex, cls, name), rec = item
+              text = ' '.join(rec['terms']).lower()
+              p = 0
+              if 'my' in text and 'target' in text: p -= 100
+              if 'instream' in text: p -= 90
+              if 'preroll' in text or 'pre_roll' in text or 'pre-roll' in text: p -= 80
+              if 'midroll' in text or 'mid_roll' in text or 'mid-roll' in text: p -= 75
+              if 'vast' in text or 'vmap' in text: p -= 60
+              if 'clip' in text and 'ad' in text: p -= 50
+              if cls.startswith('Lcom/my/target/'): p -= 100
+              if cls.startswith('Lcom/vk/'): p -= 40
+              return (p, cls, name)
+
+          items = sorted(entries.items(), key=priority)
+
+          with out.open('w', encoding='utf-8') as f:
+              f.write('# Compact VK Video 1.163 ad scan summary\n\n')
+              f.write(f'Unique class/method buckets: {len(items)}\n')
+              f.write(f'Unscoped string hits: {len(string_hits)}\n\n')
+
+              f.write('## Highest-priority class/method buckets\n')
+              for idx, ((dex, cls, name), rec) in enumerate(items[:700], 1):
+                  f.write(f'\n### {idx}. {cls} :: {name or "<unknown>"} [{dex}]\n')
+                  for term in sorted(rec['terms'])[:12]:
+                      f.write(f'MATCH: {term}\n')
+                  for ci, ctx in enumerate(rec['contexts'][:2], 1):
+                      f.write(f'CONTEXT {ci}:\n{ctx}\n')
+
+              f.write('\n## Unscoped strings\n')
+              for s in sorted(string_hits)[:2000]:
+                  f.write(s + '\n')
+
+          print(f'wrote {out} with {out.stat().st_size} bytes')
+          PY
+
+      - name: Commit compact summary
+        run: |
+          set -euo pipefail
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add docs/ad-scan-summary-1.163.txt
+          git commit -m 'analysis: summarize VK Video 1.163 ad paths' || exit 0
+          git pull --rebase origin ad-analysis-1.163
+          git push origin HEAD:ad-analysis-1.163
