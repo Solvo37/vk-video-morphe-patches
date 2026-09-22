@@ -107,6 +107,45 @@ MyTarget SDK и Clips feature/config параметры. **Remove clip ads**:
 Патч намеренно не отключает весь MyTarget component или DI/auth bootstrap: это уменьшает риск
 затронуть вход, нерекламные зависимости или обычное воспроизведение.
 
+### Runtime MIDROLL gate
+
+The remaining interactive mid-video ad path is started by `VideoAutoPlay` through:
+
+```text
+Ln33/t;.run()
+  -> Lx13/e;.b(AdSection.MIDROLL, Float)
+  -> request_midroll
+  -> Lno/w5; (InstreamAdEngine)
+```
+
+`x13.e.b(AdSection, Float)` has five local registers in 1.163. Returning `true` for
+`AdSection.MIDROLL` makes the caller exit before the main player is paused/reconfigured
+for the ad engine. **Block midroll ads** applies this gate while leaving other ad-section
+logic untouched.
+
+### Server-provided Clips feed ads
+
+The short-video API can return dedicated polymorphic feed DTOs independently from
+the earlier `ClipsFeatures`/provider configuration:
+
+- `ShortVideoFeedItemShortVideoStaticAdDto`;
+- `ShortVideoFeedItemShortVideoMarketAdDto`;
+- `ShortVideoFeedItemShortVideoFloatingAdDto`;
+- `ShortVideoFeedItemShortVideoMytargetSdkAdDto`;
+- `...MytargetSdkStaticDto`;
+- `...MytargetSdkVideoDto`;
+- `...MytargetSdkCarouselDto`;
+- `...MytargetSdkPromoDto`.
+
+`Lee1/j;.a(ShortVideoGetRecomResponseDto, ve1.q)` (`ClipsRecomResponseAdapter`) maps
+these DTOs into SDK feed items. For StaticAd/MarketAd it constructs `SdkActionLink`
+using the server title, URL, app deeplink and app package name — the path behind CTA
+buttons such as “Установить”.
+
+**Filter clip feed ads** removes those eight DTO variants from the mutable API feed list
+before the original mapper runs. Ordinary short-video/full/questionnaire/shop feed items
+are left untouched.
+
 ## Promoted banner
 
 DTO:
