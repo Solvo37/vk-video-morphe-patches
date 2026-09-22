@@ -1,0 +1,107 @@
+name: Build VK Video ad method map
+
+on:
+  push:
+    branches:
+      - ad-analysis-1.163
+    paths:
+      - '.github/workflows/ad-method-map.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  map:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+        with:
+          ref: ad-analysis-1.163
+
+      - name: Build compact method map
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          import re
+          from pathlib import Path
+
+          src = Path('docs/ad-exact-classes-1.163.txt').read_text(encoding='utf-8', errors='replace')
+          out = Path('docs/ad-method-map-1.163.txt')
+          wanted = [
+              'Lcom/vk/api/generated/video/dto/VideoVideoAdsInstreamSectionsDto;',
+              'Lcom/vk/api/generated/video/dto/VideoVideoAdsInstreamSectionDto;',
+              'Lcom/vk/api/generated/video/dto/VideoVideoAdsInstreamDto;',
+              'Lcom/vk/api/generated/video/dto/VideoGetAdsResponseDto;',
+              'Lcom/vk/api/generated/video/dto/VideoVideoAdsMobileInstreamadsDto;',
+              'Lcom/vk/mytarget/di/AdsSdkComponentImpl;',
+              'Lcom/vk/mytarget/di/AdsSdkComponentImpl$a;',
+              'Lcom/vk/clips/tool/view/newsfeed/mytarget/ClipEndOverlayAdWrapperView;',
+              'Lcom/vk/clips/tool/view/newsfeed/overlay/ClipEndOverlayView;',
+              'Lcom/vk/api/generated/shortVideo/dto/ShortVideoRecomFeedItemDto$Deserializer;',
+          ]
+
+          parts = re.split(r'(?=^===== classes\d+\.dex :: )', src, flags=re.M)
+          by_desc = {}
+          for p in parts:
+              m = re.match(r'^===== .*? :: (L[^ ]+;) =====', p)
+              if m:
+                  by_desc[m.group(1)] = p
+
+          with out.open('w', encoding='utf-8') as f:
+              for desc in wanted:
+                  f.write(f'===== {desc} =====\n')
+                  p = by_desc.get(desc)
+                  if not p:
+                      f.write('NOT_FOUND\n\n')
+                      continue
+
+                  lines = p.splitlines()
+                  # fields and method metadata + first 28 instructions of each method
+                  in_fields = False
+                  method_active = False
+                  insn_count = 0
+                  for line in lines:
+                      if line.strip() in ('Static fields     -','Instance fields   -'):
+                          in_fields = True
+                          f.write(line+'\n')
+                          continue
+                      if line.strip() in ('Direct methods    -','Virtual methods   -'):
+                          in_fields = False
+                          method_active = False
+                          f.write(line+'\n')
+                          continue
+                      if in_fields:
+                          if re.match(r'^\s+#\d+\s+:', line) or any(k in line for k in ('name          :','type          :','access        :')):
+                              f.write(line+'\n')
+                          continue
+
+                      if re.match(r'^\s+#\d+\s+: \(in ', line):
+                          method_active = True
+                          insn_count = 0
+                          f.write('\n'+line+'\n')
+                          continue
+                      if method_active:
+                          if any(k in line for k in ('name          :','type          :','access        :','registers     :','ins           :','outs          :','insns size    :')):
+                              f.write(line+'\n')
+                              continue
+                          if re.match(r'^[0-9a-f]+:', line):
+                              if insn_count < 28:
+                                  f.write(line+'\n')
+                              insn_count += 1
+                              continue
+                          if line.strip().startswith('catches'):
+                              method_active = False
+                  f.write('\n')
+          print(out.stat().st_size)
+          PY
+
+      - name: Commit method map
+        run: |
+          set -euo pipefail
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add docs/ad-method-map-1.163.txt
+          git commit -m 'analysis: map exact ad methods for 1.163' || exit 0
+          git pull --rebase origin ad-analysis-1.163
+          git push origin HEAD:ad-analysis-1.163
