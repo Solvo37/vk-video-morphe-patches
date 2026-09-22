@@ -348,8 +348,6 @@ val filterClipSdkAdsPatch = bytecodePatch(
             return-object v0
         """.trimIndent()
 
-        // r11.d.g() is the lower Clips SDK converter. c01.c.f(video) is the
-        // app's own ad-video predicate; callers already skip a null FeedItem.
         ClipSdkAdVideoMapperFingerprint.method.apply {
             check(implementation!!.registerCount >= 4) {
                 "Clips SDK ad mapper has no safe local register"
@@ -361,9 +359,6 @@ val filterClipSdkAdsPatch = bytecodePatch(
             )
         }
 
-        // The synthetic/default overload can carry the MyTarget facade and can
-        // independently construct FeedItem.Ads, so guard it with the same
-        // application-level ad predicate.
         ClipSdkAdVideoDefaultMapperFingerprint.method.apply {
             check(implementation!!.registerCount >= 5) {
                 "Clips SDK default ad mapper has no safe local register"
@@ -375,9 +370,10 @@ val filterClipSdkAdsPatch = bytecodePatch(
             )
         }
 
-        // r11.d.f() turns the intermediate k01.e sealed items into final SDK
-        // feed items. Make a filtered copy instead of mutating the source list;
-        // e$d = StaticAds, e$b = MarketAds, while e$a/e$c are non-ad items.
+        // r11.d.f(): e$d = StaticAds and e$b = MarketAds.
+        val staticAdIntermediate = "Lk01/e\$d;"
+        val marketAdIntermediate = "Lk01/e\$b;"
+
         ClipSdkIntermediateListFingerprint.method.apply {
             check(implementation!!.registerCount >= 7) {
                 "Clips SDK list mapper has insufficient local registers"
@@ -399,82 +395,10 @@ val filterClipSdkAdsPatch = bytecodePatch(
                     invoke-interface {v1}, Ljava/util/Iterator;->next()Ljava/lang/Object;
                     move-result-object v3
 
-                    instance-of v4, v3, Lk01/e${' = bytecodePatch(
-    name = "Hide promoted banner content",
-    description = "Forces VideoDiscoverAdsDto.canShowAdBanner to false.",
-    default = true
-) {
-    compatibleWith(VK_VIDEO)
-
-    execute {
-        DiscoverAdBannerFingerprint.method.addInstructions(
-            0,
-            """
-                sget-object v0, Ljava/lang/Boolean;->FALSE:Ljava/lang/Boolean;
-                return-object v0
-            """
-        )
-    }
-}
-
-@Suppress("unused")
-val disableAdPixelTrackingPatch = bytecodePatch(
-    name = "Disable ad pixel tracking",
-    description = "Stops PixelStatsTrackerImpl from sending individual and batch ad pixels.",
-    default = true
-) {
-    compatibleWith(VK_VIDEO)
-
-    execute {
-        val returnEmptyDisposable = """
-            sget-object v0, $EMPTY_DISPOSABLE->INSTANCE:$EMPTY_DISPOSABLE
-            return-object v0
-        """.trimIndent()
-
-        PixelStatsSingleFingerprint.method.addInstructions(0, returnEmptyDisposable)
-        PixelStatsBatchFingerprint.method.addInstructions(0, returnEmptyDisposable)
-    }
-}
-}d;
+                    instance-of v4, v3, $staticAdIntermediate
                     if-nez v4, :sdk_clip_filter_loop
 
-                    instance-of v4, v3, Lk01/e${' = bytecodePatch(
-    name = "Hide promoted banner content",
-    description = "Forces VideoDiscoverAdsDto.canShowAdBanner to false.",
-    default = true
-) {
-    compatibleWith(VK_VIDEO)
-
-    execute {
-        DiscoverAdBannerFingerprint.method.addInstructions(
-            0,
-            """
-                sget-object v0, Ljava/lang/Boolean;->FALSE:Ljava/lang/Boolean;
-                return-object v0
-            """
-        )
-    }
-}
-
-@Suppress("unused")
-val disableAdPixelTrackingPatch = bytecodePatch(
-    name = "Disable ad pixel tracking",
-    description = "Stops PixelStatsTrackerImpl from sending individual and batch ad pixels.",
-    default = true
-) {
-    compatibleWith(VK_VIDEO)
-
-    execute {
-        val returnEmptyDisposable = """
-            sget-object v0, $EMPTY_DISPOSABLE->INSTANCE:$EMPTY_DISPOSABLE
-            return-object v0
-        """.trimIndent()
-
-        PixelStatsSingleFingerprint.method.addInstructions(0, returnEmptyDisposable)
-        PixelStatsBatchFingerprint.method.addInstructions(0, returnEmptyDisposable)
-    }
-}
-}b;
+                    instance-of v4, v3, $marketAdIntermediate
                     if-nez v4, :sdk_clip_filter_loop
 
                     invoke-virtual {v0, v3}, Ljava/util/ArrayList;->add(Ljava/lang/Object;)Z
@@ -498,17 +422,9 @@ val blockDeepMidrollAdsPatch = bytecodePatch(
     compatibleWith(VK_VIDEO)
 
     execute {
-        // n33.t.run() is a dedicated request_midroll Runnable. Returning before
-        // its first instruction prevents the normal player from being paused or
-        // handed to InstreamAdEngine.
         MidrollRequestRunnableFingerprint.method.addInstruction(0, "return-void")
-
-        // Defense in depth: do not populate midpoint arrays even if another
-        // caller reaches the instream facade without VideoAutoPlay.
         InstreamMidpointConfigFingerprint.method.addInstruction(0, "return-void")
 
-        // Direct section starts are also supported by the facade. Reject only
-        // the literal "midroll" section and preserve other non-midroll behavior.
         InstreamNamedSectionStartFingerprint.method.apply {
             check(implementation!!.registerCount >= 3) {
                 "Instream named-section start has no safe local register"
