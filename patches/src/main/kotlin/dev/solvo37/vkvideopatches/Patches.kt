@@ -226,6 +226,110 @@ val removeClipAdsPatch = bytecodePatch(
 }
 
 @Suppress("unused")
+val filterClipServerFeedAdsPatch = bytecodePatch(
+    name = "Filter clip feed ads",
+    description = "Removes server-provided StaticAd, MarketAd, FloatingAd, and MyTarget ad items before the VK Clips feed mapper can render them.",
+    default = true
+) {
+    compatibleWith(VK_VIDEO)
+
+    execute {
+        ClipServerFeedMapperFingerprint.method.apply {
+            // ee1.j.a() in VK Video 1.163 has 74 local registers plus two
+            // parameters. Filter the mutable API feed list before the original
+            // mapper converts ad DTOs into SDK items / install CTA buttons.
+            check(implementation!!.registerCount >= 6) {
+                "Clips feed mapper has insufficient local registers; fingerprint needs updating"
+            }
+
+            addInstructionsWithLabels(
+                0,
+                """
+                    invoke-virtual {p0}, Lcom/vk/api/generated/shortVideo/dto/ShortVideoGetRecomResponseDto;->e()Lcom/vk/api/generated/shortVideo/dto/ShortVideoRecomFeedDto;
+                    move-result-object v0
+
+                    invoke-virtual {v0}, Lcom/vk/api/generated/shortVideo/dto/ShortVideoRecomFeedDto;->b()Ljava/util/List;
+                    move-result-object v0
+
+                    invoke-interface {v0}, Ljava/util/List;->iterator()Ljava/util/Iterator;
+                    move-result-object v1
+
+                    :clip_filter_loop
+                    invoke-interface {v1}, Ljava/util/Iterator;->hasNext()Z
+                    move-result v2
+                    if-eqz v2, :original
+
+                    invoke-interface {v1}, Ljava/util/Iterator;->next()Ljava/lang/Object;
+                    move-result-object v2
+
+                    instance-of v3, v2, Lcom/vk/api/generated/shortVideo/dto/ShortVideoRecomFeedItemDto$ShortVideoFeedItemShortVideoStaticAdDto;
+                    if-nez v3, :clip_remove_ad
+
+                    instance-of v3, v2, Lcom/vk/api/generated/shortVideo/dto/ShortVideoRecomFeedItemDto$ShortVideoFeedItemShortVideoMarketAdDto;
+                    if-nez v3, :clip_remove_ad
+
+                    instance-of v3, v2, Lcom/vk/api/generated/shortVideo/dto/ShortVideoRecomFeedItemDto$ShortVideoFeedItemShortVideoFloatingAdDto;
+                    if-nez v3, :clip_remove_ad
+
+                    instance-of v3, v2, Lcom/vk/api/generated/shortVideo/dto/ShortVideoRecomFeedItemDto$ShortVideoFeedItemShortVideoMytargetSdkAdDto;
+                    if-nez v3, :clip_remove_ad
+
+                    instance-of v3, v2, Lcom/vk/api/generated/shortVideo/dto/ShortVideoRecomFeedItemDto$ShortVideoFeedItemShortVideoMytargetSdkStaticDto;
+                    if-nez v3, :clip_remove_ad
+
+                    instance-of v3, v2, Lcom/vk/api/generated/shortVideo/dto/ShortVideoRecomFeedItemDto$ShortVideoFeedItemShortVideoMytargetSdkVideoDto;
+                    if-nez v3, :clip_remove_ad
+
+                    instance-of v3, v2, Lcom/vk/api/generated/shortVideo/dto/ShortVideoRecomFeedItemDto$ShortVideoFeedItemShortVideoMytargetSdkCarouselDto;
+                    if-nez v3, :clip_remove_ad
+
+                    instance-of v3, v2, Lcom/vk/api/generated/shortVideo/dto/ShortVideoRecomFeedItemDto$ShortVideoFeedItemShortVideoMytargetSdkPromoDto;
+                    if-nez v3, :clip_remove_ad
+
+                    goto :clip_filter_loop
+
+                    :clip_remove_ad
+                    invoke-interface {v1}, Ljava/util/Iterator;->remove()V
+                    goto :clip_filter_loop
+                """,
+                ExternalLabel("original", getInstruction(0))
+            )
+        }
+    }
+}
+
+@Suppress("unused")
+val blockMidrollRuntimeAdsPatch = bytecodePatch(
+    name = "Block midroll ads",
+    description = "Stops the runtime MIDROLL branch before VideoAutoPlay pauses or switches the main video player to the instream ad engine.",
+    default = true
+) {
+    compatibleWith(VK_VIDEO)
+
+    execute {
+        MidrollRuntimeGateFingerprint.method.apply {
+            // x13.e.b() has five locals in 1.163. Return the same positive gate
+            // result that VideoAutoPlay interprets as 'do not start this ad'.
+            check(implementation!!.registerCount >= 4) {
+                "Midroll gate has no safe local register; fingerprint needs updating"
+            }
+
+            addInstructionsWithLabels(
+                0,
+                """
+                    sget-object v0, Lcom/vk/dto/common/AdSection;->MIDROLL:Lcom/vk/dto/common/AdSection;
+                    if-ne p1, v0, :original
+
+                    const/4 v0, 0x1
+                    return v0
+                """,
+                ExternalLabel("original", getInstruction(0))
+            )
+        }
+    }
+}
+
+@Suppress("unused")
 val hidePromotedBannerPatch = bytecodePatch(
     name = "Hide promoted banner content",
     description = "Forces VideoDiscoverAdsDto.canShowAdBanner to false.",
