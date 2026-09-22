@@ -1,0 +1,83 @@
+name: Trace Clips SDK ad item insertion
+
+on:
+  push:
+    branches: [ad-analysis-1.163]
+    paths:
+      - '.github/workflows/trace-clips-sdk-items.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  trace:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+        with:
+          ref: ad-analysis-1.163
+      - name: Download APK
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          rm -rf clips-sdk-xrefs
+          mkdir -p clips-sdk-xrefs/dex docs
+          gh release download 1.163.2 --repo "$GITHUB_REPOSITORY" --pattern 'VK-Video-1.163.2-patched.apk' --dir clips-sdk-xrefs
+          cd clips-sdk-xrefs/dex
+          unzip -q ../VK-Video-1.163.2-patched.apk 'classes*.dex'
+      - name: Trace FeedItem ad marker and constructors
+        run: |
+          set -euo pipefail
+          DEXDUMP="$(find "$ANDROID_SDK_ROOT/build-tools" -type f \( -name dexdump -o -name dexdump.exe \) | sort -V | tail -n1)"
+          export DEXDUMP
+          python - <<'PY'
+          import os,re,subprocess
+          from pathlib import Path
+
+          needles = [
+            'Lcom/vk/clips/sdk/shared/feed/model/FeedItem$c;',
+            'Lcom/vk/clips/sdk/shared/feed/model/FeedItem$a;',
+            'Lcom/vk/clips/sdk/shared/feed/model/FeedItem$h;',
+            'Lcom/vk/clips/sdk/shared/feed/model/FeedItem$k;',
+            'ads_controls_item_key',
+            'Ads(analyticRef=',
+            'MarketAds(id=',
+            'StaticAds(id=',
+          ]
+          out=Path('docs/clips-sdk-ad-xrefs-1.163.2.txt')
+          dexdump=os.environ['DEXDUMP']
+          desc_re=re.compile(r"Class descriptor\s*:\s*'([^']+)'")
+          meth_re=re.compile(r"\]\s+([^\s]+\.[^:]+):")
+          rows=[]
+          for dex in sorted(Path('clips-sdk-xrefs/dex').glob('classes*.dex')):
+            p=subprocess.Popen([dexdump,'-d',str(dex)],stdout=subprocess.PIPE,stderr=subprocess.DEVNULL,text=True,encoding='utf-8',errors='replace')
+            cls=''; meth=''; ring=[]
+            for line in p.stdout:
+              m=desc_re.search(line)
+              if m: cls=m.group(1)
+              mm=meth_re.search(line)
+              if mm: meth=mm.group(1)
+              if any(n in line for n in needles):
+                rows.append((dex.name,cls,meth,line.strip(),''.join(ring[-18:])))
+              ring.append(line)
+              if len(ring)>36:ring.pop(0)
+            p.wait()
+            if p.returncode: raise SystemExit(p.returncode)
+          with out.open('w',encoding='utf-8') as f:
+            f.write(f'# matches={len(rows)}\n\n')
+            for dex,cls,meth,line,ctx in rows:
+              f.write(f'===== {dex} :: {cls} :: {meth} =====\n')
+              f.write(ctx)
+              f.write('MATCH: '+line+'\n\n')
+          print(len(rows),out.stat().st_size)
+          PY
+      - name: Commit report
+        run: |
+          set -euo pipefail
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add docs/clips-sdk-ad-xrefs-1.163.2.txt
+          git commit -m 'analysis: trace Clips SDK ad item insertion' || exit 0
+          git pull --rebase origin ad-analysis-1.163
+          git push origin HEAD:ad-analysis-1.163
