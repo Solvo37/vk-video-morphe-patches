@@ -350,10 +350,38 @@ jobs:
           TITLE="Compatibility: VK Video $VERSION ($VERSION_CODE)"
           EXISTING="$(gh issue list             --repo "$GITHUB_REPOSITORY"             --state open             --search "$TITLE in:title"             --json number             --jq '.[0].number // empty')"
 
+          PATCH_DETAILS=""
+          if [[ -s dist/patch-result.json ]]; then
+            PATCH_DETAILS="$(jq -r '
+              if (.failedPatches | length) == 0 then
+                "No failed patches recorded."
+              else
+                .failedPatches[] | "- " + (.patch.name // "unknown") + ": " + (.reason // "unknown")
+              end
+            ' dist/patch-result.json 2>/dev/null || true)"
+          fi
+
+          STATIC_DETAILS=""
+          if [[ -s dist/static-gate.json ]]; then
+            STATIC_DETAILS="$(jq -r '
+              if (.failures | length) == 0 then
+                "No static failures recorded."
+              else
+                .failures[] | "- " + .
+              end
+            ' dist/static-gate.json 2>/dev/null || true)"
+          fi
+
           BODY="Automated compatibility gate failed for VK Video **$VERSION** (versionCode **$VERSION_CODE**).
 
           Morphe patch step: **$PATCH_OUTCOME**
           Static post-patch gate: **$STATIC_OUTCOME**
+
+          **Morphe details**
+          ${PATCH_DETAILS:-No patch report was produced.}
+
+          **Static gate details**
+          ${STATIC_DETAILS:-No static gate report was produced.}
 
           The upstream package and VK signing certificate were verified before patching. No APK release was published.
 
