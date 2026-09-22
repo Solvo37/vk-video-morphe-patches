@@ -7,7 +7,7 @@
 [![Publish patches](https://github.com/Solvo37/vk-video-morphe-patches/actions/workflows/release-patches.yml/badge.svg)](https://github.com/Solvo37/vk-video-morphe-patches/actions/workflows/release-patches.yml)
 [![License: GPL-3.0](https://img.shields.io/badge/license-GPL--3.0-blue.svg)](./LICENSE)
 
-Публичные патчи **Morphe** для Android-приложения **VK Видео** (`com.vk.vkvideo`).\n\n> ⚠️ Текущий APK-релиз 1.163 временно считается тестовым: предыдущая FULL-сборка может падать при запуске. Идёт проверка STRIP_FAST-сборки.
+Публичные патчи **Morphe** для Android-приложения **VK Видео** (`com.vk.vkvideo`).
 
 ### Статус готового APK
 
@@ -15,16 +15,16 @@
 
 
 
-Проект содержит четыре пользовательских патча и один обязательный compatibility-fix:
+Проект содержит четыре пользовательских патча и два обязательных compatibility-fix:
 
 | Патч | Что делает |
 |---|---|
-| **Disable in-app update** | отключает встроенную проверку/предложение обновить VK Видео |
+| **Bypass native signature check** | отключает native anti-tamper выход в `libvkcore.so`, из-за которого переподписанный APK закрывался сразу после запуска |\n| **Disable in-app update** | отключает встроенную проверку/предложение обновить VK Видео |
 | **Remove video ads** | отключает клиентские instream / overlay / motion ad-фичи плеера |
 | **Hide promoted banner content** | скрывает рекламный баннер в Discover |
 | **Disable ad pixel tracking** | отключает отдельный рекламный pixel tracker, не выключая авторизацию и общую рекомендательную аналитику |
 
-> **Текущая подтверждённая версия:** VK Видео **1.163 (51920)**.  
+> **Текущая подтверждённая версия:** VK Видео **1.163 (51920)** — запуск и работа варианта с native bypass + всеми пользовательскими патчами подтверждены на реальном устройстве.  
 > Новые версии сначала проходят реальный автоматический patch-test. Если fingerprint сломался, релиз не публикуется.
 
 ## Быстрый старт
