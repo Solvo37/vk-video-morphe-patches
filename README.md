@@ -14,11 +14,11 @@
 - ✅ Проверенная версия приложения: **VK Видео 1.163 / versionCode 51920**
 - ✅ Готовый APK: [Release 1.163](https://github.com/Solvo37/vk-video-morphe-patches/releases/tag/1.163)
 - ✅ Текущий bundle патчей: **v0.2.0**
-- ✅ Проверен реальный запуск переподписанного APK с установленным обычным VK
+- ✅ Полный patch profile проверен запуском на реальном ARM64-устройстве с установленным обычным VK; точный release APK дополнительно проходит автоматические 0.2 static gates
 - ✅ Сборка: **Morphe STRIP_FAST → zipalign → APK Signature Scheme v3**
 - ⚠️ Native bypass сейчас рассчитан на **ARM64 / arm64-v8a**
 
-Готовый релиз `1.163` содержит уже проверенную рабочую комбинацию патчей. Старые экспериментальные сборки до native bypass могли закрываться сразу после запуска — текущий release этим не страдает.
+Готовый релиз `1.163` использует тот же рабочий patch profile, который прошёл реальный launch-test. Сам опубликованный APK дополнительно проверяется по package/version, подписи, zipalign, manifest coexistence, DEX class definition и native binary pattern. Старые экспериментальные сборки до native bypass могли закрываться сразу после запуска.
 
 ## Что патчится
 
