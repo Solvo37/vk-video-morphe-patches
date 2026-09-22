@@ -8,7 +8,7 @@ Public **Morphe** patches for the Android **VK Video** app (`com.vk.vkvideo`) wi
 
 - ✅ Verified app target: **VK Video 1.163 / versionCode 51920**
 - ✅ Prebuilt APK: [Release 1.163](https://github.com/Solvo37/vk-video-morphe-patches/releases/tag/1.163)
-- ✅ Current patch bundle: **v0.1.2**
+- ✅ Current patch bundle: **v0.2.0**
 - ✅ Re-signed build verified to launch alongside the stock VK app
 - ✅ Build pipeline: **Morphe STRIP_FAST → zipalign → APK Signature Scheme v3**
 - ⚠️ The native bypass currently targets **ARM64 / arm64-v8a**
@@ -87,6 +87,8 @@ D4:1F:49:2F:0E:2A:2E:39:90:AC:7F:8E:75:CC:5D:4B:
 The private signing key is not stored in the repository.
 
 See [docs/TRUST.md](./docs/TRUST.md), [docs/UPSTREAM.md](./docs/UPSTREAM.md), and [CONTRIBUTING.md](./CONTRIBUTING.md).
+
+Road to stable 1.0: [ROADMAP.md](./ROADMAP.md).
 
 ## Build the patch bundle
 
