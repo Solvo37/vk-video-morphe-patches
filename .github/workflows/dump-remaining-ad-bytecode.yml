@@ -1,0 +1,95 @@
+name: Dump exact remaining ad bytecode
+
+on:
+  push:
+    branches: [ad-analysis-1.163]
+    paths:
+      - '.github/workflows/dump-remaining-ad-bytecode.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  dump:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+        with:
+          ref: ad-analysis-1.163
+
+      - name: Download APK
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          rm -rf bytecode-rem
+          mkdir -p bytecode-rem/dex docs
+          gh release download 1.163.1 --repo "$GITHUB_REPOSITORY" --pattern 'VK-Video-1.163.1-patched.apk' --dir bytecode-rem
+          cd bytecode-rem/dex
+          unzip -q ../VK-Video-1.163.1-patched.apk 'classes*.dex'
+
+      - name: Extract exact class bytecode
+        run: |
+          set -euo pipefail
+          DEXDUMP="$(find "$ANDROID_SDK_ROOT/build-tools" -type f \( -name dexdump -o -name dexdump.exe \) | sort -V | tail -n1)"
+          export DEXDUMP
+          python - <<'PY'
+          from pathlib import Path
+          import os,re,subprocess
+
+          wanted={
+            'Lee1/j;',
+            'Lx13/e;',
+            'Ln33/t;',
+            'Lcom/vk/api/generated/shortVideo/dto/ShortVideoGetRecomResponseDto;',
+            'Lcom/vk/api/generated/shortVideo/dto/ShortVideoRecomFeedDto;',
+          }
+          out=Path('docs/remaining-ad-bytecode-1.163.txt')
+          desc_re=re.compile(r"Class descriptor\s*:\s*'([^']+)'")
+          dexdump=os.environ['DEXDUMP']
+          found=set()
+          with out.open('w',encoding='utf-8') as f:
+            for dex in sorted(Path('bytecode-rem/dex').glob('classes*.dex')):
+              p=subprocess.Popen([dexdump,'-d',str(dex)],stdout=subprocess.PIPE,stderr=subprocess.DEVNULL,
+                                 text=True,encoding='utf-8',errors='replace')
+              block=[]
+              current=None
+              keep=False
+              def flush():
+                nonlocal block,current,keep
+                if keep and block:
+                  f.write(f'===== {dex.name} :: {current} =====\n')
+                  f.writelines(block)
+                  f.write('\n')
+                  found.add(current)
+                block=[]
+                current=None
+                keep=False
+              for line in p.stdout:
+                if line.startswith('Class #'):
+                  flush()
+                block.append(line)
+                m=desc_re.search(line)
+                if m:
+                  current=m.group(1)
+                  keep=current in wanted
+              flush()
+              p.wait()
+              if p.returncode:
+                raise SystemExit(p.returncode)
+          print('found',sorted(found),'bytes',out.stat().st_size)
+          missing=wanted-found
+          if missing:
+            print('missing',sorted(missing))
+          PY
+
+      - name: Commit
+        run: |
+          set -euo pipefail
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add docs/remaining-ad-bytecode-1.163.txt
+          git commit -m 'analysis: dump exact remaining ad bytecode' || exit 0
+          git pull --rebase origin ad-analysis-1.163
+          git push origin HEAD:ad-analysis-1.163
