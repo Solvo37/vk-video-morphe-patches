@@ -1,50 +1,79 @@
-# Trust and release signing
+# Доверие и подпись релизов
 
-## Upstream VK Video verification
+## Проверка upstream
 
-The automation verifies the source APK before patching.
+До любого патчинга workflow проверяет исходный APK.
 
-Expected upstream package:
+Ожидаемый package:
 
 ```text
 com.vk.vkvideo
 ```
 
-Expected VK certificate SHA-256:
+Ожидаемый SHA-256 сертификата VK:
 
 ```text
 057d974412032066f1b5edb1fdb550f71854189815c806b27c4d486fb4f1ef32
 ```
 
-A package/version/signature mismatch stops the pipeline.
+Несовпадение package, версии или сертификата останавливает сборку.
 
-## Project release key
+## Почему проектная подпись отличается от VK
 
-Expected public certificate fingerprint for project APK releases:
+Модифицированный APK нельзя подписать приватным ключом VK. Поэтому проект использует собственный постоянный release key.
+
+Это означает:
+
+- проектный APK нельзя поставить поверх официального VK Видео;
+- один проектный релиз можно обновлять следующим проектным релизом, пока используется тот же ключ;
+- обычный VK может оставаться установленным благодаря compatibility patch.
+
+## Сертификат релизов проекта
+
+Ожидаемый SHA-256:
 
 ```text
 D4:1F:49:2F:0E:2A:2E:39:90:AC:7F:8E:75:CC:5D:4B:
 14:89:5F:7B:46:C0:B6:11:3B:78:82:C4:8A:A5:D4:0A
 ```
 
-Certificate subject:
+Subject:
 
 ```text
 CN=Solvo37 VK Video Patched, OU=Morphe, O=Solvo37
 ```
 
-The private signing key must remain private. Publishing it would allow anyone to sign a modified APK with the same certificate, defeating Android's update-signature trust boundary.
+Приватный ключ не публикуется и не хранится в Git. В CI он передаётся через GitHub Actions Secrets.
 
-## What the repository publishes
+## Native signature bypass
 
-A normal app release may contain:
+VK Видео 1.163 содержит native-проверку в `lib/arm64-v8a/libvkcore.so`, из-за которой APK с новой подписью завершал процесс при запуске.
 
-- patched APK;
-- Morphe `.mpp` bundle;
-- upstream metadata used for the build.
+Проектный patch меняет конкретный условный переход в этой проверке. Патч применится только когда ожидаемый бинарный pattern найден ровно один раз. Если pattern изменится в новой версии, pipeline должен остановиться вместо слепого изменения native-библиотеки.
 
-The repository does not intentionally commit the original VK Video APK.
+Этот bypass нужен для работоспособности переподписанного APK, но он также означает, что встроенная проверка оригинальной подписи VK больше не служит защитой в проектной сборке. Поэтому проверяйте именно **сертификат проекта** и источник загрузки.
 
-## Reproducibility notes
+## Release pipeline
 
-Patch source code and CI configuration are public. APK output still depends on the exact upstream VK Video build and the release signing key. The CI records upstream metadata and refuses to publish when required fingerprints fail.
+Текущий APK pipeline:
+
+1. проверка официального upstream сертификата;
+2. применение Morphe-патчей в режиме `STRIP_FAST`;
+3. native signature bypass;
+4. merge split APK при необходимости;
+5. `zipalign`;
+6. подпись постоянным project key через APK Signature Scheme v3;
+7. повторная проверка package/version/certificate;
+8. публикация в GitHub Release.
+
+## Что публикуется
+
+APK release может содержать:
+
+- `VK-Video-<version>-patched.apk`;
+- SHA-256 файл;
+- patch/build metadata.
+
+Отдельные `patches-v0.1.x` releases содержат Morphe `.mpp` bundle и не являются установочными APK.
+
+Оригинальные proprietary APK VK Видео в Git не коммитятся.
