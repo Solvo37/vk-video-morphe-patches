@@ -1,5 +1,14 @@
 # Changelog
 
+## 0.2.2 — 2026-09-22
+
+Runtime ad removal hardening for VK Видео 1.163:
+
+- added **Filter clip feed ads**: server-provided `StaticAd`, `MarketAd`, `FloatingAd` and MyTarget short-video feed DTOs are removed before `ClipsRecomResponseAdapter` can turn them into SDK feed items or an install/action CTA;
+- added **Block midroll ads**: `AdSection.MIDROLL` is rejected in the `x13.e.b(...)` runtime gate before `VideoAutoPlay` pauses/switches the main player into `InstreamAdEngine`;
+- both patches are separate from the earlier feature/config suppression so they can be safely applied as a delta over the 1.163.1 project-signed build;
+- fixed the production Morphe JSON gate for the current report format (`patchingSteps[].success` instead of the obsolete top-level `.success`).
+
 ## 0.2.1 — 2026-09-22
 
 Расширенное удаление рекламы для VK Видео 1.163:
