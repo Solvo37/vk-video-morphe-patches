@@ -9,6 +9,7 @@ on:
       - 'gradle/**'
       - 'settings.gradle.kts'
       - 'gradle.properties'
+      - 'patches-list.json'
       - '.github/workflows/release-patches.yml'
 
 permissions:
@@ -26,18 +27,24 @@ jobs:
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v7
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
 
       - name: Setup Java 21
-        uses: actions/setup-java@v6
+        uses: actions/setup-java@de7274f081f381c8f8158605e0321c36c376e2e6 # v6
         with:
           distribution: temurin
           java-version: '21'
 
       - name: Setup Gradle
-        uses: gradle/actions/setup-gradle@v6
+        uses: gradle/actions/setup-gradle@9c971963bec38e04b3d30dcc455b5382be2fdbfb # v6.3.0
         with:
           gradle-version: '9.7.1'
+
+      - name: Verify repository metadata
+        run: |
+          set -euo pipefail
+          VERSION="$(sed -n 's/^version[[:space:]]*=[[:space:]]*//p' gradle.properties | head -n1)"
+          [[ "$(jq -r '.version' patches-list.json)" == "$VERSION" ]]
 
       - name: Build MPP
         env:
@@ -60,15 +67,37 @@ jobs:
           cp "$MPP" "dist/$ASSET_NAME"
 
           NOTES="Standalone Morphe patch bundle for VK Video.
-          
-          Includes the current stock-VK coexistence fix, native signature-check bypass and user-selectable VK Video patches.
-          This release contains no VK Video APK."
+
+          Includes the stock-VK coexistence fix, ARM64 native signature-check bypass and user-selectable VK Video patches.
+
+          Patch-only releases are marked as prereleases so the latest stable GitHub release remains the installable VK Video APK."
 
           if gh release view "$TAG" --repo "$GITHUB_REPOSITORY" >/dev/null 2>&1; then
             gh release upload "$TAG" "dist/$ASSET_NAME" --clobber --repo "$GITHUB_REPOSITORY"
-            gh release edit "$TAG"               --repo "$GITHUB_REPOSITORY"               --title "Morphe patches v$VERSION"               --notes "$NOTES"
+            gh release edit "$TAG"               --repo "$GITHUB_REPOSITORY"               --title "Morphe patches v$VERSION"               --notes "$NOTES"               --prerelease
           else
-            gh release create "$TAG"               "dist/$ASSET_NAME#Morphe patch bundle"               --repo "$GITHUB_REPOSITORY"               --title "Morphe patches v$VERSION"               --notes "$NOTES"
+            gh release create "$TAG"               "dist/$ASSET_NAME#Morphe patch bundle"               --repo "$GITHUB_REPOSITORY"               --title "Morphe patches v$VERSION"               --notes "$NOTES"               --prerelease
+          fi
+
+          # Keep all historical patch-only releases out of GitHub's "Latest" stable slot.
+          while IFS= read -r old_tag; do
+            [[ -z "$old_tag" ]] && continue
+            gh release edit "$old_tag" --repo "$GITHUB_REPOSITORY" --prerelease || true
+          done < <(
+            gh release list --repo "$GITHUB_REPOSITORY" --limit 100 --json tagName               --jq '.[] | select(.tagName | startswith("patches-v")) | .tagName'
+          )
+
+          # Also attach the newest patch bundle to the latest stable app release.
+          APP_TAG="$(
+            gh release list               --repo "$GITHUB_REPOSITORY"               --limit 100               --json tagName,isDraft,isPrerelease,publishedAt               --jq '[.[] |
+                select(.isDraft == false) |
+                select(.isPrerelease == false) |
+                select(.tagName | test("^[0-9]+\\.[0-9]+(?:\\.[0-9]+)?(?:-[0-9]+)?$"))
+              ] | sort_by(.publishedAt) | last | .tagName // empty'
+          )"
+
+          if [[ -n "$APP_TAG" ]]; then
+            gh release upload "$APP_TAG" "dist/$ASSET_NAME" --clobber --repo "$GITHUB_REPOSITORY"
           fi
 
           PUBLISHED_AT="$(gh release view "$TAG" --repo "$GITHUB_REPOSITORY" --json publishedAt --jq '.publishedAt')"
