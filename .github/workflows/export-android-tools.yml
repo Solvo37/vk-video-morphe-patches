@@ -23,6 +23,11 @@ jobs:
           mkdir -p out
           cp "$BT/lib/apksigner.jar" out/
           cp "$BT/zipalign" out/
+          if [[ -f "$BT/lib64/libc++.so" ]]; then
+            cp "$BT/lib64/libc++.so" out/
+          elif [[ -f "$BT/lib/libc++.so" ]]; then
+            cp "$BT/lib/libc++.so" out/
+          fi
           echo "Using $BT"
 
       - name: Upload tools
