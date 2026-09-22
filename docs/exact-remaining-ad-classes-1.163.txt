@@ -1,0 +1,2133 @@
+===== ee1.j =====
+DECOMPILE_FAILED
+INFO  - loading ...
+INFO  - Saving class 'ee1.j' to file '/home/runner/work/vk-video-morphe-patches/vk-video-morphe-patches/exact-rem/1.java'
+ERROR - finished with errors, count: 1
+
+===== x13.e =====
+DECOMPILE_FAILED
+INFO  - loading ...
+INFO  - Saving class 'x13.e' to file '/home/runner/work/vk-video-morphe-patches/vk-video-morphe-patches/exact-rem/2.java'
+ERROR - finished with errors, count: 1
+
+===== n33.t =====
+DECOMPILE_FAILED
+INFO  - loading ...
+ERROR - Incorrect arguments: Input class can't be saved by current jadx settings (marked as DONT_GENERATE)
+
+===== com.vk.api.generated.shortVideo.dto.ShortVideoGetRecomResponseDto =====
+package com.vk.api.generated.shortVideo.dto;
+
+import android.os.Parcel;
+import android.os.Parcelable;
+import androidx.compose.runtime.x;
+import androidx.media3.exoplayer.hls.l;
+import com.facebook.soloader.SoLoader;
+import com.vk.api.generated.groups.dto.GroupsGroupFullDto;
+import com.vk.api.generated.market.dto.MarketMarketItemDto;
+import com.vk.api.generated.masks.dto.MasksEffectDto;
+import com.vk.api.generated.masks.dto.MasksMaskDto;
+import com.vk.api.generated.places.dto.PlacesPlaceDto;
+import com.vk.api.generated.users.dto.UsersUserFullDto;
+import com.vk.api.generated.vkTickets.dto.VkTicketsVkTicketDto;
+import in.b;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
+import kotlin.Metadata;
+import kotlin.jvm.internal.DefaultConstructorMarker;
+import kotlin.jvm.internal.h;
+import ru.ok.android.utils.Logger;
+import ru.ok.tracer.base.ucum.UcumUtils;
+
+/* JADX INFO: compiled from: ShortVideoGetRecomResponseDto.kt */
+/* JADX INFO: loaded from: classes5.dex */
+@Metadata(d1 = {"\u0000V\n\u0002\u0018\u0002\n\u0002\u0018\u0002\n\u0002\u0018\u0002\n\u0000\n\u0002\u0010 \n\u0002\u0018\u0002\n\u0000\n\u0002\u0018\u0002\n\u0000\n\u0002\u0018\u0002\n\u0000\n\u0002\u0018\u0002\n\u0000\n\u0002\u0018\u0002\n\u0000\n\u0002\u0018\u0002\n\u0000\n\u0002\u0018\u0002\n\u0000\n\u0002\u0018\u0002\n\u0000\n\u0002\u0018\u0002\n\u0000\n\u0002\u0018\u0002\n\u0000\n\u0002\u0018\u0002\n\u0002\b\u0014\b\u0087\b\u0018\u00002\u00020\u0001BÕ\u0001\u0012\u0006\u0010\u0003\u001a\u00020\u0002\u0012\u0010\b\u0002\u0010\u0006\u001a\n\u0012\u0004\u0012\u00020\u0005\u0018\u00010\u0004\u0012\u0010\b\u0002\u0010\b\u001a\n\u0012\u0004\u0012\u00020\u0007\u0018\u00010\u0004\u0012\u0010\b\u0002\u0010\n\u001a\n\u0012\u0004\u0012\u00020\t\u0018\u00010\u0004\u0012\u0010\b\u0002\u0010\f\u001a\n\u0012\u0004\u0012\u00020\u000b\u0018\u00010\u0004\u0012\u0010\b\u0002\u0010\u000e\u001a\n\u0012\u0004\u0012\u00020\r\u0018\u00010\u0004\u0012\u0010\b\u0002\u0010\u0010\u001a\n\u0012\u0004\u0012\u00020\u000f\u0018\u00010\u0004\u0012\u0010\b\u0002\u0010\u0012\u001a\n\u0012\u0004\u0012\u00020\u0011\u0018\u00010\u0004\u0012\u0010\b\u0002\u0010\u0014\u001a\n\u0012\u0004\u0012\u00020\u0013\u0018\u00010\u0004\u0012\u0010\b\u0002\u0010\u0016\u001a\n\u0012\u0004\u0012\u00020\u0015\u0018\u00010\u0004\u0012\u0010\b\u0002\u0010\u0018\u001a\n\u0012\u0004\u0012\u00020\u0017\u0018\u00010\u0004\u0012\u0010\b\u0002\u0010\u001a\u001a\n\u0012\u0004\u0012\u00020\u0019\u0018\u00010\u0004¢\u0006\u0004\b\u001b\u0010\u001cR\u001a\u0010\u0003\u001a\u00020\u00028\u0006X\u0087\u0004¢\u0006\f\n\u0004\b\u0003\u0010\u001d\u001a\u0004\b\u001e\u0010\u001fR\"\u0010\u0006\u001a\n\u0012\u0004\u0012\u00020\u0005\u0018\u00010\u00048\u0006X\u0087\u0004¢\u0006\f\n\u0004\b\u0006\u0010 \u001a\u0004\b!\u0010\"R\"\u0010\b\u001a\n\u0012\u0004\u0012\u00020\u0007\u0018\u00010\u00048\u0006X\u0087\u0004¢\u0006\f\n\u0004\b\b\u0010 \u001a\u0004\b#\u0010\"R\"\u0010\n\u001a\n\u0012\u0004\u0012\u00020\t\u0018\u00010\u00048\u0006X\u0087\u0004¢\u0006\f\n\u0004\b\n\u0010 \u001a\u0004\b$\u0010\"R\"\u0010\f\u001a\n\u0012\u0004\u0012\u00020\u000b\u0018\u00010\u00048\u0006X\u0087\u0004¢\u0006\f\n\u0004\b\f\u0010 \u001a\u0004\b%\u0010\"R\"\u0010\u000e\u001a\n\u0012\u0004\u0012\u00020\r\u0018\u00010\u00048\u0006X\u0087\u0004¢\u0006\f\n\u0004\b\u000e\u0010 \u001a\u0004\b&\u0010\"R\"\u0010\u0010\u001a\n\u0012\u0004\u0012\u00020\u000f\u0018\u00010\u00048\u0006X\u0087\u0004¢\u0006\f\n\u0004\b\u0010\u0010 \u001a\u0004\b'\u0010\"R\"\u0010\u0012\u001a\n\u0012\u0004\u0012\u00020\u0011\u0018\u00010\u00048\u0006X\u0087\u0004¢\u0006\f\n\u0004\b\u0012\u0010 \u001a\u0004\b(\u0010\"R\"\u0010\u0014\u001a\n\u0012\u0004\u0012\u00020\u0013\u0018\u00010\u00048\u0006X\u0087\u0004¢\u0006\f\n\u0004\b\u0014\u0010 \u001a\u0004\b)\u0010\"R\"\u0010\u0016\u001a\n\u0012\u0004\u0012\u00020\u0015\u0018\u00010\u00048\u0006X\u0087\u0004¢\u0006\f\n\u0004\b\u0016\u0010 \u001a\u0004\b*\u0010\"R\"\u0010\u0018\u001a\n\u0012\u0004\u0012\u00020\u0017\u0018\u00010\u00048\u0006X\u0087\u0004¢\u0006\f\n\u0004\b\u0018\u0010 \u001a\u0004\b+\u0010\"R\"\u0010\u001a\u001a\n\u0012\u0004\u0012\u00020\u0019\u0018\u00010\u00048\u0006X\u0087\u0004¢\u0006\f\n\u0004\b\u001a\u0010 \u001a\u0004\b,\u0010\"¨\u0006-"}, d2 = {"Lcom/vk/api/generated/shortVideo/dto/ShortVideoGetRecomResponseDto;", "Landroid/os/Parcelable;", "Lcom/vk/api/generated/shortVideo/dto/ShortVideoRecomFeedDto;", "feed", "", "Lcom/vk/api/generated/users/dto/UsersUserFullDto;", "profiles", "Lcom/vk/api/generated/groups/dto/GroupsGroupFullDto;", "groups", "Lcom/vk/api/generated/shortVideo/dto/ShortVideoExternalOwnerDto;", "externalOwners", "Lcom/vk/api/generated/market/dto/MarketMarketItemDto;", "marketItems", "Lcom/vk/api/generated/places/dto/PlacesPlaceDto;", "places", "Lcom/vk/api/generated/masks/dto/MasksMaskDto;", "masks", "Lcom/vk/api/generated/masks/dto/MasksEffectDto;", "effects", "Lcom/vk/api/generated/shortVideo/dto/ShortVideoAudioDto;", "audios", "Lcom/vk/api/generated/shortVideo/dto/ShortVideoCompilationInfoDto;", "compilations", "Lcom/vk/api/generated/shortVideo/dto/ShortVideoRecomAlternativeItemDto;", "alternativeItems", "Lcom/vk/api/generated/vkTickets/dto/VkTicketsVkTicketDto;", "tickets", "<init>", "(Lcom/vk/api/generated/shortVideo/dto/ShortVideoRecomFeedDto;Ljava/util/List;Ljava/util/List;Ljava/util/List;Ljava/util/List;Ljava/util/List;Ljava/util/List;Ljava/util/List;Ljava/util/List;Ljava/util/List;Ljava/util/List;Ljava/util/List;)V", "Lcom/vk/api/generated/shortVideo/dto/ShortVideoRecomFeedDto;", Logger.METHOD_E, "()Lcom/vk/api/generated/shortVideo/dto/ShortVideoRecomFeedDto;", "Ljava/util/List;", UcumUtils.UCUM_SECONDS, "()Ljava/util/List;", "f", "getExternalOwners", "l", "q", "R2", "d", "c", "a6", "b", "getTickets", "api-generated_release"}, k = 1, mv = {2, 0, 0}, xi = 48)
+public final /* data */ class ShortVideoGetRecomResponseDto implements Parcelable {
+    public static final Parcelable.Creator<ShortVideoGetRecomResponseDto> CREATOR = new a();
+
+    @b("alternative_items")
+    private final List<ShortVideoRecomAlternativeItemDto> alternativeItems;
+
+    @b("audios")
+    private final List<ShortVideoAudioDto> audios;
+
+    @b("compilations")
+    private final List<ShortVideoCompilationInfoDto> compilations;
+
+    @b("effects")
+    private final List<MasksEffectDto> effects;
+
+    @b("external_owners")
+    private final List<ShortVideoExternalOwnerDto> externalOwners;
+
+    @b("feed")
+    private final ShortVideoRecomFeedDto feed;
+
+    @b("groups")
+    private final List<GroupsGroupFullDto> groups;
+
+    @b("market_items")
+    private final List<MarketMarketItemDto> marketItems;
+
+    @b("masks")
+    private final List<MasksMaskDto> masks;
+
+    @b("places")
+    private final List<PlacesPlaceDto> places;
+
+    @b("profiles")
+    private final List<UsersUserFullDto> profiles;
+
+    @b("tickets")
+    private final List<VkTicketsVkTicketDto> tickets;
+
+    /* JADX INFO: compiled from: ShortVideoGetRecomResponseDto.kt */
+    public static final class a implements Parcelable.Creator<ShortVideoGetRecomResponseDto> {
+        @Override // android.os.Parcelable.Creator
+        public final ShortVideoGetRecomResponseDto createFromParcel(Parcel parcel) {
+            ArrayList arrayList;
+            ArrayList arrayList2;
+            ArrayList arrayList3;
+            ArrayList arrayList4;
+            ArrayList arrayList5;
+            ArrayList arrayList6;
+            ArrayList arrayList7;
+            ArrayList arrayList8;
+            ArrayList arrayList9;
+            ArrayList arrayList10;
+            ArrayList arrayList11;
+            ShortVideoRecomFeedDto shortVideoRecomFeedDtoCreateFromParcel = ShortVideoRecomFeedDto.CREATOR.createFromParcel(parcel);
+            if (parcel.readInt() == 0) {
+                arrayList = null;
+            } else {
+                int i16 = parcel.readInt();
+                arrayList = new ArrayList(i16);
+                int iC = 0;
+                while (iC != i16) {
+                    iC = x.c(ShortVideoGetRecomResponseDto.class, parcel, arrayList, iC, 1);
+                }
+            }
+            if (parcel.readInt() == 0) {
+                arrayList2 = null;
+            } else {
+                int i18 = parcel.readInt();
+                arrayList2 = new ArrayList(i18);
+                int iC2 = 0;
+                while (iC2 != i18) {
+                    iC2 = x.c(ShortVideoGetRecomResponseDto.class, parcel, arrayList2, iC2, 1);
+                }
+            }
+            if (parcel.readInt() == 0) {
+                arrayList3 = null;
+            } else {
+                int i19 = parcel.readInt();
+                arrayList3 = new ArrayList(i19);
+                int iA = 0;
+                while (iA != i19) {
+                    iA = l.a(ShortVideoExternalOwnerDto.CREATOR, parcel, arrayList3, iA, 1);
+                }
+            }
+            if (parcel.readInt() == 0) {
+                arrayList4 = null;
+            } else {
+                int i28 = parcel.readInt();
+                arrayList4 = new ArrayList(i28);
+                int iC3 = 0;
+                while (iC3 != i28) {
+                    iC3 = x.c(ShortVideoGetRecomResponseDto.class, parcel, arrayList4, iC3, 1);
+                }
+            }
+            if (parcel.readInt() == 0) {
+                arrayList5 = null;
+            } else {
+                int i29 = parcel.readInt();
+                arrayList5 = new ArrayList(i29);
+                int iC4 = 0;
+                while (iC4 != i29) {
+                    iC4 = x.c(ShortVideoGetRecomResponseDto.class, parcel, arrayList5, iC4, 1);
+                }
+            }
+            if (parcel.readInt() == 0) {
+                arrayList6 = null;
+            } else {
+                int i32 = parcel.readInt();
+                arrayList6 = new ArrayList(i32);
+                int iC5 = 0;
+                while (iC5 != i32) {
+                    iC5 = x.c(ShortVideoGetRecomResponseDto.class, parcel, arrayList6, iC5, 1);
+                }
+            }
+            if (parcel.readInt() == 0) {
+                arrayList7 = null;
+            } else {
+                int i38 = parcel.readInt();
+                arrayList7 = new ArrayList(i38);
+                int iC6 = 0;
+                while (iC6 != i38) {
+                    iC6 = x.c(ShortVideoGetRecomResponseDto.class, parcel, arrayList7, iC6, 1);
+                }
+            }
+            if (parcel.readInt() == 0) {
+                arrayList8 = null;
+            } else {
+                int i39 = parcel.readInt();
+                arrayList8 = new ArrayList(i39);
+                int iC7 = 0;
+                while (iC7 != i39) {
+                    iC7 = x.c(ShortVideoGetRecomResponseDto.class, parcel, arrayList8, iC7, 1);
+                }
+            }
+            if (parcel.readInt() == 0) {
+                arrayList9 = null;
+            } else {
+                int i48 = parcel.readInt();
+                arrayList9 = new ArrayList(i48);
+                int iC8 = 0;
+                while (iC8 != i48) {
+                    iC8 = x.c(ShortVideoGetRecomResponseDto.class, parcel, arrayList9, iC8, 1);
+                }
+            }
+            if (parcel.readInt() == 0) {
+                arrayList10 = null;
+            } else {
+                int i49 = parcel.readInt();
+                arrayList10 = new ArrayList(i49);
+                int iA2 = 0;
+                while (iA2 != i49) {
+                    iA2 = l.a(ShortVideoRecomAlternativeItemDto.CREATOR, parcel, arrayList10, iA2, 1);
+                    i49 = i49;
+                }
+            }
+            if (parcel.readInt() == 0) {
+                arrayList11 = null;
+            } else {
+                int i58 = parcel.readInt();
+                arrayList11 = new ArrayList(i58);
+                int iC9 = 0;
+                while (iC9 != i58) {
+                    iC9 = x.c(ShortVideoGetRecomResponseDto.class, parcel, arrayList11, iC9, 1);
+                }
+            }
+            ArrayList arrayList12 = arrayList;
+            ArrayList arrayList13 = arrayList4;
+            ArrayList arrayList14 = arrayList7;
+            ArrayList arrayList15 = arrayList10;
+            return new ShortVideoGetRecomResponseDto(shortVideoRecomFeedDtoCreateFromParcel, arrayList12, arrayList2, arrayList3, arrayList13, arrayList5, arrayList6, arrayList14, arrayList8, arrayList9, arrayList15, arrayList11);
+        }
+
+        @Override // android.os.Parcelable.Creator
+        public final ShortVideoGetRecomResponseDto[] newArray(int i16) {
+            return new ShortVideoGetRecomResponseDto[i16];
+        }
+    }
+
+    public ShortVideoGetRecomResponseDto(ShortVideoRecomFeedDto shortVideoRecomFeedDto, List<UsersUserFullDto> list, List<GroupsGroupFullDto> list2, List<ShortVideoExternalOwnerDto> list3, List<MarketMarketItemDto> list4, List<PlacesPlaceDto> list5, List<MasksMaskDto> list6, List<MasksEffectDto> list7, List<ShortVideoAudioDto> list8, List<ShortVideoCompilationInfoDto> list9, List<ShortVideoRecomAlternativeItemDto> list10, List<VkTicketsVkTicketDto> list11) {
+        this.feed = shortVideoRecomFeedDto;
+        this.profiles = list;
+        this.groups = list2;
+        this.externalOwners = list3;
+        this.marketItems = list4;
+        this.places = list5;
+        this.masks = list6;
+        this.effects = list7;
+        this.audios = list8;
+        this.compilations = list9;
+        this.alternativeItems = list10;
+        this.tickets = list11;
+    }
+
+    public final List<MasksMaskDto> R2() {
+        return this.masks;
+    }
+
+    public final List<ShortVideoCompilationInfoDto> a6() {
+        return this.compilations;
+    }
+
+    public final List<ShortVideoRecomAlternativeItemDto> b() {
+        return this.alternativeItems;
+    }
+
+    public final List<ShortVideoAudioDto> c() {
+        return this.audios;
+    }
+
+    public final List<MasksEffectDto> d() {
+        return this.effects;
+    }
+
+    @Override // android.os.Parcelable
+    public final int describeContents() {
+        return 0;
+    }
+
+    /* JADX INFO: renamed from: e, reason: from getter */
+    public final ShortVideoRecomFeedDto getFeed() {
+        return this.feed;
+    }
+
+    public final boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (!(obj instanceof ShortVideoGetRecomResponseDto)) {
+            return false;
+        }
+        ShortVideoGetRecomResponseDto shortVideoGetRecomResponseDto = (ShortVideoGetRecomResponseDto) obj;
+        return h.d(this.feed, shortVideoGetRecomResponseDto.feed) && h.d(this.profiles, shortVideoGetRecomResponseDto.profiles) && h.d(this.groups, shortVideoGetRecomResponseDto.groups) && h.d(this.externalOwners, shortVideoGetRecomResponseDto.externalOwners) && h.d(this.marketItems, shortVideoGetRecomResponseDto.marketItems) && h.d(this.places, shortVideoGetRecomResponseDto.places) && h.d(this.masks, shortVideoGetRecomResponseDto.masks) && h.d(this.effects, shortVideoGetRecomResponseDto.effects) && h.d(this.audios, shortVideoGetRecomResponseDto.audios) && h.d(this.compilations, shortVideoGetRecomResponseDto.compilations) && h.d(this.alternativeItems, shortVideoGetRecomResponseDto.alternativeItems) && h.d(this.tickets, shortVideoGetRecomResponseDto.tickets);
+    }
+
+    public final List<GroupsGroupFullDto> f() {
+        return this.groups;
+    }
+
+    public final int hashCode() {
+        int iHashCode = this.feed.hashCode() * 31;
+        List<UsersUserFullDto> list = this.profiles;
+        int iHashCode2 = (iHashCode + (list == null ? 0 : list.hashCode())) * 31;
+        List<GroupsGroupFullDto> list2 = this.groups;
+        int iHashCode3 = (iHashCode2 + (list2 == null ? 0 : list2.hashCode())) * 31;
+        List<ShortVideoExternalOwnerDto> list3 = this.externalOwners;
+        int iHashCode4 = (iHashCode3 + (list3 == null ? 0 : list3.hashCode())) * 31;
+        List<MarketMarketItemDto> list4 = this.marketItems;
+        int iHashCode5 = (iHashCode4 + (list4 == null ? 0 : list4.hashCode())) * 31;
+        List<PlacesPlaceDto> list5 = this.places;
+        int iHashCode6 = (iHashCode5 + (list5 == null ? 0 : list5.hashCode())) * 31;
+        List<MasksMaskDto> list6 = this.masks;
+        int iHashCode7 = (iHashCode6 + (list6 == null ? 0 : list6.hashCode())) * 31;
+        List<MasksEffectDto> list7 = this.effects;
+        int iHashCode8 = (iHashCode7 + (list7 == null ? 0 : list7.hashCode())) * 31;
+        List<ShortVideoAudioDto> list8 = this.audios;
+        int iHashCode9 = (iHashCode8 + (list8 == null ? 0 : list8.hashCode())) * 31;
+        List<ShortVideoCompilationInfoDto> list9 = this.compilations;
+        int iHashCode10 = (iHashCode9 + (list9 == null ? 0 : list9.hashCode())) * 31;
+        List<ShortVideoRecomAlternativeItemDto> list10 = this.alternativeItems;
+        int iHashCode11 = (iHashCode10 + (list10 == null ? 0 : list10.hashCode())) * 31;
+        List<VkTicketsVkTicketDto> list11 = this.tickets;
+        return iHashCode11 + (list11 != null ? list11.hashCode() : 0);
+    }
+
+    public final List<MarketMarketItemDto> l() {
+        return this.marketItems;
+    }
+
+    public final List<PlacesPlaceDto> q() {
+        return this.places;
+    }
+
+    public final List<UsersUserFullDto> s() {
+        return this.profiles;
+    }
+
+    public final String toString() {
+        StringBuilder sb2 = new StringBuilder("ShortVideoGetRecomResponseDto(feed=");
+        sb2.append(this.feed);
+        sb2.append(", profiles=");
+        sb2.append(this.profiles);
+        sb2.append(", groups=");
+        sb2.append(this.groups);
+        sb2.append(", externalOwners=");
+        sb2.append(this.externalOwners);
+        sb2.append(", marketItems=");
+        sb2.append(this.marketItems);
+        sb2.append(", places=");
+        sb2.append(this.places);
+        sb2.append(", masks=");
+        sb2.append(this.masks);
+        sb2.append(", effects=");
+        sb2.append(this.effects);
+        sb2.append(", audios=");
+        sb2.append(this.audios);
+        sb2.append(", compilations=");
+        sb2.append(this.compilations);
+        sb2.append(", alternativeItems=");
+        sb2.append(this.alternativeItems);
+        sb2.append(", tickets=");
+        return androidx.compose.animation.b.d(')', sb2, this.tickets);
+    }
+
+    @Override // android.os.Parcelable
+    public final void writeToParcel(Parcel parcel, int i16) {
+        this.feed.writeToParcel(parcel, i16);
+        List<UsersUserFullDto> list = this.profiles;
+        if (list == null) {
+            parcel.writeInt(0);
+        } else {
+            Iterator itE = bs.a.e(parcel, 1, list);
+            while (itE.hasNext()) {
+                parcel.writeParcelable((Parcelable) itE.next(), i16);
+            }
+        }
+        List<GroupsGroupFullDto> list2 = this.groups;
+        if (list2 == null) {
+            parcel.writeInt(0);
+        } else {
+            Iterator itE2 = bs.a.e(parcel, 1, list2);
+            while (itE2.hasNext()) {
+                parcel.writeParcelable((Parcelable) itE2.next(), i16);
+            }
+        }
+        List<ShortVideoExternalOwnerDto> list3 = this.externalOwners;
+        if (list3 == null) {
+            parcel.writeInt(0);
+        } else {
+            Iterator itE3 = bs.a.e(parcel, 1, list3);
+            while (itE3.hasNext()) {
+                ((ShortVideoExternalOwnerDto) itE3.next()).writeToParcel(parcel, i16);
+            }
+        }
+        List<MarketMarketItemDto> list4 = this.marketItems;
+        if (list4 == null) {
+            parcel.writeInt(0);
+        } else {
+            Iterator itE4 = bs.a.e(parcel, 1, list4);
+            while (itE4.hasNext()) {
+                parcel.writeParcelable((Parcelable) itE4.next(), i16);
+            }
+        }
+        List<PlacesPlaceDto> list5 = this.places;
+        if (list5 == null) {
+            parcel.writeInt(0);
+        } else {
+            Iterator itE5 = bs.a.e(parcel, 1, list5);
+            while (itE5.hasNext()) {
+                parcel.writeParcelable((Parcelable) itE5.next(), i16);
+            }
+        }
+        List<MasksMaskDto> list6 = this.masks;
+        if (list6 == null) {
+            parcel.writeInt(0);
+        } else {
+            Iterator itE6 = bs.a.e(parcel, 1, list6);
+            while (itE6.hasNext()) {
+                parcel.writeParcelable((Parcelable) itE6.next(), i16);
+            }
+        }
+        List<MasksEffectDto> list7 = this.effects;
+        if (list7 == null) {
+            parcel.writeInt(0);
+        } else {
+            Iterator itE7 = bs.a.e(parcel, 1, list7);
+            while (itE7.hasNext()) {
+                parcel.writeParcelable((Parcelable) itE7.next(), i16);
+            }
+        }
+        List<ShortVideoAudioDto> list8 = this.audios;
+        if (list8 == null) {
+            parcel.writeInt(0);
+        } else {
+            Iterator itE8 = bs.a.e(parcel, 1, list8);
+            while (itE8.hasNext()) {
+                parcel.writeParcelable((Parcelable) itE8.next(), i16);
+            }
+        }
+        List<ShortVideoCompilationInfoDto> list9 = this.compilations;
+        if (list9 == null) {
+            parcel.writeInt(0);
+        } else {
+            Iterator itE9 = bs.a.e(parcel, 1, list9);
+            while (itE9.hasNext()) {
+                parcel.writeParcelable((Parcelable) itE9.next(), i16);
+            }
+        }
+        List<ShortVideoRecomAlternativeItemDto> list10 = this.alternativeItems;
+        if (list10 == null) {
+            parcel.writeInt(0);
+        } else {
+            Iterator itE10 = bs.a.e(parcel, 1, list10);
+            while (itE10.hasNext()) {
+                ((ShortVideoRecomAlternativeItemDto) itE10.next()).writeToParcel(parcel, i16);
+            }
+        }
+        List<VkTicketsVkTicketDto> list11 = this.tickets;
+        if (list11 == null) {
+            parcel.writeInt(0);
+            return;
+        }
+        Iterator itE11 = bs.a.e(parcel, 1, list11);
+        while (itE11.hasNext()) {
+            parcel.writeParcelable((Parcelable) itE11.next(), i16);
+        }
+    }
+
+    public /* synthetic */ ShortVideoGetRecomResponseDto(ShortVideoRecomFeedDto shortVideoRecomFeedDto, List list, List list2, List list3, List list4, List list5, List list6, List list7, List list8, List list9, List list10, List list11, int i16, DefaultConstructorMarker defaultConstructorMarker) {
+        this(shortVideoRecomFeedDto, (i16 & 2) != 0 ? null : list, (i16 & 4) != 0 ? null : list2, (i16 & 8) != 0 ? null : list3, (i16 & 16) != 0 ? null : list4, (i16 & 32) != 0 ? null : list5, (i16 & 64) != 0 ? null : list6, (i16 & 128) != 0 ? null : list7, (i16 & 256) != 0 ? null : list8, (i16 & SoLoader.SOLOADER_ENABLE_SYSTEMLOAD_WRAPPER_SOSOURCE) != 0 ? null : list9, (i16 & 1024) != 0 ? null : list10, (i16 & 2048) != 0 ? null : list11);
+    }
+}
+
+===== com.vk.api.generated.shortVideo.dto.ShortVideoRecomFeedItemDto$Deserializer =====
+package com.vk.api.generated.shortVideo.dto;
+
+import android.os.Parcel;
+import android.os.Parcelable;
+import androidx.core.view.p;
+import az2.a;
+import com.google.gson.f;
+import com.google.gson.g;
+import com.google.gson.h;
+import com.google.gson.internal.bind.TreeTypeAdapter;
+import com.vk.api.generated.video.dto.VideoVideoFullDto;
+import in.b;
+import kotlin.Metadata;
+import kotlin.jvm.internal.DefaultConstructorMarker;
+import ru.ok.android.externcalls.analytics.internal.storage.DatabaseHelper;
+import ru.ok.android.webrtc.signaling.api.SignalingProtocol;
+
+/* JADX INFO: compiled from: ShortVideoRecomFeedItemDto.kt */
+/* JADX INFO: loaded from: classes7.dex */
+@Metadata(d1 = {"\u0000>\n\u0002\u0018\u0002\n\u0002\u0018\u0002\n\u0002\b\u000f\n\u0002\u0018\u0002\n\u0002\u0018\u0002\n\u0002\u0018\u0002\n\u0002\u0018\u0002\n\u0002\u0018\u0002\n\u0002\u0018\u0002\n\u0002\u0018\u0002\n\u0002\u0018\u0002\n\u0002\u0018\u0002\n\u0002\u0018\u0002\n\u0002\u0018\u0002\n\u0002\u0018\u0002\n\u0000\b7\u0018\u00002\u00020\u0001:\r\u0004\u0005\u0006\u0007\b\t\n\u000b\f\r\u000e\u000f\u0010B\t\b\u0004¢\u0006\u0004\b\u0002\u0010\u0003\u0082\u0001\f\u0011\u0012\u0013\u0014\u0015\u0016\u0017\u0018\u0019\u001a\u001b\u001c¨\u0006\u001d"}, d2 = {"Lcom/vk/api/generated/shortVideo/dto/ShortVideoRecomFeedItemDto;", "Landroid/os/Parcelable;", "<init>", "()V", "ShortVideoFeedItemVideoFullDto", "ShortVideoFeedItemShortVideoStaticAdDto", "ShortVideoFeedItemShortVideoQuestionnaireDto", "ShortVideoFeedItemShortVideoFloatingAdDto", "ShortVideoFeedItemShortVideoFullDto", "ShortVideoFeedItemShortVideoMytargetSdkAdDto", "ShortVideoFeedItemShortVideoMarketAdDto", "ShortVideoFeedItemShopsGridDto", "ShortVideoFeedItemShortVideoMytargetSdkCarouselDto", "ShortVideoFeedItemShortVideoMytargetSdkPromoDto", "ShortVideoFeedItemShortVideoMytargetSdkStaticDto", "ShortVideoFeedItemShortVideoMytargetSdkVideoDto", "Deserializer", "Lcom/vk/api/generated/shortVideo/dto/ShortVideoRecomFeedItemDto$ShortVideoFeedItemShopsGridDto;", "Lcom/vk/api/generated/shortVideo/dto/ShortVideoRecomFeedItemDto$ShortVideoFeedItemShortVideoFloatingAdDto;", "Lcom/vk/api/generated/shortVideo/dto/ShortVideoRecomFeedItemDto$ShortVideoFeedItemShortVideoFullDto;", "Lcom/vk/api/generated/shortVideo/dto/ShortVideoRecomFeedItemDto$ShortVideoFeedItemShortVideoMarketAdDto;", "Lcom/vk/api/generated/shortVideo/dto/ShortVideoRecomFeedItemDto$ShortVideoFeedItemShortVideoMytargetSdkAdDto;", "Lcom/vk/api/generated/shortVideo/dto/ShortVideoRecomFeedItemDto$ShortVideoFeedItemShortVideoMytargetSdkCarouselDto;", "Lcom/vk/api/generated/shortVideo/dto/ShortVideoRecomFeedItemDto$ShortVideoFeedItemShortVideoMytargetSdkPromoDto;", "Lcom/vk/api/generated/shortVideo/dto/ShortVideoRecomFeedItemDto$ShortVideoFeedItemShortVideoMytargetSdkStaticDto;", "Lcom/vk/api/generated/shortVideo/dto/ShortVideoRecomFeedItemDto$ShortVideoFeedItemShortVideoMytargetSdkVideoDto;", "Lcom/vk/api/generated/shortVideo/dto/ShortVideoRecomFeedItemDto$ShortVideoFeedItemShortVideoQuestionnaireDto;", "Lcom/vk/api/generated/shortVideo/dto/ShortVideoRecomFeedItemDto$ShortVideoFeedItemShortVideoStaticAdDto;", "Lcom/vk/api/generated/shortVideo/dto/ShortVideoRecomFeedItemDto$ShortVideoFeedItemVideoFullDto;", "api-generated_release"}, k = 1, mv = {2, 0, 0}, xi = 48)
+public abstract class ShortVideoRecomFeedItemDto implements Parcelable {
+
+    /* JADX INFO: compiled from: ShortVideoRecomFeedItemDto.kt */
+    @Metadata(d1 = {"\u0000\u0010\n\u0002\u0018\u0002\n\u0002\u0018\u0002\n\u0002\u0018\u0002\n\u0002\b\u0003\u0018\u00002\b\u0012\u0004\u0012\u00020\u00020\u0001B\u0007¢\u0006\u0004\b\u0003\u0010\u0004¨\u0006\u0005"}, d2 = {"Lcom/vk/api/generated/shortVideo/dto/ShortVideoRecomFeedItemDto$Deserializer;", "Lcom/google/gson/g;", "Lcom/vk/api/generated/shortVideo/dto/ShortVideoRecomFeedItemDto;", "<init>", "()V", "api-generated_release"}, k = 1, mv = {2, 0, 0}, xi = 48)
+    public static final class Deserializer implements g<ShortVideoRecomFeedItemDto> {
+        /* JADX WARN: Failed to restore switch over string. Please report as a decompilation issue */
+        @Override // com.google.gson.g
+        public final Object b(h hVar, f fVar) {
+            String strB = a.b(hVar, "type");
+            if (strB != null) {
+                switch (strB.hashCode()) {
+                    case -2085324305:
+                        if (strB.equals("short_video_mytarget_sdk_promo")) {
+                            return (ShortVideoRecomFeedItemDto) ((TreeTypeAdapter.a) fVar).a(hVar, ShortVideoFeedItemShortVideoMytargetSdkPromoDto.class);
+                        }
+                        break;
+                    case -2080062117:
+                        if (strB.equals("short_video_mytarget_sdk_video")) {
+                            return (ShortVideoRecomFeedItemDto) ((TreeTypeAdapter.a) fVar).a(hVar, ShortVideoFeedItemShortVideoMytargetSdkVideoDto.class);
+                        }
+                        break;
+                    case -1946941629:
+                        if (strB.equals("short_video_mytarget_sdk_ad")) {
+                            return (ShortVideoRecomFeedItemDto) ((TreeTypeAdapter.a) fVar).a(hVar, ShortVideoFeedItemShortVideoMytargetSdkAdDto.class);
+                        }
+                        break;
+                    case -1586366286:
+                        if (strB.equals("short_video_full_legacy")) {
+                            return (ShortVideoRecomFeedItemDto) ((TreeTypeAdapter.a) fVar).a(hVar, ShortVideoFeedItemVideoFullDto.class);
+                        }
+                        break;
+                    case -1556054987:
+                        if (strB.equals("short_video_floating_ad")) {
+                            return (ShortVideoRecomFeedItemDto) ((TreeTypeAdapter.a) fVar).a(hVar, ShortVideoFeedItemShortVideoFloatingAdDto.class);
+                        }
+                        break;
+                    case -1206175987:
+                        if (strB.equals("short_video_static_ad")) {
+                            return (ShortVideoRecomFeedItemDto) ((TreeTypeAdapter.a) fVar).a(hVar, ShortVideoFeedItemShortVideoStaticAdDto.class);
+                        }
+                        break;
+                    case -490765184:
+                        if (strB.equals("short_video_mytarget_sdk_carousel")) {
+                            return (ShortVideoRecomFeedItemDto) ((TreeTypeAdapter.a) fVar).a(hVar, ShortVideoFeedItemShortVideoMytargetSdkCarouselDto.class);
+                        }
+                        break;
+                    case -136774500:
+                        if (strB.equals("short_video_questionnaire")) {
+                            return (ShortVideoRecomFeedItemDto) ((TreeTypeAdapter.a) fVar).a(hVar, ShortVideoFeedItemShortVideoQuestionnaireDto.class);
+                        }
+                        break;
+                    case -133219954:
+                        if (strB.equals("short_video_mytarget_sdk_static")) {
+                            return (ShortVideoRecomFeedItemDto) ((TreeTypeAdapter.a) fVar).a(hVar, ShortVideoFeedItemShortVideoMytargetSdkStaticDto.class);
+                        }
+                        break;
+                    case -58198401:
+                        if (strB.equals("short_video_market_ad")) {
+                            return (ShortVideoRecomFeedItemDto) ((TreeTypeAdapter.a) fVar).a(hVar, ShortVideoFeedItemShortVideoMarketAdDto.class);
+                        }
+                        break;
+                    case 1135212975:
+                        if (strB.equals("short_video_shops_grid")) {
+                            return (ShortVideoRecomFeedItemDto) ((TreeTypeAdapter.a) fVar).a(hVar, ShortVideoFeedItemShopsGridDto.class);
+                        }
+                        break;
+                    case 1477822326:
+                        if (strB.equals("short_video_full")) {
+                            return (ShortVideoRecomFeedItemDto) ((TreeTypeAdapter.a) fVar).a(hVar, ShortVideoFeedItemShortVideoFullDto.class);
+                        }
+                        break;
+                }
+            }
+            throw new IllegalStateException(p.e("no mapping for the type:", strB));
+        }
+    }
+
+    /* JADX INFO: compiled from: ShortVideoRecomFeedItemDto.kt */
+    /* JADX INFO: loaded from: classes5.dex */
+    @Metadata(d1 = {"\u0000\u001a\n\u0002\u0018\u0002\n\u0002\u0018\u0002\n\u0002\u0018\u0002\n\u0002\u0018\u0002\n\u0000\n\u0002\u0018\u0002\n\u0002\b\u000b\b\u0087\b\u0018\u00002\u00020\u00012\u00020\u0002:\u0001\u000fB\u0017\u0012\u0006\u0010\u0004\u001a\u00020\u0003\u0012\u0006\u0010\u0006\u001a\u00020\u0005¢\u0006\u0004\b\u0007\u0010\bR\u001a\u0010\u0004\u001a\u00020\u00038\u0006X\u0087\u0004¢\u0006\f\n\u0004\b\u0004\u0010\t\u001a\u0004\b\n\u0010\u000bR\u001a\u0010\u0006\u001a\u00020\u00058\u0006X\u0087\u0004¢\u0006\f\n\u0004\b\u0006\u0010\f\u001a\u0004\b\r\u0010\u000e¨\u0006\u0010"}, d2 = {"Lcom/vk/api/generated/shortVideo/dto/ShortVideoRecomFeedItemDto$ShortVideoFeedItemShopsGridDto;", "Lcom/vk/api/generated/shortVideo/dto/ShortVideoRecomFeedItemDto;", "Landroid/os/Parcelable;", "Lcom/vk/api/generated/shortVideo/dto/ShortVideoShopsGridDto;", DatabaseHelper.ITEM_COLUMN_NAME, "Lcom/vk/api/generated/shortVideo/dto/ShortVideoRecomFeedItemDto$ShortVideoFeedItemShopsGridDto$TypeDto;", "type", "<init>", "(Lcom/vk/api/generated/shortVideo/dto/ShortVideoShopsGridDto;Lcom/vk/api/generated/shortVideo/dto/ShortVideoRecomFeedItemDto$ShortVideoFeedItemShopsGridDto$TypeDto;)V", "Lcom/vk/api/generated/shortVideo/dto/ShortVideoShopsGridDto;", "b", "()Lcom/vk/api/generated/shortVideo/dto/ShortVideoShopsGridDto;", "Lcom/vk/api/generated/shortVideo/dto/ShortVideoRecomFeedItemDto$ShortVideoFeedItemShopsGridDto$TypeDto;", "getType", "()Lcom/vk/api/generated/shortVideo/dto/ShortVideoRecomFeedItemDto$ShortVideoFeedItemShopsGridDto$TypeDto;", "TypeDto", "api-generated_release"}, k = 1, mv = {2, 0, 0}, xi = 48)
+    public static final /* data */ class ShortVideoFeedItemShopsGridDto extends ShortVideoRecomFeedItemDto implements Parcelable {
+        public static final Parcelable.Creator<ShortVideoFeedItemShopsGridDto> CREATOR = new a();
+
+        @b(DatabaseHelper.ITEM_COLUMN_NAME)
+        private final ShortVideoShopsGridDto item;
+
+        @b("type")
+        private final TypeDto type;
+
+        /* JADX WARN: Enum visitor error
+        jadx.core.utils.exceptions.JadxRuntimeException: Can't remove SSA var: r0v1 com.vk.api.generated.shortVideo.dto.ShortVideoRecomFeedItemDto$ShortVideoFeedItemShopsGridDto$TypeDto[], still in use, count: 1, list:
+          (r0v1 com.vk.api.generated.shortVideo.dto.ShortVideoRecomFeedItemDto$ShortVideoFeedItemShopsGridDto$TypeDto[]) from 0x0015: CONSTRUCTOR (r0v1 com.vk.api.generated.shortVideo.dto.ShortVideoRecomFeedItemDto$ShortVideoFeedItemShopsGridDto$TypeDto[]) A[MD:(T extends java.lang.Enum<T>[]):void (m), WRAPPED] (LINE:22) call: n07.b.<init>(java.lang.Enum[]):void type: CONSTRUCTOR
+        	at jadx.core.utils.InsnRemover.removeSsaVar(InsnRemover.java:164)
+        	at jadx.core.utils.InsnRemover.unbindResult(InsnRemover.java:129)
+        	at jadx.core.utils.InsnRemover.lambda$unbindInsns$1(InsnRemover.java:101)
+        	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)
+        	at jadx.core.utils.InsnRemover.unbindInsns(InsnRemover.java:100)
+        	at jadx.core.utils.InsnRemover.removeAllAndUnbind(InsnRemover.java:257)
+        	at jadx.core.dex.visitors.EnumVisitor.convertToEnum(EnumVisitor.java:187)
+        	at jadx.core.dex.visitors.EnumVisitor.visit(EnumVisitor.java:102)
+         */
+        /* JADX WARN: Failed to restore enum class, 'enum' modifier and super class removed */
+        /* JADX INFO: compiled from: ShortVideoRecomFeedItemDto.kt */
+        @Metadata(d1 = {"\u0000\u0014\n\u0002\u0018\u0002\n\u0002\u0018\u0002\n\u0002\u0010\u0010\n\u0002\u0010\u000e\n\u0002\b\b\b\u0087\u0081\u0002\u0018\u00002\u00020\u00012\b\u0012\u0004\u0012\u00020\u00000\u0002B\u0011\b\u0002\u0012\u0006\u0010\u0004\u001a\u00020\u0003¢\u0006\u0004\b\u0005\u0010\u0006R\u0017\u0010\u0004\u001a\u00020\u00038\u0006¢\u0006\f\n\u0004\b\u0004\u0010\u0007\u001a\u0004\b\b\u0010\tj\u0002\b\n¨\u0006\u000b"}, d2 = {"Lcom/vk/api/generated/shortVideo/dto/ShortVideoRecomFeedItemDto$ShortVideoFeedItemShopsGridDto$TypeDto;", "Landroid/os/Parcelable;", "", "", SignalingProtocol.KEY_VALUE, "<init>", "(Ljava/lang/String;ILjava/lang/String;)V", "Ljava/lang/String;", "getValue", "()Ljava/lang/String;", "SHORT_VIDEO_SHOPS_GRID", "api-generated_release"}, k = 1, mv = {2, 0, 0}, xi = 48)
+        public static final class TypeDto implements Parcelable {
+            SHORT_VIDEO_SHOPS_GRID("short_video_shops_grid");
+
+            private static final /* synthetic */ n07.a $ENTRIES;
+            public static final Parcelable.Creator<TypeDto> CREATOR = new a();
+            private final String value;
+
+            /* JADX INFO: compiled from: ShortVideoRecomFeedItemDto.kt */
+            public static final class a implements Parcelable.Creator<TypeDto> {
+                @Override // android.os.Parcelable.Creator
+                public final TypeDto createFromParcel(Parcel parcel) {
+                    return TypeDto.valueOf(parcel.readString());
+                }
+
+                @Override // android.os.Parcelable.Creator
+                public final TypeDto[] newArray(int i16) {
+                    return new TypeDto[i16];
+                }
+            }
+
+            static {
+                $ENTRIES = new n07.b(new TypeDto[]{r0});
+            }
+
+            private TypeDto(String str) {
+                super(str, i);
+                this.value = str;
+            }
+
+            public static TypeDto valueOf(String str) {
+                return (TypeDto) Enum.valueOf(TypeDto.class, str);
+            }
+
+            public static TypeDto[] values() {
+                return (TypeDto[]) $VALUES.clone();
+            }
+
+            @Override // android.os.Parcelable
+            public final int describeContents() {
+                return 0;
+            }
+
+            @Override // android.os.Parcelable
+            public final void writeToParcel(Parcel parcel, int i16) {
+                parcel.writeString(name());
+            }
+        }
+
+        /* JADX INFO: compiled from: ShortVideoRecomFeedItemDto.kt */
+        public static final class a implements Parcelable.Creator<ShortVideoFeedItemShopsGridDto> {
+            @Override // android.os.Parcelable.Creator
+            public final ShortVideoFeedItemShopsGridDto createFromParcel(Parcel parcel) {
+                return new ShortVideoFeedItemShopsGridDto(ShortVideoShopsGridDto.CREATOR.createFromParcel(parcel), TypeDto.CREATOR.createFromParcel(parcel));
+            }
+
+            @Override // android.os.Parcelable.Creator
+            public final ShortVideoFeedItemShopsGridDto[] newArray(int i16) {
+                return new ShortVideoFeedItemShopsGridDto[i16];
+            }
+        }
+
+        public ShortVideoFeedItemShopsGridDto(ShortVideoShopsGridDto shortVideoShopsGridDto, TypeDto typeDto) {
+            super(null);
+            this.item = shortVideoShopsGridDto;
+            this.type = typeDto;
+        }
+
+        /* JADX INFO: renamed from: b, reason: from getter */
+        public final ShortVideoShopsGridDto getItem() {
+            return this.item;
+        }
+
+        @Override // android.os.Parcelable
+        public final int describeContents() {
+            return 0;
+        }
+
+        public final boolean equals(Object obj) {
+            if (this == obj) {
+                return true;
+            }
+            if (!(obj instanceof ShortVideoFeedItemShopsGridDto)) {
+                return false;
+            }
+            ShortVideoFeedItemShopsGridDto shortVideoFeedItemShopsGridDto = (ShortVideoFeedItemShopsGridDto) obj;
+            return kotlin.jvm.internal.h.d(this.item, shortVideoFeedItemShopsGridDto.item) && this.type == shortVideoFeedItemShopsGridDto.type;
+        }
+
+        public final int hashCode() {
+            return this.type.hashCode() + (this.item.hashCode() * 31);
+        }
+
+        public final String toString() {
+            return "ShortVideoFeedItemShopsGridDto(item=" + this.item + ", type=" + this.type + ')';
+        }
+
+        @Override // android.os.Parcelable
+        public final void writeToParcel(Parcel parcel, int i16) {
+            this.item.writeToParcel(parcel, i16);
+            this.type.writeToParcel(parcel, i16);
+        }
+    }
+
+    /* JADX INFO: compiled from: ShortVideoRecomFeedItemDto.kt */
+    /* JADX INFO: loaded from: classes5.dex */
+    @Metadata(d1 = {"\u0000\u001a\n\u0002\u0018\u0002\n\u0002\u0018\u0002\n\u0002\u0018\u0002\n\u0002\u0018\u0002\n\u0000\n\u0002\u0018\u0002\n\u0002\b\u000b\b\u0087\b\u0018\u00002\u00020\u00012\u00020\u0002:\u0001\u000fB\u0017\u0012\u0006\u0010\u0004\u001a\u00020\u0003\u0012\u0006\u0010\u0006\u001a\u00020\u0005¢\u0006\u0004\b\u0007\u0010\bR\u001a\u0010\u0004\u001a\u00020\u00038\u0006X\u0087\u0004¢\u0006\f\n\u0004\b\u0004\u0010\t\u001a\u0004\b\n\u0010\u000bR\u001a\u0010\u0006\u001a\u00020\u00058\u0006X\u0087\u0004¢\u0006\f\n\u0004\b\u0006\u0010\f\u001a\u0004\b\r\u0010\u000e¨\u0006\u0010"}, d2 = {"Lcom/vk/api/generated/shortVideo/dto/ShortVideoRecomFeedItemDto$ShortVideoFeedItemShortVideoFloatingAdDto;", "Lcom/vk/api/generated/shortVideo/dto/ShortVideoRecomFeedItemDto;", "Landroid/os/Parcelable;", "Lcom/vk/api/generated/shortVideo/dto/ShortVideoRecomFeedItemDto$ShortVideoFeedItemShortVideoFloatingAdDto$TypeDto;", "type", "Lcom/vk/api/generated/shortVideo/dto/ShortVideoFloatingAdDto;", DatabaseHelper.ITEM_COLUMN_NAME, "<init>", "(Lcom/vk/api/generated/shortVideo/dto/ShortVideoRecomFeedItemDto$ShortVideoFeedItemShortVideoFloatingAdDto$TypeDto;Lcom/vk/api/generated/shortVideo/dto/ShortVideoFloatingAdDto;)V", "Lcom/vk/api/generated/shortVideo/dto/ShortVideoRecomFeedItemDto$ShortVideoFeedItemShortVideoFloatingAdDto$TypeDto;", "getType", "()Lcom/vk/api/generated/shortVideo/dto/ShortVideoRecomFeedItemDto$ShortVideoFeedItemShortVideoFloatingAdDto$TypeDto;", "Lcom/vk/api/generated/shortVideo/dto/ShortVideoFloatingAdDto;", "b", "()Lcom/vk/api/generated/shortVideo/dto/ShortVideoFloatingAdDto;", "TypeDto", "api-generated_release"}, k = 1, mv = {2, 0, 0}, xi = 48)
+    public static final /* data */ class ShortVideoFeedItemShortVideoFloatingAdDto extends ShortVideoRecomFeedItemDto implements Parcelable {
+        public static final Parcelable.Creator<ShortVideoFeedItemShortVideoFloatingAdDto> CREATOR = new a();
+
+        @b(DatabaseHelper.ITEM_COLUMN_NAME)
+        private final ShortVideoFloatingAdDto item;
+
+        @b("type")
+        private final TypeDto type;
+
+        /* JADX WARN: Enum visitor error
+        jadx.core.utils.exceptions.JadxRuntimeException: Can't remove SSA var: r0v1 com.vk.api.generated.shortVideo.dto.ShortVideoRecomFeedItemDto$ShortVideoFeedItemShortVideoFloatingAdDto$TypeDto[], still in use, count: 1, list:
+          (r0v1 com.vk.api.generated.shortVideo.dto.ShortVideoRecomFeedItemDto$ShortVideoFeedItemShortVideoFloatingAdDto$TypeDto[]) from 0x0015: CONSTRUCTOR 
+          (r0v1 com.vk.api.generated.shortVideo.dto.ShortVideoRecomFeedItemDto$ShortVideoFeedItemShortVideoFloatingAdDto$TypeDto[])
+         A[MD:(T extends java.lang.Enum<T>[]):void (m), WRAPPED] (LINE:22) call: n07.b.<init>(java.lang.Enum[]):void type: CONSTRUCTOR
+        	at jadx.core.utils.InsnRemover.removeSsaVar(InsnRemover.java:164)
+        	at jadx.core.utils.InsnRemover.unbindResult(InsnRemover.java:129)
+        	at jadx.core.utils.InsnRemover.lambda$unbindInsns$1(InsnRemover.java:101)
+        	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)
+        	at jadx.core.utils.InsnRemover.unbindInsns(InsnRemover.java:100)
+        	at jadx.core.utils.InsnRemover.removeAllAndUnbind(InsnRemover.java:257)
+        	at jadx.core.dex.visitors.EnumVisitor.convertToEnum(EnumVisitor.java:187)
+        	at jadx.core.dex.visitors.EnumVisitor.visit(EnumVisitor.java:102)
+         */
+        /* JADX WARN: Failed to restore enum class, 'enum' modifier and super class removed */
+        /* JADX INFO: compiled from: ShortVideoRecomFeedItemDto.kt */
+        @Metadata(d1 = {"\u0000\u0014\n\u0002\u0018\u0002\n\u0002\u0018\u0002\n\u0002\u0010\u0010\n\u0002\u0010\u000e\n\u0002\b\b\b\u0087\u0081\u0002\u0018\u00002\u00020\u00012\b\u0012\u0004\u0012\u00020\u00000\u0002B\u0011\b\u0002\u0012\u0006\u0010\u0004\u001a\u00020\u0003¢\u0006\u0004\b\u0005\u0010\u0006R\u0017\u0010\u0004\u001a\u00020\u00038\u0006¢\u0006\f\n\u0004\b\u0004\u0010\u0007\u001a\u0004\b\b\u0010\tj\u0002\b\n¨\u0006\u000b"}, d2 = {"Lcom/vk/api/generated/shortVideo/dto/ShortVideoRecomFeedItemDto$ShortVideoFeedItemShortVideoFloatingAdDto$TypeDto;", "Landroid/os/Parcelable;", "", "", SignalingProtocol.KEY_VALUE, "<init>", "(Ljava/lang/String;ILjava/lang/String;)V", "Ljava/lang/String;", "getValue", "()Ljava/lang/String;", "SHORT_VIDEO_FLOATING_AD", "api-generated_release"}, k = 1, mv = {2, 0, 0}, xi = 48)
+        public static final class TypeDto implements Parcelable {
+            SHORT_VIDEO_FLOATING_AD("short_video_floating_ad");
+
+            private static final /* synthetic */ n07.a $ENTRIES;
+            public static final Parcelable.Creator<TypeDto> CREATOR = new a();
+            private final String value;
+
+            /* JADX INFO: compiled from: ShortVideoRecomFeedItemDto.kt */
+            public static final class a implements Parcelable.Creator<TypeDto> {
+                @Override // android.os.Parcelable.Creator
+                public final TypeDto createFromParcel(Parcel parcel) {
+                    return TypeDto.valueOf(parcel.readString());
+                }
+
+                @Override // android.os.Parcelable.Creator
+                public final TypeDto[] newArray(int i16) {
+                    return new TypeDto[i16];
+                }
+            }
+
+            static {
+                $ENTRIES = new n07.b(new TypeDto[]{r0});
+            }
+
+            private TypeDto(String str) {
+                super(str, i);
+                this.value = str;
+            }
+
+            public static TypeDto valueOf(String str) {
+                return (TypeDto) Enum.valueOf(TypeDto.class, str);
+            }
+
+            public static TypeDto[] values() {
+                return (TypeDto[]) $VALUES.clone();
+            }
+
+            @Override // android.os.Parcelable
+            public final int describeContents() {
+                return 0;
+            }
+
+            @Override // android.os.Parcelable
+            public final void writeToParcel(Parcel parcel, int i16) {
+                parcel.writeString(name());
+            }
+        }
+
+        /* JADX INFO: compiled from: ShortVideoRecomFeedItemDto.kt */
+        public static final class a implements Parcelable.Creator<ShortVideoFeedItemShortVideoFloatingAdDto> {
+            @Override // android.os.Parcelable.Creator
+            public final ShortVideoFeedItemShortVideoFloatingAdDto createFromParcel(Parcel parcel) {
+                return new ShortVideoFeedItemShortVideoFloatingAdDto(TypeDto.CREATOR.createFromParcel(parcel), ShortVideoFloatingAdDto.CREATOR.createFromParcel(parcel));
+            }
+
+            @Override // android.os.Parcelable.Creator
+            public final ShortVideoFeedItemShortVideoFloatingAdDto[] newArray(int i16) {
+                return new ShortVideoFeedItemShortVideoFloatingAdDto[i16];
+            }
+        }
+
+        public ShortVideoFeedItemShortVideoFloatingAdDto(TypeDto typeDto, ShortVideoFloatingAdDto shortVideoFloatingAdDto) {
+            super(null);
+            this.type = typeDto;
+            this.item = shortVideoFloatingAdDto;
+        }
+
+        /* JADX INFO: renamed from: b, reason: from getter */
+        public final ShortVideoFloatingAdDto getItem() {
+            return this.item;
+        }
+
+        @Override // android.os.Parcelable
+        public final int describeContents() {
+            return 0;
+        }
+
+        public final boolean equals(Object obj) {
+            if (this == obj) {
+                return true;
+            }
+            if (!(obj instanceof ShortVideoFeedItemShortVideoFloatingAdDto)) {
+                return false;
+            }
+            ShortVideoFeedItemShortVideoFloatingAdDto shortVideoFeedItemShortVideoFloatingAdDto = (ShortVideoFeedItemShortVideoFloatingAdDto) obj;
+            return this.type == shortVideoFeedItemShortVideoFloatingAdDto.type && kotlin.jvm.internal.h.d(this.item, shortVideoFeedItemShortVideoFloatingAdDto.item);
+        }
+
+        public final int hashCode() {
+            return this.item.hashCode() + (this.type.hashCode() * 31);
+        }
+
+        public final String toString() {
+            return "ShortVideoFeedItemShortVideoFloatingAdDto(type=" + this.type + ", item=" + this.item + ')';
+        }
+
+        @Override // android.os.Parcelable
+        public final void writeToParcel(Parcel parcel, int i16) {
+            this.type.writeToParcel(parcel, i16);
+            this.item.writeToParcel(parcel, i16);
+        }
+    }
+
+    /* JADX INFO: compiled from: ShortVideoRecomFeedItemDto.kt */
+    /* JADX INFO: loaded from: classes5.dex */
+    @Metadata(d1 = {"\u0000\u001a\n\u0002\u0018\u0002\n\u0002\u0018\u0002\n\u0002\u0018\u0002\n\u0002\u0018\u0002\n\u0000\n\u0002\u0018\u0002\n\u0002\b\u000b\b\u0087\b\u0018\u00002\u00020\u00012\u00020\u0002:\u0001\u000fB\u0017\u0012\u0006\u0010\u0004\u001a\u00020\u0003\u0012\u0006\u0010\u0006\u001a\u00020\u0005¢\u0006\u0004\b\u0007\u0010\bR\u001a\u0010\u0004\u001a\u00020\u00038\u0006X\u0087\u0004¢\u0006\f\n\u0004\b\u0004\u0010\t\u001a\u0004\b\n\u0010\u000bR\u001a\u0010\u0006\u001a\u00020\u00058\u0006X\u0087\u0004¢\u0006\f\n\u0004\b\u0006\u0010\f\u001a\u0004\b\r\u0010\u000e¨\u0006\u0010"}, d2 = {"Lcom/vk/api/generated/shortVideo/dto/ShortVideoRecomFeedItemDto$ShortVideoFeedItemShortVideoFullDto;", "Lcom/vk/api/generated/shortVideo/dto/ShortVideoRecomFeedItemDto;", "Landroid/os/Parcelable;", "Lcom/vk/api/generated/shortVideo/dto/ShortVideoRecomFeedItemDto$ShortVideoFeedItemShortVideoFullDto$TypeDto;", "type", "Lcom/vk/api/generated/shortVideo/dto/ShortVideoShortVideoFullDto;", DatabaseHelper.ITEM_COLUMN_NAME, "<init>", "(Lcom/vk/api/generated/shortVideo/dto/ShortVideoRecomFeedItemDto$ShortVideoFeedItemShortVideoFullDto$TypeDto;Lcom/vk/api/generated/shortVideo/dto/ShortVideoShortVideoFullDto;)V", "Lcom/vk/api/generated/shortVideo/dto/ShortVideoRecomFeedItemDto$ShortVideoFeedItemShortVideoFullDto$TypeDto;", "getType", "()Lcom/vk/api/generated/shortVideo/dto/ShortVideoRecomFeedItemDto$ShortVideoFeedItemShortVideoFullDto$TypeDto;", "Lcom/vk/api/generated/shortVideo/dto/ShortVideoShortVideoFullDto;", "b", "()Lcom/vk/api/generated/shortVideo/dto/ShortVideoShortVideoFullDto;", "TypeDto", "api-generated_release"}, k = 1, mv = {2, 0, 0}, xi = 48)
+    public static final /* data */ class ShortVideoFeedItemShortVideoFullDto extends ShortVideoRecomFeedItemDto implements Parcelable {
+        public static final Parcelable.Creator<ShortVideoFeedItemShortVideoFullDto> CREATOR = new a();
+
+        @b(DatabaseHelper.ITEM_COLUMN_NAME)
+        private final ShortVideoShortVideoFullDto item;
+
+        @b("type")
+        private final TypeDto type;
+
+        /* JADX WARN: Enum visitor error
+        jadx.core.utils.exceptions.JadxRuntimeException: Can't remove SSA var: r0v1 com.vk.api.generated.shortVideo.dto.ShortVideoRecomFeedItemDto$ShortVideoFeedItemShortVideoFullDto$TypeDto[], still in use, count: 1, list:
+          (r0v1 com.vk.api.generated.shortVideo.dto.ShortVideoRecomFeedItemDto$ShortVideoFeedItemShortVideoFullDto$TypeDto[]) from 0x0015: CONSTRUCTOR (r0v1 com.vk.api.generated.shortVideo.dto.ShortVideoRecomFeedItemDto$ShortVideoFeedItemShortVideoFullDto$TypeDto[]) A[MD:(T extends java.lang.Enum<T>[]):void (m), WRAPPED] (LINE:22) call: n07.b.<init>(java.lang.Enum[]):void type: CONSTRUCTOR
+        	at jadx.core.utils.InsnRemover.removeSsaVar(InsnRemover.java:164)
+        	at jadx.core.utils.InsnRemover.unbindResult(InsnRemover.java:129)
+        	at jadx.core.utils.InsnRemover.lambda$unbindInsns$1(InsnRemover.java:101)
+        	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)
+        	at jadx.core.utils.InsnRemover.unbindInsns(InsnRemover.java:100)
+        	at jadx.core.utils.InsnRemover.removeAllAndUnbind(InsnRemover.java:257)
+        	at jadx.core.dex.visitors.EnumVisitor.convertToEnum(EnumVisitor.java:187)
+        	at jadx.core.dex.visitors.EnumVisitor.visit(EnumVisitor.java:102)
+         */
+        /* JADX WARN: Failed to restore enum class, 'enum' modifier and super class removed */
+        /* JADX INFO: compiled from: ShortVideoRecomFeedItemDto.kt */
+        @Metadata(d1 = {"\u0000\u0014\n\u0002\u0018\u0002\n\u0002\u0018\u0002\n\u0002\u0010\u0010\n\u0002\u0010\u000e\n\u0002\b\b\b\u0087\u0081\u0002\u0018\u00002\u00020\u00012\b\u0012\u0004\u0012\u00020\u00000\u0002B\u0011\b\u0002\u0012\u0006\u0010\u0004\u001a\u00020\u0003¢\u0006\u0004\b\u0005\u0010\u0006R\u0017\u0010\u0004\u001a\u00020\u00038\u0006¢\u0006\f\n\u0004\b\u0004\u0010\u0007\u001a\u0004\b\b\u0010\tj\u0002\b\n¨\u0006\u000b"}, d2 = {"Lcom/vk/api/generated/shortVideo/dto/ShortVideoRecomFeedItemDto$ShortVideoFeedItemShortVideoFullDto$TypeDto;", "Landroid/os/Parcelable;", "", "", SignalingProtocol.KEY_VALUE, "<init>", "(Ljava/lang/String;ILjava/lang/String;)V", "Ljava/lang/String;", "getValue", "()Ljava/lang/String;", "SHORT_VIDEO_FULL", "api-generated_release"}, k = 1, mv = {2, 0, 0}, xi = 48)
+        public static final class TypeDto implements Parcelable {
+            SHORT_VIDEO_FULL("short_video_full");
+
+            private static final /* synthetic */ n07.a $ENTRIES;
+            public static final Parcelable.Creator<TypeDto> CREATOR = new a();
+            private final String value;
+
+            /* JADX INFO: compiled from: ShortVideoRecomFeedItemDto.kt */
+            public static final class a implements Parcelable.Creator<TypeDto> {
+                @Override // android.os.Parcelable.Creator
+                public final TypeDto createFromParcel(Parcel parcel) {
+                    return TypeDto.valueOf(parcel.readString());
+                }
+
+                @Override // android.os.Parcelable.Creator
+                public final TypeDto[] newArray(int i16) {
+                    return new TypeDto[i16];
+                }
+            }
+
+            static {
+                $ENTRIES = new n07.b(new TypeDto[]{r0});
+            }
+
+            private TypeDto(String str) {
+                super(str, i);
+                this.value = str;
+            }
+
+            public static TypeDto valueOf(String str) {
+                return (TypeDto) Enum.valueOf(TypeDto.class, str);
+            }
+
+            public static TypeDto[] values() {
+                return (TypeDto[]) $VALUES.clone();
+            }
+
+            @Override // android.os.Parcelable
+            public final int describeContents() {
+                return 0;
+            }
+
+            @Override // android.os.Parcelable
+            public final void writeToParcel(Parcel parcel, int i16) {
+                parcel.writeString(name());
+            }
+        }
+
+        /* JADX INFO: compiled from: ShortVideoRecomFeedItemDto.kt */
+        public static final class a implements Parcelable.Creator<ShortVideoFeedItemShortVideoFullDto> {
+            @Override // android.os.Parcelable.Creator
+            public final ShortVideoFeedItemShortVideoFullDto createFromParcel(Parcel parcel) {
+                return new ShortVideoFeedItemShortVideoFullDto(TypeDto.CREATOR.createFromParcel(parcel), ShortVideoShortVideoFullDto.CREATOR.createFromParcel(parcel));
+            }
+
+            @Override // android.os.Parcelable.Creator
+            public final ShortVideoFeedItemShortVideoFullDto[] newArray(int i16) {
+                return new ShortVideoFeedItemShortVideoFullDto[i16];
+            }
+        }
+
+        public ShortVideoFeedItemShortVideoFullDto(TypeDto typeDto, ShortVideoShortVideoFullDto shortVideoShortVideoFullDto) {
+            super(null);
+            this.type = typeDto;
+            this.item = shortVideoShortVideoFullDto;
+        }
+
+        /* JADX INFO: renamed from: b, reason: from getter */
+        public final ShortVideoShortVideoFullDto getItem() {
+            return this.item;
+        }
+
+        @Override // android.os.Parcelable
+        public final int describeContents() {
+            return 0;
+        }
+
+        public final boolean equals(Object obj) {
+            if (this == obj) {
+                return true;
+            }
+            if (!(obj instanceof ShortVideoFeedItemShortVideoFullDto)) {
+                return false;
+            }
+            ShortVideoFeedItemShortVideoFullDto shortVideoFeedItemShortVideoFullDto = (ShortVideoFeedItemShortVideoFullDto) obj;
+            return this.type == shortVideoFeedItemShortVideoFullDto.type && kotlin.jvm.internal.h.d(this.item, shortVideoFeedItemShortVideoFullDto.item);
+        }
+
+        public final int hashCode() {
+            return this.item.hashCode() + (this.type.hashCode() * 31);
+        }
+
+        public final String toString() {
+            return "ShortVideoFeedItemShortVideoFullDto(type=" + this.type + ", item=" + this.item + ')';
+        }
+
+        @Override // android.os.Parcelable
+        public final void writeToParcel(Parcel parcel, int i16) {
+            this.type.writeToParcel(parcel, i16);
+            this.item.writeToParcel(parcel, i16);
+        }
+    }
+
+    /* JADX INFO: compiled from: ShortVideoRecomFeedItemDto.kt */
+    /* JADX INFO: loaded from: classes5.dex */
+    @Metadata(d1 = {"\u0000\u001a\n\u0002\u0018\u0002\n\u0002\u0018\u0002\n\u0002\u0018\u0002\n\u0002\u0018\u0002\n\u0000\n\u0002\u0018\u0002\n\u0002\b\u000b\b\u0087\b\u0018\u00002\u00020\u00012\u00020\u0002:\u0001\u000fB\u0017\u0012\u0006\u0010\u0004\u001a\u00020\u0003\u0012\u0006\u0010\u0006\u001a\u00020\u0005¢\u0006\u0004\b\u0007\u0010\bR\u001a\u0010\u0004\u001a\u00020\u00038\u0006X\u0087\u0004¢\u0006\f\n\u0004\b\u0004\u0010\t\u001a\u0004\b\n\u0010\u000bR\u001a\u0010\u0006\u001a\u00020\u00058\u0006X\u0087\u0004¢\u0006\f\n\u0004\b\u0006\u0010\f\u001a\u0004\b\r\u0010\u000e¨\u0006\u0010"}, d2 = {"Lcom/vk/api/generated/shortVideo/dto/ShortVideoRecomFeedItemDto$ShortVideoFeedItemShortVideoMarketAdDto;", "Lcom/vk/api/generated/shortVideo/dto/ShortVideoRecomFeedItemDto;", "Landroid/os/Parcelable;", "Lcom/vk/api/generated/shortVideo/dto/ShortVideoRecomFeedItemDto$ShortVideoFeedItemShortVideoMarketAdDto$TypeDto;", "type", "Lcom/vk/api/generated/shortVideo/dto/ShortVideoMarketAdDto;", DatabaseHelper.ITEM_COLUMN_NAME, "<init>", "(Lcom/vk/api/generated/shortVideo/dto/ShortVideoRecomFeedItemDto$ShortVideoFeedItemShortVideoMarketAdDto$TypeDto;Lcom/vk/api/generated/shortVideo/dto/ShortVideoMarketAdDto;)V", "Lcom/vk/api/generated/shortVideo/dto/ShortVideoRecomFeedItemDto$ShortVideoFeedItemShortVideoMarketAdDto$TypeDto;", "getType", "()Lcom/vk/api/generated/shortVideo/dto/ShortVideoRecomFeedItemDto$ShortVideoFeedItemShortVideoMarketAdDto$TypeDto;", "Lcom/vk/api/generated/shortVideo/dto/ShortVideoMarketAdDto;", "b", "()Lcom/vk/api/generated/shortVideo/dto/ShortVideoMarketAdDto;", "TypeDto", "api-generated_release"}, k = 1, mv = {2, 0, 0}, xi = 48)
+    public static final /* data */ class ShortVideoFeedItemShortVideoMarketAdDto extends ShortVideoRecomFeedItemDto implements Parcelable {
+        public static final Parcelable.Creator<ShortVideoFeedItemShortVideoMarketAdDto> CREATOR = new a();
+
+        @b(DatabaseHelper.ITEM_COLUMN_NAME)
+        private final ShortVideoMarketAdDto item;
+
+        @b("type")
+        private final TypeDto type;
+
+        /* JADX WARN: Enum visitor error
+        jadx.core.utils.exceptions.JadxRuntimeException: Can't remove SSA var: r0v1 com.vk.api.generated.shortVideo.dto.ShortVideoRecomFeedItemDto$ShortVideoFeedItemShortVideoMarketAdDto$TypeDto[], still in use, count: 1, list:
+          (r0v1 com.vk.api.generated.shortVideo.dto.ShortVideoRecomFeedItemDto$ShortVideoFeedItemShortVideoMarketAdDto$TypeDto[]) from 0x0015: CONSTRUCTOR (r0v1 com.vk.api.generated.shortVideo.dto.ShortVideoRecomFeedItemDto$ShortVideoFeedItemShortVideoMarketAdDto$TypeDto[]) A[MD:(T extends java.lang.Enum<T>[]):void (m), WRAPPED] (LINE:22) call: n07.b.<init>(java.lang.Enum[]):void type: CONSTRUCTOR
+        	at jadx.core.utils.InsnRemover.removeSsaVar(InsnRemover.java:164)
+        	at jadx.core.utils.InsnRemover.unbindResult(InsnRemover.java:129)
+        	at jadx.core.utils.InsnRemover.lambda$unbindInsns$1(InsnRemover.java:101)
+        	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)
+        	at jadx.core.utils.InsnRemover.unbindInsns(InsnRemover.java:100)
+        	at jadx.core.utils.InsnRemover.removeAllAndUnbind(InsnRemover.java:257)
+        	at jadx.core.dex.visitors.EnumVisitor.convertToEnum(EnumVisitor.java:187)
+        	at jadx.core.dex.visitors.EnumVisitor.visit(EnumVisitor.java:102)
+         */
+        /* JADX WARN: Failed to restore enum class, 'enum' modifier and super class removed */
+        /* JADX INFO: compiled from: ShortVideoRecomFeedItemDto.kt */
+        @Metadata(d1 = {"\u0000\u0014\n\u0002\u0018\u0002\n\u0002\u0018\u0002\n\u0002\u0010\u0010\n\u0002\u0010\u000e\n\u0002\b\b\b\u0087\u0081\u0002\u0018\u00002\u00020\u00012\b\u0012\u0004\u0012\u00020\u00000\u0002B\u0011\b\u0002\u0012\u0006\u0010\u0004\u001a\u00020\u0003¢\u0006\u0004\b\u0005\u0010\u0006R\u0017\u0010\u0004\u001a\u00020\u00038\u0006¢\u0006\f\n\u0004\b\u0004\u0010\u0007\u001a\u0004\b\b\u0010\tj\u0002\b\n¨\u0006\u000b"}, d2 = {"Lcom/vk/api/generated/shortVideo/dto/ShortVideoRecomFeedItemDto$ShortVideoFeedItemShortVideoMarketAdDto$TypeDto;", "Landroid/os/Parcelable;", "", "", SignalingProtocol.KEY_VALUE, "<init>", "(Ljava/lang/String;ILjava/lang/String;)V", "Ljava/lang/String;", "getValue", "()Ljava/lang/String;", "SHORT_VIDEO_MARKET_AD", "api-generated_release"}, k = 1, mv = {2, 0, 0}, xi = 48)
+        public static final class TypeDto implements Parcelable {
+            SHORT_VIDEO_MARKET_AD("short_video_market_ad");
+
+            private static final /* synthetic */ n07.a $ENTRIES;
+            public static final Parcelable.Creator<TypeDto> CREATOR = new a();
+            private final String value;
+
+            /* JADX INFO: compiled from: ShortVideoRecomFeedItemDto.kt */
+            public static final class a implements Parcelable.Creator<TypeDto> {
+                @Override // android.os.Parcelable.Creator
+                public final TypeDto createFromParcel(Parcel parcel) {
+                    return TypeDto.valueOf(parcel.readString());
+                }
+
+                @Override // android.os.Parcelable.Creator
+                public final TypeDto[] newArray(int i16) {
+                    return new TypeDto[i16];
+                }
+            }
+
+            static {
+                $ENTRIES = new n07.b(new TypeDto[]{r0});
+            }
+
+            private TypeDto(String str) {
+                super(str, i);
+                this.value = str;
+            }
+
+            public static TypeDto valueOf(String str) {
+                return (TypeDto) Enum.valueOf(TypeDto.class, str);
+            }
+
+            public static TypeDto[] values() {
+                return (TypeDto[]) $VALUES.clone();
+            }
+
+            @Override // android.os.Parcelable
+            public final int describeContents() {
+                return 0;
+            }
+
+            @Override // android.os.Parcelable
+            public final void writeToParcel(Parcel parcel, int i16) {
+                parcel.writeString(name());
+            }
+        }
+
+        /* JADX INFO: compiled from: ShortVideoRecomFeedItemDto.kt */
+        public static final class a implements Parcelable.Creator<ShortVideoFeedItemShortVideoMarketAdDto> {
+            @Override // android.os.Parcelable.Creator
+            public final ShortVideoFeedItemShortVideoMarketAdDto createFromParcel(Parcel parcel) {
+                return new ShortVideoFeedItemShortVideoMarketAdDto(TypeDto.CREATOR.createFromParcel(parcel), ShortVideoMarketAdDto.CREATOR.createFromParcel(parcel));
+            }
+
+            @Override // android.os.Parcelable.Creator
+            public final ShortVideoFeedItemShortVideoMarketAdDto[] newArray(int i16) {
+                return new ShortVideoFeedItemShortVideoMarketAdDto[i16];
+            }
+        }
+
+        public ShortVideoFeedItemShortVideoMarketAdDto(TypeDto typeDto, ShortVideoMarketAdDto shortVideoMarketAdDto) {
+            super(null);
+            this.type = typeDto;
+            this.item = shortVideoMarketAdDto;
+        }
+
+        /* JADX INFO: renamed from: b, reason: from getter */
+        public final ShortVideoMarketAdDto getItem() {
+            return this.item;
+        }
+
+        @Override // android.os.Parcelable
+        public final int describeContents() {
+            return 0;
+        }
+
+        public final boolean equals(Object obj) {
+            if (this == obj) {
+                return true;
+            }
+            if (!(obj instanceof ShortVideoFeedItemShortVideoMarketAdDto)) {
+                return false;
+            }
+            ShortVideoFeedItemShortVideoMarketAdDto shortVideoFeedItemShortVideoMarketAdDto = (ShortVideoFeedItemShortVideoMarketAdDto) obj;
+            return this.type == shortVideoFeedItemShortVideoMarketAdDto.type && kotlin.jvm.internal.h.d(this.item, shortVideoFeedItemShortVideoMarketAdDto.item);
+        }
+
+        public final int hashCode() {
+            return this.item.hashCode() + (this.type.hashCode() * 31);
+        }
+
+        public final String toString() {
+            return "ShortVideoFeedItemShortVideoMarketAdDto(type=" + this.type + ", item=" + this.item + ')';
+        }
+
+        @Override // android.os.Parcelable
+        public final void writeToParcel(Parcel parcel, int i16) {
+            this.type.writeToParcel(parcel, i16);
+            this.item.writeToParcel(parcel, i16);
+        }
+    }
+
+    /* JADX INFO: compiled from: ShortVideoRecomFeedItemDto.kt */
+    /* JADX INFO: loaded from: classes5.dex */
+    @Metadata(d1 = {"\u0000\u001a\n\u0002\u0018\u0002\n\u0002\u0018\u0002\n\u0002\u0018\u0002\n\u0002\u0018\u0002\n\u0000\n\u0002\u0018\u0002\n\u0002\b\u000b\b\u0087\b\u0018\u00002\u00020\u00012\u00020\u0002:\u0001\u000fB\u0017\u0012\u0006\u0010\u0004\u001a\u00020\u0003\u0012\u0006\u0010\u0006\u001a\u00020\u0005¢\u0006\u0004\b\u0007\u0010\bR\u001a\u0010\u0004\u001a\u00020\u00038\u0006X\u0087\u0004¢\u0006\f\n\u0004\b\u0004\u0010\t\u001a\u0004\b\n\u0010\u000bR\u001a\u0010\u0006\u001a\u00020\u00058\u0006X\u0087\u0004¢\u0006\f\n\u0004\b\u0006\u0010\f\u001a\u0004\b\r\u0010\u000e¨\u0006\u0010"}, d2 = {"Lcom/vk/api/generated/shortVideo/dto/ShortVideoRecomFeedItemDto$ShortVideoFeedItemShortVideoMytargetSdkAdDto;", "Lcom/vk/api/generated/shortVideo/dto/ShortVideoRecomFeedItemDto;", "Landroid/os/Parcelable;", "Lcom/vk/api/generated/shortVideo/dto/ShortVideoRecomFeedItemDto$ShortVideoFeedItemShortVideoMytargetSdkAdDto$TypeDto;", "type", "Lcom/vk/api/generated/shortVideo/dto/ShortVideoMytargetSdkAdDto;", DatabaseHelper.ITEM_COLUMN_NAME, "<init>", "(Lcom/vk/api/generated/shortVideo/dto/ShortVideoRecomFeedItemDto$ShortVideoFeedItemShortVideoMytargetSdkAdDto$TypeDto;Lcom/vk/api/generated/shortVideo/dto/ShortVideoMytargetSdkAdDto;)V", "Lcom/vk/api/generated/shortVideo/dto/ShortVideoRecomFeedItemDto$ShortVideoFeedItemShortVideoMytargetSdkAdDto$TypeDto;", "getType", "()Lcom/vk/api/generated/shortVideo/dto/ShortVideoRecomFeedItemDto$ShortVideoFeedItemShortVideoMytargetSdkAdDto$TypeDto;", "Lcom/vk/api/generated/shortVideo/dto/ShortVideoMytargetSdkAdDto;", "getItem", "()Lcom/vk/api/generated/shortVideo/dto/ShortVideoMytargetSdkAdDto;", "TypeDto", "api-generated_release"}, k = 1, mv = {2, 0, 0}, xi = 48)
+    public static final /* data */ class ShortVideoFeedItemShortVideoMytargetSdkAdDto extends ShortVideoRecomFeedItemDto implements Parcelable {
+        public static final Parcelable.Creator<ShortVideoFeedItemShortVideoMytargetSdkAdDto> CREATOR = new a();
+
+        @b(DatabaseHelper.ITEM_COLUMN_NAME)
+        private final ShortVideoMytargetSdkAdDto item;
+
+        @b("type")
+        private final TypeDto type;
+
+        /* JADX WARN: Enum visitor error
+        jadx.core.utils.exceptions.JadxRuntimeException: Can't remove SSA var: r0v1 com.vk.api.generated.shortVideo.dto.ShortVideoRecomFeedItemDto$ShortVideoFeedItemShortVideoMytargetSdkAdDto$TypeDto[], still in use, count: 1, list:
+          (r0v1 com.vk.api.generated.shortVideo.dto.ShortVideoRecomFeedItemDto$ShortVideoFeedItemShortVideoMytargetSdkAdDto$TypeDto[]) from 0x0015: CONSTRUCTOR 
+          (r0v1 com.vk.api.generated.shortVideo.dto.ShortVideoRecomFeedItemDto$ShortVideoFeedItemShortVideoMytargetSdkAdDto$TypeDto[])
+         A[MD:(T extends java.lang.Enum<T>[]):void (m), WRAPPED] (LINE:22) call: n07.b.<init>(java.lang.Enum[]):void type: CONSTRUCTOR
+        	at jadx.core.utils.InsnRemover.removeSsaVar(InsnRemover.java:164)
+        	at jadx.core.utils.InsnRemover.unbindResult(InsnRemover.java:129)
+        	at jadx.core.utils.InsnRemover.lambda$unbindInsns$1(InsnRemover.java:101)
+        	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)
+        	at jadx.core.utils.InsnRemover.unbindInsns(InsnRemover.java:100)
+        	at jadx.core.utils.InsnRemover.removeAllAndUnbind(InsnRemover.java:257)
+        	at jadx.core.dex.visitors.EnumVisitor.convertToEnum(EnumVisitor.java:187)
+        	at jadx.core.dex.visitors.EnumVisitor.visit(EnumVisitor.java:102)
+         */
+        /* JADX WARN: Failed to restore enum class, 'enum' modifier and super class removed */
+        /* JADX INFO: compiled from: ShortVideoRecomFeedItemDto.kt */
+        @Metadata(d1 = {"\u0000\u0014\n\u0002\u0018\u0002\n\u0002\u0018\u0002\n\u0002\u0010\u0010\n\u0002\u0010\u000e\n\u0002\b\b\b\u0087\u0081\u0002\u0018\u00002\u00020\u00012\b\u0012\u0004\u0012\u00020\u00000\u0002B\u0011\b\u0002\u0012\u0006\u0010\u0004\u001a\u00020\u0003¢\u0006\u0004\b\u0005\u0010\u0006R\u0017\u0010\u0004\u001a\u00020\u00038\u0006¢\u0006\f\n\u0004\b\u0004\u0010\u0007\u001a\u0004\b\b\u0010\tj\u0002\b\n¨\u0006\u000b"}, d2 = {"Lcom/vk/api/generated/shortVideo/dto/ShortVideoRecomFeedItemDto$ShortVideoFeedItemShortVideoMytargetSdkAdDto$TypeDto;", "Landroid/os/Parcelable;", "", "", SignalingProtocol.KEY_VALUE, "<init>", "(Ljava/lang/String;ILjava/lang/String;)V", "Ljava/lang/String;", "getValue", "()Ljava/lang/String;", "SHORT_VIDEO_MYTARGET_SDK_AD", "api-generated_release"}, k = 1, mv = {2, 0, 0}, xi = 48)
+        public static final class TypeDto implements Parcelable {
+            SHORT_VIDEO_MYTARGET_SDK_AD("short_video_mytarget_sdk_ad");
+
+            private static final /* synthetic */ n07.a $ENTRIES;
+            public static final Parcelable.Creator<TypeDto> CREATOR = new a();
+            private final String value;
+
+            /* JADX INFO: compiled from: ShortVideoRecomFeedItemDto.kt */
+            public static final class a implements Parcelable.Creator<TypeDto> {
+                @Override // android.os.Parcelable.Creator
+                public final TypeDto createFromParcel(Parcel parcel) {
+                    return TypeDto.valueOf(parcel.readString());
+                }
+
+                @Override // android.os.Parcelable.Creator
+                public final TypeDto[] newArray(int i16) {
+                    return new TypeDto[i16];
+                }
+            }
+
+            static {
+                $ENTRIES = new n07.b(new TypeDto[]{r0});
+            }
+
+            private TypeDto(String str) {
+                super(str, i);
+                this.value = str;
+            }
+
+            public static TypeDto valueOf(String str) {
+                return (TypeDto) Enum.valueOf(TypeDto.class, str);
+            }
+
+            public static TypeDto[] values() {
+                return (TypeDto[]) $VALUES.clone();
+            }
+
+            @Override // android.os.Parcelable
+            public final int describeContents() {
+                return 0;
+            }
+
+            @Override // android.os.Parcelable
+            public final void writeToParcel(Parcel parcel, int i16) {
+                parcel.writeString(name());
+            }
+        }
+
+        /* JADX INFO: compiled from: ShortVideoRecomFeedItemDto.kt */
+        public static final class a implements Parcelable.Creator<ShortVideoFeedItemShortVideoMytargetSdkAdDto> {
+            @Override // android.os.Parcelable.Creator
+            public final ShortVideoFeedItemShortVideoMytargetSdkAdDto createFromParcel(Parcel parcel) {
+                return new ShortVideoFeedItemShortVideoMytargetSdkAdDto(TypeDto.CREATOR.createFromParcel(parcel), ShortVideoMytargetSdkAdDto.CREATOR.createFromParcel(parcel));
+            }
+
+            @Override // android.os.Parcelable.Creator
+            public final ShortVideoFeedItemShortVideoMytargetSdkAdDto[] newArray(int i16) {
+                return new ShortVideoFeedItemShortVideoMytargetSdkAdDto[i16];
+            }
+        }
+
+        public ShortVideoFeedItemShortVideoMytargetSdkAdDto(TypeDto typeDto, ShortVideoMytargetSdkAdDto shortVideoMytargetSdkAdDto) {
+            super(null);
+            this.type = typeDto;
+            this.item = shortVideoMytargetSdkAdDto;
+        }
+
+        @Override // android.os.Parcelable
+        public final int describeContents() {
+            return 0;
+        }
+
+        public final boolean equals(Object obj) {
+            if (this == obj) {
+                return true;
+            }
+            if (!(obj instanceof ShortVideoFeedItemShortVideoMytargetSdkAdDto)) {
+                return false;
+            }
+            ShortVideoFeedItemShortVideoMytargetSdkAdDto shortVideoFeedItemShortVideoMytargetSdkAdDto = (ShortVideoFeedItemShortVideoMytargetSdkAdDto) obj;
+            return this.type == shortVideoFeedItemShortVideoMytargetSdkAdDto.type && kotlin.jvm.internal.h.d(this.item, shortVideoFeedItemShortVideoMytargetSdkAdDto.item);
+        }
+
+        public final int hashCode() {
+            return this.item.hashCode() + (this.type.hashCode() * 31);
+        }
+
+        public final String toString() {
+            return "ShortVideoFeedItemShortVideoMytargetSdkAdDto(type=" + this.type + ", item=" + this.item + ')';
+        }
+
+        @Override // android.os.Parcelable
+        public final void writeToParcel(Parcel parcel, int i16) {
+            this.type.writeToParcel(parcel, i16);
+            this.item.writeToParcel(parcel, i16);
+        }
+    }
+
+    /* JADX INFO: compiled from: ShortVideoRecomFeedItemDto.kt */
+    /* JADX INFO: loaded from: classes5.dex */
+    @Metadata(d1 = {"\u0000\u001a\n\u0002\u0018\u0002\n\u0002\u0018\u0002\n\u0002\u0018\u0002\n\u0002\u0018\u0002\n\u0000\n\u0002\u0018\u0002\n\u0002\b\u000b\b\u0087\b\u0018\u00002\u00020\u00012\u00020\u0002:\u0001\u000fB\u0017\u0012\u0006\u0010\u0004\u001a\u00020\u0003\u0012\u0006\u0010\u0006\u001a\u00020\u0005¢\u0006\u0004\b\u0007\u0010\bR\u001a\u0010\u0004\u001a\u00020\u00038\u0006X\u0087\u0004¢\u0006\f\n\u0004\b\u0004\u0010\t\u001a\u0004\b\n\u0010\u000bR\u001a\u0010\u0006\u001a\u00020\u00058\u0006X\u0087\u0004¢\u0006\f\n\u0004\b\u0006\u0010\f\u001a\u0004\b\r\u0010\u000e¨\u0006\u0010"}, d2 = {"Lcom/vk/api/generated/shortVideo/dto/ShortVideoRecomFeedItemDto$ShortVideoFeedItemShortVideoMytargetSdkCarouselDto;", "Lcom/vk/api/generated/shortVideo/dto/ShortVideoRecomFeedItemDto;", "Landroid/os/Parcelable;", "Lcom/vk/api/generated/shortVideo/dto/ShortVideoRecomFeedItemDto$ShortVideoFeedItemShortVideoMytargetSdkCarouselDto$TypeDto;", "type", "Lcom/vk/api/generated/shortVideo/dto/ShortVideoMytargetSdkCarouselDto;", DatabaseHelper.ITEM_COLUMN_NAME, "<init>", "(Lcom/vk/api/generated/shortVideo/dto/ShortVideoRecomFeedItemDto$ShortVideoFeedItemShortVideoMytargetSdkCarouselDto$TypeDto;Lcom/vk/api/generated/shortVideo/dto/ShortVideoMytargetSdkCarouselDto;)V", "Lcom/vk/api/generated/shortVideo/dto/ShortVideoRecomFeedItemDto$ShortVideoFeedItemShortVideoMytargetSdkCarouselDto$TypeDto;", "getType", "()Lcom/vk/api/generated/shortVideo/dto/ShortVideoRecomFeedItemDto$ShortVideoFeedItemShortVideoMytargetSdkCarouselDto$TypeDto;", "Lcom/vk/api/generated/shortVideo/dto/ShortVideoMytargetSdkCarouselDto;", "b", "()Lcom/vk/api/generated/shortVideo/dto/ShortVideoMytargetSdkCarouselDto;", "TypeDto", "api-generated_release"}, k = 1, mv = {2, 0, 0}, xi = 48)
+    public static final /* data */ class ShortVideoFeedItemShortVideoMytargetSdkCarouselDto extends ShortVideoRecomFeedItemDto implements Parcelable {
+        public static final Parcelable.Creator<ShortVideoFeedItemShortVideoMytargetSdkCarouselDto> CREATOR = new a();
+
+        @b(DatabaseHelper.ITEM_COLUMN_NAME)
+        private final ShortVideoMytargetSdkCarouselDto item;
+
+        @b("type")
+        private final TypeDto type;
+
+        /* JADX WARN: Enum visitor error
+        jadx.core.utils.exceptions.JadxRuntimeException: Can't remove SSA var: r0v1 com.vk.api.generated.shortVideo.dto.ShortVideoRecomFeedItemDto$ShortVideoFeedItemShortVideoMytargetSdkCarouselDto$TypeDto[], still in use, count: 1, list:
+          (r0v1 com.vk.api.generated.shortVideo.dto.ShortVideoRecomFeedItemDto$ShortVideoFeedItemShortVideoMytargetSdkCarouselDto$TypeDto[]) from 0x0015: CONSTRUCTOR 
+          (r0v1 com.vk.api.generated.shortVideo.dto.ShortVideoRecomFeedItemDto$ShortVideoFeedItemShortVideoMytargetSdkCarouselDto$TypeDto[])
+         A[MD:(T extends java.lang.Enum<T>[]):void (m), WRAPPED] (LINE:22) call: n07.b.<init>(java.lang.Enum[]):void type: CONSTRUCTOR
+        	at jadx.core.utils.InsnRemover.removeSsaVar(InsnRemover.java:164)
+        	at jadx.core.utils.InsnRemover.unbindResult(InsnRemover.java:129)
+        	at jadx.core.utils.InsnRemover.lambda$unbindInsns$1(InsnRemover.java:101)
+        	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)
+        	at jadx.core.utils.InsnRemover.unbindInsns(InsnRemover.java:100)
+        	at jadx.core.utils.InsnRemover.removeAllAndUnbind(InsnRemover.java:257)
+        	at jadx.core.dex.visitors.EnumVisitor.convertToEnum(EnumVisitor.java:187)
+        	at jadx.core.dex.visitors.EnumVisitor.visit(EnumVisitor.java:102)
+         */
+        /* JADX WARN: Failed to restore enum class, 'enum' modifier and super class removed */
+        /* JADX INFO: compiled from: ShortVideoRecomFeedItemDto.kt */
+        @Metadata(d1 = {"\u0000\u0014\n\u0002\u0018\u0002\n\u0002\u0018\u0002\n\u0002\u0010\u0010\n\u0002\u0010\u000e\n\u0002\b\b\b\u0087\u0081\u0002\u0018\u00002\u00020\u00012\b\u0012\u0004\u0012\u00020\u00000\u0002B\u0011\b\u0002\u0012\u0006\u0010\u0004\u001a\u00020\u0003¢\u0006\u0004\b\u0005\u0010\u0006R\u0017\u0010\u0004\u001a\u00020\u00038\u0006¢\u0006\f\n\u0004\b\u0004\u0010\u0007\u001a\u0004\b\b\u0010\tj\u0002\b\n¨\u0006\u000b"}, d2 = {"Lcom/vk/api/generated/shortVideo/dto/ShortVideoRecomFeedItemDto$ShortVideoFeedItemShortVideoMytargetSdkCarouselDto$TypeDto;", "Landroid/os/Parcelable;", "", "", SignalingProtocol.KEY_VALUE, "<init>", "(Ljava/lang/String;ILjava/lang/String;)V", "Ljava/lang/String;", "getValue", "()Ljava/lang/String;", "SHORT_VIDEO_MYTARGET_SDK_CAROUSEL", "api-generated_release"}, k = 1, mv = {2, 0, 0}, xi = 48)
+        public static final class TypeDto implements Parcelable {
+            SHORT_VIDEO_MYTARGET_SDK_CAROUSEL("short_video_mytarget_sdk_carousel");
+
+            private static final /* synthetic */ n07.a $ENTRIES;
+            public static final Parcelable.Creator<TypeDto> CREATOR = new a();
+            private final String value;
+
+            /* JADX INFO: compiled from: ShortVideoRecomFeedItemDto.kt */
+            public static final class a implements Parcelable.Creator<TypeDto> {
+                @Override // android.os.Parcelable.Creator
+                public final TypeDto createFromParcel(Parcel parcel) {
+                    return TypeDto.valueOf(parcel.readString());
+                }
+
+                @Override // android.os.Parcelable.Creator
+                public final TypeDto[] newArray(int i16) {
+                    return new TypeDto[i16];
+                }
+            }
+
+            static {
+                $ENTRIES = new n07.b(new TypeDto[]{r0});
+            }
+
+            private TypeDto(String str) {
+                super(str, i);
+                this.value = str;
+            }
+
+            public static TypeDto valueOf(String str) {
+                return (TypeDto) Enum.valueOf(TypeDto.class, str);
+            }
+
+            public static TypeDto[] values() {
+                return (TypeDto[]) $VALUES.clone();
+            }
+
+            @Override // android.os.Parcelable
+            public final int describeContents() {
+                return 0;
+            }
+
+            @Override // android.os.Parcelable
+            public final void writeToParcel(Parcel parcel, int i16) {
+                parcel.writeString(name());
+            }
+        }
+
+        /* JADX INFO: compiled from: ShortVideoRecomFeedItemDto.kt */
+        public static final class a implements Parcelable.Creator<ShortVideoFeedItemShortVideoMytargetSdkCarouselDto> {
+            @Override // android.os.Parcelable.Creator
+            public final ShortVideoFeedItemShortVideoMytargetSdkCarouselDto createFromParcel(Parcel parcel) {
+                return new ShortVideoFeedItemShortVideoMytargetSdkCarouselDto(TypeDto.CREATOR.createFromParcel(parcel), ShortVideoMytargetSdkCarouselDto.CREATOR.createFromParcel(parcel));
+            }
+
+            @Override // android.os.Parcelable.Creator
+            public final ShortVideoFeedItemShortVideoMytargetSdkCarouselDto[] newArray(int i16) {
+                return new ShortVideoFeedItemShortVideoMytargetSdkCarouselDto[i16];
+            }
+        }
+
+        public ShortVideoFeedItemShortVideoMytargetSdkCarouselDto(TypeDto typeDto, ShortVideoMytargetSdkCarouselDto shortVideoMytargetSdkCarouselDto) {
+            super(null);
+            this.type = typeDto;
+            this.item = shortVideoMytargetSdkCarouselDto;
+        }
+
+        /* JADX INFO: renamed from: b, reason: from getter */
+        public final ShortVideoMytargetSdkCarouselDto getItem() {
+            return this.item;
+        }
+
+        @Override // android.os.Parcelable
+        public final int describeContents() {
+            return 0;
+        }
+
+        public final boolean equals(Object obj) {
+            if (this == obj) {
+                return true;
+            }
+            if (!(obj instanceof ShortVideoFeedItemShortVideoMytargetSdkCarouselDto)) {
+                return false;
+            }
+            ShortVideoFeedItemShortVideoMytargetSdkCarouselDto shortVideoFeedItemShortVideoMytargetSdkCarouselDto = (ShortVideoFeedItemShortVideoMytargetSdkCarouselDto) obj;
+            return this.type == shortVideoFeedItemShortVideoMytargetSdkCarouselDto.type && kotlin.jvm.internal.h.d(this.item, shortVideoFeedItemShortVideoMytargetSdkCarouselDto.item);
+        }
+
+        public final int hashCode() {
+            return this.item.hashCode() + (this.type.hashCode() * 31);
+        }
+
+        public final String toString() {
+            return "ShortVideoFeedItemShortVideoMytargetSdkCarouselDto(type=" + this.type + ", item=" + this.item + ')';
+        }
+
+        @Override // android.os.Parcelable
+        public final void writeToParcel(Parcel parcel, int i16) {
+            this.type.writeToParcel(parcel, i16);
+            this.item.writeToParcel(parcel, i16);
+        }
+    }
+
+    /* JADX INFO: compiled from: ShortVideoRecomFeedItemDto.kt */
+    /* JADX INFO: loaded from: classes5.dex */
+    @Metadata(d1 = {"\u0000\u001a\n\u0002\u0018\u0002\n\u0002\u0018\u0002\n\u0002\u0018\u0002\n\u0002\u0018\u0002\n\u0000\n\u0002\u0018\u0002\n\u0002\b\u000b\b\u0087\b\u0018\u00002\u00020\u00012\u00020\u0002:\u0001\u000fB\u0017\u0012\u0006\u0010\u0004\u001a\u00020\u0003\u0012\u0006\u0010\u0006\u001a\u00020\u0005¢\u0006\u0004\b\u0007\u0010\bR\u001a\u0010\u0004\u001a\u00020\u00038\u0006X\u0087\u0004¢\u0006\f\n\u0004\b\u0004\u0010\t\u001a\u0004\b\n\u0010\u000bR\u001a\u0010\u0006\u001a\u00020\u00058\u0006X\u0087\u0004¢\u0006\f\n\u0004\b\u0006\u0010\f\u001a\u0004\b\r\u0010\u000e¨\u0006\u0010"}, d2 = {"Lcom/vk/api/generated/shortVideo/dto/ShortVideoRecomFeedItemDto$ShortVideoFeedItemShortVideoMytargetSdkPromoDto;", "Lcom/vk/api/generated/shortVideo/dto/ShortVideoRecomFeedItemDto;", "Landroid/os/Parcelable;", "Lcom/vk/api/generated/shortVideo/dto/ShortVideoRecomFeedItemDto$ShortVideoFeedItemShortVideoMytargetSdkPromoDto$TypeDto;", "type", "Lcom/vk/api/generated/shortVideo/dto/ShortVideoMytargetSdkPromoDto;", DatabaseHelper.ITEM_COLUMN_NAME, "<init>", "(Lcom/vk/api/generated/shortVideo/dto/ShortVideoRecomFeedItemDto$ShortVideoFeedItemShortVideoMytargetSdkPromoDto$TypeDto;Lcom/vk/api/generated/shortVideo/dto/ShortVideoMytargetSdkPromoDto;)V", "Lcom/vk/api/generated/shortVideo/dto/ShortVideoRecomFeedItemDto$ShortVideoFeedItemShortVideoMytargetSdkPromoDto$TypeDto;", "getType", "()Lcom/vk/api/generated/shortVideo/dto/ShortVideoRecomFeedItemDto$ShortVideoFeedItemShortVideoMytargetSdkPromoDto$TypeDto;", "Lcom/vk/api/generated/shortVideo/dto/ShortVideoMytargetSdkPromoDto;", "b", "()Lcom/vk/api/generated/shortVideo/dto/ShortVideoMytargetSdkPromoDto;", "TypeDto", "api-generated_release"}, k = 1, mv = {2, 0, 0}, xi = 48)
+    public static final /* data */ class ShortVideoFeedItemShortVideoMytargetSdkPromoDto extends ShortVideoRecomFeedItemDto implements Parcelable {
+        public static final Parcelable.Creator<ShortVideoFeedItemShortVideoMytargetSdkPromoDto> CREATOR = new a();
+
+        @b(DatabaseHelper.ITEM_COLUMN_NAME)
+        private final ShortVideoMytargetSdkPromoDto item;
+
+        @b("type")
+        private final TypeDto type;
+
+        /* JADX WARN: Enum visitor error
+        jadx.core.utils.exceptions.JadxRuntimeException: Can't remove SSA var: r0v1 com.vk.api.generated.shortVideo.dto.ShortVideoRecomFeedItemDto$ShortVideoFeedItemShortVideoMytargetSdkPromoDto$TypeDto[], still in use, count: 1, list:
+          (r0v1 com.vk.api.generated.shortVideo.dto.ShortVideoRecomFeedItemDto$ShortVideoFeedItemShortVideoMytargetSdkPromoDto$TypeDto[]) from 0x0015: CONSTRUCTOR 
+          (r0v1 com.vk.api.generated.shortVideo.dto.ShortVideoRecomFeedItemDto$ShortVideoFeedItemShortVideoMytargetSdkPromoDto$TypeDto[])
+         A[MD:(T extends java.lang.Enum<T>[]):void (m), WRAPPED] (LINE:22) call: n07.b.<init>(java.lang.Enum[]):void type: CONSTRUCTOR
+        	at jadx.core.utils.InsnRemover.removeSsaVar(InsnRemover.java:164)
+        	at jadx.core.utils.InsnRemover.unbindResult(InsnRemover.java:129)
+        	at jadx.core.utils.InsnRemover.lambda$unbindInsns$1(InsnRemover.java:101)
+        	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)
+        	at jadx.core.utils.InsnRemover.unbindInsns(InsnRemover.java:100)
+        	at jadx.core.utils.InsnRemover.removeAllAndUnbind(InsnRemover.java:257)
+        	at jadx.core.dex.visitors.EnumVisitor.convertToEnum(EnumVisitor.java:187)
+        	at jadx.core.dex.visitors.EnumVisitor.visit(EnumVisitor.java:102)
+         */
+        /* JADX WARN: Failed to restore enum class, 'enum' modifier and super class removed */
+        /* JADX INFO: compiled from: ShortVideoRecomFeedItemDto.kt */
+        @Metadata(d1 = {"\u0000\u0014\n\u0002\u0018\u0002\n\u0002\u0018\u0002\n\u0002\u0010\u0010\n\u0002\u0010\u000e\n\u0002\b\b\b\u0087\u0081\u0002\u0018\u00002\u00020\u00012\b\u0012\u0004\u0012\u00020\u00000\u0002B\u0011\b\u0002\u0012\u0006\u0010\u0004\u001a\u00020\u0003¢\u0006\u0004\b\u0005\u0010\u0006R\u0017\u0010\u0004\u001a\u00020\u00038\u0006¢\u0006\f\n\u0004\b\u0004\u0010\u0007\u001a\u0004\b\b\u0010\tj\u0002\b\n¨\u0006\u000b"}, d2 = {"Lcom/vk/api/generated/shortVideo/dto/ShortVideoRecomFeedItemDto$ShortVideoFeedItemShortVideoMytargetSdkPromoDto$TypeDto;", "Landroid/os/Parcelable;", "", "", SignalingProtocol.KEY_VALUE, "<init>", "(Ljava/lang/String;ILjava/lang/String;)V", "Ljava/lang/String;", "getValue", "()Ljava/lang/String;", "SHORT_VIDEO_MYTARGET_SDK_PROMO", "api-generated_release"}, k = 1, mv = {2, 0, 0}, xi = 48)
+        public static final class TypeDto implements Parcelable {
+            SHORT_VIDEO_MYTARGET_SDK_PROMO("short_video_mytarget_sdk_promo");
+
+            private static final /* synthetic */ n07.a $ENTRIES;
+            public static final Parcelable.Creator<TypeDto> CREATOR = new a();
+            private final String value;
+
+            /* JADX INFO: compiled from: ShortVideoRecomFeedItemDto.kt */
+            public static final class a implements Parcelable.Creator<TypeDto> {
+                @Override // android.os.Parcelable.Creator
+                public final TypeDto createFromParcel(Parcel parcel) {
+                    return TypeDto.valueOf(parcel.readString());
+                }
+
+                @Override // android.os.Parcelable.Creator
+                public final TypeDto[] newArray(int i16) {
+                    return new TypeDto[i16];
+                }
+            }
+
+            static {
+                $ENTRIES = new n07.b(new TypeDto[]{r0});
+            }
+
+            private TypeDto(String str) {
+                super(str, i);
+                this.value = str;
+            }
+
+            public static TypeDto valueOf(String str) {
+                return (TypeDto) Enum.valueOf(TypeDto.class, str);
+            }
+
+            public static TypeDto[] values() {
+                return (TypeDto[]) $VALUES.clone();
+            }
+
+            @Override // android.os.Parcelable
+            public final int describeContents() {
+                return 0;
+            }
+
+            @Override // android.os.Parcelable
+            public final void writeToParcel(Parcel parcel, int i16) {
+                parcel.writeString(name());
+            }
+        }
+
+        /* JADX INFO: compiled from: ShortVideoRecomFeedItemDto.kt */
+        public static final class a implements Parcelable.Creator<ShortVideoFeedItemShortVideoMytargetSdkPromoDto> {
+            @Override // android.os.Parcelable.Creator
+            public final ShortVideoFeedItemShortVideoMytargetSdkPromoDto createFromParcel(Parcel parcel) {
+                return new ShortVideoFeedItemShortVideoMytargetSdkPromoDto(TypeDto.CREATOR.createFromParcel(parcel), ShortVideoMytargetSdkPromoDto.CREATOR.createFromParcel(parcel));
+            }
+
+            @Override // android.os.Parcelable.Creator
+            public final ShortVideoFeedItemShortVideoMytargetSdkPromoDto[] newArray(int i16) {
+                return new ShortVideoFeedItemShortVideoMytargetSdkPromoDto[i16];
+            }
+        }
+
+        public ShortVideoFeedItemShortVideoMytargetSdkPromoDto(TypeDto typeDto, ShortVideoMytargetSdkPromoDto shortVideoMytargetSdkPromoDto) {
+            super(null);
+            this.type = typeDto;
+            this.item = shortVideoMytargetSdkPromoDto;
+        }
+
+        /* JADX INFO: renamed from: b, reason: from getter */
+        public final ShortVideoMytargetSdkPromoDto getItem() {
+            return this.item;
+        }
+
+        @Override // android.os.Parcelable
+        public final int describeContents() {
+            return 0;
+        }
+
+        public final boolean equals(Object obj) {
+            if (this == obj) {
+                return true;
+            }
+            if (!(obj instanceof ShortVideoFeedItemShortVideoMytargetSdkPromoDto)) {
+                return false;
+            }
+            ShortVideoFeedItemShortVideoMytargetSdkPromoDto shortVideoFeedItemShortVideoMytargetSdkPromoDto = (ShortVideoFeedItemShortVideoMytargetSdkPromoDto) obj;
+            return this.type == shortVideoFeedItemShortVideoMytargetSdkPromoDto.type && kotlin.jvm.internal.h.d(this.item, shortVideoFeedItemShortVideoMytargetSdkPromoDto.item);
+        }
+
+        public final int hashCode() {
+            return this.item.hashCode() + (this.type.hashCode() * 31);
+        }
+
+        public final String toString() {
+            return "ShortVideoFeedItemShortVideoMytargetSdkPromoDto(type=" + this.type + ", item=" + this.item + ')';
+        }
+
+        @Override // android.os.Parcelable
+        public final void writeToParcel(Parcel parcel, int i16) {
+            this.type.writeToParcel(parcel, i16);
+            this.item.writeToParcel(parcel, i16);
+        }
+    }
+
+    /* JADX INFO: compiled from: ShortVideoRecomFeedItemDto.kt */
+    /* JADX INFO: loaded from: classes5.dex */
+    @Metadata(d1 = {"\u0000\u001a\n\u0002\u0018\u0002\n\u0002\u0018\u0002\n\u0002\u0018\u0002\n\u0002\u0018\u0002\n\u0000\n\u0002\u0018\u0002\n\u0002\b\u000b\b\u0087\b\u0018\u00002\u00020\u00012\u00020\u0002:\u0001\u000fB\u0017\u0012\u0006\u0010\u0004\u001a\u00020\u0003\u0012\u0006\u0010\u0006\u001a\u00020\u0005¢\u0006\u0004\b\u0007\u0010\bR\u001a\u0010\u0004\u001a\u00020\u00038\u0006X\u0087\u0004¢\u0006\f\n\u0004\b\u0004\u0010\t\u001a\u0004\b\n\u0010\u000bR\u001a\u0010\u0006\u001a\u00020\u00058\u0006X\u0087\u0004¢\u0006\f\n\u0004\b\u0006\u0010\f\u001a\u0004\b\r\u0010\u000e¨\u0006\u0010"}, d2 = {"Lcom/vk/api/generated/shortVideo/dto/ShortVideoRecomFeedItemDto$ShortVideoFeedItemShortVideoMytargetSdkStaticDto;", "Lcom/vk/api/generated/shortVideo/dto/ShortVideoRecomFeedItemDto;", "Landroid/os/Parcelable;", "Lcom/vk/api/generated/shortVideo/dto/ShortVideoRecomFeedItemDto$ShortVideoFeedItemShortVideoMytargetSdkStaticDto$TypeDto;", "type", "Lcom/vk/api/generated/shortVideo/dto/ShortVideoMytargetSdkStaticDto;", DatabaseHelper.ITEM_COLUMN_NAME, "<init>", "(Lcom/vk/api/generated/shortVideo/dto/ShortVideoRecomFeedItemDto$ShortVideoFeedItemShortVideoMytargetSdkStaticDto$TypeDto;Lcom/vk/api/generated/shortVideo/dto/ShortVideoMytargetSdkStaticDto;)V", "Lcom/vk/api/generated/shortVideo/dto/ShortVideoRecomFeedItemDto$ShortVideoFeedItemShortVideoMytargetSdkStaticDto$TypeDto;", "getType", "()Lcom/vk/api/generated/shortVideo/dto/ShortVideoRecomFeedItemDto$ShortVideoFeedItemShortVideoMytargetSdkStaticDto$TypeDto;", "Lcom/vk/api/generated/shortVideo/dto/ShortVideoMytargetSdkStaticDto;", "b", "()Lcom/vk/api/generated/shortVideo/dto/ShortVideoMytargetSdkStaticDto;", "TypeDto", "api-generated_release"}, k = 1, mv = {2, 0, 0}, xi = 48)
+    public static final /* data */ class ShortVideoFeedItemShortVideoMytargetSdkStaticDto extends ShortVideoRecomFeedItemDto implements Parcelable {
+        public static final Parcelable.Creator<ShortVideoFeedItemShortVideoMytargetSdkStaticDto> CREATOR = new a();
+
+        @b(DatabaseHelper.ITEM_COLUMN_NAME)
+        private final ShortVideoMytargetSdkStaticDto item;
+
+        @b("type")
+        private final TypeDto type;
+
+        /* JADX WARN: Enum visitor error
+        jadx.core.utils.exceptions.JadxRuntimeException: Can't remove SSA var: r0v1 com.vk.api.generated.shortVideo.dto.ShortVideoRecomFeedItemDto$ShortVideoFeedItemShortVideoMytargetSdkStaticDto$TypeDto[], still in use, count: 1, list:
+          (r0v1 com.vk.api.generated.shortVideo.dto.ShortVideoRecomFeedItemDto$ShortVideoFeedItemShortVideoMytargetSdkStaticDto$TypeDto[]) from 0x0015: CONSTRUCTOR 
+          (r0v1 com.vk.api.generated.shortVideo.dto.ShortVideoRecomFeedItemDto$ShortVideoFeedItemShortVideoMytargetSdkStaticDto$TypeDto[])
+         A[MD:(T extends java.lang.Enum<T>[]):void (m), WRAPPED] (LINE:22) call: n07.b.<init>(java.lang.Enum[]):void type: CONSTRUCTOR
+        	at jadx.core.utils.InsnRemover.removeSsaVar(InsnRemover.java:164)
+        	at jadx.core.utils.InsnRemover.unbindResult(InsnRemover.java:129)
+        	at jadx.core.utils.InsnRemover.lambda$unbindInsns$1(InsnRemover.java:101)
+        	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)
+        	at jadx.core.utils.InsnRemover.unbindInsns(InsnRemover.java:100)
+        	at jadx.core.utils.InsnRemover.removeAllAndUnbind(InsnRemover.java:257)
+        	at jadx.core.dex.visitors.EnumVisitor.convertToEnum(EnumVisitor.java:187)
+        	at jadx.core.dex.visitors.EnumVisitor.visit(EnumVisitor.java:102)
+         */
+        /* JADX WARN: Failed to restore enum class, 'enum' modifier and super class removed */
+        /* JADX INFO: compiled from: ShortVideoRecomFeedItemDto.kt */
+        @Metadata(d1 = {"\u0000\u0014\n\u0002\u0018\u0002\n\u0002\u0018\u0002\n\u0002\u0010\u0010\n\u0002\u0010\u000e\n\u0002\b\b\b\u0087\u0081\u0002\u0018\u00002\u00020\u00012\b\u0012\u0004\u0012\u00020\u00000\u0002B\u0011\b\u0002\u0012\u0006\u0010\u0004\u001a\u00020\u0003¢\u0006\u0004\b\u0005\u0010\u0006R\u0017\u0010\u0004\u001a\u00020\u00038\u0006¢\u0006\f\n\u0004\b\u0004\u0010\u0007\u001a\u0004\b\b\u0010\tj\u0002\b\n¨\u0006\u000b"}, d2 = {"Lcom/vk/api/generated/shortVideo/dto/ShortVideoRecomFeedItemDto$ShortVideoFeedItemShortVideoMytargetSdkStaticDto$TypeDto;", "Landroid/os/Parcelable;", "", "", SignalingProtocol.KEY_VALUE, "<init>", "(Ljava/lang/String;ILjava/lang/String;)V", "Ljava/lang/String;", "getValue", "()Ljava/lang/String;", "SHORT_VIDEO_MYTARGET_SDK_STATIC", "api-generated_release"}, k = 1, mv = {2, 0, 0}, xi = 48)
+        public static final class TypeDto implements Parcelable {
+            SHORT_VIDEO_MYTARGET_SDK_STATIC("short_video_mytarget_sdk_static");
+
+            private static final /* synthetic */ n07.a $ENTRIES;
+            public static final Parcelable.Creator<TypeDto> CREATOR = new a();
+            private final String value;
+
+            /* JADX INFO: compiled from: ShortVideoRecomFeedItemDto.kt */
+            public static final class a implements Parcelable.Creator<TypeDto> {
+                @Override // android.os.Parcelable.Creator
+                public final TypeDto createFromParcel(Parcel parcel) {
+                    return TypeDto.valueOf(parcel.readString());
+                }
+
+                @Override // android.os.Parcelable.Creator
+                public final TypeDto[] newArray(int i16) {
+                    return new TypeDto[i16];
+                }
+            }
+
+            static {
+                $ENTRIES = new n07.b(new TypeDto[]{r0});
+            }
+
+            private TypeDto(String str) {
+                super(str, i);
+                this.value = str;
+            }
+
+            public static TypeDto valueOf(String str) {
+                return (TypeDto) Enum.valueOf(TypeDto.class, str);
+            }
+
+            public static TypeDto[] values() {
+                return (TypeDto[]) $VALUES.clone();
+            }
+
+            @Override // android.os.Parcelable
+            public final int describeContents() {
+                return 0;
+            }
+
+            @Override // android.os.Parcelable
+            public final void writeToParcel(Parcel parcel, int i16) {
+                parcel.writeString(name());
+            }
+        }
+
+        /* JADX INFO: compiled from: ShortVideoRecomFeedItemDto.kt */
+        public static final class a implements Parcelable.Creator<ShortVideoFeedItemShortVideoMytargetSdkStaticDto> {
+            @Override // android.os.Parcelable.Creator
+            public final ShortVideoFeedItemShortVideoMytargetSdkStaticDto createFromParcel(Parcel parcel) {
+                return new ShortVideoFeedItemShortVideoMytargetSdkStaticDto(TypeDto.CREATOR.createFromParcel(parcel), ShortVideoMytargetSdkStaticDto.CREATOR.createFromParcel(parcel));
+            }
+
+            @Override // android.os.Parcelable.Creator
+            public final ShortVideoFeedItemShortVideoMytargetSdkStaticDto[] newArray(int i16) {
+                return new ShortVideoFeedItemShortVideoMytargetSdkStaticDto[i16];
+            }
+        }
+
+        public ShortVideoFeedItemShortVideoMytargetSdkStaticDto(TypeDto typeDto, ShortVideoMytargetSdkStaticDto shortVideoMytargetSdkStaticDto) {
+            super(null);
+            this.type = typeDto;
+            this.item = shortVideoMytargetSdkStaticDto;
+        }
+
+        /* JADX INFO: renamed from: b, reason: from getter */
+        public final ShortVideoMytargetSdkStaticDto getItem() {
+            return this.item;
+        }
+
+        @Override // android.os.Parcelable
+        public final int describeContents() {
+            return 0;
+        }
+
+        public final boolean equals(Object obj) {
+            if (this == obj) {
+                return true;
+            }
+            if (!(obj instanceof ShortVideoFeedItemShortVideoMytargetSdkStaticDto)) {
+                return false;
+            }
+            ShortVideoFeedItemShortVideoMytargetSdkStaticDto shortVideoFeedItemShortVideoMytargetSdkStaticDto = (ShortVideoFeedItemShortVideoMytargetSdkStaticDto) obj;
+            return this.type == shortVideoFeedItemShortVideoMytargetSdkStaticDto.type && kotlin.jvm.internal.h.d(this.item, shortVideoFeedItemShortVideoMytargetSdkStaticDto.item);
+        }
+
+        public final int hashCode() {
+            return this.item.hashCode() + (this.type.hashCode() * 31);
+        }
+
+        public final String toString() {
+            return "ShortVideoFeedItemShortVideoMytargetSdkStaticDto(type=" + this.type + ", item=" + this.item + ')';
+        }
+
+        @Override // android.os.Parcelable
+        public final void writeToParcel(Parcel parcel, int i16) {
+            this.type.writeToParcel(parcel, i16);
+            this.item.writeToParcel(parcel, i16);
+        }
+    }
+
+    /* JADX INFO: compiled from: ShortVideoRecomFeedItemDto.kt */
+    /* JADX INFO: loaded from: classes5.dex */
+    @Metadata(d1 = {"\u0000\u001a\n\u0002\u0018\u0002\n\u0002\u0018\u0002\n\u0002\u0018\u0002\n\u0002\u0018\u0002\n\u0000\n\u0002\u0018\u0002\n\u0002\b\u000b\b\u0087\b\u0018\u00002\u00020\u00012\u00020\u0002:\u0001\u000fB\u0017\u0012\u0006\u0010\u0004\u001a\u00020\u0003\u0012\u0006\u0010\u0006\u001a\u00020\u0005¢\u0006\u0004\b\u0007\u0010\bR\u001a\u0010\u0004\u001a\u00020\u00038\u0006X\u0087\u0004¢\u0006\f\n\u0004\b\u0004\u0010\t\u001a\u0004\b\n\u0010\u000bR\u001a\u0010\u0006\u001a\u00020\u00058\u0006X\u0087\u0004¢\u0006\f\n\u0004\b\u0006\u0010\f\u001a\u0004\b\r\u0010\u000e¨\u0006\u0010"}, d2 = {"Lcom/vk/api/generated/shortVideo/dto/ShortVideoRecomFeedItemDto$ShortVideoFeedItemShortVideoMytargetSdkVideoDto;", "Lcom/vk/api/generated/shortVideo/dto/ShortVideoRecomFeedItemDto;", "Landroid/os/Parcelable;", "Lcom/vk/api/generated/shortVideo/dto/ShortVideoRecomFeedItemDto$ShortVideoFeedItemShortVideoMytargetSdkVideoDto$TypeDto;", "type", "Lcom/vk/api/generated/shortVideo/dto/ShortVideoMytargetSdkVideoDto;", DatabaseHelper.ITEM_COLUMN_NAME, "<init>", "(Lcom/vk/api/generated/shortVideo/dto/ShortVideoRecomFeedItemDto$ShortVideoFeedItemShortVideoMytargetSdkVideoDto$TypeDto;Lcom/vk/api/generated/shortVideo/dto/ShortVideoMytargetSdkVideoDto;)V", "Lcom/vk/api/generated/shortVideo/dto/ShortVideoRecomFeedItemDto$ShortVideoFeedItemShortVideoMytargetSdkVideoDto$TypeDto;", "getType", "()Lcom/vk/api/generated/shortVideo/dto/ShortVideoRecomFeedItemDto$ShortVideoFeedItemShortVideoMytargetSdkVideoDto$TypeDto;", "Lcom/vk/api/generated/shortVideo/dto/ShortVideoMytargetSdkVideoDto;", "b", "()Lcom/vk/api/generated/shortVideo/dto/ShortVideoMytargetSdkVideoDto;", "TypeDto", "api-generated_release"}, k = 1, mv = {2, 0, 0}, xi = 48)
+    public static final /* data */ class ShortVideoFeedItemShortVideoMytargetSdkVideoDto extends ShortVideoRecomFeedItemDto implements Parcelable {
+        public static final Parcelable.Creator<ShortVideoFeedItemShortVideoMytargetSdkVideoDto> CREATOR = new a();
+
+        @b(DatabaseHelper.ITEM_COLUMN_NAME)
+        private final ShortVideoMytargetSdkVideoDto item;
+
+        @b("type")
+        private final TypeDto type;
+
+        /* JADX WARN: Enum visitor error
+        jadx.core.utils.exceptions.JadxRuntimeException: Can't remove SSA var: r0v1 com.vk.api.generated.shortVideo.dto.ShortVideoRecomFeedItemDto$ShortVideoFeedItemShortVideoMytargetSdkVideoDto$TypeDto[], still in use, count: 1, list:
+          (r0v1 com.vk.api.generated.shortVideo.dto.ShortVideoRecomFeedItemDto$ShortVideoFeedItemShortVideoMytargetSdkVideoDto$TypeDto[]) from 0x0015: CONSTRUCTOR 
+          (r0v1 com.vk.api.generated.shortVideo.dto.ShortVideoRecomFeedItemDto$ShortVideoFeedItemShortVideoMytargetSdkVideoDto$TypeDto[])
+         A[MD:(T extends java.lang.Enum<T>[]):void (m), WRAPPED] (LINE:22) call: n07.b.<init>(java.lang.Enum[]):void type: CONSTRUCTOR
+        	at jadx.core.utils.InsnRemover.removeSsaVar(InsnRemover.java:164)
+        	at jadx.core.utils.InsnRemover.unbindResult(InsnRemover.java:129)
+        	at jadx.core.utils.InsnRemover.lambda$unbindInsns$1(InsnRemover.java:101)
+        	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)
+        	at jadx.core.utils.InsnRemover.unbindInsns(InsnRemover.java:100)
+        	at jadx.core.utils.InsnRemover.removeAllAndUnbind(InsnRemover.java:257)
+        	at jadx.core.dex.visitors.EnumVisitor.convertToEnum(EnumVisitor.java:187)
+        	at jadx.core.dex.visitors.EnumVisitor.visit(EnumVisitor.java:102)
+         */
+        /* JADX WARN: Failed to restore enum class, 'enum' modifier and super class removed */
+        /* JADX INFO: compiled from: ShortVideoRecomFeedItemDto.kt */
+        @Metadata(d1 = {"\u0000\u0014\n\u0002\u0018\u0002\n\u0002\u0018\u0002\n\u0002\u0010\u0010\n\u0002\u0010\u000e\n\u0002\b\b\b\u0087\u0081\u0002\u0018\u00002\u00020\u00012\b\u0012\u0004\u0012\u00020\u00000\u0002B\u0011\b\u0002\u0012\u0006\u0010\u0004\u001a\u00020\u0003¢\u0006\u0004\b\u0005\u0010\u0006R\u0017\u0010\u0004\u001a\u00020\u00038\u0006¢\u0006\f\n\u0004\b\u0004\u0010\u0007\u001a\u0004\b\b\u0010\tj\u0002\b\n¨\u0006\u000b"}, d2 = {"Lcom/vk/api/generated/shortVideo/dto/ShortVideoRecomFeedItemDto$ShortVideoFeedItemShortVideoMytargetSdkVideoDto$TypeDto;", "Landroid/os/Parcelable;", "", "", SignalingProtocol.KEY_VALUE, "<init>", "(Ljava/lang/String;ILjava/lang/String;)V", "Ljava/lang/String;", "getValue", "()Ljava/lang/String;", "SHORT_VIDEO_MYTARGET_SDK_VIDEO", "api-generated_release"}, k = 1, mv = {2, 0, 0}, xi = 48)
+        public static final class TypeDto implements Parcelable {
+            SHORT_VIDEO_MYTARGET_SDK_VIDEO("short_video_mytarget_sdk_video");
+
+            private static final /* synthetic */ n07.a $ENTRIES;
+            public static final Parcelable.Creator<TypeDto> CREATOR = new a();
+            private final String value;
+
+            /* JADX INFO: compiled from: ShortVideoRecomFeedItemDto.kt */
+            public static final class a implements Parcelable.Creator<TypeDto> {
+                @Override // android.os.Parcelable.Creator
+                public final TypeDto createFromParcel(Parcel parcel) {
+                    return TypeDto.valueOf(parcel.readString());
+                }
+
+                @Override // android.os.Parcelable.Creator
+                public final TypeDto[] newArray(int i16) {
+                    return new TypeDto[i16];
+                }
+            }
+
+            static {
+                $ENTRIES = new n07.b(new TypeDto[]{r0});
+            }
+
+            private TypeDto(String str) {
+                super(str, i);
+                this.value = str;
+            }
+
+            public static TypeDto valueOf(String str) {
+                return (TypeDto) Enum.valueOf(TypeDto.class, str);
+            }
+
+            public static TypeDto[] values() {
+                return (TypeDto[]) $VALUES.clone();
+            }
+
+            @Override // android.os.Parcelable
+            public final int describeContents() {
+                return 0;
+            }
+
+            @Override // android.os.Parcelable
+            public final void writeToParcel(Parcel parcel, int i16) {
+                parcel.writeString(name());
+            }
+        }
+
+        /* JADX INFO: compiled from: ShortVideoRecomFeedItemDto.kt */
+        public static final class a implements Parcelable.Creator<ShortVideoFeedItemShortVideoMytargetSdkVideoDto> {
+            @Override // android.os.Parcelable.Creator
+            public final ShortVideoFeedItemShortVideoMytargetSdkVideoDto createFromParcel(Parcel parcel) {
+                return new ShortVideoFeedItemShortVideoMytargetSdkVideoDto(TypeDto.CREATOR.createFromParcel(parcel), ShortVideoMytargetSdkVideoDto.CREATOR.createFromParcel(parcel));
+            }
+
+            @Override // android.os.Parcelable.Creator
+            public final ShortVideoFeedItemShortVideoMytargetSdkVideoDto[] newArray(int i16) {
+                return new ShortVideoFeedItemShortVideoMytargetSdkVideoDto[i16];
+            }
+        }
+
+        public ShortVideoFeedItemShortVideoMytargetSdkVideoDto(TypeDto typeDto, ShortVideoMytargetSdkVideoDto shortVideoMytargetSdkVideoDto) {
+            super(null);
+            this.type = typeDto;
+            this.item = shortVideoMytargetSdkVideoDto;
+        }
+
+        /* JADX INFO: renamed from: b, reason: from getter */
+        public final ShortVideoMytargetSdkVideoDto getItem() {
+            return this.item;
+        }
+
+        @Override // android.os.Parcelable
+        public final int describeContents() {
+            return 0;
+        }
+
+        public final boolean equals(Object obj) {
+            if (this == obj) {
+                return true;
+            }
+            if (!(obj instanceof ShortVideoFeedItemShortVideoMytargetSdkVideoDto)) {
+                return false;
+            }
+            ShortVideoFeedItemShortVideoMytargetSdkVideoDto shortVideoFeedItemShortVideoMytargetSdkVideoDto = (ShortVideoFeedItemShortVideoMytargetSdkVideoDto) obj;
+            return this.type == shortVideoFeedItemShortVideoMytargetSdkVideoDto.type && kotlin.jvm.internal.h.d(this.item, shortVideoFeedItemShortVideoMytargetSdkVideoDto.item);
+        }
+
+        public final int hashCode() {
+            return this.item.hashCode() + (this.type.hashCode() * 31);
+        }
+
+        public final String toString() {
+            return "ShortVideoFeedItemShortVideoMytargetSdkVideoDto(type=" + this.type + ", item=" + this.item + ')';
+        }
+
+        @Override // android.os.Parcelable
+        public final void writeToParcel(Parcel parcel, int i16) {
+            this.type.writeToParcel(parcel, i16);
+            this.item.writeToParcel(parcel, i16);
+        }
+    }
+
+    /* JADX INFO: compiled from: ShortVideoRecomFeedItemDto.kt */
+    /* JADX INFO: loaded from: classes5.dex */
+    @Metadata(d1 = {"\u0000\u001a\n\u0002\u0018\u0002\n\u0002\u0018\u0002\n\u0002\u0018\u0002\n\u0002\u0018\u0002\n\u0000\n\u0002\u0018\u0002\n\u0002\b\u000b\b\u0087\b\u0018\u00002\u00020\u00012\u00020\u0002:\u0001\u000fB\u0017\u0012\u0006\u0010\u0004\u001a\u00020\u0003\u0012\u0006\u0010\u0006\u001a\u00020\u0005¢\u0006\u0004\b\u0007\u0010\bR\u001a\u0010\u0004\u001a\u00020\u00038\u0006X\u0087\u0004¢\u0006\f\n\u0004\b\u0004\u0010\t\u001a\u0004\b\n\u0010\u000bR\u001a\u0010\u0006\u001a\u00020\u00058\u0006X\u0087\u0004¢\u0006\f\n\u0004\b\u0006\u0010\f\u001a\u0004\b\r\u0010\u000e¨\u0006\u0010"}, d2 = {"Lcom/vk/api/generated/shortVideo/dto/ShortVideoRecomFeedItemDto$ShortVideoFeedItemShortVideoQuestionnaireDto;", "Lcom/vk/api/generated/shortVideo/dto/ShortVideoRecomFeedItemDto;", "Landroid/os/Parcelable;", "Lcom/vk/api/generated/shortVideo/dto/ShortVideoRecomFeedItemDto$ShortVideoFeedItemShortVideoQuestionnaireDto$TypeDto;", "type", "Lcom/vk/api/generated/shortVideo/dto/ShortVideoFeedQuestionnaireDto;", DatabaseHelper.ITEM_COLUMN_NAME, "<init>", "(Lcom/vk/api/generated/shortVideo/dto/ShortVideoRecomFeedItemDto$ShortVideoFeedItemShortVideoQuestionnaireDto$TypeDto;Lcom/vk/api/generated/shortVideo/dto/ShortVideoFeedQuestionnaireDto;)V", "Lcom/vk/api/generated/shortVideo/dto/ShortVideoRecomFeedItemDto$ShortVideoFeedItemShortVideoQuestionnaireDto$TypeDto;", "getType", "()Lcom/vk/api/generated/shortVideo/dto/ShortVideoRecomFeedItemDto$ShortVideoFeedItemShortVideoQuestionnaireDto$TypeDto;", "Lcom/vk/api/generated/shortVideo/dto/ShortVideoFeedQuestionnaireDto;", "b", "()Lcom/vk/api/generated/shortVideo/dto/ShortVideoFeedQuestionnaireDto;", "TypeDto", "api-generated_release"}, k = 1, mv = {2, 0, 0}, xi = 48)
+    public static final /* data */ class ShortVideoFeedItemShortVideoQuestionnaireDto extends ShortVideoRecomFeedItemDto implements Parcelable {
+        public static final Parcelable.Creator<ShortVideoFeedItemShortVideoQuestionnaireDto> CREATOR = new a();
+
+        @b(DatabaseHelper.ITEM_COLUMN_NAME)
+        private final ShortVideoFeedQuestionnaireDto item;
+
+        @b("type")
+        private final TypeDto type;
+
+        /* JADX WARN: Enum visitor error
+        jadx.core.utils.exceptions.JadxRuntimeException: Can't remove SSA var: r0v1 com.vk.api.generated.shortVideo.dto.ShortVideoRecomFeedItemDto$ShortVideoFeedItemShortVideoQuestionnaireDto$TypeDto[], still in use, count: 1, list:
+          (r0v1 com.vk.api.generated.shortVideo.dto.ShortVideoRecomFeedItemDto$ShortVideoFeedItemShortVideoQuestionnaireDto$TypeDto[]) from 0x0015: CONSTRUCTOR 
+          (r0v1 com.vk.api.generated.shortVideo.dto.ShortVideoRecomFeedItemDto$ShortVideoFeedItemShortVideoQuestionnaireDto$TypeDto[])
+         A[MD:(T extends java.lang.Enum<T>[]):void (m), WRAPPED] (LINE:22) call: n07.b.<init>(java.lang.Enum[]):void type: CONSTRUCTOR
+        	at jadx.core.utils.InsnRemover.removeSsaVar(InsnRemover.java:164)
+        	at jadx.core.utils.InsnRemover.unbindResult(InsnRemover.java:129)
+        	at jadx.core.utils.InsnRemover.lambda$unbindInsns$1(InsnRemover.java:101)
+        	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)
+        	at jadx.core.utils.InsnRemover.unbindInsns(InsnRemover.java:100)
+        	at jadx.core.utils.InsnRemover.removeAllAndUnbind(InsnRemover.java:257)
+        	at jadx.core.dex.visitors.EnumVisitor.convertToEnum(EnumVisitor.java:187)
+        	at jadx.core.dex.visitors.EnumVisitor.visit(EnumVisitor.java:102)
+         */
+        /* JADX WARN: Failed to restore enum class, 'enum' modifier and super class removed */
+        /* JADX INFO: compiled from: ShortVideoRecomFeedItemDto.kt */
+        @Metadata(d1 = {"\u0000\u0014\n\u0002\u0018\u0002\n\u0002\u0018\u0002\n\u0002\u0010\u0010\n\u0002\u0010\u000e\n\u0002\b\b\b\u0087\u0081\u0002\u0018\u00002\u00020\u00012\b\u0012\u0004\u0012\u00020\u00000\u0002B\u0011\b\u0002\u0012\u0006\u0010\u0004\u001a\u00020\u0003¢\u0006\u0004\b\u0005\u0010\u0006R\u0017\u0010\u0004\u001a\u00020\u00038\u0006¢\u0006\f\n\u0004\b\u0004\u0010\u0007\u001a\u0004\b\b\u0010\tj\u0002\b\n¨\u0006\u000b"}, d2 = {"Lcom/vk/api/generated/shortVideo/dto/ShortVideoRecomFeedItemDto$ShortVideoFeedItemShortVideoQuestionnaireDto$TypeDto;", "Landroid/os/Parcelable;", "", "", SignalingProtocol.KEY_VALUE, "<init>", "(Ljava/lang/String;ILjava/lang/String;)V", "Ljava/lang/String;", "getValue", "()Ljava/lang/String;", "SHORT_VIDEO_QUESTIONNAIRE", "api-generated_release"}, k = 1, mv = {2, 0, 0}, xi = 48)
+        public static final class TypeDto implements Parcelable {
+            SHORT_VIDEO_QUESTIONNAIRE("short_video_questionnaire");
+
+            private static final /* synthetic */ n07.a $ENTRIES;
+            public static final Parcelable.Creator<TypeDto> CREATOR = new a();
+            private final String value;
+
+            /* JADX INFO: compiled from: ShortVideoRecomFeedItemDto.kt */
+            public static final class a implements Parcelable.Creator<TypeDto> {
+                @Override // android.os.Parcelable.Creator
+                public final TypeDto createFromParcel(Parcel parcel) {
+                    return TypeDto.valueOf(parcel.readString());
+                }
+
+                @Override // android.os.Parcelable.Creator
+                public final TypeDto[] newArray(int i16) {
+                    return new TypeDto[i16];
+                }
+            }
+
+            static {
+                $ENTRIES = new n07.b(new TypeDto[]{r0});
+            }
+
+            private TypeDto(String str) {
+                super(str, i);
+                this.value = str;
+            }
+
+            public static TypeDto valueOf(String str) {
+                return (TypeDto) Enum.valueOf(TypeDto.class, str);
+            }
+
+            public static TypeDto[] values() {
+                return (TypeDto[]) $VALUES.clone();
+            }
+
+            @Override // android.os.Parcelable
+            public final int describeContents() {
+                return 0;
+            }
+
+            @Override // android.os.Parcelable
+            public final void writeToParcel(Parcel parcel, int i16) {
+                parcel.writeString(name());
+            }
+        }
+
+        /* JADX INFO: compiled from: ShortVideoRecomFeedItemDto.kt */
+        public static final class a implements Parcelable.Creator<ShortVideoFeedItemShortVideoQuestionnaireDto> {
+            @Override // android.os.Parcelable.Creator
+            public final ShortVideoFeedItemShortVideoQuestionnaireDto createFromParcel(Parcel parcel) {
+                return new ShortVideoFeedItemShortVideoQuestionnaireDto(TypeDto.CREATOR.createFromParcel(parcel), ShortVideoFeedQuestionnaireDto.CREATOR.createFromParcel(parcel));
+            }
+
+            @Override // android.os.Parcelable.Creator
+            public final ShortVideoFeedItemShortVideoQuestionnaireDto[] newArray(int i16) {
+                return new ShortVideoFeedItemShortVideoQuestionnaireDto[i16];
+            }
+        }
+
+        public ShortVideoFeedItemShortVideoQuestionnaireDto(TypeDto typeDto, ShortVideoFeedQuestionnaireDto shortVideoFeedQuestionnaireDto) {
+            super(null);
+            this.type = typeDto;
+            this.item = shortVideoFeedQuestionnaireDto;
+        }
+
+        /* JADX INFO: renamed from: b, reason: from getter */
+        public final ShortVideoFeedQuestionnaireDto getItem() {
+            return this.item;
+        }
+
+        @Override // android.os.Parcelable
+        public final int describeContents() {
+            return 0;
+        }
+
+        public final boolean equals(Object obj) {
+            if (this == obj) {
+                return true;
+            }
+            if (!(obj instanceof ShortVideoFeedItemShortVideoQuestionnaireDto)) {
+                return false;
+            }
+            ShortVideoFeedItemShortVideoQuestionnaireDto shortVideoFeedItemShortVideoQuestionnaireDto = (ShortVideoFeedItemShortVideoQuestionnaireDto) obj;
+            return this.type == shortVideoFeedItemShortVideoQuestionnaireDto.type && kotlin.jvm.internal.h.d(this.item, shortVideoFeedItemShortVideoQuestionnaireDto.item);
+        }
+
+        public final int hashCode() {
+            return this.item.hashCode() + (this.type.hashCode() * 31);
+        }
+
+        public final String toString() {
+            return "ShortVideoFeedItemShortVideoQuestionnaireDto(type=" + this.type + ", item=" + this.item + ')';
+        }
+
+        @Override // android.os.Parcelable
+        public final void writeToParcel(Parcel parcel, int i16) {
+            this.type.writeToParcel(parcel, i16);
+            this.item.writeToParcel(parcel, i16);
+        }
+    }
+
+    /* JADX INFO: compiled from: ShortVideoRecomFeedItemDto.kt */
+    /* JADX INFO: loaded from: classes5.dex */
+    @Metadata(d1 = {"\u0000\u001a\n\u0002\u0018\u0002\n\u0002\u0018\u0002\n\u0002\u0018\u0002\n\u0002\u0018\u0002\n\u0000\n\u0002\u0018\u0002\n\u0002\b\u000b\b\u0087\b\u0018\u00002\u00020\u00012\u00020\u0002:\u0001\u000fB\u0017\u0012\u0006\u0010\u0004\u001a\u00020\u0003\u0012\u0006\u0010\u0006\u001a\u00020\u0005¢\u0006\u0004\b\u0007\u0010\bR\u001a\u0010\u0004\u001a\u00020\u00038\u0006X\u0087\u0004¢\u0006\f\n\u0004\b\u0004\u0010\t\u001a\u0004\b\n\u0010\u000bR\u001a\u0010\u0006\u001a\u00020\u00058\u0006X\u0087\u0004¢\u0006\f\n\u0004\b\u0006\u0010\f\u001a\u0004\b\r\u0010\u000e¨\u0006\u0010"}, d2 = {"Lcom/vk/api/generated/shortVideo/dto/ShortVideoRecomFeedItemDto$ShortVideoFeedItemShortVideoStaticAdDto;", "Lcom/vk/api/generated/shortVideo/dto/ShortVideoRecomFeedItemDto;", "Landroid/os/Parcelable;", "Lcom/vk/api/generated/shortVideo/dto/ShortVideoRecomFeedItemDto$ShortVideoFeedItemShortVideoStaticAdDto$TypeDto;", "type", "Lcom/vk/api/generated/shortVideo/dto/ShortVideoStaticAdDto;", DatabaseHelper.ITEM_COLUMN_NAME, "<init>", "(Lcom/vk/api/generated/shortVideo/dto/ShortVideoRecomFeedItemDto$ShortVideoFeedItemShortVideoStaticAdDto$TypeDto;Lcom/vk/api/generated/shortVideo/dto/ShortVideoStaticAdDto;)V", "Lcom/vk/api/generated/shortVideo/dto/ShortVideoRecomFeedItemDto$ShortVideoFeedItemShortVideoStaticAdDto$TypeDto;", "getType", "()Lcom/vk/api/generated/shortVideo/dto/ShortVideoRecomFeedItemDto$ShortVideoFeedItemShortVideoStaticAdDto$TypeDto;", "Lcom/vk/api/generated/shortVideo/dto/ShortVideoStaticAdDto;", "b", "()Lcom/vk/api/generated/shortVideo/dto/ShortVideoStaticAdDto;", "TypeDto", "api-generated_release"}, k = 1, mv = {2, 0, 0}, xi = 48)
+    public static final /* data */ class ShortVideoFeedItemShortVideoStaticAdDto extends ShortVideoRecomFeedItemDto implements Parcelable {
+        public static final Parcelable.Creator<ShortVideoFeedItemShortVideoStaticAdDto> CREATOR = new a();
+
+        @b(DatabaseHelper.ITEM_COLUMN_NAME)
+        private final ShortVideoStaticAdDto item;
+
+        @b("type")
+        private final TypeDto type;
+
+        /* JADX WARN: Enum visitor error
+        jadx.core.utils.exceptions.JadxRuntimeException: Can't remove SSA var: r0v1 com.vk.api.generated.shortVideo.dto.ShortVideoRecomFeedItemDto$ShortVideoFeedItemShortVideoStaticAdDto$TypeDto[], still in use, count: 1, list:
+          (r0v1 com.vk.api.generated.shortVideo.dto.ShortVideoRecomFeedItemDto$ShortVideoFeedItemShortVideoStaticAdDto$TypeDto[]) from 0x0015: CONSTRUCTOR (r0v1 com.vk.api.generated.shortVideo.dto.ShortVideoRecomFeedItemDto$ShortVideoFeedItemShortVideoStaticAdDto$TypeDto[]) A[MD:(T extends java.lang.Enum<T>[]):void (m), WRAPPED] (LINE:22) call: n07.b.<init>(java.lang.Enum[]):void type: CONSTRUCTOR
+        	at jadx.core.utils.InsnRemover.removeSsaVar(InsnRemover.java:164)
+        	at jadx.core.utils.InsnRemover.unbindResult(InsnRemover.java:129)
+        	at jadx.core.utils.InsnRemover.lambda$unbindInsns$1(InsnRemover.java:101)
+        	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)
+        	at jadx.core.utils.InsnRemover.unbindInsns(InsnRemover.java:100)
+        	at jadx.core.utils.InsnRemover.removeAllAndUnbind(InsnRemover.java:257)
+        	at jadx.core.dex.visitors.EnumVisitor.convertToEnum(EnumVisitor.java:187)
+        	at jadx.core.dex.visitors.EnumVisitor.visit(EnumVisitor.java:102)
+         */
+        /* JADX WARN: Failed to restore enum class, 'enum' modifier and super class removed */
+        /* JADX INFO: compiled from: ShortVideoRecomFeedItemDto.kt */
+        @Metadata(d1 = {"\u0000\u0014\n\u0002\u0018\u0002\n\u0002\u0018\u0002\n\u0002\u0010\u0010\n\u0002\u0010\u000e\n\u0002\b\b\b\u0087\u0081\u0002\u0018\u00002\u00020\u00012\b\u0012\u0004\u0012\u00020\u00000\u0002B\u0011\b\u0002\u0012\u0006\u0010\u0004\u001a\u00020\u0003¢\u0006\u0004\b\u0005\u0010\u0006R\u0017\u0010\u0004\u001a\u00020\u00038\u0006¢\u0006\f\n\u0004\b\u0004\u0010\u0007\u001a\u0004\b\b\u0010\tj\u0002\b\n¨\u0006\u000b"}, d2 = {"Lcom/vk/api/generated/shortVideo/dto/ShortVideoRecomFeedItemDto$ShortVideoFeedItemShortVideoStaticAdDto$TypeDto;", "Landroid/os/Parcelable;", "", "", SignalingProtocol.KEY_VALUE, "<init>", "(Ljava/lang/String;ILjava/lang/String;)V", "Ljava/lang/String;", "getValue", "()Ljava/lang/String;", "SHORT_VIDEO_STATIC_AD", "api-generated_release"}, k = 1, mv = {2, 0, 0}, xi = 48)
+        public static final class TypeDto implements Parcelable {
+            SHORT_VIDEO_STATIC_AD("short_video_static_ad");
+
+            private static final /* synthetic */ n07.a $ENTRIES;
+            public static final Parcelable.Creator<TypeDto> CREATOR = new a();
+            private final String value;
+
+            /* JADX INFO: compiled from: ShortVideoRecomFeedItemDto.kt */
+            public static final class a implements Parcelable.Creator<TypeDto> {
+                @Override // android.os.Parcelable.Creator
+                public final TypeDto createFromParcel(Parcel parcel) {
+                    return TypeDto.valueOf(parcel.readString());
+                }
+
+                @Override // android.os.Parcelable.Creator
+                public final TypeDto[] newArray(int i16) {
+                    return new TypeDto[i16];
+                }
+            }
+
+            static {
+                $ENTRIES = new n07.b(new TypeDto[]{r0});
+            }
+
+            private TypeDto(String str) {
+                super(str, i);
+                this.value = str;
+            }
+
+            public static TypeDto valueOf(String str) {
+                return (TypeDto) Enum.valueOf(TypeDto.class, str);
+            }
+
+            public static TypeDto[] values() {
+                return (TypeDto[]) $VALUES.clone();
+            }
+
+            @Override // android.os.Parcelable
+            public final int describeContents() {
+                return 0;
+            }
+
+            @Override // android.os.Parcelable
+            public final void writeToParcel(Parcel parcel, int i16) {
+                parcel.writeString(name());
+            }
+        }
+
+        /* JADX INFO: compiled from: ShortVideoRecomFeedItemDto.kt */
+        public static final class a implements Parcelable.Creator<ShortVideoFeedItemShortVideoStaticAdDto> {
+            @Override // android.os.Parcelable.Creator
+            public final ShortVideoFeedItemShortVideoStaticAdDto createFromParcel(Parcel parcel) {
+                return new ShortVideoFeedItemShortVideoStaticAdDto(TypeDto.CREATOR.createFromParcel(parcel), ShortVideoStaticAdDto.CREATOR.createFromParcel(parcel));
+            }
+
+            @Override // android.os.Parcelable.Creator
+            public final ShortVideoFeedItemShortVideoStaticAdDto[] newArray(int i16) {
+                return new ShortVideoFeedItemShortVideoStaticAdDto[i16];
+            }
+        }
+
+        public ShortVideoFeedItemShortVideoStaticAdDto(TypeDto typeDto, ShortVideoStaticAdDto shortVideoStaticAdDto) {
+            super(null);
+            this.type = typeDto;
+            this.item = shortVideoStaticAdDto;
+        }
+
+        /* JADX INFO: renamed from: b, reason: from getter */
+        public final ShortVideoStaticAdDto getItem() {
+            return this.item;
+        }
+
+        @Override // android.os.Parcelable
+        public final int describeContents() {
+            return 0;
+        }
+
+        public final boolean equals(Object obj) {
+            if (this == obj) {
+                return true;
+            }
+            if (!(obj instanceof ShortVideoFeedItemShortVideoStaticAdDto)) {
+                return false;
+            }
+            ShortVideoFeedItemShortVideoStaticAdDto shortVideoFeedItemShortVideoStaticAdDto = (ShortVideoFeedItemShortVideoStaticAdDto) obj;
+            return this.type == shortVideoFeedItemShortVideoStaticAdDto.type && kotlin.jvm.internal.h.d(this.item, shortVideoFeedItemShortVideoStaticAdDto.item);
+        }
+
+        public final int hashCode() {
+            return this.item.hashCode() + (this.type.hashCode() * 31);
+        }
+
+        public final String toString() {
+            return "ShortVideoFeedItemShortVideoStaticAdDto(type=" + this.type + ", item=" + this.item + ')';
+        }
+
+        @Override // android.os.Parcelable
+        public final void writeToParcel(Parcel parcel, int i16) {
+            this.type.writeToParcel(parcel, i16);
+            this.item.writeToParcel(parcel, i16);
+        }
+    }
+
+    /* JADX INFO: compiled from: ShortVideoRecomFeedItemDto.kt */
+    /* JADX INFO: loaded from: classes5.dex */
+    @Metadata(d1 = {"\u0000\u001a\n\u0002\u0018\u0002\n\u0002\u0018\u0002\n\u0002\u0018\u0002\n\u0002\u0018\u0002\n\u0000\n\u0002\u0018\u0002\n\u0002\b\u000b\b\u0087\b\u0018\u00002\u00020\u00012\u00020\u0002:\u0001\u000fB\u0017\u0012\u0006\u0010\u0004\u001a\u00020\u0003\u0012\u0006\u0010\u0006\u001a\u00020\u0005¢\u0006\u0004\b\u0007\u0010\bR\u001a\u0010\u0004\u001a\u00020\u00038\u0006X\u0087\u0004¢\u0006\f\n\u0004\b\u0004\u0010\t\u001a\u0004\b\n\u0010\u000bR\u001a\u0010\u0006\u001a\u00020\u00058\u0006X\u0087\u0004¢\u0006\f\n\u0004\b\u0006\u0010\f\u001a\u0004\b\r\u0010\u000e¨\u0006\u0010"}, d2 = {"Lcom/vk/api/generated/shortVideo/dto/ShortVideoRecomFeedItemDto$ShortVideoFeedItemVideoFullDto;", "Lcom/vk/api/generated/shortVideo/dto/ShortVideoRecomFeedItemDto;", "Landroid/os/Parcelable;", "Lcom/vk/api/generated/shortVideo/dto/ShortVideoRecomFeedItemDto$ShortVideoFeedItemVideoFullDto$TypeDto;", "type", "Lcom/vk/api/generated/video/dto/VideoVideoFullDto;", DatabaseHelper.ITEM_COLUMN_NAME, "<init>", "(Lcom/vk/api/generated/shortVideo/dto/ShortVideoRecomFeedItemDto$ShortVideoFeedItemVideoFullDto$TypeDto;Lcom/vk/api/generated/video/dto/VideoVideoFullDto;)V", "Lcom/vk/api/generated/shortVideo/dto/ShortVideoRecomFeedItemDto$ShortVideoFeedItemVideoFullDto$TypeDto;", "getType", "()Lcom/vk/api/generated/shortVideo/dto/ShortVideoRecomFeedItemDto$ShortVideoFeedItemVideoFullDto$TypeDto;", "Lcom/vk/api/generated/video/dto/VideoVideoFullDto;", "b", "()Lcom/vk/api/generated/video/dto/VideoVideoFullDto;", "TypeDto", "api-generated_release"}, k = 1, mv = {2, 0, 0}, xi = 48)
+    public static final /* data */ class ShortVideoFeedItemVideoFullDto extends ShortVideoRecomFeedItemDto implements Parcelable {
+        public static final Parcelable.Creator<ShortVideoFeedItemVideoFullDto> CREATOR = new a();
+
+        @b(DatabaseHelper.ITEM_COLUMN_NAME)
+        private final VideoVideoFullDto item;
+
+        @b("type")
+        private final TypeDto type;
+
+        /* JADX WARN: Enum visitor error
+        jadx.core.utils.exceptions.JadxRuntimeException: Can't remove SSA var: r0v1 com.vk.api.generated.shortVideo.dto.ShortVideoRecomFeedItemDto$ShortVideoFeedItemVideoFullDto$TypeDto[], still in use, count: 1, list:
+          (r0v1 com.vk.api.generated.shortVideo.dto.ShortVideoRecomFeedItemDto$ShortVideoFeedItemVideoFullDto$TypeDto[]) from 0x0015: CONSTRUCTOR (r0v1 com.vk.api.generated.shortVideo.dto.ShortVideoRecomFeedItemDto$ShortVideoFeedItemVideoFullDto$TypeDto[]) A[MD:(T extends java.lang.Enum<T>[]):void (m), WRAPPED] (LINE:22) call: n07.b.<init>(java.lang.Enum[]):void type: CONSTRUCTOR
+        	at jadx.core.utils.InsnRemover.removeSsaVar(InsnRemover.java:164)
+        	at jadx.core.utils.InsnRemover.unbindResult(InsnRemover.java:129)
+        	at jadx.core.utils.InsnRemover.lambda$unbindInsns$1(InsnRemover.java:101)
+        	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)
+        	at jadx.core.utils.InsnRemover.unbindInsns(InsnRemover.java:100)
+        	at jadx.core.utils.InsnRemover.removeAllAndUnbind(InsnRemover.java:257)
+        	at jadx.core.dex.visitors.EnumVisitor.convertToEnum(EnumVisitor.java:187)
+        	at jadx.core.dex.visitors.EnumVisitor.visit(EnumVisitor.java:102)
+         */
+        /* JADX WARN: Failed to restore enum class, 'enum' modifier and super class removed */
+        /* JADX INFO: compiled from: ShortVideoRecomFeedItemDto.kt */
+        @Metadata(d1 = {"\u0000\u0014\n\u0002\u0018\u0002\n\u0002\u0018\u0002\n\u0002\u0010\u0010\n\u0002\u0010\u000e\n\u0002\b\b\b\u0087\u0081\u0002\u0018\u00002\u00020\u00012\b\u0012\u0004\u0012\u00020\u00000\u0002B\u0011\b\u0002\u0012\u0006\u0010\u0004\u001a\u00020\u0003¢\u0006\u0004\b\u0005\u0010\u0006R\u0017\u0010\u0004\u001a\u00020\u00038\u0006¢\u0006\f\n\u0004\b\u0004\u0010\u0007\u001a\u0004\b\b\u0010\tj\u0002\b\n¨\u0006\u000b"}, d2 = {"Lcom/vk/api/generated/shortVideo/dto/ShortVideoRecomFeedItemDto$ShortVideoFeedItemVideoFullDto$TypeDto;", "Landroid/os/Parcelable;", "", "", SignalingProtocol.KEY_VALUE, "<init>", "(Ljava/lang/String;ILjava/lang/String;)V", "Ljava/lang/String;", "getValue", "()Ljava/lang/String;", "SHORT_VIDEO_FULL_LEGACY", "api-generated_release"}, k = 1, mv = {2, 0, 0}, xi = 48)
+        public static final class TypeDto implements Parcelable {
+            SHORT_VIDEO_FULL_LEGACY("short_video_full_legacy");
+
+            private static final /* synthetic */ n07.a $ENTRIES;
+            public static final Parcelable.Creator<TypeDto> CREATOR = new a();
+            private final String value;
+
+            /* JADX INFO: compiled from: ShortVideoRecomFeedItemDto.kt */
+            public static final class a implements Parcelable.Creator<TypeDto> {
+                @Override // android.os.Parcelable.Creator
+                public final TypeDto createFromParcel(Parcel parcel) {
+                    return TypeDto.valueOf(parcel.readString());
+                }
+
+                @Override // android.os.Parcelable.Creator
+                public final TypeDto[] newArray(int i16) {
+                    return new TypeDto[i16];
+                }
+            }
+
+            static {
+                $ENTRIES = new n07.b(new TypeDto[]{r0});
+            }
+
+            private TypeDto(String str) {
+                super(str, i);
+                this.value = str;
+            }
+
+            public static TypeDto valueOf(String str) {
+                return (TypeDto) Enum.valueOf(TypeDto.class, str);
+            }
+
+            public static TypeDto[] values() {
+                return (TypeDto[]) $VALUES.clone();
+            }
+
+            @Override // android.os.Parcelable
+            public final int describeContents() {
+                return 0;
+            }
+
+            @Override // android.os.Parcelable
+            public final void writeToParcel(Parcel parcel, int i16) {
+                parcel.writeString(name());
+            }
+        }
+
+        /* JADX INFO: compiled from: ShortVideoRecomFeedItemDto.kt */
+        public static final class a implements Parcelable.Creator<ShortVideoFeedItemVideoFullDto> {
+            @Override // android.os.Parcelable.Creator
+            public final ShortVideoFeedItemVideoFullDto createFromParcel(Parcel parcel) {
+                return new ShortVideoFeedItemVideoFullDto(TypeDto.CREATOR.createFromParcel(parcel), (VideoVideoFullDto) parcel.readParcelable(ShortVideoFeedItemVideoFullDto.class.getClassLoader()));
+            }
+
+            @Override // android.os.Parcelable.Creator
+            public final ShortVideoFeedItemVideoFullDto[] newArray(int i16) {
+                return new ShortVideoFeedItemVideoFullDto[i16];
+            }
+        }
+
+        public ShortVideoFeedItemVideoFullDto(TypeDto typeDto, VideoVideoFullDto videoVideoFullDto) {
+            super(null);
+            this.type = typeDto;
+            this.item = videoVideoFullDto;
+        }
+
+        /* JADX INFO: renamed from: b, reason: from getter */
+        public final VideoVideoFullDto getItem() {
+            return this.item;
+        }
+
+        @Override // android.os.Parcelable
+        public final int describeContents() {
+            return 0;
+        }
+
+        public final boolean equals(Object obj) {
+            if (this == obj) {
+                return true;
+            }
+            if (!(obj instanceof ShortVideoFeedItemVideoFullDto)) {
+                return false;
+            }
+            ShortVideoFeedItemVideoFullDto shortVideoFeedItemVideoFullDto = (ShortVideoFeedItemVideoFullDto) obj;
+            return this.type == shortVideoFeedItemVideoFullDto.type && kotlin.jvm.internal.h.d(this.item, shortVideoFeedItemVideoFullDto.item);
+        }
+
+        public final int hashCode() {
+            return this.item.hashCode() + (this.type.hashCode() * 31);
+        }
+
+        public final String toString() {
+            return "ShortVideoFeedItemVideoFullDto(type=" + this.type + ", item=" + this.item + ')';
+        }
+
+        @Override // android.os.Parcelable
+        public final void writeToParcel(Parcel parcel, int i16) {
+            this.type.writeToParcel(parcel, i16);
+            parcel.writeParcelable(this.item, i16);
+        }
+    }
+
+    public /* synthetic */ ShortVideoRecomFeedItemDto(DefaultConstructorMarker defaultConstructorMarker) {
+        this();
+    }
+
+    private ShortVideoRecomFeedItemDto() {
+    }
+}
+
