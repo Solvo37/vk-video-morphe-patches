@@ -8,7 +8,6 @@ on:
 
 permissions:
   contents: write
-  packages: read
 
 concurrency:
   group: replace-vk-video-1-163
@@ -17,8 +16,9 @@ concurrency:
 env:
   PACKAGE_NAME: com.vk.vkvideo
   EXPECTED_VERSION: '1.163'
-  EXPECTED_VERSION_CODE: '51921'
-  EXPECTED_CERT_SHA256: 057d974412032066f1b5edb1fdb550f71854189815c806b27c4d486fb4f1ef32
+  EXPECTED_VERSION_CODE: '51920'
+  OLD_RELEASE_SHA256: 014063018ec150855dabfa2b3501c22f69ffec46952e761f0e58dfa1cb3e580e
+  TARGET_MAP_SHA256: 013866d3bf7a2e21c408ef61ec1ff7c5c37d22304a45af1b2319d3e7d662ab4e
   MORPHE_VERSION: v1.16.0
   MORPHE_SHA256: 82a0df2ff881d83d5ca8b4f9a6ce196bd4ac3b87ff147fe37845c296b436806c
 
@@ -37,141 +37,103 @@ jobs:
           distribution: temurin
           java-version: '21'
 
-      - name: Setup Python
-        uses: actions/setup-python@v6
-        with:
-          python-version: '3.12'
-
-      - name: Setup Gradle
-        uses: gradle/actions/setup-gradle@v6
-        with:
-          gradle-version: '9.7.1'
-
       - name: Install Android tools
         run: |
           set -euo pipefail
           sudo apt-get update
-          sudo apt-get install -y apksigner aapt zipalign jq unzip zip
-          python -m pip install --disable-pip-version-check requests selectolax
+          sudo apt-get install -y apksigner aapt zipalign unzip zip
 
-      - name: Download official VK Video 1.163 from APKMirror
+      - name: Download current 1.163 release
+        env:
+          GH_TOKEN: ${{ github.token }}
         run: |
           set -euo pipefail
-          mkdir -p upstream
+          mkdir -p work
+          gh release download 1.163             --repo "$GITHUB_REPOSITORY"             --pattern 'VK-Video-1.163-patched.apk'             --dir work
+          mv work/VK-Video-1.163-patched.apk work/old-release.apk
+
+          ACTUAL="$(sha256sum work/old-release.apk | awk '{print $1}')"
+          echo "Current release SHA-256: $ACTUAL"
+          [[ "$ACTUAL" == "$OLD_RELEASE_SHA256" ]]
+
+          BADGING="$(aapt dump badging work/old-release.apk | head -n1)"
+          echo "$BADGING"
+          grep -q "name='${PACKAGE_NAME}'" <<< "$BADGING"
+          grep -q "versionName='${EXPECTED_VERSION}'" <<< "$BADGING"
+          grep -q "versionCode='${EXPECTED_VERSION_CODE}'" <<< "$BADGING"
+
+      - name: Restore tested STRIP_FAST DEX layout
+        run: |
+          set -euo pipefail
+
+          cat tools/dex-map/part1.b64               tools/dex-map/part2.b64               tools/dex-map/part3.b64               tools/dex-map/part4.b64             | base64 -d | gzip -d > work/dex-targets.bin
+
+          echo "${TARGET_MAP_SHA256}  work/dex-targets.bin" | sha256sum -c -
+
+          curl -fL --retry 4             -o work/morphe.jar             "https://github.com/MorpheApp/morphe-desktop/releases/download/${MORPHE_VERSION}/morphe-desktop-${MORPHE_VERSION#v}-all.jar"
+          echo "${MORPHE_SHA256}  work/morphe.jar" | sha256sum -c -
+
+          mkdir -p work/tool-classes work/newdex
+          javac -cp work/morphe.jar -d work/tool-classes tools/DexRepack.java
+
+          "$JAVA_HOME/bin/java" -Xmx6g             -cp "work/morphe.jar:work/tool-classes"             DexRepack             work/old-release.apk             work/dex-targets.bin             work/newdex
+
+          test "$(find work/newdex -maxdepth 1 -name 'classes*.dex' | wc -l)" -eq 13
+          test ! -e work/newdex/classes14.dex
+
+      - name: Apply proven native signature bypass
+        run: |
+          set -euo pipefail
+          mkdir -p work/payload/lib/arm64-v8a
+
+          cp work/newdex/classes*.dex work/payload/
+          unzip -p work/old-release.apk lib/arm64-v8a/libvkcore.so             > work/payload/lib/arm64-v8a/libvkcore.so
 
           python - <<'PY'
           from pathlib import Path
-          import requests
-          from selectolax.lexbor import LexborHTMLParser
 
-          page = (
-              "https://www.apkmirror.com/apk/vk-llc/vk-video-2/"
-              "vk-video-movies-cartoons-tv-1-163-release/"
-              "vk-video-movies-cartoons-tv-1-163-2-android-apk-download/"
-          )
+          p = Path("work/payload/lib/arm64-v8a/libvkcore.so")
+          data = bytearray(p.read_bytes())
 
-          s = requests.Session()
-          s.headers.update({
-              "User-Agent": (
-                  "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 "
-                  "(KHTML, like Gecko) Chrome/143.0 Safari/537.36"
-              ),
-              "Accept-Language": "en-US,en;q=0.9",
-          })
+          original = bytes.fromhex("1f1c0072e80700f900050054")
+          patched  = bytes.fromhex("1f1c0072e80700f900040054")
 
-          r = s.get(page, timeout=30)
-          r.raise_for_status()
-          p = LexborHTMLParser(r.text)
-          button = p.css_first("a.accent_bg")
-          if button is None or not button.attributes.get("href"):
-              raise SystemExit("APKMirror: first download button not found")
+          original_count = data.count(original)
+          patched_count = data.count(patched)
+          print("native original pattern:", original_count)
+          print("native patched pattern:", patched_count)
 
-          stage2 = requests.compat.urljoin(page, button.attributes["href"])
-          r = s.get(stage2, timeout=30)
-          r.raise_for_status()
-          p = LexborHTMLParser(r.text)
-
-          # APKMirror's final page currently exposes the actual file link in
-          # the notes area. Keep a broader fallback for minor HTML changes.
-          link = p.css_first("p.notes:nth-child(3) > span:nth-child(1) > a:nth-child(1)")
-          if link is None:
-              candidates = [
-                  a for a in p.css("a")
-                  if a.attributes.get("href")
-                  and (
-                      "key=" in a.attributes["href"]
-                      or "/wp-content/" in a.attributes["href"]
-                      or "download.php" in a.attributes["href"]
-                  )
-              ]
-              link = candidates[0] if candidates else None
-
-          if link is None or not link.attributes.get("href"):
-              raise SystemExit("APKMirror: final APK link not found")
-
-          final_url = requests.compat.urljoin(stage2, link.attributes["href"])
-          print("Final APK URL resolved.")
-
-          out = Path("upstream/VK-Video-1.163-original.apk")
-          with s.get(final_url, stream=True, timeout=60) as resp:
-              resp.raise_for_status()
-              with out.open("wb") as fh:
-                  for chunk in resp.iter_content(1024 * 1024):
-                      if chunk:
-                          fh.write(chunk)
-
-          print(f"Downloaded {out.stat().st_size} bytes")
+          if original_count == 1 and patched_count == 0:
+              pos = data.index(original)
+              data[pos:pos + len(original)] = patched
+              p.write_bytes(data)
+          elif original_count == 0 and patched_count == 1:
+              pass
+          else:
+              raise SystemExit("Unexpected libvkcore signature-check pattern count")
           PY
 
-          test -s upstream/VK-Video-1.163-original.apk
-
-      - name: Verify upstream APK
-        id: verify
+      - name: Build unsigned Variant 5 payload
         run: |
           set -euo pipefail
-          APK=upstream/VK-Video-1.163-original.apk
+          cp work/old-release.apk work/variant5-unsigned.apk
 
-          BADGING="$(aapt dump badging "$APK" | head -n1)"
-          echo "$BADGING"
+          # Remove the FULL-repacked DEX set, its old JAR/v1 signature, and the unpatched native library.
+          zip -q -d work/variant5-unsigned.apk 'classes*.dex' 'META-INF/*' 'lib/arm64-v8a/libvkcore.so' || true
 
-          VERSION="$(grep -o "versionName='[^']*'" <<< "$BADGING" | head -n1 | cut -d"'" -f2)"
-          VERSION_CODE="$(grep -o "versionCode='[^']*'" <<< "$BADGING" | head -n1 | cut -d"'" -f2)"
-          PACKAGE="$(grep -o "name='[^']*'" <<< "$BADGING" | head -n1 | cut -d"'" -f2)"
+          (
+            cd work/payload
+            zip -9 -q ../variant5-unsigned.apk classes*.dex lib/arm64-v8a/libvkcore.so
+          )
 
-          CERT="$(apksigner verify --print-certs "$APK"             | sed -n 's/^Signer #1 certificate SHA-256 digest: //p'             | head -n1 | tr '[:upper:]' '[:lower:]')"
+          # The tested layout has exactly 13 dex files.
+          COUNT="$(zipinfo -1 work/variant5-unsigned.apk | grep -Ec '^classes([0-9]+)?\.dex$')"
+          echo "DEX count: $COUNT"
+          test "$COUNT" -eq 13
+          ! zipinfo -1 work/variant5-unsigned.apk | grep -q '^classes14\.dex$'
+          ! zipinfo -1 work/variant5-unsigned.apk | grep -q '^META-INF/.*\.(RSA|SF)$'
 
-          echo "Package: $PACKAGE"
-          echo "Version: $VERSION ($VERSION_CODE)"
-          echo "Certificate: $CERT"
-
-          [[ "$PACKAGE" == "$PACKAGE_NAME" ]]
-          [[ "$VERSION" == "$EXPECTED_VERSION" ]]
-          [[ "$VERSION_CODE" == "$EXPECTED_VERSION_CODE" ]]
-          [[ "$CERT" == "$EXPECTED_CERT_SHA256" ]]
-
-          sha256sum "$APK" | tee upstream/original.sha256
-
-      - name: Build Morphe patch bundle
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: gradle :patches:buildAndroid --no-daemon
-
-      - name: Download Morphe Desktop
-        run: |
-          set -euo pipefail
-          curl -fL --retry 4             -o morphe.jar             "https://github.com/MorpheApp/morphe-desktop/releases/download/${MORPHE_VERSION}/morphe-desktop-${MORPHE_VERSION#v}-all.jar"
-          echo "${MORPHE_SHA256}  morphe.jar" | sha256sum -c -
-
-      - name: Apply Variant 5 patches
-        run: |
-          set -euo pipefail
-          mkdir -p dist
-          MPP="$(find patches/build/libs -maxdepth 1 -type f -name '*.mpp' ! -name '*sources*' ! -name '*javadoc*' -print -quit)"
-          test -n "$MPP"
-
-          "$JAVA_HOME/bin/java" -jar morphe.jar patch             -p "$MPP"             --force             --exclusive             -e "Fix install conflict with stock VK"             -e "Bypass native signature check"             -e "Disable in-app update"             -e "Remove video ads"             -e "Hide promoted banner content"             -e "Disable ad pixel tracking"             --bytecode-mode STRIP_FAST             --unsigned             -r dist/patch-result.json             -o dist/unsigned.apk             upstream/VK-Video-1.163-original.apk
-
-      - name: Sign exactly like tested Variant 5
+      - name: Zipalign and v3-only sign
         env:
           STORE_PASSWORD: ${{ secrets.ANDROID_KEYSTORE_PASSWORD }}
           KEY_ALIAS: ${{ secrets.ANDROID_KEY_ALIAS }}
@@ -179,23 +141,28 @@ jobs:
         run: |
           set -euo pipefail
 
-          printf '%s' "${{ secrets.ANDROID_KEYSTORE_B64 }}" | base64 -d > signing.jks
-          test -s signing.jks
+          printf '%s' "${{ secrets.ANDROID_KEYSTORE_B64 }}" | base64 -d > work/signing.jks
+          test -s work/signing.jks
 
-          zipalign -f -p 4 dist/unsigned.apk dist/aligned.apk
+          zipalign -f -p 4 work/variant5-unsigned.apk work/variant5-aligned.apk
 
-          apksigner sign             --ks signing.jks             --ks-pass env:STORE_PASSWORD             --ks-key-alias "$KEY_ALIAS"             --key-pass env:KEY_PASSWORD             --v1-signing-enabled false             --v2-signing-enabled false             --v3-signing-enabled true             --v4-signing-enabled false             --out dist/VK-Video-1.163-patched.apk             dist/aligned.apk
+          apksigner sign             --ks work/signing.jks             --ks-pass env:STORE_PASSWORD             --ks-key-alias "$KEY_ALIAS"             --key-pass env:KEY_PASSWORD             --v1-signing-enabled false             --v2-signing-enabled false             --v3-signing-enabled true             --v4-signing-enabled false             --out work/VK-Video-1.163-patched.apk             work/variant5-aligned.apk
 
-          zipalign -c -p 4 dist/VK-Video-1.163-patched.apk
-          apksigner verify --verbose --print-certs dist/VK-Video-1.163-patched.apk
+          zipalign -c -p 4 work/VK-Video-1.163-patched.apk
 
-          BADGING="$(aapt dump badging dist/VK-Video-1.163-patched.apk | head -n1)"
+          VERIFY="$(apksigner verify --verbose --print-certs work/VK-Video-1.163-patched.apk)"
+          echo "$VERIFY"
+          grep -q 'Verified using v1 scheme (JAR signing): false' <<< "$VERIFY"
+          grep -q 'Verified using v2 scheme (APK Signature Scheme v2): false' <<< "$VERIFY"
+          grep -q 'Verified using v3 scheme (APK Signature Scheme v3): true' <<< "$VERIFY"
+
+          BADGING="$(aapt dump badging work/VK-Video-1.163-patched.apk | head -n1)"
           echo "$BADGING"
           grep -q "name='${PACKAGE_NAME}'" <<< "$BADGING"
           grep -q "versionName='${EXPECTED_VERSION}'" <<< "$BADGING"
           grep -q "versionCode='${EXPECTED_VERSION_CODE}'" <<< "$BADGING"
 
-          sha256sum dist/VK-Video-1.163-patched.apk             | tee dist/VK-Video-1.163-patched.sha256
+          sha256sum work/VK-Video-1.163-patched.apk             | tee work/VK-Video-1.163-patched.sha256
 
       - name: Replace GitHub Release asset
         env:
@@ -203,22 +170,22 @@ jobs:
         run: |
           set -euo pipefail
 
-          gh release upload 1.163             dist/VK-Video-1.163-patched.apk             dist/VK-Video-1.163-patched.sha256             dist/patch-result.json             --clobber             --repo "$GITHUB_REPOSITORY"
+          gh release upload 1.163             work/VK-Video-1.163-patched.apk             work/VK-Video-1.163-patched.sha256             --clobber             --repo "$GITHUB_REPOSITORY"
 
-          gh release edit 1.163             --repo "$GITHUB_REPOSITORY"             --title "VK Video 1.163 patched"             --notes "Tested Variant 5 build.
+          gh release edit 1.163             --repo "$GITHUB_REPOSITORY"             --title "VK Video 1.163 patched"             --notes "Variant 5 build.
 
-          Upstream: APKMirror / VK LLC
-          VK Video: 1.163 (51921)
-          Includes stock-VK coexistence fix, native libvkcore signature-check bypass, disabled in-app updates, video ads, promoted banner content and ad pixel tracking.
-          Built with Morphe STRIP_FAST, zipaligned and signed v3-only with the project's persistent release key."
+          VK Video: 1.163 (51920)
+          Includes stock-VK coexistence fix, video ad removal, promoted-banner hiding, ad-pixel blocking, disabled in-app update, and the proven libvkcore native signature-check bypass.
+
+          DEX layout restored to the tested STRIP_FAST layout, zipaligned, and signed v3-only with the project's persistent release key."
 
       - name: Upload diagnostics
         if: always()
         uses: actions/upload-artifact@v7
         with:
-          name: vk-video-1.163-replacement
+          name: vk-video-1.163-release-replacement
           path: |
-            upstream/original.sha256
-            dist/patch-result.json
-            dist/VK-Video-1.163-patched.sha256
+            work/VK-Video-1.163-patched.sha256
+            work/dex-targets.bin
           if-no-files-found: warn
+          retention-days: 3
