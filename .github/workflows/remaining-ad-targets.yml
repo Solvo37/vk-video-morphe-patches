@@ -1,0 +1,157 @@
+name: Pin remaining ad targets
+
+on:
+  push:
+    branches:
+      - ad-analysis-1.163
+    paths:
+      - '.github/workflows/remaining-ad-targets.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  scan:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+        with:
+          ref: ad-analysis-1.163
+
+      - name: Setup Java 21
+        uses: actions/setup-java@de7274f081f381c8f8158605e0321c36c376e2e6 # v6
+        with:
+          distribution: temurin
+          java-version: '21'
+
+      - name: Download APK and JADX
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          rm -rf remaining
+          mkdir -p remaining/dex remaining/jadx-out docs
+          gh release download 1.163.1 --repo "$GITHUB_REPOSITORY" --pattern 'VK-Video-1.163.1-patched.apk' --dir remaining
+          cd remaining/dex
+          unzip -q ../VK-Video-1.163.1-patched.apk 'classes*.dex'
+          cd ../..
+          URL="$(gh api repos/skylot/jadx/releases/latest --jq '.assets[] | select(.name | test("^jadx-[0-9].*\\.zip$")) | .browser_download_url' | head -n1)"
+          curl -fL --retry 4 "$URL" -o remaining/jadx.zip
+          unzip -q remaining/jadx.zip -d remaining/jadx
+          chmod +x remaining/jadx/bin/jadx
+
+      - name: Find exact DEX methods referencing remaining ads
+        run: |
+          set -euo pipefail
+          DEXDUMP="$(find "$ANDROID_SDK_ROOT/build-tools" -type f \( -name dexdump -o -name dexdump.exe \) | sort -V | tail -n1)"
+          export DEXDUMP
+          python - <<'PY'
+          import os, re, subprocess
+          from pathlib import Path
+
+          needles = [
+              'ShortVideoFeedItemShortVideoStaticAdDto',
+              'ShortVideoFeedItemShortVideoMarketAdDto',
+              'ShortVideoFeedItemShortVideoFloatingAdDto',
+              'ShortVideoFeedItemShortVideoMytargetSdkAdDto',
+              'ShortVideoFeedItemShortVideoMytargetSdkStaticDto',
+              'ShortVideoFeedItemShortVideoMytargetSdkVideoDto',
+              'ShortVideoFeedItemShortVideoMytargetSdkCarouselDto',
+              'ShortVideoFeedItemShortVideoMytargetSdkPromoDto',
+              'ShortVideoAdActionButtonDto',
+              'SdkActionLink',
+              'AdSection;.MIDROLL',
+              'request_midroll',
+              'const-string/jumbo v3, "midroll"',
+          ]
+          dex_dump = os.environ['DEXDUMP']
+          desc_re = re.compile(r"Class descriptor\s*:\s*'([^']+)'")
+          meth_re = re.compile(r"^\s*[0-9a-f]+:\s+\|\[[0-9a-f]+\]\s+([^\s]+\.[^:]+:[^\n]+)", re.I)
+          matches = []
+
+          for dex in sorted(Path('remaining/dex').glob('classes*.dex')):
+              p = subprocess.Popen([dex_dump, '-d', str(dex)], stdout=subprocess.PIPE, stderr=subprocess.DEVNULL,
+                                   text=True, encoding='utf-8', errors='replace')
+              current_class = ''
+              current_method = ''
+              ring = []
+              for line in p.stdout:
+                  dm = desc_re.search(line)
+                  if dm:
+                      current_class = dm.group(1)
+                  mm = meth_re.search(line)
+                  if mm:
+                      current_method = mm.group(1)
+                  if any(n in line for n in needles):
+                      matches.append((dex.name, current_class, current_method, line.rstrip(), ''.join(ring[-12:])))
+                  ring.append(line)
+                  if len(ring) > 20:
+                      ring.pop(0)
+              p.wait()
+              if p.returncode:
+                  raise SystemExit(p.returncode)
+
+          out = Path('docs/remaining-ad-targets-1.163.txt')
+          seen = set()
+          classes = set()
+          with out.open('w', encoding='utf-8') as f:
+              for dex, cls, meth, line, ctx in matches:
+                  key=(dex,cls,meth,line)
+                  if key in seen:
+                      continue
+                  seen.add(key)
+                  if cls:
+                      classes.add(cls)
+                  f.write(f'===== {dex} :: {cls} :: {meth} =====\n')
+                  f.write(ctx)
+                  f.write('MATCH: '+line+'\n\n')
+              f.write('\n# Candidate classes\n')
+              for cls in sorted(classes):
+                  f.write(cls+'\n')
+
+          Path('remaining/candidate-classes.txt').write_text('\n'.join(sorted(classes))+'\n', encoding='utf-8')
+          print('matches', len(seen), 'classes', len(classes), 'bytes', out.stat().st_size)
+          PY
+
+      - name: Decompile candidate classes and x13.e
+        run: |
+          set -euo pipefail
+          APK='remaining/VK-Video-1.163.1-patched.apk'
+          J='remaining/jadx/bin/jadx'
+          OUT='docs/remaining-ad-candidates-1.163.txt'
+          : > "$OUT"
+
+          {
+            echo 'Lx13/e;'
+            echo 'Ln33/t;'
+            cat remaining/candidate-classes.txt
+          } | sort -u | head -n 40 > remaining/decompile-classes.txt
+
+          n=0
+          while IFS= read -r desc; do
+            [[ -z "$desc" ]] && continue
+            cls="${desc#L}"
+            cls="${cls%;}"
+            cls="${cls//\//.}"
+            n=$((n+1))
+            echo "===== $desc / $cls =====" >> "$OUT"
+            if "$J" --no-res --show-bad-code --single-class "$cls" --single-class-output "remaining/jadx-out/$n.java" "$APK" >/tmp/jadx-one.log 2>&1; then
+              cat "remaining/jadx-out/$n.java" >> "$OUT"
+            else
+              echo "DECOMPILE_FAILED" >> "$OUT"
+              tail -n 20 /tmp/jadx-one.log >> "$OUT" || true
+            fi
+            echo >> "$OUT"
+          done < remaining/decompile-classes.txt
+          wc -c "$OUT"
+
+      - name: Commit reports
+        run: |
+          set -euo pipefail
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add docs/remaining-ad-targets-1.163.txt docs/remaining-ad-candidates-1.163.txt
+          git commit -m 'analysis: pin remaining clip and midroll ad targets' || exit 0
+          git pull --rebase origin ad-analysis-1.163
+          git push origin HEAD:ad-analysis-1.163
