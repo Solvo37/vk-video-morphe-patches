@@ -23,6 +23,7 @@ jobs:
   publish:
     if: github.repository == 'Solvo37/vk-video-morphe-patches'
     runs-on: ubuntu-latest
+
     steps:
       - name: Checkout
         uses: actions/checkout@v7
@@ -48,17 +49,43 @@ jobs:
           GH_TOKEN: ${{ github.token }}
         run: |
           set -euo pipefail
+
           VERSION="$(sed -n 's/^version[[:space:]]*=[[:space:]]*//p' gradle.properties | head -n1)"
           TAG="patches-v$VERSION"
+          ASSET_NAME="vk-video-morphe-patches-$VERSION.mpp"
+
           mkdir -p dist
           MPP="$(find patches/build/libs -maxdepth 1 -type f -name '*.mpp' ! -name '*sources*' ! -name '*javadoc*' -print -quit)"
           test -n "$MPP"
-          ASSET="dist/vk-video-morphe-patches-$VERSION.mpp"
-          cp "$MPP" "$ASSET"
+          cp "$MPP" "dist/$ASSET_NAME"
+
+          NOTES="Standalone Morphe patch bundle for VK Video.
+          
+          Includes the current stock-VK coexistence fix, native signature-check bypass and user-selectable VK Video patches.
+          This release contains no VK Video APK."
 
           if gh release view "$TAG" --repo "$GITHUB_REPOSITORY" >/dev/null 2>&1; then
-            gh release upload "$TAG" "$ASSET" --clobber --repo "$GITHUB_REPOSITORY"
-            gh release edit "$TAG" --repo "$GITHUB_REPOSITORY"               --title "Morphe patches v$VERSION"               --notes "Standalone Morphe patch bundle. This release contains no VK Video APK."
+            gh release upload "$TAG" "dist/$ASSET_NAME" --clobber --repo "$GITHUB_REPOSITORY"
+            gh release edit "$TAG"               --repo "$GITHUB_REPOSITORY"               --title "Morphe patches v$VERSION"               --notes "$NOTES"
           else
-            gh release create "$TAG" "$ASSET#Morphe patch bundle"               --repo "$GITHUB_REPOSITORY"               --title "Morphe patches v$VERSION"               --notes "Standalone Morphe patch bundle. This release contains no VK Video APK."
+            gh release create "$TAG"               "dist/$ASSET_NAME#Morphe patch bundle"               --repo "$GITHUB_REPOSITORY"               --title "Morphe patches v$VERSION"               --notes "$NOTES"
+          fi
+
+          PUBLISHED_AT="$(gh release view "$TAG" --repo "$GITHUB_REPOSITORY" --json publishedAt --jq '.publishedAt')"
+
+          jq -n             --arg version "$VERSION"             --arg created_at "$PUBLISHED_AT"             --arg description "VK Video Morphe patches with stock-VK coexistence and native signature bypass"             --arg download_url "https://github.com/$GITHUB_REPOSITORY/releases/download/$TAG/$ASSET_NAME"             '{
+              created_at: $created_at,
+              description: $description,
+              download_url: $download_url,
+              signature_download_url: "",
+              version: $version
+            }' > patches-bundle.json
+
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add patches-bundle.json
+
+          if ! git diff --cached --quiet; then
+            git commit -m "chore: update patch bundle metadata [skip ci]"
+            git push
           fi
