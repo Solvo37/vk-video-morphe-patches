@@ -200,7 +200,7 @@ internal object ClipSdkAdVideoMapperFingerprint : Fingerprint(
     definingClass = "Lr11/d;",
     name = "g",
     accessFlags = listOf(AccessFlags.PUBLIC, AccessFlags.FINAL),
-    returnType = "Lcom/vk/clips/sdk/shared/feed/model/FeedItem$d;",
+    returnType = "Lcom/vk/clips/sdk/shared/feed/model/FeedItem\$d;",
     parameters = listOf(
         "Lcom/vk/clips/sdk/shared/api/deps/video/SdkVideoFile;",
         "Lcom/vk/clips/sdk/shared/api/routing/models/ClipFeedCacheInfo;"
@@ -211,7 +211,7 @@ internal object ClipSdkAdVideoDefaultMapperFingerprint : Fingerprint(
     definingClass = "Lr11/d;",
     name = "d",
     accessFlags = listOf(AccessFlags.PUBLIC, AccessFlags.STATIC),
-    returnType = "Lcom/vk/clips/sdk/shared/feed/model/FeedItem$d;",
+    returnType = "Lcom/vk/clips/sdk/shared/feed/model/FeedItem\$d;",
     parameters = listOf(
         "Lr11/d;",
         "Lcom/vk/clips/sdk/shared/api/deps/video/SdkVideoFile;",
