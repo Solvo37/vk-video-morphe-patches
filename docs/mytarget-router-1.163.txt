@@ -1,0 +1,221 @@
+===== j04.b =====
+package j04;
+
+import android.app.Activity;
+import android.content.Context;
+import com.vk.clips.sdk.shared.api.deps.video.SdkVideoFile;
+import com.vk.feed.core.models.MyTargetAdsComplainOptions;
+import com.vk.feed.core.models.MyTargetBrandLiftSurvey;
+import com.vk.feed.core.models.news.NewsEntry;
+import java.util.LinkedHashMap;
+import y02.g;
+import y02.s;
+
+/* JADX INFO: compiled from: AdsSdkRouter.kt */
+/* JADX INFO: loaded from: classes4.dex */
+public interface b {
+    void a(androidx.appcompat.view.c cVar, String str, String str2, MyTargetAdsComplainOptions[] myTargetAdsComplainOptionsArr, boolean z13);
+
+    void b(Context context, NewsEntry newsEntry, String str, MyTargetAdsComplainOptions[] myTargetAdsComplainOptionsArr, boolean z13);
+
+    void c(Context context, NewsEntry newsEntry, String[] strArr, boolean z13);
+
+    void d(Context context, MyTargetBrandLiftSurvey myTargetBrandLiftSurvey, NewsEntry newsEntry, LinkedHashMap linkedHashMap, boolean z13);
+
+    void e(Activity activity, SdkVideoFile sdkVideoFile, String str, MyTargetAdsComplainOptions[] myTargetAdsComplainOptionsArr);
+
+    void f(s sVar, String str, String str2, MyTargetAdsComplainOptions[] myTargetAdsComplainOptionsArr);
+
+    void g(g gVar, SdkVideoFile sdkVideoFile, String str, MyTargetAdsComplainOptions[] myTargetAdsComplainOptionsArr);
+
+    void h(Activity activity, SdkVideoFile sdkVideoFile, MyTargetAdsComplainOptions[] myTargetAdsComplainOptionsArr);
+}
+
+===== hw5.j =====
+package hw5;
+
+import android.animation.ValueAnimator;
+import androidx.fragment.app.FragmentActivity;
+import com.vk.auth.modal.base.ModalAuthHostActivity;
+import com.vk.auth.modal.qrwithcode.QrWithCodeAuthModal;
+import com.vk.camera.clips.api.di.CameraClipsComponent;
+import com.vk.clips.viewer.impl.di.ClipsViewerComponentImpl;
+import com.vk.clips.viewer.impl.feed.wrapper.ui.fragment.ClipsWrapperFragment;
+import com.vk.clips.viewer.impl.grid.ClipsGridFragment;
+import com.vk.core.view.components.text.VkFadeText;
+import com.vk.ecomm.market.api.di.MarketComponent;
+import com.vk.fave.di.FaveComponent;
+import com.vk.libvideo.offline.ui.VideoOfflineFragment;
+import com.vk.music.model.di.AudioModelsComponent;
+import com.vk.mytarget.di.AdsSdkComponentImpl;
+import com.vk.newsfeed.impl.newsfeed_post.presentation.fragment.PostFragment;
+import com.vk.onboarding.api.di.VkOnboardingComponent;
+import com.vk.sharing.api.di.SharingComponent;
+import com.vk.sharing.core.picker.GroupPickerActivity;
+import com.vk.stickers.settings.StickerSettingsRouter;
+import com.vk.stories.design.view.stats.tabs.viewers.mvi.StoryStatisticsViewersFragment;
+import com.vk.story.api.di.StoriesComponent;
+import com.vk.superapp.multiaccount.api.MultiAccountComponent;
+import g07.t;
+import kotlin.jvm.functions.Function0;
+import kotlin.text.Regex;
+import live.vkplay.chat.settings.domain.initraid.store.InitRaidStore;
+import ru.mail.libverify.controls.VerificationController;
+import s74.c0;
+
+/* JADX INFO: compiled from: R8$$SyntheticClass */
+/* JADX INFO: loaded from: classes6.dex */
+public final /* synthetic */ class j implements Function0 {
+
+    /* JADX INFO: renamed from: a, reason: collision with root package name */
+    public final /* synthetic */ int f129502a;
+
+    /* JADX INFO: renamed from: b, reason: collision with root package name */
+    public final /* synthetic */ Object f129503b;
+
+    public /* synthetic */ j(Object obj, int i16) {
+        this.f129502a = i16;
+        this.f129503b = obj;
+    }
+
+    /* JADX WARN: Type inference failed for: r0v41, types: [java.lang.Object, kotlin.Lazy] */
+    @Override // kotlin.jvm.functions.Function0
+    public final Object invoke() {
+        int i16 = this.f129502a;
+        int i18 = 0;
+        Object obj = this.f129503b;
+        switch (i16) {
+            case 0:
+                Regex regex = k.V;
+                return ((k) obj).Qk();
+            case 1:
+                ((ik5.i) obj).D.clear();
+                return t.f122188a;
+            case 2:
+                return new jc0.b.a((jc0.b) obj);
+            case 3:
+                return new xf1.a(((ClipsViewerComponentImpl) obj).f56840b.d());
+            case 4:
+                AdsSdkComponentImpl adsSdkComponentImpl = (AdsSdkComponentImpl) obj;
+                c17.l<Object>[] lVarArr = AdsSdkComponentImpl.f86597e;
+                return new k04.c(new m04.c(adsSdkComponentImpl.G8()), adsSdkComponentImpl.C1());
+            case 5:
+                ((k94.h) obj).onClick();
+                return t.f122188a;
+            case 6:
+                ((kd5.t) obj).f141601b.invoke();
+                return t.f122188a;
+            case 7:
+                ((ho0.f) obj).invoke(StickerSettingsRouter.VmojiMenuButton.EDIT);
+                return t.f122188a;
+            case 8:
+                ValueAnimator valueAnimatorOfFloat = ValueAnimator.ofFloat(0.0f, kk2.c.f142293t);
+                valueAnimatorOfFloat.setStartDelay(kk2.c.f142290q);
+                valueAnimatorOfFloat.setDuration(kk2.c.f142289p);
+                valueAnimatorOfFloat.setInterpolator(new jx1.a(0.35f, 0.0f, 0.7f, 1.0f));
+                valueAnimatorOfFloat.addUpdateListener(new kk2.a((kk2.c) obj, i18));
+                return valueAnimatorOfFloat;
+            case 9:
+                c17.l<Object>[] lVarArr2 = ClipsGridFragment.L0;
+                return ((CameraClipsComponent) u62.b.c((ClipsGridFragment) obj).a(kotlin.jvm.internal.k.f142790a.b(CameraClipsComponent.class))).J1();
+            case 10:
+                ((live.vkplay.chat.settings.presentation.initraid.d) obj).f(InitRaidStore.b.a.f148446b);
+                return t.f122188a;
+            case 11:
+                ll5.a aVar = (ll5.a) obj;
+                if (aVar.f153183f) {
+                    aVar.f153182e.invoke();
+                }
+                return t.f122188a;
+            case 12:
+                mg1.f fVar = (mg1.f) obj;
+                return new mg1.c(fVar.f156353c, fVar.f156354d);
+            case 13:
+                n20.g gVar = (n20.g) ((n20.e) obj).f180326a;
+                if (gVar != null) {
+                    gVar.e();
+                }
+                return t.f122188a;
+            case 14:
+                Function0<t> function0 = ((n72.h) obj).f159290f;
+                if (function0 != null) {
+                    function0.invoke();
+                }
+                return t.f122188a;
+            case 15:
+                int i19 = PostFragment.f87702e1;
+                return ((AudioModelsComponent) u62.b.c((PostFragment) obj).a(kotlin.jvm.internal.k.f142790a.b(AudioModelsComponent.class))).E8();
+            case 16:
+                return new VkFadeText(((ow2.a) obj).f171125d, null, 6, 0);
+            case 17:
+                return ((com.vk.clips.sdk.shared.item.ads.c) obj).f54853w;
+            case 18:
+                int i28 = GroupPickerActivity.I;
+                return ((SharingComponent) ((GroupPickerActivity) obj).F.getValue()).c();
+            case 19:
+                return ((FaveComponent) ((a72.b) u62.b.e((pc2.b) obj)).mo0a(kotlin.jvm.internal.k.f142790a.b(FaveComponent.class))).Gb();
+            case 20:
+                return ((qk7.d) obj).f178694d;
+            case 21:
+                ((a33.a) obj).a();
+                return t.f122188a;
+            case 22:
+                return ((VerificationController) obj).lambda$getSmsCode$5();
+            case 23:
+                return ((MarketComponent) ((a72.b) u62.b.e((c0) obj)).a(kotlin.jvm.internal.k.f142790a.b(MarketComponent.class))).X5();
+            case 24:
+                VideoOfflineFragment videoOfflineFragment = (VideoOfflineFragment) obj;
+                int i29 = VideoOfflineFragment.f80755e1;
+                FragmentActivity activity = videoOfflineFragment.getActivity();
+                if (activity != null) {
+                    ae.a.a().I().s(activity, (3962 & 2) != 0 ? null : null, "VIDEO_DOWNLOADS", (3962 & 8) == 0, (3962 & 16) != 0 ? null : null, (3962 & 32) != 0 ? null : null, (3962 & 64) != 0 ? false : false, (3962 & 128) == 0, (3962 & 256) != 0 ? false : false, (3962 & 1024) != 0 ? null : null, (3962 & 2048) != 0 ? null : null);
+                }
+                if (videoOfflineFragment.getParentFragment() == null) {
+                    videoOfflineFragment.finish();
+                }
+                return t.f122188a;
+            case 25:
+                int i32 = StoryStatisticsViewersFragment.f96496f0;
+                return ((StoriesComponent) u62.b.c((StoryStatisticsViewersFragment) obj).a(kotlin.jvm.internal.k.f142790a.b(StoriesComponent.class))).ha();
+            case 26:
+                int i38 = ClipsWrapperFragment.W0;
+                return (VkOnboardingComponent) u62.b.c((ClipsWrapperFragment) obj).a(kotlin.jvm.internal.k.f142790a.b(VkOnboardingComponent.class));
+            case 27:
+                return "getAndRemoveBySessionKey(sessionKey: " + ((ql7.b) obj) + ")";
+            case 28:
+                um3.c.a aVar2 = ((um3.g) obj).f203367d;
+                um3.c.this.f169592l.t(aVar2.f203355a);
+                return t.f122188a;
+            default:
+                ModalAuthHostActivity modalAuthHostActivity = ((QrWithCodeAuthModal) obj).f41351d;
+                if (modalAuthHostActivity != null) {
+                    return ((MultiAccountComponent) u62.b.a(modalAuthHostActivity).a(kotlin.jvm.internal.k.f142790a.b(MultiAccountComponent.class))).c();
+                }
+                throw new IllegalStateException("QrWithCodeAuthModal is not shown");
+        }
+    }
+}
+
+===== com.vk.mytarget.AdsSdkComponent =====
+package com.vk.mytarget;
+
+import com.vk.di.component.DiUnscopedComponent;
+import j04.a;
+import j04.b;
+import j04.c;
+import kotlin.Metadata;
+
+/* JADX INFO: compiled from: AdsSdkComponent.kt */
+/* JADX INFO: loaded from: classes4.dex */
+@Metadata(d1 = {"\u0000\n\n\u0002\u0018\u0002\n\u0002\u0018\u0002\n\u0000\bf\u0018\u00002\u00020\u0001¨\u0006\u0002À\u0006\u0003"}, d2 = {"Lcom/vk/mytarget/AdsSdkComponent;", "Lcom/vk/di/component/DiUnscopedComponent;", "api_release"}, k = 1, mv = {2, 2, 0}, xi = 48)
+public interface AdsSdkComponent extends DiUnscopedComponent {
+    c C1();
+
+    a G8();
+
+    b u8();
+}
+
+===== com.vk.mytarget.AdsSdkRouter =====
+DECOMPILE_FAILED
+
