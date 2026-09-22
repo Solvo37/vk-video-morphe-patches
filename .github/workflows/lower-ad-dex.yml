@@ -1,0 +1,79 @@
+name: Extract lower ad DEX blocks
+
+on:
+  push:
+    branches: [ad-analysis-1.163]
+    paths:
+      - '.github/workflows/lower-ad-dex.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  extract:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+        with:
+          ref: ad-analysis-1.163
+      - name: Download APK
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          rm -rf lowerdex
+          mkdir -p lowerdex/dex docs
+          gh release download 1.163.2 --repo "$GITHUB_REPOSITORY" --pattern 'VK-Video-1.163.2-patched.apk' --dir lowerdex
+          cd lowerdex/dex
+          unzip -q ../VK-Video-1.163.2-patched.apk 'classes*.dex'
+      - name: Extract exact classes
+        run: |
+          set -euo pipefail
+          DEXDUMP="$(find "$ANDROID_SDK_ROOT/build-tools" -type f \( -name dexdump -o -name dexdump.exe \) | sort -V | tail -n1)"
+          export DEXDUMP
+          python - <<'PY'
+          import os,re,subprocess
+          from pathlib import Path
+          wanted={
+            'Lr11/d;',
+            'Lwg1/k;',
+            'Lj31/b;',
+            'Lkz0/a;',
+            'Liz0/a;',
+            'Ln33/t;',
+            'Lcom/vk/clips/sdk/shared/feed/model/FeedItem$a;',
+            'Lcom/vk/clips/sdk/shared/feed/model/FeedItem$c;',
+            'Lcom/vk/clips/sdk/shared/feed/model/FeedItem$h;',
+            'Lcom/vk/clips/sdk/shared/feed/model/FeedItem$k;',
+          }
+          dexexe=os.environ['DEXDUMP']
+          desc_re=re.compile(r"Class descriptor\s*:\s*'([^']+)'")
+          selected=[]
+          for dex in sorted(Path('lowerdex/dex').glob('classes*.dex')):
+            p=subprocess.Popen([dexexe,'-d',str(dex)],stdout=subprocess.PIPE,stderr=subprocess.DEVNULL,text=True,encoding='utf-8',errors='replace')
+            block=[]
+            for line in p.stdout:
+              if line.startswith('Class #') and block:
+                txt=''.join(block); m=desc_re.search(txt); desc=m.group(1) if m else ''
+                if desc in wanted:selected.append((dex.name,desc,txt))
+                block=[line]
+              else:block.append(line)
+            if block:
+              txt=''.join(block); m=desc_re.search(txt); desc=m.group(1) if m else ''
+              if desc in wanted:selected.append((dex.name,desc,txt))
+            p.wait()
+          out=Path('docs/lower-ad-dex-1.163.2.txt')
+          with out.open('w',encoding='utf-8') as f:
+            for dex,desc,txt in selected:
+              f.write(f'===== {dex} :: {desc} =====\n{txt}\n')
+          print('selected',len(selected),'bytes',out.stat().st_size)
+          PY
+      - name: Commit report
+        run: |
+          set -euo pipefail
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add docs/lower-ad-dex-1.163.2.txt
+          git commit -m 'analysis: extract lower ad DEX blocks' || exit 0
+          git pull --rebase origin ad-analysis-1.163
+          git push origin HEAD:ad-analysis-1.163
