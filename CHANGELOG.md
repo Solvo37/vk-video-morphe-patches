@@ -1,5 +1,22 @@
 # Changelog
 
+## 0.2.0 — 2026-09-22
+
+Release-pipeline hardening on the road to 1.0:
+
+- all available upstream sources are evaluated and the highest verified `versionCode` wins;
+- baseline can be resolved from the latest stable release metadata with repository fallback;
+- split APKs are merged before Morphe so ARM64 native libraries are patchable;
+- added machine-readable `upstream.json`, `build-metadata.json` and Morphe reports;
+- added fail-closed manifest, multidex, native-pattern and v1-signature static gates;
+- required patch names are verified against Morphe `appliedPatches`;
+- final project certificate and zip alignment are verified before publishing;
+- same-`versionName` / newer-`versionCode` builds get distinct release tags;
+- patch-only releases are prereleases and the newest bundle is also attached to the latest stable app release;
+- GitHub Actions dependencies are pinned to immutable commits;
+- added `ROADMAP.md` with explicit 1.0 exit criteria.
+
+
 ## 0.1.2 — 2026-09-22
 
 Рабочий production-профиль для VK Видео 1.163:
