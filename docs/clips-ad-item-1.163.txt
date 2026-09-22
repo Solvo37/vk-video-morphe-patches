@@ -1,0 +1,1351 @@
+===== com.vk.clips.sdk.shared.item.ads.c =====
+DECOMPILE_FAILED
+
+===== com.vk.clips.sdk.shared.item.ads.a =====
+package com.vk.clips.sdk.shared.item.ads;
+
+/* JADX INFO: compiled from: AdsItemAction.kt */
+/* JADX INFO: loaded from: classes13.dex */
+public final class a implements AdsItemAction.t {
+
+    /* JADX INFO: renamed from: a, reason: collision with root package name */
+    public static final a f54820a = new a();
+
+    public final boolean equals(Object obj) {
+        return this == obj || (obj instanceof a);
+    }
+
+    public final int hashCode() {
+        return -1860190093;
+    }
+
+    public final String toString() {
+        return "Open";
+    }
+}
+
+===== com.vk.clips.sdk.shared.item.ads.b =====
+package com.vk.clips.sdk.shared.item.ads;
+
+import android.content.Intent;
+import android.net.Uri;
+import androidx.compose.foundation.gestures.h5;
+import com.vk.clips.sdk.models.ActionLinkSnippet;
+import com.vk.clips.sdk.models.SdkActionLink;
+import com.vk.clips.sdk.models.SdkVideoRestriction;
+import com.vk.clips.sdk.shared.api.deps.video.SdkClipVideoFile;
+import com.vk.dto.common.id.UserId;
+import d94.i;
+import ez3.e;
+import g07.g;
+import g07.t;
+import kl6.f;
+import kotlin.LazyThreadSafetyMode;
+import kotlin.NoWhenBranchMatchedException;
+import kotlin.jvm.functions.Function1;
+import uf1.h;
+
+/* JADX INFO: compiled from: AdsItemFeature.kt */
+/* JADX INFO: loaded from: classes13.dex */
+public final class b extends e<k31.a, d31.e, AdsItemAction, AdsItemPatch> {
+
+    /* JADX INFO: renamed from: e, reason: collision with root package name */
+    public final u21.b f54821e;
+
+    /* JADX INFO: renamed from: f, reason: collision with root package name */
+    public final q81.a f54822f;
+
+    /* JADX INFO: renamed from: g, reason: collision with root package name */
+    public final f f54823g;
+
+    /* JADX INFO: renamed from: h, reason: collision with root package name */
+    public final Function1<m21.b, t> f54824h;
+
+    /* JADX INFO: renamed from: i, reason: collision with root package name */
+    public final if1.a f54825i;
+
+    /* JADX INFO: renamed from: j, reason: collision with root package name */
+    public final ez3.c f54826j;
+
+    /* JADX INFO: renamed from: k, reason: collision with root package name */
+    public final ez3.c f54827k;
+
+    /* JADX INFO: renamed from: l, reason: collision with root package name */
+    public final ez3.c f54828l;
+
+    /* JADX INFO: renamed from: m, reason: collision with root package name */
+    public final gz3.a<d31.e, AdsItemAction, AdsItemPatch> f54829m;
+
+    /* JADX INFO: renamed from: n, reason: collision with root package name */
+    public final gz3.a<d31.e, AdsItemAction, AdsItemPatch> f54830n;
+
+    /* JADX INFO: renamed from: o, reason: collision with root package name */
+    public final Object f54831o;
+
+    /* JADX INFO: renamed from: p, reason: collision with root package name */
+    public final gz3.a<d31.e, AdsItemAction, AdsItemPatch> f54832p;
+
+    /* JADX INFO: renamed from: q, reason: collision with root package name */
+    public final gz3.a<d31.e, AdsItemAction, AdsItemPatch> f54833q;
+
+    /* JADX INFO: renamed from: r, reason: collision with root package name */
+    public final gz3.a<d31.e, AdsItemAction, AdsItemPatch> f54834r;
+
+    /* JADX INFO: renamed from: s, reason: collision with root package name */
+    public final gz3.a<d31.e, AdsItemAction, AdsItemPatch> f54835s;
+
+    /* JADX INFO: compiled from: AdsItemFeature.kt */
+    public static final /* synthetic */ class a {
+        public static final /* synthetic */ int[] $EnumSwitchMapping$0;
+
+        static {
+            int[] iArr = new int[AdsItemAction.HandleOnItemViewFocusChanged.values().length];
+            try {
+                iArr[AdsItemAction.HandleOnItemViewFocusChanged.FOCUSED.ordinal()] = 1;
+            } catch (NoSuchFieldError unused) {
+            }
+            try {
+                iArr[AdsItemAction.HandleOnItemViewFocusChanged.UNFOCUSED.ordinal()] = 2;
+            } catch (NoSuchFieldError unused2) {
+            }
+            $EnumSwitchMapping$0 = iArr;
+        }
+    }
+
+    public b(d dVar, u21.c cVar, q81.a aVar, f fVar, d31.c cVar2, h hVar, u21.a aVar2, b01.a aVar3, if1.a aVar4, k91.a aVar5, String str, g91.a aVar6) {
+        super(AdsItemAction.r.f54770a, dVar);
+        this.f54821e = cVar;
+        this.f54822f = aVar;
+        this.f54823g = fVar;
+        this.f54824h = hVar;
+        this.f54825i = aVar4;
+        ez3.c cVar3 = new ez3.c();
+        this.f54826j = cVar3;
+        ez3.c cVar4 = new ez3.c();
+        this.f54827k = cVar4;
+        ez3.c cVar5 = new ez3.c();
+        this.f54828l = cVar5;
+        this.f54829m = s(new t21.a(cVar3, aVar2, aVar3, cVar2, cVar));
+        this.f54830n = s(new t21.b(cVar, cVar4, cVar5, aVar6));
+        this.f54831o = g.b(LazyThreadSafetyMode.NONE, new i(this, 29));
+        this.f54832p = s(new t21.d(cVar, cVar3, cVar5, aVar6));
+        this.f54833q = s(new t21.g(new lp3.c(this, 8), aVar5, str, aVar6, hVar));
+        this.f54834r = s(new t21.e(cVar5));
+        this.f54835s = s(new t21.f(cVar, cVar3, cVar5, aVar6));
+    }
+
+    /* JADX WARN: Type inference failed for: r0v45, types: [java.lang.Object, kotlin.Lazy] */
+    @Override // ez3.e
+    public final void r(fz3.d dVar, fz3.a aVar) {
+        SdkVideoRestriction sdkVideoRestrictionA;
+        SdkActionLink sdkActionLinkN0;
+        s21.b aVar2;
+        String str;
+        d31.e eVar = (d31.e) dVar;
+        AdsItemAction adsItemAction = (AdsItemAction) aVar;
+        if (adsItemAction instanceof AdsItemAction.r) {
+            v(AdsItemPatch.d.f54806a);
+            return;
+        }
+        if (adsItemAction instanceof AdsItemAction.a) {
+            this.f54829m.a(eVar, adsItemAction);
+            return;
+        }
+        if (adsItemAction instanceof AdsItemAction.b) {
+            this.f54830n.a(eVar, adsItemAction);
+            return;
+        }
+        if (adsItemAction instanceof AdsItemAction.c) {
+            ((gz3.a) this.f54831o.getValue()).a(eVar, adsItemAction);
+            return;
+        }
+        if (adsItemAction instanceof AdsItemAction.s) {
+            this.f54832p.a(eVar, adsItemAction);
+            return;
+        }
+        if (adsItemAction instanceof AdsItemAction.v) {
+            this.f54833q.a(eVar, adsItemAction);
+            return;
+        }
+        boolean z13 = adsItemAction instanceof AdsItemAction.p;
+        ez3.c cVar = this.f54826j;
+        if (z13) {
+            if (eVar instanceof d31.e.a) {
+                cVar.a(new r21.b.o.a(((d31.e.a) eVar).f110096b));
+                return;
+            }
+            return;
+        }
+        if (adsItemAction instanceof AdsItemAction.d) {
+            if (eVar instanceof d31.e.a) {
+                cVar.a(new r21.b.c(((d31.e.a) eVar).f110095a.a()));
+                return;
+            }
+            return;
+        }
+        boolean z15 = adsItemAction instanceof AdsItemAction.e;
+        ez3.c cVar2 = this.f54828l;
+        if (z15) {
+            if ((eVar instanceof d31.e.a) && (sdkActionLinkN0 = ((d31.e.a) eVar).f110095a.f110080a.N0()) != null) {
+                ActionLinkSnippet actionLinkSnippet = sdkActionLinkN0.f54309f;
+                if (sdkActionLinkN0.f54307d.equals("link_community_with_subscribe")) {
+                    cVar.a(r21.b.d.f180914a);
+                    return;
+                }
+                String str2 = sdkActionLinkN0.f54308e;
+                if (actionLinkSnippet == null || (str = actionLinkSnippet.f54291j) == null || !h5.q(actionLinkSnippet.f54290i)) {
+                    s21.b cVar3 = new s21.b.c(str2);
+                    aVar2 = cVar3;
+                } else {
+                    aVar2 = new s21.b.a(new Intent("android.intent.action.VIEW", Uri.parse(str)));
+                }
+                cVar2.a(aVar2);
+                return;
+            }
+            return;
+        }
+        if (adsItemAction instanceof AdsItemAction.h) {
+            if (eVar instanceof d31.e.a) {
+                d31.e.a aVar3 = (d31.e.a) eVar;
+                SdkClipVideoFile sdkClipVideoFile = aVar3.f110095a.f110080a;
+                if (!sdkClipVideoFile.y0()) {
+                    cVar.a(new r21.b.l.C4196b(aVar3.f110096b, null));
+                    return;
+                }
+                UserId userIdB = c01.c.b(sdkClipVideoFile);
+                if (userIdB == null) {
+                    return;
+                }
+                cVar2.a(new s21.b.e(userIdB));
+                return;
+            }
+            return;
+        }
+        if (adsItemAction instanceof AdsItemAction.j) {
+            AdsItemAction.j jVar = (AdsItemAction.j) adsItemAction;
+            if (eVar instanceof d31.e.a) {
+                d31.e.a aVar4 = (d31.e.a) eVar;
+                SdkClipVideoFile sdkClipVideoFile2 = aVar4.f110095a.f110080a;
+                if (!sdkClipVideoFile2.y0()) {
+                    cVar.a(new r21.b.l.C4196b(aVar4.f110096b, jVar.f54761a));
+                    return;
+                }
+                UserId userIdB2 = c01.c.b(sdkClipVideoFile2);
+                if (userIdB2 == null) {
+                    return;
+                }
+                cVar2.a(new s21.b.e(userIdB2));
+                return;
+            }
+            return;
+        }
+        if (adsItemAction instanceof AdsItemAction.k) {
+            AdsItemAction.k kVar = (AdsItemAction.k) adsItemAction;
+            if (eVar instanceof d31.e.a) {
+                v(new AdsItemPatch.e(kVar.f54762a));
+                return;
+            }
+            return;
+        }
+        if (adsItemAction instanceof AdsItemAction.l) {
+            if (eVar instanceof d31.e.a) {
+                d31.b bVar = ((d31.e.a) eVar).f110095a;
+                SdkClipVideoFile sdkClipVideoFileA = bVar.a();
+                c01.b bVarA = c01.c.a(sdkClipVideoFileA);
+                if ((bVarA instanceof c01.b.c) || (bVarA instanceof c01.b.C0424b)) {
+                    cVar2.a(new s21.b.d(sdkClipVideoFileA));
+                    return;
+                } else {
+                    if (!(bVarA instanceof c01.b.a)) {
+                        throw new NoWhenBranchMatchedException();
+                    }
+                    cVar.a(new r21.b.c(bVar.a()));
+                    return;
+                }
+            }
+            return;
+        }
+        if (adsItemAction instanceof AdsItemAction.f) {
+            if ((eVar instanceof d31.e.a) && ((rz0.c) this.f54823g.invoke()).f191308b) {
+                cVar.a(r21.b.C4195b.f180912a);
+                return;
+            }
+            return;
+        }
+        if (adsItemAction instanceof AdsItemAction.m) {
+            if (eVar instanceof d31.e.a) {
+                cVar.a(new r21.b.g(((d31.e.a) eVar).f110097c));
+                return;
+            }
+            return;
+        }
+        if (adsItemAction instanceof AdsItemAction.n) {
+            if ((eVar instanceof d31.e.a) && (sdkVideoRestrictionA = ((d31.e.a) eVar).f110095a.a().A()) != null) {
+                cVar2.a(new s21.b.f(sdkVideoRestrictionA));
+                return;
+            }
+            return;
+        }
+        if (adsItemAction instanceof AdsItemAction.o) {
+            if (eVar instanceof d31.e.a) {
+                d31.e.a aVar5 = (d31.e.a) eVar;
+                cVar.a(new r21.b.a(aVar5.f110095a.a(), aVar5.f110097c));
+                return;
+            }
+            return;
+        }
+        if (adsItemAction instanceof AdsItemAction.i) {
+            if (eVar instanceof d31.e.a) {
+                SdkClipVideoFile sdkClipVideoFile3 = ((d31.e.a) eVar).f110095a.f110080a;
+                if (sdkClipVideoFile3.f0()) {
+                    return;
+                }
+                cVar.a(new r21.b.m(sdkClipVideoFile3));
+                return;
+            }
+            return;
+        }
+        if (adsItemAction instanceof AdsItemAction.t) {
+            this.f54834r.a(eVar, adsItemAction);
+            return;
+        }
+        if (adsItemAction instanceof AdsItemAction.u) {
+            this.f54835s.a(eVar, adsItemAction);
+            return;
+        }
+        if (adsItemAction instanceof AdsItemAction.q) {
+            AdsItemAction.q qVar = (AdsItemAction.q) adsItemAction;
+            if (eVar instanceof d31.e.a) {
+                if (qVar instanceof AdsItemAction.q.a) {
+                    v(AdsItemPatch.UpdateVideoFocused.FOCUSED);
+                    if1.a aVar6 = this.f54825i;
+                    if (aVar6 != null) {
+                        v(new AdsItemPatch.f.k(aVar6.a()));
+                        return;
+                    }
+                    return;
+                }
+                if (!(qVar instanceof AdsItemAction.q.b)) {
+                    throw new NoWhenBranchMatchedException();
+                }
+                v(AdsItemPatch.UpdateVideoFocused.UNFOCUSED);
+                d31.e.a aVar7 = (d31.e.a) eVar;
+                cVar.a(new r21.b.h(aVar7.f110097c));
+                this.f54821e.E2().l(aVar7.f110095a.f110080a.X7(), ((AdsItemAction.q.b) qVar).f54769a);
+                return;
+            }
+            return;
+        }
+        if (!(adsItemAction instanceof AdsItemAction.HandleOnItemViewFocusChanged)) {
+            if (!(adsItemAction instanceof AdsItemAction.g)) {
+                throw new NoWhenBranchMatchedException();
+            }
+            if (eVar instanceof d31.e.a) {
+                cVar.a(new r21.b.i(((d31.e.a) eVar).f110097c));
+                return;
+            }
+            return;
+        }
+        AdsItemAction.HandleOnItemViewFocusChanged handleOnItemViewFocusChanged = (AdsItemAction.HandleOnItemViewFocusChanged) adsItemAction;
+        if (eVar instanceof d31.e.a) {
+            int i16 = a.$EnumSwitchMapping$0[handleOnItemViewFocusChanged.ordinal()];
+            if (i16 == 1) {
+                v(AdsItemPatch.UpdateItemViewFocused.FOCUSED);
+            } else {
+                if (i16 != 2) {
+                    throw new NoWhenBranchMatchedException();
+                }
+                v(AdsItemPatch.UpdateItemViewFocused.UNFOCUSED);
+            }
+        }
+    }
+}
+
+===== com.vk.clips.sdk.shared.item.ads.d =====
+DECOMPILE_FAILED
+
+===== com.vk.clips.sdk.shared.feed.model.FeedItem$d =====
+package com.vk.clips.sdk.shared.feed.model;
+
+import aa2.d0;
+import com.facebook.soloader.SoLoader;
+import com.vk.clips.sdk.models.ImageUrl;
+import com.vk.clips.sdk.models.SdkActionLink;
+import com.vk.clips.sdk.shared.api.deps.video.SdkClipVideoFile;
+import com.vk.clips.sdk.shared.api.deps.video.SdkVideoFile;
+import com.vk.clips.sdk.shared.api.feed.data.activities.SdkClipActivities;
+import com.vk.clips.sdk.shared.api.routing.models.ClipFeedTab;
+import com.vk.clips.sdk.shared.decoration.ClipsFeedDecorationPayload;
+import java.util.List;
+import k0.n;
+import kotlin.Metadata;
+import ru.ok.android.webrtc.signaling.api.SignalingProtocol;
+
+/* JADX INFO: compiled from: FeedItem.kt */
+/* JADX INFO: loaded from: classes13.dex */
+public interface FeedItem extends yz1.j, lz0.a {
+
+    /* JADX INFO: compiled from: FeedItem.kt */
+    public static abstract class Pagination implements FeedItem, qz0.a.InterfaceC4182a {
+
+        /* JADX INFO: compiled from: FeedItem.kt */
+        public static final class Empty extends Pagination {
+
+            /* JADX INFO: renamed from: a, reason: collision with root package name */
+            public final EmptyType f54665a;
+
+            /* JADX WARN: Failed to restore enum class, 'enum' modifier and super class removed */
+            /* JADX WARN: Unknown enum class pattern. Please report as an issue! */
+            /* JADX INFO: compiled from: FeedItem.kt */
+            @Metadata(d1 = {"\u0000\f\n\u0002\u0018\u0002\n\u0002\u0010\u0010\n\u0002\b\u0005\b\u0086\u0081\u0002\u0018\u00002\b\u0012\u0004\u0012\u00020\u00000\u0001j\u0002\b\u0002j\u0002\b\u0003j\u0002\b\u0004j\u0002\b\u0005¨\u0006\u0006"}, d2 = {"Lcom/vk/clips/sdk/shared/feed/model/FeedItem$Pagination$Empty$EmptyType;", "", "USER_SUBSCRIPTIONS", "PLAYLIST", "COAUTHOR_INVITATIONS", "DEFAULT", "clips-feed_release"}, k = 1, mv = {2, 0, 0}, xi = 48)
+            public static final class EmptyType {
+                private static final /* synthetic */ n07.a $ENTRIES;
+                private static final /* synthetic */ EmptyType[] $VALUES;
+                public static final EmptyType COAUTHOR_INVITATIONS;
+                public static final EmptyType DEFAULT;
+                public static final EmptyType PLAYLIST;
+                public static final EmptyType USER_SUBSCRIPTIONS;
+
+                static {
+                    EmptyType emptyType = new EmptyType("USER_SUBSCRIPTIONS", 0);
+                    USER_SUBSCRIPTIONS = emptyType;
+                    EmptyType emptyType2 = new EmptyType("PLAYLIST", 1);
+                    PLAYLIST = emptyType2;
+                    EmptyType emptyType3 = new EmptyType("COAUTHOR_INVITATIONS", 2);
+                    COAUTHOR_INVITATIONS = emptyType3;
+                    EmptyType emptyType4 = new EmptyType("DEFAULT", 3);
+                    DEFAULT = emptyType4;
+                    EmptyType[] emptyTypeArr = {emptyType, emptyType2, emptyType3, emptyType4};
+                    $VALUES = emptyTypeArr;
+                    $ENTRIES = new n07.b(emptyTypeArr);
+                }
+
+                public EmptyType() {
+                    throw null;
+                }
+
+                public static EmptyType valueOf(String str) {
+                    return (EmptyType) Enum.valueOf(EmptyType.class, str);
+                }
+
+                public static EmptyType[] values() {
+                    return (EmptyType[]) $VALUES.clone();
+                }
+            }
+
+            public Empty(EmptyType emptyType) {
+                this.f54665a = emptyType;
+            }
+
+            @Override // com.vk.clips.sdk.shared.feed.model.FeedItem
+            public final String d() {
+                return "pagination_empty";
+            }
+
+            public final boolean equals(Object obj) {
+                if (this == obj) {
+                    return true;
+                }
+                return (obj instanceof Empty) && this.f54665a == ((Empty) obj).f54665a;
+            }
+
+            public final int hashCode() {
+                return this.f54665a.hashCode();
+            }
+
+            public final String toString() {
+                return "Empty(emptyType=" + this.f54665a + ')';
+            }
+        }
+
+        /* JADX INFO: compiled from: FeedItem.kt */
+        public static final class a extends Pagination {
+
+            /* JADX INFO: renamed from: a, reason: collision with root package name */
+            public final boolean f54666a;
+
+            /* JADX INFO: renamed from: b, reason: collision with root package name */
+            public final String f54667b;
+
+            public a(boolean z13) {
+                this.f54666a = z13;
+                this.f54667b = "pagination_error:".concat(z13 ? "forward" : SignalingProtocol.KEY_BACKWARD);
+            }
+
+            @Override // com.vk.clips.sdk.shared.feed.model.FeedItem
+            public final String d() {
+                return this.f54667b;
+            }
+
+            public final boolean equals(Object obj) {
+                if (this == obj) {
+                    return true;
+                }
+                return (obj instanceof a) && this.f54666a == ((a) obj).f54666a;
+            }
+
+            public final int hashCode() {
+                return Boolean.hashCode(this.f54666a);
+            }
+
+            public final String toString() {
+                return d0.c(new StringBuilder("Error(isForward="), this.f54666a, ')');
+            }
+        }
+
+        /* JADX INFO: compiled from: FeedItem.kt */
+        public static final class b extends Pagination implements n11.f {
+
+            /* JADX INFO: renamed from: a, reason: collision with root package name */
+            public final boolean f54668a;
+
+            /* JADX INFO: renamed from: b, reason: collision with root package name */
+            public final String f54669b;
+
+            public b(boolean z13) {
+                this.f54668a = z13;
+                this.f54669b = "pagination_loading:".concat(z13 ? "forward" : SignalingProtocol.KEY_BACKWARD);
+            }
+
+            @Override // n11.f
+            public final boolean a() {
+                return this.f54668a;
+            }
+
+            @Override // com.vk.clips.sdk.shared.feed.model.FeedItem
+            public final String d() {
+                return this.f54669b;
+            }
+
+            public final boolean equals(Object obj) {
+                if (this == obj) {
+                    return true;
+                }
+                return (obj instanceof b) && this.f54668a == ((b) obj).f54668a;
+            }
+
+            public final int hashCode() {
+                return Boolean.hashCode(this.f54668a);
+            }
+
+            public final String toString() {
+                return d0.c(new StringBuilder("Loading(isForward="), this.f54668a, ')');
+            }
+        }
+
+        @Override // com.vk.clips.sdk.shared.feed.model.FeedItem, lz0.a
+        public final String f() {
+            return d();
+        }
+
+        @Override // yz1.j
+        public final Number getItemId() {
+            return Integer.valueOf(d().hashCode());
+        }
+
+        @Override // com.vk.clips.sdk.shared.feed.model.FeedItem
+        public final boolean l() {
+            return this instanceof c;
+        }
+    }
+
+    /* JADX INFO: compiled from: FeedItem.kt */
+    public static final class a implements j, c {
+
+        /* JADX INFO: renamed from: a, reason: collision with root package name */
+        public final String f54670a;
+
+        /* JADX INFO: renamed from: b, reason: collision with root package name */
+        public final String f54671b;
+
+        /* JADX INFO: renamed from: c, reason: collision with root package name */
+        public final ClipFeedTab f54672c;
+
+        /* JADX INFO: renamed from: d, reason: collision with root package name */
+        public final SdkClipVideoFile f54673d;
+
+        /* JADX INFO: renamed from: e, reason: collision with root package name */
+        public final c01.h f54674e;
+
+        /* JADX INFO: renamed from: f, reason: collision with root package name */
+        public final c01.d f54675f;
+
+        /* JADX INFO: renamed from: g, reason: collision with root package name */
+        public final c01.a f54676g;
+
+        /* JADX INFO: renamed from: h, reason: collision with root package name */
+        public final iz0.a f54677h;
+
+        public a(String str, String str2, ClipFeedTab clipFeedTab, SdkClipVideoFile sdkClipVideoFile, c01.h hVar, c01.d dVar, c01.a aVar, iz0.a aVar2) {
+            this.f54670a = str;
+            this.f54671b = str2;
+            this.f54672c = clipFeedTab;
+            this.f54673d = sdkClipVideoFile;
+            this.f54674e = hVar;
+            this.f54675f = dVar;
+            this.f54676g = aVar;
+            this.f54677h = aVar2;
+        }
+
+        @Override // com.vk.clips.sdk.shared.feed.model.FeedItem.d
+        public final c01.h I() {
+            return this.f54674e;
+        }
+
+        @Override // com.vk.clips.sdk.shared.feed.model.FeedItem.d
+        public final d L(SdkVideoFile sdkVideoFile) {
+            return new a(this.f54670a, this.f54671b, this.f54672c, (SdkClipVideoFile) sdkVideoFile, this.f54674e, this.f54675f, this.f54676g, this.f54677h);
+        }
+
+        @Override // com.vk.clips.sdk.shared.feed.model.FeedItem.d
+        public final c01.d b() {
+            return this.f54675f;
+        }
+
+        @Override // com.vk.clips.sdk.shared.feed.model.FeedItem.j, com.vk.clips.sdk.shared.feed.model.FeedItem.d
+        public final SdkClipVideoFile c() {
+            return this.f54673d;
+        }
+
+        @Override // com.vk.clips.sdk.shared.feed.model.FeedItem
+        public final String d() {
+            return d.a.a(this);
+        }
+
+        public final boolean equals(Object obj) {
+            if (this == obj) {
+                return true;
+            }
+            if (!(obj instanceof a)) {
+                return false;
+            }
+            a aVar = (a) obj;
+            return kotlin.jvm.internal.h.d(this.f54670a, aVar.f54670a) && kotlin.jvm.internal.h.d(this.f54671b, aVar.f54671b) && kotlin.jvm.internal.h.d(this.f54672c, aVar.f54672c) && kotlin.jvm.internal.h.d(this.f54673d, aVar.f54673d) && kotlin.jvm.internal.h.d(this.f54674e, aVar.f54674e) && kotlin.jvm.internal.h.d(this.f54675f, aVar.f54675f) && kotlin.jvm.internal.h.d(this.f54676g, aVar.f54676g) && kotlin.jvm.internal.h.d(this.f54677h, aVar.f54677h);
+        }
+
+        @Override // com.vk.clips.sdk.shared.feed.model.FeedItem, lz0.a
+        public final String f() {
+            return d.a.a(this);
+        }
+
+        @Override // com.vk.clips.sdk.shared.feed.model.FeedItem.d, yz1.j
+        public final Integer getItemId() {
+            return Integer.valueOf(d().hashCode());
+        }
+
+        public final int hashCode() {
+            int iHashCode = (this.f54676g.hashCode() + ((this.f54675f.hashCode() + ((this.f54674e.hashCode() + ((this.f54673d.hashCode() + ((this.f54672c.hashCode() + androidx.collection.j.a(this.f54670a.hashCode() * 31, 31, this.f54671b)) * 31)) * 31)) * 31)) * 31)) * 31;
+            iz0.a aVar = this.f54677h;
+            return iHashCode + (aVar == null ? 0 : aVar.hashCode());
+        }
+
+        @Override // com.vk.clips.sdk.shared.feed.model.FeedItem
+        public final boolean l() {
+            return true;
+        }
+
+        @Override // com.vk.clips.sdk.shared.feed.model.FeedItem.l
+        public final u11.e s() {
+            return null;
+        }
+
+        public final String toString() {
+            return "Ads(analyticRef=" + this.f54670a + ", analyticContext=" + this.f54671b + ", commonParams=" + this.f54672c + ", video=" + this.f54673d + ", videoFileController=" + this.f54674e + ", autoPlay=" + this.f54675f + ", autoPlayTrackingData=" + this.f54676g + ", myTargetFacade=" + this.f54677h + ')';
+        }
+
+        @Override // com.vk.clips.sdk.shared.feed.model.FeedItem.d
+        public final SdkVideoFile c() {
+            return this.f54673d;
+        }
+
+        @Override // yz1.j
+        public final Number getItemId() {
+            return Integer.valueOf(d().hashCode());
+        }
+    }
+
+    /* JADX INFO: compiled from: FeedItem.kt */
+    public static final class b implements FeedItem {
+
+        /* JADX INFO: renamed from: a, reason: collision with root package name */
+        public static final String f54678a;
+
+        static {
+            new b();
+            f54678a = "ads_controls_item_key";
+        }
+
+        @Override // com.vk.clips.sdk.shared.feed.model.FeedItem
+        public final String d() {
+            return f54678a;
+        }
+
+        public final boolean equals(Object obj) {
+            return this == obj || (obj instanceof b);
+        }
+
+        @Override // com.vk.clips.sdk.shared.feed.model.FeedItem, lz0.a
+        public final String f() {
+            return d();
+        }
+
+        @Override // yz1.j
+        public final Number getItemId() {
+            return Integer.valueOf(f54678a.hashCode());
+        }
+
+        public final int hashCode() {
+            return 1996331667;
+        }
+
+        @Override // com.vk.clips.sdk.shared.feed.model.FeedItem
+        public final boolean l() {
+            return this instanceof c;
+        }
+
+        public final String toString() {
+            return "AdsControlsItem";
+        }
+    }
+
+    /* JADX INFO: compiled from: FeedItem.kt */
+    public interface c {
+    }
+
+    /* JADX INFO: compiled from: FeedItem.kt */
+    public interface d extends FeedItem {
+
+        /* JADX INFO: compiled from: FeedItem.kt */
+        public static final class a {
+            public static String a(l lVar) {
+                return lVar.c().P0();
+            }
+        }
+
+        c01.h I();
+
+        d L(SdkVideoFile sdkVideoFile);
+
+        c01.d b();
+
+        SdkVideoFile c();
+
+        @Override // yz1.j
+        Integer getItemId();
+    }
+
+    /* JADX INFO: compiled from: FeedItem.kt */
+    public static final class e implements j {
+
+        /* JADX INFO: renamed from: a, reason: collision with root package name */
+        public final String f54679a;
+
+        /* JADX INFO: renamed from: b, reason: collision with root package name */
+        public final String f54680b;
+
+        /* JADX INFO: renamed from: c, reason: collision with root package name */
+        public final ClipFeedTab f54681c;
+
+        /* JADX INFO: renamed from: d, reason: collision with root package name */
+        public final SdkClipVideoFile f54682d;
+
+        /* JADX INFO: renamed from: e, reason: collision with root package name */
+        public final u11.e f54683e;
+
+        /* JADX INFO: renamed from: f, reason: collision with root package name */
+        public final c01.h f54684f;
+
+        /* JADX INFO: renamed from: g, reason: collision with root package name */
+        public final c01.d f54685g;
+
+        /* JADX INFO: renamed from: h, reason: collision with root package name */
+        public final c01.a f54686h;
+
+        /* JADX INFO: renamed from: i, reason: collision with root package name */
+        public final iz0.a f54687i;
+
+        /* JADX INFO: renamed from: j, reason: collision with root package name */
+        public final SdkClipActivities f54688j;
+
+        /* JADX INFO: renamed from: k, reason: collision with root package name */
+        public final ClipsFeedDecorationPayload f54689k;
+
+        /* JADX INFO: renamed from: l, reason: collision with root package name */
+        public final String f54690l;
+
+        public e(String str, String str2, ClipFeedTab clipFeedTab, SdkClipVideoFile sdkClipVideoFile, u11.e eVar, c01.h hVar, c01.d dVar, c01.a aVar, iz0.a aVar2, SdkClipActivities sdkClipActivities, ClipsFeedDecorationPayload clipsFeedDecorationPayload) {
+            this.f54679a = str;
+            this.f54680b = str2;
+            this.f54681c = clipFeedTab;
+            this.f54682d = sdkClipVideoFile;
+            this.f54683e = eVar;
+            this.f54684f = hVar;
+            this.f54685g = dVar;
+            this.f54686h = aVar;
+            this.f54687i = aVar2;
+            this.f54688j = sdkClipActivities;
+            this.f54689k = clipsFeedDecorationPayload;
+            StringBuilder sb2 = new StringBuilder();
+            sb2.append(sdkClipVideoFile.u0());
+            sb2.append(clipsFeedDecorationPayload.hashCode());
+            sb2.append(sdkClipVideoFile.g0() == null ? null : sdkClipVideoFile.r());
+            this.f54690l = sb2.toString();
+        }
+
+        public static e a(e eVar, SdkClipVideoFile sdkClipVideoFile, u11.e eVar2, SdkClipActivities sdkClipActivities, int i16) {
+            String str = eVar.f54679a;
+            String str2 = eVar.f54680b;
+            ClipFeedTab clipFeedTab = eVar.f54681c;
+            if ((i16 & 8) != 0) {
+                sdkClipVideoFile = eVar.f54682d;
+            }
+            SdkClipVideoFile sdkClipVideoFile2 = sdkClipVideoFile;
+            if ((i16 & 16) != 0) {
+                eVar2 = eVar.f54683e;
+            }
+            u11.e eVar3 = eVar2;
+            c01.h hVar = eVar.f54684f;
+            c01.d dVar = eVar.f54685g;
+            c01.a aVar = eVar.f54686h;
+            iz0.a aVar2 = eVar.f54687i;
+            SdkClipActivities sdkClipActivities2 = (i16 & SoLoader.SOLOADER_ENABLE_SYSTEMLOAD_WRAPPER_SOSOURCE) != 0 ? eVar.f54688j : sdkClipActivities;
+            ClipsFeedDecorationPayload clipsFeedDecorationPayload = eVar.f54689k;
+            eVar.getClass();
+            return new e(str, str2, clipFeedTab, sdkClipVideoFile2, eVar3, hVar, dVar, aVar, aVar2, sdkClipActivities2, clipsFeedDecorationPayload);
+        }
+
+        @Override // com.vk.clips.sdk.shared.feed.model.FeedItem.d
+        public final c01.h I() {
+            return this.f54684f;
+        }
+
+        @Override // com.vk.clips.sdk.shared.feed.model.FeedItem.d
+        public final d L(SdkVideoFile sdkVideoFile) {
+            return a(this, (SdkClipVideoFile) sdkVideoFile, null, null, 2039);
+        }
+
+        @Override // com.vk.clips.sdk.shared.feed.model.FeedItem.d
+        public final c01.d b() {
+            return this.f54685g;
+        }
+
+        @Override // com.vk.clips.sdk.shared.feed.model.FeedItem.j, com.vk.clips.sdk.shared.feed.model.FeedItem.d
+        public final SdkClipVideoFile c() {
+            return this.f54682d;
+        }
+
+        @Override // com.vk.clips.sdk.shared.feed.model.FeedItem
+        public final String d() {
+            return d.a.a(this);
+        }
+
+        public final boolean equals(Object obj) {
+            if (this == obj) {
+                return true;
+            }
+            if (!(obj instanceof e)) {
+                return false;
+            }
+            e eVar = (e) obj;
+            return kotlin.jvm.internal.h.d(this.f54679a, eVar.f54679a) && kotlin.jvm.internal.h.d(this.f54680b, eVar.f54680b) && kotlin.jvm.internal.h.d(this.f54681c, eVar.f54681c) && kotlin.jvm.internal.h.d(this.f54682d, eVar.f54682d) && kotlin.jvm.internal.h.d(this.f54683e, eVar.f54683e) && kotlin.jvm.internal.h.d(this.f54684f, eVar.f54684f) && kotlin.jvm.internal.h.d(this.f54685g, eVar.f54685g) && kotlin.jvm.internal.h.d(this.f54686h, eVar.f54686h) && kotlin.jvm.internal.h.d(this.f54687i, eVar.f54687i) && kotlin.jvm.internal.h.d(this.f54688j, eVar.f54688j) && kotlin.jvm.internal.h.d(this.f54689k, eVar.f54689k);
+        }
+
+        @Override // com.vk.clips.sdk.shared.feed.model.FeedItem, lz0.a
+        public final String f() {
+            return this.f54690l;
+        }
+
+        public final int hashCode() {
+            int iHashCode = (this.f54682d.hashCode() + ((this.f54681c.hashCode() + androidx.collection.j.a(this.f54679a.hashCode() * 31, 31, this.f54680b)) * 31)) * 31;
+            u11.e eVar = this.f54683e;
+            int iHashCode2 = (this.f54686h.hashCode() + ((this.f54685g.hashCode() + ((this.f54684f.hashCode() + ((iHashCode + (eVar == null ? 0 : eVar.hashCode())) * 31)) * 31)) * 31)) * 31;
+            iz0.a aVar = this.f54687i;
+            int iHashCode3 = (iHashCode2 + (aVar == null ? 0 : aVar.hashCode())) * 31;
+            SdkClipActivities sdkClipActivities = this.f54688j;
+            return this.f54689k.hashCode() + ((iHashCode3 + (sdkClipActivities != null ? sdkClipActivities.hashCode() : 0)) * 31);
+        }
+
+        @Override // com.vk.clips.sdk.shared.feed.model.FeedItem
+        public final boolean l() {
+            return this instanceof c;
+        }
+
+        @Override // com.vk.clips.sdk.shared.feed.model.FeedItem.l
+        public final u11.e s() {
+            return this.f54683e;
+        }
+
+        public final String toString() {
+            return "Clip(analyticRef=" + this.f54679a + ", analyticContext=" + this.f54680b + ", commonParams=" + this.f54681c + ", video=" + this.f54682d + ", cacheInfo=" + this.f54683e + ", videoFileController=" + this.f54684f + ", autoPlay=" + this.f54685g + ", autoPlayTrackingData=" + this.f54686h + ", myTargetFacade=" + this.f54687i + ", activities=" + this.f54688j + ", decorationPayload=" + this.f54689k + ')';
+        }
+
+        @Override // com.vk.clips.sdk.shared.feed.model.FeedItem.d
+        public final SdkVideoFile c() {
+            return this.f54682d;
+        }
+
+        @Override // yz1.j
+        public final Integer getItemId() {
+            return Integer.valueOf(this.f54682d.P0().hashCode());
+        }
+    }
+
+    /* JADX INFO: compiled from: FeedItem.kt */
+    public static final class f implements FeedItem {
+
+        /* JADX INFO: renamed from: a, reason: collision with root package name */
+        public static final String f54691a;
+
+        static {
+            new f();
+            f54691a = "clip_controls_item_key";
+        }
+
+        @Override // com.vk.clips.sdk.shared.feed.model.FeedItem
+        public final String d() {
+            return f54691a;
+        }
+
+        public final boolean equals(Object obj) {
+            return this == obj || (obj instanceof f);
+        }
+
+        @Override // com.vk.clips.sdk.shared.feed.model.FeedItem, lz0.a
+        public final String f() {
+            return d();
+        }
+
+        @Override // yz1.j
+        public final Number getItemId() {
+            return Integer.valueOf(f54691a.hashCode());
+        }
+
+        public final int hashCode() {
+            return -1830790465;
+        }
+
+        @Override // com.vk.clips.sdk.shared.feed.model.FeedItem
+        public final boolean l() {
+            return this instanceof c;
+        }
+
+        public final String toString() {
+            return "ClipControlsItem";
+        }
+    }
+
+    /* JADX INFO: compiled from: FeedItem.kt */
+    public static final class g implements d {
+
+        /* JADX INFO: renamed from: a, reason: collision with root package name */
+        public final String f54692a;
+
+        /* JADX INFO: renamed from: b, reason: collision with root package name */
+        public final String f54693b;
+
+        /* JADX INFO: renamed from: c, reason: collision with root package name */
+        public final SdkVideoFile f54694c;
+
+        /* JADX INFO: renamed from: d, reason: collision with root package name */
+        public final c01.h f54695d;
+
+        /* JADX INFO: renamed from: e, reason: collision with root package name */
+        public final c01.d f54696e;
+
+        /* JADX INFO: renamed from: f, reason: collision with root package name */
+        public final c01.a f54697f;
+
+        /* JADX INFO: renamed from: g, reason: collision with root package name */
+        public final boolean f54698g;
+
+        public g(String str, String str2, SdkVideoFile sdkVideoFile, c01.h hVar, c01.d dVar, c01.a aVar, boolean z13) {
+            this.f54692a = str;
+            this.f54693b = str2;
+            this.f54694c = sdkVideoFile;
+            this.f54695d = hVar;
+            this.f54696e = dVar;
+            this.f54697f = aVar;
+            this.f54698g = z13;
+        }
+
+        @Override // com.vk.clips.sdk.shared.feed.model.FeedItem.d
+        public final c01.h I() {
+            return this.f54695d;
+        }
+
+        @Override // com.vk.clips.sdk.shared.feed.model.FeedItem.d
+        public final d L(SdkVideoFile sdkVideoFile) {
+            return new g(this.f54692a, this.f54693b, sdkVideoFile, this.f54695d, this.f54696e, this.f54697f, this.f54698g);
+        }
+
+        @Override // com.vk.clips.sdk.shared.feed.model.FeedItem.d
+        public final c01.d b() {
+            return this.f54696e;
+        }
+
+        @Override // com.vk.clips.sdk.shared.feed.model.FeedItem.d
+        public final SdkVideoFile c() {
+            return this.f54694c;
+        }
+
+        @Override // com.vk.clips.sdk.shared.feed.model.FeedItem
+        public final String d() {
+            return c().P0();
+        }
+
+        public final boolean equals(Object obj) {
+            if (this == obj) {
+                return true;
+            }
+            if (!g.class.equals(obj != null ? obj.getClass() : null)) {
+                return false;
+            }
+            g gVar = (g) obj;
+            if (!kotlin.jvm.internal.h.d(this.f54692a, gVar.f54692a) || !kotlin.jvm.internal.h.d(this.f54693b, gVar.f54693b)) {
+                return false;
+            }
+            SdkVideoFile sdkVideoFile = this.f54694c;
+            return sdkVideoFile.D0() == gVar.f54694c.D0() && sdkVideoFile.w0() == gVar.f54694c.w0() && sdkVideoFile.p0() == gVar.f54694c.p0() && kotlin.jvm.internal.h.d(sdkVideoFile.P0(), gVar.f54694c.P0()) && sdkVideoFile.O() == gVar.f54694c.O();
+        }
+
+        @Override // com.vk.clips.sdk.shared.feed.model.FeedItem, lz0.a
+        public final String f() {
+            return d();
+        }
+
+        @Override // yz1.j
+        public final Integer getItemId() {
+            return Integer.valueOf(d().hashCode());
+        }
+
+        public final int hashCode() {
+            return this.f54694c.hashCode() + androidx.collection.j.a(this.f54692a.hashCode() * 31, 31, this.f54693b);
+        }
+
+        @Override // com.vk.clips.sdk.shared.feed.model.FeedItem
+        public final boolean l() {
+            return this instanceof c;
+        }
+
+        public final String toString() {
+            StringBuilder sb2 = new StringBuilder("Live(analyticRef=");
+            sb2.append(this.f54692a);
+            sb2.append(", analyticContext=");
+            sb2.append(this.f54693b);
+            sb2.append(", video=");
+            sb2.append(this.f54694c);
+            sb2.append(", videoFileController=");
+            sb2.append(this.f54695d);
+            sb2.append(", autoPlay=");
+            sb2.append(this.f54696e);
+            sb2.append(", autoPlayTrackingData=");
+            sb2.append(this.f54697f);
+            sb2.append(", isDislikeEnabled=");
+            return d0.c(sb2, this.f54698g, ')');
+        }
+    }
+
+    /* JADX INFO: compiled from: FeedItem.kt */
+    public static final class h implements FeedItem, c {
+
+        /* JADX INFO: renamed from: a, reason: collision with root package name */
+        public final String f54699a;
+
+        /* JADX INFO: renamed from: b, reason: collision with root package name */
+        public final List<jz0.a> f54700b;
+
+        /* JADX INFO: renamed from: c, reason: collision with root package name */
+        public final ImageUrl f54701c;
+
+        /* JADX INFO: renamed from: d, reason: collision with root package name */
+        public final k01.e.b.a f54702d;
+
+        /* JADX INFO: renamed from: e, reason: collision with root package name */
+        public final SdkActionLink f54703e;
+
+        /* JADX INFO: renamed from: f, reason: collision with root package name */
+        public final String f54704f;
+
+        /* JADX INFO: renamed from: g, reason: collision with root package name */
+        public final String f54705g;
+
+        public h(ImageUrl imageUrl, SdkActionLink sdkActionLink, String str, String str2, String str3, List list, k01.e.b.a aVar) {
+            this.f54699a = str;
+            this.f54700b = list;
+            this.f54701c = imageUrl;
+            this.f54702d = aVar;
+            this.f54703e = sdkActionLink;
+            this.f54704f = str2;
+            this.f54705g = str3;
+        }
+
+        @Override // com.vk.clips.sdk.shared.feed.model.FeedItem
+        public final String d() {
+            String str = this.f54705g;
+            return str == null ? this.f54699a : str;
+        }
+
+        public final boolean equals(Object obj) {
+            if (this == obj) {
+                return true;
+            }
+            if (!(obj instanceof h)) {
+                return false;
+            }
+            h hVar = (h) obj;
+            return kotlin.jvm.internal.h.d(this.f54699a, hVar.f54699a) && kotlin.jvm.internal.h.d(this.f54700b, hVar.f54700b) && kotlin.jvm.internal.h.d(this.f54701c, hVar.f54701c) && kotlin.jvm.internal.h.d(this.f54702d, hVar.f54702d) && kotlin.jvm.internal.h.d(this.f54703e, hVar.f54703e) && kotlin.jvm.internal.h.d(this.f54704f, hVar.f54704f) && kotlin.jvm.internal.h.d(this.f54705g, hVar.f54705g);
+        }
+
+        @Override // com.vk.clips.sdk.shared.feed.model.FeedItem, lz0.a
+        public final String f() {
+            return d();
+        }
+
+        @Override // yz1.j
+        public final Number getItemId() {
+            return Integer.valueOf(d().hashCode());
+        }
+
+        public final int hashCode() {
+            int iA = n.a(this.f54699a.hashCode() * 31, 31, this.f54700b);
+            ImageUrl imageUrl = this.f54701c;
+            int iHashCode = (this.f54702d.hashCode() + ((iA + (imageUrl == null ? 0 : imageUrl.hashCode())) * 31)) * 31;
+            SdkActionLink sdkActionLink = this.f54703e;
+            int iA2 = androidx.collection.j.a((iHashCode + (sdkActionLink == null ? 0 : sdkActionLink.hashCode())) * 31, 31, this.f54704f);
+            String str = this.f54705g;
+            return (iA2 + (str != null ? str.hashCode() : 0)) * 31;
+        }
+
+        @Override // com.vk.clips.sdk.shared.feed.model.FeedItem
+        public final boolean l() {
+            return true;
+        }
+
+        public final String toString() {
+            StringBuilder sb2 = new StringBuilder("MarketAds(id=");
+            sb2.append(this.f54699a);
+            sb2.append(", cards=");
+            sb2.append(this.f54700b);
+            sb2.append(", image=");
+            sb2.append(this.f54701c);
+            sb2.append(", adInfo=");
+            sb2.append(this.f54702d);
+            sb2.append(", actionLink=");
+            sb2.append(this.f54703e);
+            sb2.append(", description=");
+            sb2.append(this.f54704f);
+            sb2.append(", trackCode=");
+            return androidx.car.app.model.e.d(sb2, this.f54705g, ", myTargetFacade=null)");
+        }
+    }
+
+    /* JADX INFO: compiled from: FeedItem.kt */
+    public static final class i implements l {
+
+        /* JADX INFO: renamed from: a, reason: collision with root package name */
+        public final String f54706a;
+
+        /* JADX INFO: renamed from: b, reason: collision with root package name */
+        public final String f54707b;
+
+        /* JADX INFO: renamed from: c, reason: collision with root package name */
+        public final ClipFeedTab f54708c;
+
+        /* JADX INFO: renamed from: d, reason: collision with root package name */
+        public final SdkClipVideoFile f54709d;
+
+        /* JADX INFO: renamed from: e, reason: collision with root package name */
+        public final u11.e f54710e;
+
+        /* JADX INFO: renamed from: f, reason: collision with root package name */
+        public final c01.h f54711f;
+
+        /* JADX INFO: renamed from: g, reason: collision with root package name */
+        public final c01.d f54712g;
+
+        /* JADX INFO: renamed from: h, reason: collision with root package name */
+        public final c01.a f54713h;
+
+        public i(String str, String str2, ClipFeedTab clipFeedTab, SdkClipVideoFile sdkClipVideoFile, u11.e eVar, c01.h hVar, c01.d dVar, c01.a aVar) {
+            this.f54706a = str;
+            this.f54707b = str2;
+            this.f54708c = clipFeedTab;
+            this.f54709d = sdkClipVideoFile;
+            this.f54710e = eVar;
+            this.f54711f = hVar;
+            this.f54712g = dVar;
+            this.f54713h = aVar;
+        }
+
+        @Override // com.vk.clips.sdk.shared.feed.model.FeedItem.d
+        public final c01.h I() {
+            return this.f54711f;
+        }
+
+        @Override // com.vk.clips.sdk.shared.feed.model.FeedItem.d
+        public final d L(SdkVideoFile sdkVideoFile) {
+            return new i(this.f54706a, this.f54707b, this.f54708c, (SdkClipVideoFile) sdkVideoFile, this.f54710e, this.f54711f, this.f54712g, this.f54713h);
+        }
+
+        @Override // com.vk.clips.sdk.shared.feed.model.FeedItem.d
+        public final c01.d b() {
+            return this.f54712g;
+        }
+
+        @Override // com.vk.clips.sdk.shared.feed.model.FeedItem.d
+        public final SdkVideoFile c() {
+            return this.f54709d;
+        }
+
+        @Override // com.vk.clips.sdk.shared.feed.model.FeedItem
+        public final String d() {
+            return d.a.a(this);
+        }
+
+        public final boolean equals(Object obj) {
+            if (this == obj) {
+                return true;
+            }
+            if (!(obj instanceof i)) {
+                return false;
+            }
+            i iVar = (i) obj;
+            return kotlin.jvm.internal.h.d(this.f54706a, iVar.f54706a) && kotlin.jvm.internal.h.d(this.f54707b, iVar.f54707b) && kotlin.jvm.internal.h.d(this.f54708c, iVar.f54708c) && kotlin.jvm.internal.h.d(this.f54709d, iVar.f54709d) && kotlin.jvm.internal.h.d(this.f54710e, iVar.f54710e) && kotlin.jvm.internal.h.d(this.f54711f, iVar.f54711f) && kotlin.jvm.internal.h.d(this.f54712g, iVar.f54712g) && kotlin.jvm.internal.h.d(this.f54713h, iVar.f54713h);
+        }
+
+        @Override // com.vk.clips.sdk.shared.feed.model.FeedItem, lz0.a
+        public final String f() {
+            return d.a.a(this);
+        }
+
+        @Override // com.vk.clips.sdk.shared.feed.model.FeedItem.d, yz1.j
+        public final Integer getItemId() {
+            return Integer.valueOf(d().hashCode());
+        }
+
+        public final int hashCode() {
+            int iHashCode = (this.f54709d.hashCode() + ((this.f54708c.hashCode() + androidx.collection.j.a(this.f54706a.hashCode() * 31, 31, this.f54707b)) * 31)) * 31;
+            u11.e eVar = this.f54710e;
+            return this.f54713h.hashCode() + ((this.f54712g.hashCode() + ((this.f54711f.hashCode() + ((iHashCode + (eVar == null ? 0 : eVar.hashCode())) * 31)) * 31)) * 31);
+        }
+
+        @Override // com.vk.clips.sdk.shared.feed.model.FeedItem
+        public final boolean l() {
+            return this instanceof c;
+        }
+
+        @Override // com.vk.clips.sdk.shared.feed.model.FeedItem.l
+        public final u11.e s() {
+            return this.f54710e;
+        }
+
+        public final String toString() {
+            return "MusicTemplate(analyticRef=" + this.f54706a + ", analyticContext=" + this.f54707b + ", commonParams=" + this.f54708c + ", video=" + this.f54709d + ", cacheInfo=" + this.f54710e + ", videoFileController=" + this.f54711f + ", autoPlay=" + this.f54712g + ", autoPlayTrackingData=" + this.f54713h + ')';
+        }
+
+        @Override // yz1.j
+        public final Number getItemId() {
+            return Integer.valueOf(d().hashCode());
+        }
+    }
+
+    /* JADX INFO: compiled from: FeedItem.kt */
+    public interface j extends l {
+        @Override // com.vk.clips.sdk.shared.feed.model.FeedItem.d
+        SdkClipVideoFile c();
+    }
+
+    /* JADX INFO: compiled from: FeedItem.kt */
+    public static final class k implements FeedItem, c {
+
+        /* JADX INFO: renamed from: a, reason: collision with root package name */
+        public final String f54714a;
+
+        /* JADX INFO: renamed from: b, reason: collision with root package name */
+        public final ImageUrl f54715b;
+
+        /* JADX INFO: renamed from: c, reason: collision with root package name */
+        public final k01.e.d.a f54716c;
+
+        /* JADX INFO: renamed from: d, reason: collision with root package name */
+        public final SdkActionLink f54717d;
+
+        /* JADX INFO: renamed from: e, reason: collision with root package name */
+        public final String f54718e;
+
+        /* JADX INFO: renamed from: f, reason: collision with root package name */
+        public final String f54719f;
+
+        /* JADX INFO: renamed from: g, reason: collision with root package name */
+        public final iz0.a f54720g;
+
+        public k(ImageUrl imageUrl, SdkActionLink sdkActionLink, iz0.a aVar, String str, String str2, String str3, k01.e.d.a aVar2) {
+            this.f54714a = str;
+            this.f54715b = imageUrl;
+            this.f54716c = aVar2;
+            this.f54717d = sdkActionLink;
+            this.f54718e = str2;
+            this.f54719f = str3;
+            this.f54720g = aVar;
+        }
+
+        @Override // com.vk.clips.sdk.shared.feed.model.FeedItem
+        public final String d() {
+            String str = this.f54719f;
+            return str == null ? this.f54714a : str;
+        }
+
+        public final boolean equals(Object obj) {
+            if (this == obj) {
+                return true;
+            }
+            if (!(obj instanceof k)) {
+                return false;
+            }
+            k kVar = (k) obj;
+            return kotlin.jvm.internal.h.d(this.f54714a, kVar.f54714a) && kotlin.jvm.internal.h.d(this.f54715b, kVar.f54715b) && kotlin.jvm.internal.h.d(this.f54716c, kVar.f54716c) && kotlin.jvm.internal.h.d(this.f54717d, kVar.f54717d) && kotlin.jvm.internal.h.d(this.f54718e, kVar.f54718e) && kotlin.jvm.internal.h.d(this.f54719f, kVar.f54719f) && kotlin.jvm.internal.h.d(this.f54720g, kVar.f54720g);
+        }
+
+        @Override // com.vk.clips.sdk.shared.feed.model.FeedItem, lz0.a
+        public final String f() {
+            return d();
+        }
+
+        @Override // yz1.j
+        public final Number getItemId() {
+            return Integer.valueOf(d().hashCode());
+        }
+
+        public final int hashCode() {
+            int iHashCode = (this.f54716c.hashCode() + ((this.f54715b.hashCode() + (this.f54714a.hashCode() * 31)) * 31)) * 31;
+            SdkActionLink sdkActionLink = this.f54717d;
+            int iA = androidx.collection.j.a((iHashCode + (sdkActionLink == null ? 0 : sdkActionLink.hashCode())) * 31, 31, this.f54718e);
+            String str = this.f54719f;
+            int iHashCode2 = (iA + (str == null ? 0 : str.hashCode())) * 31;
+            iz0.a aVar = this.f54720g;
+            return iHashCode2 + (aVar != null ? aVar.hashCode() : 0);
+        }
+
+        @Override // com.vk.clips.sdk.shared.feed.model.FeedItem
+        public final boolean l() {
+            return true;
+        }
+
+        public final String toString() {
+            return "StaticAds(id=" + this.f54714a + ", image=" + this.f54715b + ", adInfo=" + this.f54716c + ", actionLink=" + this.f54717d + ", description=" + this.f54718e + ", trackCode=" + this.f54719f + ", myTargetFacade=" + this.f54720g + ')';
+        }
+    }
+
+    /* JADX INFO: compiled from: FeedItem.kt */
+    public interface l extends d {
+        u11.e s();
+    }
+
+    String d();
+
+    @Override // lz0.a
+    String f();
+
+    boolean l();
+}
+
