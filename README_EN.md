@@ -59,13 +59,9 @@ For a re-signed VK Video 1.163 build, **Bypass native signature check** is manda
 
 ## Automated updates
 
-The release workflow checks upstream in this order:
+The release workflow queries every available upstream source — RuStore, Google Play via gplaydl, and APKPure via apkeep — verifies each downloaded base APK, and selects the candidate with the **highest verified `versionCode`**. Source priority is only used as a tie-breaker.
 
-1. RuStore
-2. Google Play via gplaydl
-3. APKPure via apkeep
-
-Before patching, it validates package name, version metadata, the original VK certificate, downgrade protection, bytecode fingerprints, and the native signature-check pattern.
+Before patching, it validates package name, version metadata, the original VK certificate, downgrade protection, bytecode fingerprints, the native signature-check pattern, the manifest coexistence fix, multidex startup prerequisites, zip alignment, and the final project signature.
 
 A new version is not published merely because it downloads. If a required fingerprint or native pattern no longer matches, the pipeline stops and opens a compatibility issue.
 
