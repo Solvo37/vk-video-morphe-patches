@@ -52,11 +52,29 @@ jobs:
         with:
           gradle-version: '9.7.1'
 
-      - name: Install Android verification tools
+      - name: Setup Android verification tools
         run: |
           set -euo pipefail
           sudo apt-get update
-          sudo apt-get install -y apksigner aapt zipalign jq unzip
+          sudo apt-get install -y jq unzip
+
+          test -n "${ANDROID_HOME:-}"
+          ZIPALIGN_BIN="$(find "$ANDROID_HOME/build-tools" -mindepth 2 -maxdepth 2 -type f -name zipalign | sort -V | tail -n1)"
+          APKSIGNER_BIN="$(find "$ANDROID_HOME/build-tools" -mindepth 2 -maxdepth 2 -type f -name apksigner | sort -V | tail -n1)"
+          AAPT_BIN="$(find "$ANDROID_HOME/build-tools" -mindepth 2 -maxdepth 2 -type f -name aapt | sort -V | tail -n1)"
+
+          test -x "$ZIPALIGN_BIN"
+          test -x "$APKSIGNER_BIN"
+          test -x "$AAPT_BIN"
+
+          echo "ZIPALIGN_BIN=$ZIPALIGN_BIN" >> "$GITHUB_ENV"
+          echo "APKSIGNER_BIN=$APKSIGNER_BIN" >> "$GITHUB_ENV"
+          echo "AAPT_BIN=$AAPT_BIN" >> "$GITHUB_ENV"
+
+          echo "Using zipalign: $ZIPALIGN_BIN"
+          "$ZIPALIGN_BIN" -h 2>&1 | head -n 3 || true
+          echo "Using apksigner: $APKSIGNER_BIN"
+          "$APKSIGNER_BIN" version
 
       - name: Build 0.3 development patch bundle
         env:
@@ -78,12 +96,12 @@ jobs:
             "https://github.com/$GITHUB_REPOSITORY/releases/download/$BASE_TAG/$BASE_APK"
           echo "$BASE_SHA256  dist/$BASE_APK" | sha256sum -c -
 
-          VERIFY="$(apksigner verify --verbose --print-certs "dist/$BASE_APK")"
+          VERIFY="$("$APKSIGNER_BIN" verify --verbose --print-certs "dist/$BASE_APK")"
           printf '%s\n' "$VERIFY"
           CERT="$(sed -n 's/^Signer #1 certificate SHA-256 digest: //p' <<< "$VERIFY" | head -n1 | tr '[:upper:]' '[:lower:]' | tr -d ':')"
           [[ "$CERT" == "$PROJECT_CERT_SHA256" ]]
 
-          BADGING="$(aapt dump badging "dist/$BASE_APK" | head -n1)"
+          BADGING="$("$AAPT_BIN" dump badging "dist/$BASE_APK" | head -n1)"
           echo "$BADGING"
           grep -q "name='$PACKAGE_NAME'" <<< "$BADGING"
           grep -q "versionCode='51920'" <<< "$BADGING"
@@ -163,20 +181,20 @@ jobs:
           set -euo pipefail
           echo "Trying page-aligned dev APK..."
           set +e
-          zipalign -v -f -p 4 dist/dev-unsigned.apk dist/dev-aligned.apk
+          "$ZIPALIGN_BIN" -v -f -p 4 dist/dev-unsigned.apk dist/dev-aligned.apk
           PAGE_STATUS=$?
           set -e
 
           if [[ "$PAGE_STATUS" -eq 0 ]]; then
             echo "page" > dist/alignment-mode.txt
-            zipalign -c -p 4 dist/dev-aligned.apk
+            "$ZIPALIGN_BIN" -c -p 4 dist/dev-aligned.apk
             echo "Page alignment OK."
           else
             echo "::warning::zipalign -p failed with status $PAGE_STATUS; retrying standard 4-byte alignment for development candidate only."
             rm -f dist/dev-aligned.apk
-            zipalign -v -f 4 dist/dev-unsigned.apk dist/dev-aligned.apk
+            "$ZIPALIGN_BIN" -v -f 4 dist/dev-unsigned.apk dist/dev-aligned.apk
             test -s dist/dev-aligned.apk
-            zipalign -c 4 dist/dev-aligned.apk
+            "$ZIPALIGN_BIN" -c 4 dist/dev-aligned.apk
             echo "standard" > dist/alignment-mode.txt
             echo "Standard 4-byte alignment OK."
           fi
@@ -192,7 +210,7 @@ jobs:
           OUT="dist/VK-Video-1.163-0.3.0-alpha1-dev.apk"
 
           echo "Signing dev APK..."
-          apksigner sign \
+          "$APKSIGNER_BIN" sign \
             --ks signing.jks \
             --ks-pass env:STORE_PASSWORD \
             --ks-key-alias "$KEY_ALIAS" \
@@ -209,17 +227,17 @@ jobs:
 
           ALIGNMENT_MODE="$(cat dist/alignment-mode.txt)"
           if [[ "$ALIGNMENT_MODE" == "page" ]]; then
-            zipalign -c -p 4 "$OUT"
+            "$ZIPALIGN_BIN" -c -p 4 "$OUT"
           else
-            zipalign -c 4 "$OUT"
+            "$ZIPALIGN_BIN" -c 4 "$OUT"
           fi
 
-          VERIFY="$(apksigner verify --verbose --print-certs "$OUT")"
+          VERIFY="$("$APKSIGNER_BIN" verify --verbose --print-certs "$OUT")"
           printf '%s\n' "$VERIFY"
           CERT="$(sed -n 's/^Signer #1 certificate SHA-256 digest: //p' <<< "$VERIFY" | head -n1 | tr '[:upper:]' '[:lower:]' | tr -d ':')"
           [[ "$CERT" == "$PROJECT_CERT_SHA256" ]]
 
-          BADGING="$(aapt dump badging "$OUT" | head -n1)"
+          BADGING="$("$AAPT_BIN" dump badging "$OUT" | head -n1)"
           echo "$BADGING"
           grep -q "name='$PACKAGE_NAME'" <<< "$BADGING"
           grep -q "versionCode='51920'" <<< "$BADGING"
