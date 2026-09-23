@@ -8,6 +8,8 @@ on:
       - 'ci/dump_dex_methods.py'
       - 'patches/src/main/kotlin/dev/solvo37/vkvideopatches/RuntimeSettingsPatch.kt'
       - 'extensions/vk-video/**'
+      - 'gradle.properties'
+      - 'patches-list.json'
   workflow_dispatch:
 
 permissions:
@@ -85,7 +87,7 @@ jobs:
           MPP="$(find patches/build/libs -maxdepth 1 -type f -name '*.mpp' ! -name '*sources*' ! -name '*javadoc*' -print -quit)"
           test -n "$MPP"
           cp "$MPP" dev.mpp
-          grep -q '^version = 0.3.0-alpha1$' gradle.properties
+          grep -q '^version = 0.3.0-alpha2$' gradle.properties
 
       - name: Download verified stable base
         run: |
@@ -158,8 +160,10 @@ jobs:
           python ci/verify_patched_apk.py dist/dev-unsigned.apk --json-out dist/static-gate.json
 
           grep -q 'dev.solvo37.vkvideopatches.extension.PatchedSettingsActivity' dist/manifest-xmltree.txt
-          grep -q 'android.intent.action.MAIN' dist/manifest-xmltree.txt
-          grep -q 'android.intent.category.LAUNCHER' dist/manifest-xmltree.txt
+          if grep -A8 -B2 'dev.solvo37.vkvideopatches.extension.PatchedSettingsActivity' dist/manifest-xmltree.txt | grep -q 'android.intent.action.MAIN'; then
+            echo "::error::Patched settings Activity must not expose a launcher entry."
+            exit 1
+          fi
 
       - name: Decode project signing key
         env:
@@ -207,7 +211,7 @@ jobs:
         run: |
           set -euo pipefail
 
-          OUT="dist/VK-Video-1.163-0.3.0-alpha1-dev.apk"
+          OUT="dist/VK-Video-1.163-0.3.0-alpha2-dev.apk"
 
           echo "Signing dev APK..."
           "$APKSIGNER_BIN" sign \
@@ -244,18 +248,18 @@ jobs:
           grep -q "versionName='1.163'" <<< "$BADGING"
 
           python ci/verify_patched_apk.py "$OUT" --json-out dist/final-gate.json
-          sha256sum "$OUT" | tee dist/VK-Video-1.163-0.3.0-alpha1-dev.sha256
+          sha256sum "$OUT" | tee dist/VK-Video-1.163-0.3.0-alpha2-dev.sha256
 
       - name: Build candidate metadata
         run: |
           set -euo pipefail
-          FINAL_SHA="$(cut -d' ' -f1 dist/VK-Video-1.163-0.3.0-alpha1-dev.sha256)"
+          FINAL_SHA="$(cut -d' ' -f1 dist/VK-Video-1.163-0.3.0-alpha2-dev.sha256)"
 
           jq -n \
             --arg package "$PACKAGE_NAME" \
             --arg version_name "1.163" \
             --argjson version_code 51920 \
-            --arg patch_bundle_version "0.3.0-alpha1" \
+            --arg patch_bundle_version "0.3.0-alpha2" \
             --arg base_tag "$BASE_TAG" \
             --arg base_sha256 "$BASE_SHA256" \
             --arg final_sha256 "$FINAL_SHA" \
@@ -273,7 +277,8 @@ jobs:
                 "Runtime settings foundation",
                 "Disable ad-free subscription promo"
               ],
-              temporary_settings_launcher: true,
+              internal_profile_menu_entry: true,
+              temporary_settings_launcher: false,
               published_to_releases: false,
               workflow_run: $workflow_run
             }' > dist/dev-candidate-metadata.json
@@ -281,10 +286,10 @@ jobs:
       - name: Upload candidate artifact only
         uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7
         with:
-          name: vk-video-0.3.0-alpha1-dev-candidate
+          name: vk-video-0.3.0-alpha2-dev-candidate
           path: |
-            dist/VK-Video-1.163-0.3.0-alpha1-dev.apk
-            dist/VK-Video-1.163-0.3.0-alpha1-dev.sha256
+            dist/VK-Video-1.163-0.3.0-alpha2-dev.apk
+            dist/VK-Video-1.163-0.3.0-alpha2-dev.sha256
             dist/dev-candidate-metadata.json
             dist/patch-result.json
             dist/static-gate.json
