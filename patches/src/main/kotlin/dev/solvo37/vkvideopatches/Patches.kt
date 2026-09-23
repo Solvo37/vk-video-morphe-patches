@@ -12,7 +12,7 @@ import com.android.tools.smali.dexlib2.iface.instruction.ReferenceInstruction
 private const val VIDEO_FEATURES = "Lcom/vk/toggle/features/VideoFeatures;"
 private const val CLIPS_FEATURES = "Lcom/vk/toggle/features/ClipsFeatures;"
 private const val EMPTY_DISPOSABLE = "Lio/reactivex/rxjava3/internal/disposables/EmptyDisposable;"
-private const val VIDEO_ADS_COMPANION = "Lcom/vk/libvideo/api/di/VideoAdvertisementsComponent\\$Companion;"
+private const val VIDEO_ADS_COMPANION = "Lcom/vk/libvideo/api/di/VideoAdvertisementsComponent\$Companion;"
 
 @Suppress("unused")
 val disableInAppUpdatePatch = bytecodePatch(
