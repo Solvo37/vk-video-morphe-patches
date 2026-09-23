@@ -1,5 +1,14 @@
 # Changelog
 
+## 0.2.6 — 2026-09-23
+
+Profile cleanup after real-device validation of 1.163.5-rc1:
+
+- added **Hide profile ad-free promo** for the remaining «Отключить рекламу / бесплатно на 14 дней» card on the «Моё» screen;
+- the patch short-circuits `wc6.q.i(ArrayList)` (`ProfileMenuDataProvider.kt`), whose only job is to append `ProfileMenuItemType.AD_FREE_SUBSCRIPTION`;
+- the card is therefore omitted before RecyclerView/holder creation; other profile items, downloads and the already-working Clips/video ad blockers are untouched;
+- keeps the 0.2.5 startup-crash fix for the Home showcase blocker.
+
 ## 0.2.5 — 2026-09-23
 
 Startup-crash hotfix for the 0.2.4 home-ad blocker:
