@@ -269,8 +269,7 @@ internal object HomeShowcaseCatalogFactoryFingerprint : Fingerprint(
     )
 )
 
-// Real video-player advertising repository. VK's API component also ships a
-// no-op STUB repository, which is safer to use than chasing individual ad paths.
+// Real video-player advertising repository.
 internal object VideoAdvertisementsRepositoryFingerprint : Fingerprint(
     definingClass = "Lcom/vk/libvideo/impl/di/VideoAdvertisementsComponentImpl;",
     name = "Q6",
