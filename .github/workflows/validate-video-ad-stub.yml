@@ -43,13 +43,16 @@ jobs:
         run: |
           set -euo pipefail
           "$JAVA_HOME/bin/java" -jar morphe.jar patch \
-            -i VK-Video-1.163.3-patched.apk \
             -p work.mpp \
+            --force \
+            --exclusive \
             -e "Disable video ad repository" \
             -e "Hide home showcase ads" \
+            --bytecode-mode STRIP_FAST \
+            --unsigned \
+            -r patch-result.json \
             -o out.apk \
-            --report patch-result.json \
-            --purge
+            VK-Video-1.163.3-patched.apk
           cat patch-result.json
           jq -e '
             all(.patchingSteps[]?; .success == true)
