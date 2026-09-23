@@ -445,6 +445,35 @@ val blockDeepMidrollAdsPatch = bytecodePatch(
     }
 }
 @Suppress("unused")
+val disableVideoAdRepositoryPatch = bytecodePatch(
+    name = "Disable video ad repository",
+    description = "Replaces the real video advertising repository with VK's built-in no-op STUB.",
+    default = true
+) {
+    compatibleWith(VK_VIDEO)
+
+    execute {
+        VideoAdvertisementsRepositoryFingerprint.method.apply {
+            check(implementation!!.registerCount >= 2) {
+                "VideoAdvertisementsComponentImpl.Q6() has no safe local register"
+            }
+
+            addInstructions(
+                0,
+                """
+                    sget-object v0, Lcom/vk/libvideo/api/di/VideoAdvertisementsComponent;->INSTANCE:Lcom/vk/libvideo/api/di/VideoAdvertisementsComponent$Companion;
+                    invoke-virtual {v0}, Lcom/vk/libvideo/api/di/VideoAdvertisementsComponent$Companion;->getSTUB()Lcom/vk/libvideo/api/di/VideoAdvertisementsComponent;
+                    move-result-object v0
+                    invoke-interface {v0}, Lcom/vk/libvideo/api/di/VideoAdvertisementsComponent;->Q6()Lcom/vk/libvideo/api/ad/VideoAdvertisementsRepository;
+                    move-result-object v0
+                    return-object v0
+                """
+            )
+        }
+    }
+}
+
+@Suppress("unused")
 val hidePromotedBannerPatch = bytecodePatch(
     name = "Hide promoted banner content",
     description = "Forces VideoDiscoverAdsDto.canShowAdBanner to false.",
