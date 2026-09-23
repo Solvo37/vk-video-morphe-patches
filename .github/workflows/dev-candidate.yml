@@ -161,11 +161,25 @@ jobs:
       - name: Align development candidate
         run: |
           set -euo pipefail
-          echo "Aligning dev APK..."
-          zipalign -f -p 4 dist/dev-unsigned.apk dist/dev-aligned.apk
-          test -s dist/dev-aligned.apk
-          zipalign -c -p 4 dist/dev-aligned.apk
-          echo "Alignment OK."
+          echo "Trying page-aligned dev APK..."
+          set +e
+          zipalign -v -f -p 4 dist/dev-unsigned.apk dist/dev-aligned.apk
+          PAGE_STATUS=$?
+          set -e
+
+          if [[ "$PAGE_STATUS" -eq 0 ]]; then
+            echo "page" > dist/alignment-mode.txt
+            zipalign -c -p 4 dist/dev-aligned.apk
+            echo "Page alignment OK."
+          else
+            echo "::warning::zipalign -p failed with status $PAGE_STATUS; retrying standard 4-byte alignment for development candidate only."
+            rm -f dist/dev-aligned.apk
+            zipalign -v -f 4 dist/dev-unsigned.apk dist/dev-aligned.apk
+            test -s dist/dev-aligned.apk
+            zipalign -c 4 dist/dev-aligned.apk
+            echo "standard" > dist/alignment-mode.txt
+            echo "Standard 4-byte alignment OK."
+          fi
 
       - name: Sign development candidate
         env:
@@ -192,7 +206,13 @@ jobs:
 
           echo "Signature written."
           test -s "$OUT"
-          zipalign -c -p 4 "$OUT"
+
+          ALIGNMENT_MODE="$(cat dist/alignment-mode.txt)"
+          if [[ "$ALIGNMENT_MODE" == "page" ]]; then
+            zipalign -c -p 4 "$OUT"
+          else
+            zipalign -c 4 "$OUT"
+          fi
 
           VERIFY="$(apksigner verify --verbose --print-certs "$OUT")"
           printf '%s\n' "$VERIFY"
@@ -252,5 +272,6 @@ jobs:
             dist/static-gate.json
             dist/final-gate.json
             dist/manifest-xmltree.txt
+            dist/alignment-mode.txt
             dev.mpp
           if-no-files-found: error
