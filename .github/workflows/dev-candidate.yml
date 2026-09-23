@@ -5,6 +5,9 @@ on:
     branches: [dev/0.3-stability]
     paths:
       - '.github/workflows/dev-candidate.yml'
+      - 'ci/dump_dex_methods.py'
+      - 'patches/src/main/kotlin/dev/solvo37/vkvideopatches/RuntimeSettingsPatch.kt'
+      - 'extensions/vk-video/**'
   workflow_dispatch:
 
 permissions:
@@ -85,6 +88,14 @@ jobs:
           grep -q "name='$PACKAGE_NAME'" <<< "$BADGING"
           grep -q "versionCode='51920'" <<< "$BADGING"
           grep -q "versionName='1.163'" <<< "$BADGING"
+
+      - name: Inspect VK application methods
+        run: |
+          set -euo pipefail
+          python ci/dump_dex_methods.py \
+            "dist/$BASE_APK" \
+            'Lcom/vk/video/app/VkVideoApplication;' \
+            | tee dist/vk-video-application-methods.txt
 
       - name: Download pinned Morphe
         run: |
