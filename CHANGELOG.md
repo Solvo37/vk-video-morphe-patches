@@ -1,5 +1,14 @@
 # Changelog
 
+## 0.2.7 — 2026-09-23
+
+Safe profile-promo hotfix after the 1.163.5 crash report:
+
+- removed the direct `return-void` patch from `ProfileMenuDataProvider.i(ArrayList)`;
+- added **Disable ad-free subscription promo**, which forces only `VideoFeatures.VIDEO_AD_FREE_SUBSCRIPTION` to false;
+- VK's own profile code now follows its normal “feature disabled” path, so the «Отключить рекламу / бесплатно на 14 дней» card is never appended without changing RecyclerView/menu initialization;
+- 1.163.5 is marked broken and 1.163.3 remains stable while the replacement candidate is tested.
+
 ## 0.2.6 — 2026-09-23
 
 Profile cleanup after real-device validation of 1.163.5-rc1:
