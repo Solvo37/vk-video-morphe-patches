@@ -1,5 +1,14 @@
 # Changelog
 
+## 0.2.5 — 2026-09-23
+
+Startup-crash hotfix for the 0.2.4 home-ad blocker:
+
+- fixed **Hide home showcase ads** to return a new `EmptyVh` directly at the native showcase branch instead of reusing `p2` as `CatalogViewType`;
+- reverse-engineering of the real 1.163 factory shows the active view type is already held in a local register at that branch, so the old `p2` assumption could produce verifier/type failure during home-screen construction;
+- **Disable video ad repository** remains unchanged and continues to route video advertising through VK's built-in no-op `VideoAdvertisementsComponent.STUB`;
+- 1.163.4 is marked broken and 1.163.3 restored as stable while this fix is validated.
+
 ## 0.2.4 — 2026-09-23
 
 Home/player ad removal after real-account screenshots from 1.163.3:
