@@ -1,113 +1,45 @@
-# VK Video Morphe Patches
+# VK Video Patched
 
-[Русский](./README.md) · English
+[![CI](https://github.com/Solvo37/vk-video-morphe-patches/actions/workflows/ci.yml/badge.svg)](https://github.com/Solvo37/vk-video-morphe-patches/actions/workflows/ci.yml)
+[![Auto build](https://github.com/Solvo37/vk-video-morphe-patches/actions/workflows/auto-update.yml/badge.svg)](https://github.com/Solvo37/vk-video-morphe-patches/actions/workflows/auto-update.yml)
 
-Public **Morphe** patches for the Android **VK Video** app (`com.vk.vkvideo`) with signed APK releases suitable for **Obtainium**.
+Public **Morphe** patches and signed ARM64 builds for **VK Video**. The patched app can coexist with the regular VK app.
 
-## Current status
+## Download
 
-- ✅ Verified app target: **VK Video 1.163 / versionCode 51920**
-- ✅ Prebuilt APK: [Latest stable release](https://github.com/Solvo37/vk-video-morphe-patches/releases/latest)
-- ✅ Current patch bundle: **v0.2.3**
-- ✅ Full patch profile verified on a real ARM64 device alongside the stock VK app; the exact release APK additionally passes automated 0.2 static gates
-- ✅ Build pipeline: **Morphe STRIP_FAST → zipalign → APK Signature Scheme v3**
-- ⚠️ The native bypass currently targets **ARM64 / arm64-v8a**
+Current stable release: **1.163.6**.  
+Android package version inside the APK: **1.163 / versionCode 51920**.
 
-## Patches
+[Download the latest APK](https://github.com/Solvo37/vk-video-morphe-patches/releases/latest)
 
-| Patch | Purpose |
-|---|---|
-| **Fix install conflict with stock VK** | lets the project-signed VK Video coexist with stock `com.vkontakte.android` |
-| **Bypass native signature check** | patches `libvkcore.so` so a re-signed build is not terminated during startup |
-| **Disable in-app update** | disables VK Video's internal update prompt/check |
-| **Remove video ads** | disables video ad feature gates and strips known server instream/mobile/sport/banner payloads |
-| **Remove clip ads** | disables VK Clips ad feature/config/SDK paths |
-| **Filter clip feed ads** | removes server-provided StaticAd / MarketAd / MyTarget / FloatingAd feed items before they become Clips SDK items or install CTAs |
-| **Block midroll ads** | blocks the runtime MIDROLL branch before the main video player switches to instream ads |
-| **Filter Clips SDK ads** | drops ad-marked SDK videos and StaticAds/MarketAds inside the Clips SDK, including client-injected install CTAs |
-| **Block deep midroll ads** | disables the dedicated `request_midroll` runnable, midpoint setup, and direct `midroll` section starts |
-| **Hide profile ad-free promo** | removes the “Disable ads / free for 14 days” card from the My screen before holder creation | user-selectable |
-| **Hide promoted banner content** | disables the Discover promoted-banner gate |
-| **Disable ad pixel tracking** | disables the dedicated advertising pixel tracker |
+Only the APK is published as a Release asset. Build reports and diagnostics stay in GitHub Actions.
 
-These patches target the ad paths reverse-engineered in VK Video 1.163, including server feed items and the runtime MIDROLL branch. A newly introduced server/client path in a future version still requires fresh reverse engineering.
+## Updates
+
+The auto-build checks RuStore, Google Play and APKPure every 6 hours, verifies package/signing data, selects the highest verified versionCode, applies all required patches and publishes only if every compatibility gate passes.
+
+Release revisions are immutable:
+
+- current: `1.163.6`;
+- next rebuild of Android 1.163: `1.163.7`;
+- a new Android 1.164 line starts at `1.164.0`.
+
+For Obtainium use this repository and the APK asset filter:
+
+```text
+^VK-Video-.*-patched\.apk$
+```
 
 ## Install
 
-Download `VK-Video-<version>-patched.apk` from [Releases](https://github.com/Solvo37/vk-video-morphe-patches/releases).
+Uninstall the official **VK Video** once before the first project-signed install. The regular **VK** app can stay installed. Future project builds use the same signing certificate and can update previous project builds.
 
-The first project-signed build cannot update the official VK Video installation because the certificates differ. Uninstall the official **VK Video** app once, then install the project build.
-
-The regular **VK** app may remain installed; the coexistence patch is specifically intended for that case.
-
-### Obtainium
-
-Repository URL:
-
-```text
-https://github.com/Solvo37/vk-video-morphe-patches
-```
-
-Recommended filters:
-
-```text
-Release title: ^VK Video
-APK asset:     ^VK-Video-.*-patched\.apk$
-```
-
-See [docs/INSTALL.md](./docs/INSTALL.md).
-
-## Morphe custom source
-
-Use the same repository URL as a Morphe custom source. Standalone patch bundles are published as `patches-v0.2.x` releases.
-
-For a re-signed VK Video 1.163 build, **Bypass native signature check** is mandatory. Without it, the app terminates during startup after the native signature check.
-
-## Automated updates
-
-The release workflow queries every available upstream source — RuStore, Google Play via gplaydl, and APKPure via apkeep — verifies each downloaded base APK, and selects the candidate with the **highest verified `versionCode`**. Source priority is only used as a tie-breaker.
-
-Before patching, it validates package name, version metadata, the original VK certificate, downgrade protection, bytecode fingerprints, the native signature-check pattern, the manifest coexistence fix, multidex startup prerequisites, zip alignment, and the final project signature.
-
-A new version is not published merely because it downloads. If a required fingerprint or native pattern no longer matches, the pipeline stops and opens a compatibility issue.
-
-## Trust
-
-Expected upstream VK certificate SHA-256:
-
-```text
-057d974412032066f1b5edb1fdb550f71854189815c806b27c4d486fb4f1ef32
-```
-
-Expected project release certificate SHA-256:
-
-```text
-D4:1F:49:2F:0E:2A:2E:39:90:AC:7F:8E:75:CC:5D:4B:
-14:89:5F:7B:46:C0:B6:11:3B:78:82:C4:8A:A5:D4:0A
-```
-
-The private signing key is not stored in the repository.
-
-See [docs/TRUST.md](./docs/TRUST.md), [docs/UPSTREAM.md](./docs/UPSTREAM.md), and [CONTRIBUTING.md](./CONTRIBUTING.md).
-
-Road to stable 1.0: [ROADMAP.md](./ROADMAP.md).
-
-## Build the patch bundle
-
-Java 21 is required.
+## Development
 
 ```bash
 gradle :patches:buildAndroid
 ```
 
-Output:
+See `patches/`, `ci/`, `.github/workflows/auto-update.yml` and `CHANGELOG.md`.
 
-```text
-patches/build/libs/*.mpp
-```
-
-## Disclaimer
-
-This project is not affiliated with or endorsed by VK, VK Video, Morphe, or Obtainium. It contains patches and build automation, not VK Video source code.
-
-Licensed under [GPL-3.0](./LICENSE).
+This project is not affiliated with or endorsed by VK, VK Video, Morphe or Obtainium. Licensed under [GPL-3.0](./LICENSE).

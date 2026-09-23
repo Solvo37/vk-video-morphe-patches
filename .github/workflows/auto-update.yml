@@ -264,49 +264,49 @@ jobs:
 
           next_revision_tag() {
             local base="$1"
-            local revision=1
-            local candidate
-            while true; do
-              candidate="${base}.${revision}"
-              if ! gh release view "$candidate" --repo "$GITHUB_REPOSITORY" >/dev/null 2>&1; then
-                printf '%s\n' "$candidate"
-                return 0
+            local prefix="${base}."
+            local max=-1
+            local tag suffix
+
+            while IFS= read -r tag; do
+              [[ "$tag" == "$prefix"* ]] || continue
+              suffix="${tag#"$prefix"}"
+              if [[ "$suffix" =~ ^[0-9]+$ ]] && (( suffix > max )); then
+                max="$suffix"
               fi
-              revision=$((revision + 1))
-            done
+            done < <(
+              gh release list \
+                --repo "$GITHUB_REPOSITORY" \
+                --limit 100 \
+                --json tagName \
+                --jq '.[].tagName'
+            )
+
+            if (( max < 0 )); then
+              printf '%s.0\n' "$base"
+            else
+              printf '%s.%d\n' "$base" "$((max + 1))"
+            fi
           }
 
           if (( VERSION_CODE == BASELINE_VERSION_CODE )) && [[ "$VERSION" == "$BASELINE_VERSION" ]]; then
             if [[ "$FORCE_REBUILD" != "true" ]]; then
               echo "build=false" >> "$GITHUB_OUTPUT"
-              echo "Baseline build already released."
+              echo "Verified upstream is already released."
               exit 0
             fi
+          fi
 
-            # Never replace assets inside an existing release. Obtainium and other
-            # clients can cache GitHub asset IDs, which become 404 after --clobber.
-            TAG="$(next_revision_tag "$VERSION")"
-          else
-            TAG="$VERSION"
+          TAG="$(next_revision_tag "$VERSION")"
 
-            if gh release view "$TAG" --repo "$GITHUB_REPOSITORY" >/dev/null 2>&1; then
-              # Same versionName can exist with a newer versionCode.
-              TAG="${VERSION}-${VERSION_CODE}"
-            fi
-
-            if gh release view "$TAG" --repo "$GITHUB_REPOSITORY" >/dev/null 2>&1; then
-              if [[ "$FORCE_REBUILD" != "true" ]]; then
-                echo "build=false" >> "$GITHUB_OUTPUT"
-                echo "Release $TAG already exists."
-                exit 0
-              fi
-              TAG="$(next_revision_tag "$VERSION")"
-            fi
+          if gh release view "$TAG" --repo "$GITHUB_REPOSITORY" >/dev/null 2>&1; then
+            echo "::error::Calculated immutable release tag $TAG already exists."
+            exit 1
           fi
 
           echo "tag=$TAG" >> "$GITHUB_OUTPUT"
           echo "build=true" >> "$GITHUB_OUTPUT"
-          echo "Will build VK Video $VERSION ($VERSION_CODE) as immutable release tag $TAG."
+          echo "Will build VK Video $VERSION ($VERSION_CODE) as immutable release revision $TAG."
 
       - name: Build Morphe patch bundle
         if: steps.decision.outputs.build == 'true'
@@ -540,7 +540,7 @@ jobs:
             patches/build/libs/*.mpp
           if-no-files-found: warn
 
-      - name: Publish GitHub Release for Obtainium
+      - name: Publish clean GitHub Release
         if: steps.decision.outputs.build == 'true' && steps.patch.outcome == 'success' && steps.static_gate.outcome == 'success' && env.HAS_SIGNING == 'true'
         env:
           GH_TOKEN: ${{ github.token }}
@@ -548,56 +548,74 @@ jobs:
           VERSION_CODE: ${{ steps.upstream.outputs.version_code }}
           SOURCE: ${{ steps.upstream.outputs.source }}
           TAG: ${{ steps.decision.outputs.tag }}
-          MPP: ${{ steps.mpp.outputs.path }}
           APK: ${{ steps.signed.outputs.apk }}
         run: |
           set -euo pipefail
 
-          SHA="dist/VK-Video-${VERSION}-patched.sha256"
+          PUBLISH_APK="dist/VK-Video-${TAG}-patched.apk"
+          cp "$APK" "$PUBLISH_APK"
 
           cat > dist/release-notes.md <<EOF
-          ## VK Video $VERSION ($VERSION_CODE) patched
+          ## VK Video $TAG
 
-          Automated ARM64 build.
+          Готовый подписанный ARM64 APK.
 
-          - upstream source: **$SOURCE**
-          - package and original VK certificate verified before patching
-          - stock-VK coexistence fix
-          - native `libvkcore.so` signature-check bypass
-          - in-app update disabled
-          - video player ad feature gates disabled
-          - server-provided instream/mobile/sport/banner ad payloads stripped
-          - preroll/midroll/postroll instream sections stripped
-          - VK Clips ad feature/config/SDK paths disabled
-          - server-provided VK Clips ad feed items filtered before rendering
-          - runtime MIDROLL branch blocked before the main player is switched to ads
-          - promoted Discover banner disabled
-          - ad pixel tracker disabled
-          - Morphe **STRIP_FAST**
-          - **zipalign**
-          - APK Signature Scheme **v3 only**
-          - static post-build gates passed
+          - Android version: **$VERSION**
+          - versionCode: **$VERSION_CODE**
+          - upstream: **$SOURCE**
+          - совместная установка с обычным VK
+          - отключена встроенная проверка обновлений VK Video
+          - применён текущий профиль удаления рекламы
+          - Morphe STRIP_FAST → zipalign → APK Signature Scheme v3
+          - статические compatibility gates пройдены
 
-          The regular VK app can remain installed. The official VK Video app must be removed before the first project-signed install.
-
-          See `build-metadata.json` and `upstream.json` for machine-readable build provenance.
+          В Release намеренно публикуется только APK. Служебные отчёты остаются в GitHub Actions.
           EOF
 
-          ASSETS=(
-            "$APK"
-            "$SHA"
-            "$MPP"
-            "upstream.json"
-            "dist/build-metadata.json"
-            "dist/patch-result.json"
-          )
-
           if gh release view "$TAG" --repo "$GITHUB_REPOSITORY" >/dev/null 2>&1; then
-            echo "::error::Release $TAG already exists. Refusing to replace release assets because update clients may cache immutable GitHub asset IDs."
+            echo "::error::Release $TAG already exists. Refusing to replace immutable assets."
             exit 1
           fi
 
-          gh release create "$TAG" "${ASSETS[@]}"             --repo "$GITHUB_REPOSITORY"             --title "VK Video $VERSION ($VERSION_CODE) patched"             --notes-file dist/release-notes.md             --latest
+          gh release create "$TAG" "$PUBLISH_APK#VK Video patched APK" \
+            --repo "$GITHUB_REPOSITORY" \
+            --title "VK Video $TAG — patched APK" \
+            --notes-file dist/release-notes.md \
+            --latest
+
+      - name: Advance verified baseline
+        if: steps.decision.outputs.build == 'true' && steps.patch.outcome == 'success' && steps.static_gate.outcome == 'success' && env.HAS_SIGNING == 'true'
+        env:
+          VERSION: ${{ steps.upstream.outputs.version }}
+          VERSION_CODE: ${{ steps.upstream.outputs.version_code }}
+          TAG: ${{ steps.decision.outputs.tag }}
+        run: |
+          set -euo pipefail
+
+          TODAY="$(date -u +%F)"
+          jq \
+            --arg version "$VERSION" \
+            --argjson version_code "$VERSION_CODE" \
+            --arg tag "$TAG" \
+            --arg verified_at "$TODAY" \
+            '.version_name = $version
+             | .version_code = $version_code
+             | .release_tag = $tag
+             | .verified_at = $verified_at
+             | .notes = "Automated release passed all compatibility gates."' \
+            ci/baseline.json > ci/baseline.json.tmp
+          mv ci/baseline.json.tmp ci/baseline.json
+
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add ci/baseline.json
+          if git diff --cached --quiet; then
+            exit 0
+          fi
+
+          git commit -m "chore: advance verified baseline to $TAG"
+          git pull --rebase origin main
+          git push origin HEAD:main
 
       - name: Signing setup reminder
         if: steps.decision.outputs.build == 'true' && steps.patch.outcome == 'success' && steps.static_gate.outcome == 'success' && env.HAS_SIGNING != 'true'

@@ -1,182 +1,89 @@
-# VK Video Morphe Patches
-
-[Русский](./README.md) · [English](./README_EN.md)
+# VK Video Patched
 
 [![CI](https://github.com/Solvo37/vk-video-morphe-patches/actions/workflows/ci.yml/badge.svg)](https://github.com/Solvo37/vk-video-morphe-patches/actions/workflows/ci.yml)
-[![VK Video auto build](https://github.com/Solvo37/vk-video-morphe-patches/actions/workflows/auto-update.yml/badge.svg)](https://github.com/Solvo37/vk-video-morphe-patches/actions/workflows/auto-update.yml)
-[![Publish patches](https://github.com/Solvo37/vk-video-morphe-patches/actions/workflows/release-patches.yml/badge.svg)](https://github.com/Solvo37/vk-video-morphe-patches/actions/workflows/release-patches.yml)
+[![Auto build](https://github.com/Solvo37/vk-video-morphe-patches/actions/workflows/auto-update.yml/badge.svg)](https://github.com/Solvo37/vk-video-morphe-patches/actions/workflows/auto-update.yml)
 [![License: GPL-3.0](https://img.shields.io/badge/license-GPL--3.0-blue.svg)](./LICENSE)
 
-Публичный набор патчей **Morphe** для Android-приложения **VK Видео** (`com.vk.vkvideo`) с готовыми подписанными APK-релизами для **Obtainium**.
+Патчи **Morphe** и готовая подписанная ARM64-сборка **VK Видео** без найденных рекламных блоков. Модифицированный VK Видео устанавливается рядом с обычным VK.
 
-## Текущий статус
+## Скачать
 
-- ✅ Проверенная версия приложения: **VK Видео 1.163 / versionCode 51920**
-- ✅ Готовый APK: [Latest stable release](https://github.com/Solvo37/vk-video-morphe-patches/releases/latest)
-- ✅ Текущий bundle патчей: **v0.2.6**
-- ✅ Полный patch profile проверен запуском на реальном ARM64-устройстве с установленным обычным VK; точный release APK дополнительно проходит автоматические 0.2 static gates
-- ✅ Сборка: **Morphe STRIP_FAST → zipalign → APK Signature Scheme v3**
-- ⚠️ Native bypass сейчас рассчитан на **ARM64 / arm64-v8a**
+**Текущий стабильный релиз: 1.163.6**  
+Android внутри APK: **1.163 / versionCode 51920**.
 
-Базовый профиль `1.163` прошёл реальный launch-test. Изменения рекламного профиля 0.2.1 дополнительно проходят сборку Morphe и fail-closed static gates; опубликованный APK проверяется по package/version, подписи, zipalign, manifest coexistence, DEX class definition и native binary pattern.
+➡️ [Скачать последний APK](https://github.com/Solvo37/vk-video-morphe-patches/releases/latest)
 
-## Что патчится
+В Releases публикуется **только один APK**. Служебные отчёты, checksums и build metadata остаются в GitHub Actions и не засоряют список загрузок.
 
-| Патч | Назначение | Тип |
-|---|---|---|
-| **Fix install conflict with stock VK** | позволяет переподписанному VK Видео устанавливаться рядом с обычным `com.vkontakte.android` | обязательный compatibility fix |
-| **Bypass native signature check** | изменяет проверку в `libvkcore.so`, которая завершала переподписанное приложение через native exit | обязательный compatibility fix |
-| **Disable in-app update** | отключает встроенную проверку и предложение обновить VK Видео | пользовательский |
-| **Remove video ads** | отключает video ad feature gates и обнуляет серверные instream/mobile/sport/banner payloads, включая preroll/midroll/postroll | пользовательский |
-| **Remove clip ads** | отключает отдельные рекламные feature/config/SDK-пути VK Клипов | пользовательский |
-| **Filter clip feed ads** | удаляет серверные рекламные элементы Клипов (StaticAd / MarketAd / MyTarget / FloatingAd) до преобразования в ленту и CTA «Установить» | пользовательский |
-| **Block midroll ads** | блокирует runtime MIDROLL до переключения основного видео на instream-рекламу | пользовательский |
-| **Filter Clips SDK ads** | отбрасывает рекламные SDK-видео и StaticAds/MarketAds уже внутри Clips SDK, включая клиентски вставленные объявления с CTA «Установить» | пользовательский |
-| **Block deep midroll ads** | отключает dedicated `request_midroll`, midpoint-конфигурацию и прямой запуск секции `midroll` | пользовательский |
-| **Hide home showcase ads** | удаляет нативную рекламную карточку MyTarget на Главной / «Для вас» до создания AdShowCaseBannerVh | пользовательский |
-| **Disable video ad repository** | заменяет реальный video-ad repository на встроенный no-op STUB VK, чтобы не запускать instream-сессии | пользовательский |
-| **Hide profile ad-free promo** | убирает карточку «Отключить рекламу / бесплатно на 14 дней» из раздела «Моё» до создания holder | пользовательский |
-| **Hide promoted banner content** | выключает показ рекламного баннера в Discover | пользовательский |
-| **Disable ad pixel tracking** | останавливает отдельный рекламный pixel tracker | пользовательский |
+## Что изменено
 
-В 1.163 патчи перекрывают найденные клиентские feature gates, серверный рекламный payload обычного видео, runtime MIDROLL и серверные рекламные feed-item Клипов до их преобразования в SDK-элементы. Совершенно новый серверный путь в будущих версиях приложения потребует повторного reverse engineering.
+- совместная установка с обычным `com.vkontakte.android`;
+- bypass проверки подписи в `libvkcore.so`;
+- отключение встроенного update prompt VK Видео;
+- удаление найденных рекламных путей в обычном видео и VK Клипах;
+- скрытие рекламных карточек/баннеров на Home, Discover и в профиле;
+- блокировка ad pixel tracking;
+- fail-closed проверки: если новая версия VK Видео несовместима с патчами, APK не публикуется.
+
+Полный список активных патчей хранится в [patches-list.json](./patches-list.json).
 
 ## Установка
 
-### Готовый APK
+1. Если установлен официальный **VK Видео**, удалите его один раз — официальный APK и этот проект подписаны разными сертификатами.
+2. Обычный **VK** удалять не нужно.
+3. Установите APK из [Latest Release](https://github.com/Solvo37/vk-video-morphe-patches/releases/latest).
 
-Откройте [Releases](https://github.com/Solvo37/vk-video-morphe-patches/releases) и скачайте:
+Все релизы проекта подписываются одним постоянным сертификатом, поэтому следующие сборки ставятся поверх предыдущих.
 
-```text
-VK-Video-<version>-patched.apk
-```
+## Автообновление
 
-Первую установку нельзя делать поверх официального **VK Видео**, потому что проект использует собственный постоянный signing key. Официальный VK Видео нужно удалить один раз.
+Workflow **VK Video auto build** каждые 6 часов проверяет RuStore, Google Play и APKPure, валидирует package/certificate и выбирает самый новый подтверждённый `versionCode`.
 
-Обычный **VK** (`com.vkontakte.android`) удалять не нужно: compatibility fix сделан именно для совместной установки.
+Схема версий Releases отделена от Android `versionName`:
+
+- текущий стабильный релиз: `1.163.6`;
+- следующий rebuild этой же Android-версии: `1.163.7`;
+- новая Android-версия 1.164 начнётся с `1.164.0`.
+
+Каждый Release immutable: существующий APK не перезаписывается. Это важно для корректной работы клиентов обновлений и кэша GitHub asset IDs.
 
 ### Obtainium
 
-Добавьте репозиторий:
+Repository URL:
 
 ```text
 https://github.com/Solvo37/vk-video-morphe-patches
 ```
 
-Рекомендуемые фильтры:
+APK asset filter:
 
 ```text
-Release title:
-^VK Video
-
-APK asset:
 ^VK-Video-.*-patched\.apk$
 ```
 
-Это отделяет APK-релизы приложения от отдельных релизов Morphe bundle вида `patches-v0.1.x`.
-
-Подробности: [docs/INSTALL.md](./docs/INSTALL.md).
-
-## Самостоятельный патч через Morphe
-
-Репозиторий можно добавить как custom source:
+Release title filter при необходимости:
 
 ```text
-https://github.com/Solvo37/vk-video-morphe-patches
+^VK Video
 ```
 
-Bundle публикуется отдельным release:
+## Для разработки
 
-```text
-patches-v0.2.6
-vk-video-morphe-patches-0.2.6.mpp
-```
-
-Для переподписанной сборки **Bypass native signature check** должен оставаться включённым. Без него VK Видео 1.163 завершает процесс на старте после проверки подписи.
-
-## Автоматические обновления
-
-Workflow `VK Video auto build` периодически опрашивает **все доступные upstream-источники** — RuStore, Google Play через gplaydl и APKPure через apkeep — проверяет каждый скачанный base APK и выбирает кандидат с **максимальным подтверждённым `versionCode`**. Если `versionCode` одинаковый, приоритет используется только как tie-breaker: RuStore → Google Play → APKPure.
-
-Перед патчингом проверяются:
-
-- package name `com.vk.vkvideo`;
-- `versionName` и `versionCode`;
-- оригинальный SHA-256 сертификата VK;
-- отсутствие downgrade ниже подтверждённой baseline;
-- применение всех обязательных fingerprints и native-паттерна.
-
-Если новая версия несовместима, APK не публикуется: workflow останавливается и создаёт compatibility issue.
-
-Split APK сначала объединяются в universal upstream, затем применяются Morphe `STRIP_FAST` и native patch. После статических compatibility gates итоговый APK проходит `zipalign` и подписывается постоянным ключом проекта только APK Signature Scheme v3. В app release публикуются APK, SHA-256, `.mpp`, `upstream.json`, build metadata и Morphe report.
-
-Подробнее: [docs/UPSTREAM.md](./docs/UPSTREAM.md).
-
-## Проверка подписи
-
-Оригинальный upstream принимается только с сертификатом VK:
-
-```text
-057d974412032066f1b5edb1fdb550f71854189815c806b27c4d486fb4f1ef32
-```
-
-APK этого проекта подписываются постоянным сертификатом:
-
-```text
-D4:1F:49:2F:0E:2A:2E:39:90:AC:7F:8E:75:CC:5D:4B:
-14:89:5F:7B:46:C0:B6:11:3B:78:82:C4:8A:A5:D4:0A
-```
-
-Проверка:
-
-```bash
-apksigner verify --verbose --print-certs VK-Video-*-patched.apk
-```
-
-Подробнее о модели доверия: [docs/TRUST.md](./docs/TRUST.md).
-
-## Совместимость
-
-| Компонент | Статус |
-|---|---|
-| VK Видео 1.163 / 51920 | ✅ проверено |
-| Android ARM64 | ✅ текущая цель |
-| Обычный VK установлен рядом | ✅ проверено |
-| Будущие версии VK Видео | 🧪 только после автоматического compatibility test |
-| Другие ABI | ⚠️ native bypass пока не заявлен |
-
-R8-имена и native-код могут меняться между версиями. Поэтому версия не считается поддерживаемой только потому, что скачалась: все fingerprints должны реально примениться.
-
-## Сборка bundle
-
-Нужна Java 21.
+Сборка Morphe bundle:
 
 ```bash
 gradle :patches:buildAndroid
 ```
 
-Результат:
+Ключевые файлы:
 
-```text
-patches/build/libs/*.mpp
-```
+- `patches/` — исходники патчей;
+- `ci/` — проверки совместимости и выбор upstream;
+- `.github/workflows/auto-update.yml` — автоматическая сборка и публикация;
+- `CHANGELOG.md` — история изменений.
 
-Для разработки см. [CONTRIBUTING.md](./CONTRIBUTING.md) и [docs/reverse-engineering-1.163.md](./docs/reverse-engineering-1.163.md).
+## Важно
 
-План до стабильной 1.0: [ROADMAP.md](./ROADMAP.md).
+Проект не связан с VK, VK Видео, Morphe или Obtainium и не одобрен ими. Репозиторий не содержит исходный код VK Видео.
 
-## Безопасность
-
-Приватный signing key в репозитории не хранится. В GitHub Actions он доступен только через repository secrets. Если этот ключ будет потерян, существующие установки нельзя будет обновить новым ключом без переустановки; если ключ утечёт, доверять дальнейшим обновлениям с этим сертификатом будет нельзя.
-
-См. [SECURITY.md](./SECURITY.md) и [docs/MAINTAINER_SIGNING.md](./docs/MAINTAINER_SIGNING.md).
-
-## Disclaimer
-
-Проект не связан с VK, VK Видео, Morphe или Obtainium и не одобрен ими. Репозиторий содержит патчи и инфраструктуру сборки, а не исходный код VK Видео.
-
-Использование модифицированного клиента может зависеть от правил сервиса и законодательства вашей юрисдикции.
-
-## License
-
-Код проекта распространяется по [GPL-3.0](./LICENSE).
+Код проекта: [GPL-3.0](./LICENSE).
