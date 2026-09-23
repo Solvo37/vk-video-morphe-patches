@@ -255,9 +255,7 @@ internal object InstreamNamedSectionStartFingerprint : Fingerprint(
     returnType = "V",
     parameters = listOf("Ljava/lang/String;")
 )
-// Real video-player advertising repository. VK ships a built-in STUB
-// implementation that returns no ads; patching Q6() to that STUB cuts all
-// repository-driven instream sessions instead of chasing individual midrolls.
+// Home "For you" native MyTarget showcase card factory.
 internal object HomeShowcaseCatalogFactoryFingerprint : Fingerprint(
     definingClass = "Lcom/vk/catalog2/common/ui/mvp/configuration/a;",
     name = "E",
@@ -271,7 +269,9 @@ internal object HomeShowcaseCatalogFactoryFingerprint : Fingerprint(
     )
 )
 
-// internal object VideoAdvertisementsRepositoryFingerprint : Fingerprint(
+// Real video-player advertising repository. VK's API component also ships a
+// no-op STUB repository, which is safer to use than chasing individual ad paths.
+internal object VideoAdvertisementsRepositoryFingerprint : Fingerprint(
     definingClass = "Lcom/vk/libvideo/impl/di/VideoAdvertisementsComponentImpl;",
     name = "Q6",
     accessFlags = listOf(AccessFlags.PUBLIC, AccessFlags.FINAL),
