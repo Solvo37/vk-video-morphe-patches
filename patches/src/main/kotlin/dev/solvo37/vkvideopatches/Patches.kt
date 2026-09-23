@@ -466,11 +466,16 @@ val hideHomeShowcaseAdsPatch = bytecodePatch(
                 "Home showcase AdShowCaseBannerVh factory call not found"
             }
 
+            // Do not reuse parameter registers here. In the real 1.163
+            // method the active CatalogViewType has already been moved to a
+            // local register, and p2 is not guaranteed to retain that type at
+            // this branch. Returning a plain EmptyVh avoids verifier/type
+            // hazards and mirrors existing branches in the same method.
             addInstructions(
                 adFactoryIndex,
                 """
-                    invoke-static {p2}, Lcom/vk/catalog2/common/ui/mvp/configuration/a;->A0(Lcom/vk/catalog2/common/dto/api/CatalogViewType;)Lcom/vk/catalog2/common/ui/holders/EmptyVh;
-                    move-result-object v0
+                    new-instance v0, Lcom/vk/catalog2/common/ui/holders/EmptyVh;
+                    invoke-direct {v0}, Lcom/vk/catalog2/common/ui/holders/EmptyVh;-><init>()V
                     return-object v0
                 """
             )
@@ -504,6 +509,22 @@ val disableVideoAdRepositoryPatch = bytecodePatch(
                 """
             )
         }
+    }
+}
+
+@Suppress("unused")
+val hideProfileAdFreePromoPatch = bytecodePatch(
+    name = "Hide profile ad-free promo",
+    description = "Removes the VK Premium / ad-free trial promotional card from the profile My screen before it enters the adapter list.",
+    default = true
+) {
+    compatibleWith(VK_VIDEO)
+
+    execute {
+        // wc6.q.i(ArrayList) only appends AD_FREE_SUBSCRIPTION to the profile
+        // menu when the feature/config gates are enabled. Returning here keeps
+        // the item out of the list entirely, without touching other profile UI.
+        ProfileAdFreeMenuItemFingerprint.method.addInstruction(0, "return-void")
     }
 }
 
