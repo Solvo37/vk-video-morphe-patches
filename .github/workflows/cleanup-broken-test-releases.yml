@@ -1,0 +1,38 @@
+name: Cleanup broken test releases
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/cleanup-broken-test-releases.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  cleanup:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Delete broken and test releases
+        env:
+          GH_TOKEN: ${{ github.token }}
+          REPO: ${{ github.repository }}
+        run: |
+          set -euo pipefail
+
+          for tag in 1.163.4 1.163.5-rc1 patches-v0.2.4; do
+            if gh release view "$tag" --repo "$REPO" >/dev/null 2>&1; then
+              gh release delete "$tag" --repo "$REPO" --cleanup-tag -y
+            fi
+          done
+
+          # 0.2.4 was temporarily attached to the then-latest stable 1.163.3.
+          # Remove that known-broken patch bundle asset if it is still there.
+          if gh release view 1.163.3 --repo "$REPO" --json assets --jq '.assets[].name' | grep -qx 'vk-video-morphe-patches-0.2.4.mpp'; then
+            gh release delete-asset 1.163.3 vk-video-morphe-patches-0.2.4.mpp --repo "$REPO" -y
+          fi
+
+          # The hotfix branch is merged and no longer needed.
+          gh api --method DELETE "repos/$REPO/git/refs/heads/fix/1.163.5-startup-crash" >/dev/null 2>&1 || true
+
+          test "$(gh api "repos/$REPO/releases/latest" --jq '.tag_name')" = "1.163.5"
