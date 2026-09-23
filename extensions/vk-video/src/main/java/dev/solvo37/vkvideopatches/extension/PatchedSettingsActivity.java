@@ -2,10 +2,12 @@ package dev.solvo37.vkvideopatches.extension;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.content.Context;
+import android.content.Intent;
 import android.content.pm.PackageInfo;
+import android.content.res.Configuration;
+import android.graphics.Color;
 import android.os.Bundle;
-import android.text.TextUtils;
-import android.view.View;
 import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.LinearLayout;
@@ -16,32 +18,56 @@ import android.widget.TextView;
 import java.util.Map;
 
 /**
- * Development settings screen for the 0.3 branch.
+ * Runtime settings screen for VK Video Patched.
  *
- * It is intentionally programmatic: no dependency on VK resources or AppCompat,
- * which keeps the initial runtime-settings foundation isolated from VK UI changes.
+ * The screen is opened from VK Video's own "My" profile menu. It intentionally
+ * uses only Android framework widgets so it does not depend on VK UI internals.
  */
 @SuppressWarnings("deprecation")
 public final class PatchedSettingsActivity extends Activity {
-    private static final String PATCH_VERSION = "0.3.0-alpha1";
+    private static final String PATCH_VERSION = "0.3.0-alpha2";
+
+    private int backgroundColor;
+    private int surfaceColor;
+    private int primaryTextColor;
+    private int secondaryTextColor;
+
+    public static void open(Context context) {
+        if (context == null) {
+            return;
+        }
+
+        Intent intent = new Intent(context, PatchedSettingsActivity.class);
+        if (!(context instanceof Activity)) {
+            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        }
+        context.startActivity(intent);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         RuntimeSettings.initialize(this);
+        configurePalette();
+
         setTitle("VK Video Patched");
+        getWindow().setStatusBarColor(backgroundColor);
+        getWindow().setNavigationBarColor(backgroundColor);
 
         ScrollView scroll = new ScrollView(this);
+        scroll.setBackgroundColor(backgroundColor);
+
         LinearLayout root = new LinearLayout(this);
         root.setOrientation(LinearLayout.VERTICAL);
+        root.setBackgroundColor(backgroundColor);
         int pad = dp(20);
-        root.setPadding(pad, pad, pad, pad);
+        root.setPadding(pad, pad, pad, dp(32));
         scroll.addView(root);
 
-        TextView title = text("VK Video Patched Settings", 24f);
+        TextView title = text("VK Video Patched", 26f, primaryTextColor);
         root.addView(title);
 
-        TextView version = text(buildVersionText(), 14f);
+        TextView version = text(buildVersionText(), 14f, secondaryTextColor);
         version.setPadding(0, dp(6), 0, dp(18));
         root.addView(version);
 
@@ -60,25 +86,45 @@ public final class PatchedSettingsActivity extends Activity {
         addSection(root, "Для разработчика");
         addSwitch(root, "Debug logging", RuntimeSettings.KEY_DEBUG_LOGGING, false);
 
-        Button diagnostics = new Button(this);
-        diagnostics.setText("Показать диагностику");
+        Button diagnostics = button("Показать диагностику");
         diagnostics.setOnClickListener(v -> showDiagnostics());
         root.addView(diagnostics);
 
-        Button reset = new Button(this);
-        reset.setText("Сбросить настройки патча");
+        Button reset = button("Сбросить настройки патча");
         reset.setOnClickListener(v -> {
             RuntimeSettings.reset();
             recreate();
         });
-        root.addView(reset);
+        LinearLayout.LayoutParams resetParams = new LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.MATCH_PARENT,
+                LinearLayout.LayoutParams.WRAP_CONTENT
+        );
+        resetParams.topMargin = dp(10);
+        root.addView(reset, resetParams);
 
         setContentView(scroll);
     }
 
+    private void configurePalette() {
+        boolean dark = (getResources().getConfiguration().uiMode
+                & Configuration.UI_MODE_NIGHT_MASK) == Configuration.UI_MODE_NIGHT_YES;
+
+        if (dark) {
+            backgroundColor = Color.rgb(18, 18, 18);
+            surfaceColor = Color.rgb(42, 42, 46);
+            primaryTextColor = Color.rgb(245, 245, 247);
+            secondaryTextColor = Color.rgb(180, 180, 186);
+        } else {
+            backgroundColor = Color.rgb(250, 250, 252);
+            surfaceColor = Color.rgb(235, 235, 240);
+            primaryTextColor = Color.rgb(25, 25, 28);
+            secondaryTextColor = Color.rgb(95, 95, 102);
+        }
+    }
+
     private void addSection(LinearLayout root, String label) {
-        TextView view = text(label, 18f);
-        view.setPadding(0, dp(18), 0, dp(6));
+        TextView view = text(label, 19f, primaryTextColor);
+        view.setPadding(0, dp(20), 0, dp(6));
         root.addView(view);
     }
 
@@ -90,8 +136,10 @@ public final class PatchedSettingsActivity extends Activity {
     ) {
         Switch toggle = new Switch(this);
         toggle.setText(label);
+        toggle.setTextColor(primaryTextColor);
+        toggle.setTextSize(15f);
         toggle.setChecked(RuntimeSettings.getBoolean(key, stockDefault));
-        toggle.setPadding(0, dp(6), 0, dp(6));
+        toggle.setPadding(0, dp(8), 0, dp(8));
         toggle.setOnCheckedChangeListener(
                 (CompoundButton buttonView, boolean isChecked) ->
                         RuntimeSettings.putBoolean(key, isChecked)
@@ -99,11 +147,23 @@ public final class PatchedSettingsActivity extends Activity {
         root.addView(toggle);
     }
 
-    private TextView text(String value, float sizeSp) {
+    private TextView text(String value, float sizeSp, int color) {
         TextView view = new TextView(this);
         view.setText(value);
         view.setTextSize(sizeSp);
+        view.setTextColor(color);
         return view;
+    }
+
+    private Button button(String label) {
+        Button button = new Button(this);
+        button.setText(label);
+        button.setTextColor(primaryTextColor);
+        button.setTextSize(15f);
+        if (android.os.Build.VERSION.SDK_INT >= 21) {
+            button.setBackgroundTintList(android.content.res.ColorStateList.valueOf(surfaceColor));
+        }
+        return button;
     }
 
     private String buildVersionText() {
