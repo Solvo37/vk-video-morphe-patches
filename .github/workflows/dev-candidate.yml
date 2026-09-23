@@ -158,6 +158,15 @@ jobs:
           printf '%s' "$KEYSTORE_B64" | base64 -d > signing.jks
           test -s signing.jks
 
+      - name: Align development candidate
+        run: |
+          set -euo pipefail
+          echo "Aligning dev APK..."
+          zipalign -f -p 4 dist/dev-unsigned.apk dist/dev-aligned.apk
+          test -s dist/dev-aligned.apk
+          zipalign -c -p 4 dist/dev-aligned.apk
+          echo "Alignment OK."
+
       - name: Sign development candidate
         env:
           STORE_PASSWORD: ${{ secrets.ANDROID_KEYSTORE_PASSWORD }}
@@ -167,10 +176,8 @@ jobs:
           set -euo pipefail
 
           OUT="dist/VK-Video-1.163-0.3.0-alpha1-dev.apk"
-          ALIGNED="dist/dev-aligned.apk"
 
-          zipalign -f -p 4 dist/dev-unsigned.apk "$ALIGNED"
-
+          echo "Signing dev APK..."
           apksigner sign \
             --ks signing.jks \
             --ks-pass env:STORE_PASSWORD \
@@ -181,8 +188,10 @@ jobs:
             --v3-signing-enabled true \
             --v4-signing-enabled false \
             --out "$OUT" \
-            "$ALIGNED"
+            dist/dev-aligned.apk
 
+          echo "Signature written."
+          test -s "$OUT"
           zipalign -c -p 4 "$OUT"
 
           VERIFY="$(apksigner verify --verbose --print-certs "$OUT")"
