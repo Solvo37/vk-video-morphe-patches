@@ -42,7 +42,7 @@ jobs:
       - name: Apply home and player ad delta
         run: |
           set -euo pipefail
-          java -jar morphe.jar patch \
+          "$JAVA_HOME/bin/java" -jar morphe.jar patch \
             -i VK-Video-1.163.3-patched.apk \
             -p work.mpp \
             -e "Disable video ad repository" \
