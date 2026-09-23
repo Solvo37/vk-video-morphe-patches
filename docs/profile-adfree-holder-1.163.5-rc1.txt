@@ -1,0 +1,6 @@
+===== com.vk.video.screens.profile.adapter.holder.VideoAdFreeSubscriptionMenuHolder =====
+DECOMPILE_FAILED
+
+===== com.vk.video.screens.profile.adapter.holder.VideoAdFreeSubscriptionMenuHolder$loadSubscriptionState$1 =====
+DECOMPILE_FAILED
+
