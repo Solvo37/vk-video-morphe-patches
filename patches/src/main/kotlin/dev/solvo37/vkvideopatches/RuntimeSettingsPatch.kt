@@ -33,8 +33,22 @@ private val runtimeSettingsManifestPatch = resourcePatch {
             if (!alreadyPresent) {
                 val activity = document.createElement("activity")
                 activity.setAttribute("android:name", SETTINGS_ACTIVITY)
-                activity.setAttribute("android:exported", "false")
-                activity.setAttribute("android:label", "VK Video Patched")
+                activity.setAttribute("android:exported", "true")
+                activity.setAttribute("android:label", "VK Video Patched Settings")
+
+                // Temporary alpha-only launcher entry. This avoids touching VK's
+                // own navigation while the runtime settings screen is being validated.
+                val intentFilter = document.createElement("intent-filter")
+
+                val action = document.createElement("action")
+                action.setAttribute("android:name", "android.intent.action.MAIN")
+                intentFilter.appendChild(action)
+
+                val category = document.createElement("category")
+                category.setAttribute("android:name", "android.intent.category.LAUNCHER")
+                intentFilter.appendChild(category)
+
+                activity.appendChild(intentFilter)
                 application.appendChild(activity)
             }
         }
