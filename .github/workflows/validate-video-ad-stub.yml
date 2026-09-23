@@ -1,4 +1,5 @@
 name: Validate video ad repository stub
+# rerun after Companion escape fix
 
 on:
   push:
