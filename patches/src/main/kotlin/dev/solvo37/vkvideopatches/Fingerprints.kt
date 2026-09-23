@@ -255,6 +255,17 @@ internal object InstreamNamedSectionStartFingerprint : Fingerprint(
     returnType = "V",
     parameters = listOf("Ljava/lang/String;")
 )
+// Real video-player advertising repository. VK ships a built-in STUB
+// implementation that returns no ads; patching Q6() to that STUB cuts all
+// repository-driven instream sessions instead of chasing individual midrolls.
+internal object VideoAdvertisementsRepositoryFingerprint : Fingerprint(
+    definingClass = "Lcom/vk/libvideo/impl/di/VideoAdvertisementsComponentImpl;",
+    name = "Q6",
+    accessFlags = listOf(AccessFlags.PUBLIC, AccessFlags.FINAL),
+    returnType = "Lcom/vk/libvideo/api/ad/VideoAdvertisementsRepository;",
+    parameters = emptyList()
+)
+
 internal object VideoGetAdsResponseConstructorFingerprint : Fingerprint(
     definingClass = "Lcom/vk/api/generated/video/dto/VideoGetAdsResponseDto;",
     name = "<init>",
