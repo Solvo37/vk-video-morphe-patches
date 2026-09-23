@@ -1,0 +1,2511 @@
+===== com.vk.catalog2.common.ui.mvp.configuration.a =====
+package com.vk.catalog2.common.ui.mvp.configuration;
+
+import ad4.o;
+import ad4.r;
+import ad4.s;
+import ad4.t;
+import ad4.u;
+import ad4.v;
+import android.content.Context;
+import android.net.Uri;
+import android.os.Bundle;
+import android.view.View;
+import android.view.animation.DecelerateInterpolator;
+import androidx.compose.animation.core.q1;
+import androidx.compose.foundation.text.f2;
+import androidx.compose.material.e0;
+import androidx.compose.material.z3;
+import androidx.compose.ui.text.input.h0;
+import androidx.fragment.app.m;
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.recyclerview.widget.q0;
+import bc3.a1;
+import cf0.f;
+import cf0.k;
+import com.facebook.soloader.SoLoader;
+import com.vk.api.generated.account.dto.AccountToggleDto;
+import com.vk.api.generated.catalog.dto.CatalogBlockItemsDto;
+import com.vk.auth.main.m1;
+import com.vk.auth.main.u1;
+import com.vk.auth.main.z0;
+import com.vk.catalog.mvi.domain.CatalogLinkButtonActionDo;
+import com.vk.catalog.mvi.register.CatalogBlockVariant;
+import com.vk.catalog2.common.dto.api.CatalogDataType;
+import com.vk.catalog2.common.dto.api.CatalogViewType;
+import com.vk.catalog2.common.dto.api.search.CatalogSearchEntityAnswer;
+import com.vk.catalog2.common.dto.api.style.CatalogViewStyle;
+import com.vk.catalog2.common.dto.api.style.CategoriesListViewStyle;
+import com.vk.catalog2.common.dto.api.style.DoubleListViewStyle;
+import com.vk.catalog2.common.dto.api.style.HorizontalButtonStackViewStyle;
+import com.vk.catalog2.common.dto.api.style.LinkListViewStyle;
+import com.vk.catalog2.common.dto.api.style.LinkSliderViewStyle;
+import com.vk.catalog2.common.dto.api.style.SearchEntityCatalogViewStyle;
+import com.vk.catalog2.common.dto.api.style.VideoCatalogViewStyle;
+import com.vk.catalog2.common.dto.api.style.VkMixInteractiveViewStyle;
+import com.vk.catalog2.common.dto.api.style.VkMixViewStyle;
+import com.vk.catalog2.common.dto.api.ui.UIBlock;
+import com.vk.catalog2.common.dto.ui.UIBlockApp;
+import com.vk.catalog2.common.dto.ui.UIBlockAppContent;
+import com.vk.catalog2.common.dto.ui.UIBlockBanner;
+import com.vk.catalog2.common.dto.ui.UIBlockButtons;
+import com.vk.catalog2.common.dto.ui.UIBlockLink;
+import com.vk.catalog2.common.dto.ui.UIBlockList;
+import com.vk.catalog2.common.dto.ui.UIBlockPlaceholder;
+import com.vk.catalog2.common.dto.ui.UIBlockVideo;
+import com.vk.catalog2.common.dto.ui.UIBlockVideoAlbum;
+import com.vk.catalog2.common.dto.ui.actions.UIBlockActionOpenSection;
+import com.vk.catalog2.common.dto.ui.actions.UIBlockActionOpenUrl;
+import com.vk.catalog2.common.dto.ui.actions.UIBlockActionTextButton;
+import com.vk.catalog2.common.dto.ui.stickers.UIBlockStickerPack;
+import com.vk.catalog2.common.dto.ui.stickers.UIBlockStickerPackPreview;
+import com.vk.catalog2.common.ui.holders.CatalogMviTopshelfVh;
+import com.vk.catalog2.common.ui.holders.CatalogMviVh;
+import com.vk.catalog2.common.ui.holders.EmptyVh;
+import com.vk.catalog2.common.ui.holders.ads.AdSearchBannerVh;
+import com.vk.catalog2.common.ui.holders.ads.AdShowCaseBannerVh;
+import com.vk.catalog2.common.ui.holders.api.CatalogPaginatedListViewHolder;
+import com.vk.catalog2.common.ui.holders.api.CatalogViewHolder;
+import com.vk.catalog2.common.ui.holders.api.search.SearchStatInfoProvider;
+import com.vk.catalog2.common.ui.holders.author.AuthorsVideoGroupCardVh;
+import com.vk.catalog2.common.ui.holders.author.CircularAuthorViewHolder;
+import com.vk.catalog2.common.ui.holders.button.HorizontalButtonLargeWithIconVh;
+import com.vk.catalog2.common.ui.holders.button.HorizontalButtonSmallVh;
+import com.vk.catalog2.common.ui.holders.search.SearchEntityPersonAnswerVh;
+import com.vk.catalog2.common.ui.holders.search.SearchEntityVideoPlaylistAnswerVh;
+import com.vk.catalog2.common.ui.holders.vkui.LinkBaseVh;
+import com.vk.catalog2.common.ui.holders.vkui.LinkCellVh;
+import com.vk.catalog2.common.ui.holders.vkui.LinkHorizontalListItemVh;
+import com.vk.catalog2.common.ui.mvp.holder.container.GridListVh;
+import com.vk.catalog2.common.ui.mvp.holder.container.HorizontalListVh;
+import com.vk.catalog2.common.ui.mvp.holder.container.VerticalListVh;
+import com.vk.catalog2.common.ui.mvp.holder.group.GroupCardWithBottomBtnVh;
+import com.vk.catalog2.common.ui.mvp.holder.search.SearchAuthorVh;
+import com.vk.catalog2.feature.music.dto.ui.UIBlockMusicPlaylist;
+import com.vk.catalog2.feature.music.dto.ui.UIBlockMusicTrack;
+import com.vk.catalog2.feature.music.holders.CategoryLinkVh;
+import com.vk.catalog2.feature.music.holders.MusicKidsAgeCategoryVh;
+import com.vk.catalog2.feature.music.holders.MusicTrackCellVh;
+import com.vk.catalog2.feature.music.holders.MusicTrackVh;
+import com.vk.catalog2.feature.music.holders.podcast.PodcastCategoryVh;
+import com.vk.catalog2.feature.music.holders.track.ComposeMusicTrackCellVh;
+import com.vk.catalog2.feature.music.holders.vkmix.MusicVkMixVh;
+import com.vk.catalog2.feature.music.holders.vkmix.SimpleMusicVkMixVh;
+import com.vk.catalog2.feature.music.holders.vkmix.small.SmallVkMixVh;
+import com.vk.catalog2.feature.music.holders.vkmix.viewholders.MusicBaseVkMixInteractiveVh;
+import com.vk.catalog2.feature.music.holders.vkmix.viewholders.MusicInteractiveSingleVkMixVh;
+import com.vk.catalog2.feature.music.holders.vkmix.viewholders.MusicInteractiveTwoVkMixesVh;
+import com.vk.catalog2.feature.search.dto.ui.UIBlockSearchEntityPerson;
+import com.vk.catalog2.feature.search.dto.ui.UIBlockSearchEntityVideoPlaylist;
+import com.vk.core.apps.BuildInfo;
+import com.vk.core.concurrent.d0;
+import com.vk.core.concurrent.f0;
+import com.vk.core.concurrent.g0;
+import com.vk.core.concurrent.p;
+import com.vk.core.performance.device.DevicePerformanceInfo;
+import com.vk.core.serialize.Serializer;
+import com.vk.dto.common.Image;
+import com.vk.dto.common.ImageSize;
+import com.vk.dto.common.NotificationImage;
+import com.vk.dto.common.id.UserId;
+import com.vk.dto.music.MusicTrack;
+import com.vk.dto.music.Playlist;
+import com.vk.dto.music.SearchSuggestion;
+import com.vk.dto.music.Thumb;
+import com.vk.imageloader.ImageScreenSize;
+import com.vk.libvideo.api.VideoAutoPlayDelayType;
+import com.vk.toggle.features.CatalogFeatures;
+import com.vk.toggle.features.MusicFeatures;
+import com.vk.video.ui.discovery.minimizable.u2;
+import com.vk.vkvideo.R;
+import g07.g;
+import g07.j;
+import gn5.z;
+import hk0.n0;
+import hk0.y;
+import io.reactivex.rxjava3.core.q;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
+import jg0.n;
+import k23.b0;
+import kotlin.LazyThreadSafetyMode;
+import kotlin.NoWhenBranchMatchedException;
+import kotlin.jvm.functions.Function1;
+import kotlin.jvm.internal.FunctionReferenceImpl;
+import ng0.h;
+import nk0.i;
+import ru.ok.android.api.core.ApiInvocationException;
+import tw1.c0;
+import xe0.l;
+
+/* JADX INFO: compiled from: VkCatalogConfiguration.kt */
+/* JADX INFO: loaded from: classes14.dex */
+public abstract class a implements r62.a, CatalogConfiguration {
+    public final Object A;
+    public final Object B;
+    public final Object C;
+    public final Object D;
+    public final Object E;
+    public final Object F;
+    public final j G;
+    public final j H;
+    public final yy2.c I;
+    public final f J;
+    public final Object K;
+    public final Object L;
+    public final Object M;
+    public final j N;
+
+    /* JADX INFO: renamed from: a, reason: collision with root package name */
+    public final UserId f48904a;
+
+    /* JADX INFO: renamed from: b, reason: collision with root package name */
+    public final String f48905b;
+
+    /* JADX INFO: renamed from: c, reason: collision with root package name */
+    public final Object f48906c;
+
+    /* JADX INFO: renamed from: d, reason: collision with root package name */
+    public final Object f48907d;
+
+    /* JADX INFO: renamed from: e, reason: collision with root package name */
+    public final Object f48908e;
+
+    /* JADX INFO: renamed from: f, reason: collision with root package name */
+    public final j f48909f;
+
+    /* JADX INFO: renamed from: g, reason: collision with root package name */
+    public final Object f48910g;
+
+    /* JADX INFO: renamed from: h, reason: collision with root package name */
+    public final boolean f48911h;
+
+    /* JADX INFO: renamed from: i, reason: collision with root package name */
+    public final Object f48912i;
+
+    /* JADX INFO: renamed from: j, reason: collision with root package name */
+    public final Object f48913j;
+
+    /* JADX INFO: renamed from: k, reason: collision with root package name */
+    public final j f48914k;
+
+    /* JADX INFO: renamed from: l, reason: collision with root package name */
+    public final Object f48915l;
+
+    /* JADX INFO: renamed from: m, reason: collision with root package name */
+    public final Object f48916m;
+
+    /* JADX INFO: renamed from: n, reason: collision with root package name */
+    public final Object f48917n;
+
+    /* JADX INFO: renamed from: o, reason: collision with root package name */
+    public final Object f48918o;
+
+    /* JADX INFO: renamed from: p, reason: collision with root package name */
+    public final Object f48919p;
+
+    /* JADX INFO: renamed from: q, reason: collision with root package name */
+    public final Object f48920q;
+
+    /* JADX INFO: renamed from: r, reason: collision with root package name */
+    public final Object f48921r;
+
+    /* JADX INFO: renamed from: s, reason: collision with root package name */
+    public final Object f48922s;
+
+    /* JADX INFO: renamed from: t, reason: collision with root package name */
+    public final Object f48923t;
+
+    /* JADX INFO: renamed from: u, reason: collision with root package name */
+    public final Object f48924u;
+
+    /* JADX INFO: renamed from: v, reason: collision with root package name */
+    public final Object f48925v;
+
+    /* JADX INFO: renamed from: w, reason: collision with root package name */
+    public final Object f48926w;
+    public final j x;
+    public final ot3.b y;
+
+    /* JADX INFO: renamed from: z, reason: collision with root package name */
+    public final Object f48927z;
+
+    /* JADX INFO: renamed from: com.vk.catalog2.common.ui.mvp.configuration.a$a, reason: collision with other inner class name */
+    /* JADX INFO: compiled from: VkCatalogConfiguration.kt */
+    /* JADX INFO: loaded from: classes5.dex */
+    public static final class C0771a extends h {
+
+        /* JADX INFO: renamed from: d, reason: collision with root package name */
+        public final ai0.f f48928d;
+
+        public C0771a(eg0.a aVar, SearchStatInfoProvider searchStatInfoProvider, ai0.f fVar) {
+            super(null, searchStatInfoProvider, aVar);
+            this.f48928d = fVar;
+        }
+
+        @Override // ng0.h, ng0.f
+        public final void a(Context context, View view, UIBlock uIBlock, com.vk.catalog.mvi.block.c cVar) {
+            if (!(cVar instanceof com.vk.catalog.mvi.block.c.a) || !kotlin.jvm.internal.h.d(((com.vk.catalog.mvi.block.c.a) cVar).f43118a, CatalogLinkButtonActionDo.CreateAlbum.f45966a)) {
+                super.a(context, view, uIBlock, cVar);
+                return;
+            }
+            UIBlockActionTextButton uIBlockActionTextButton = null;
+            if (uIBlock instanceof UIBlockButtons) {
+                for (UIBlock uIBlock2 : ((UIBlockButtons) uIBlock).f47554w) {
+                    UIBlockActionTextButton uIBlockActionTextButton2 = uIBlock2 instanceof UIBlockActionTextButton ? (UIBlockActionTextButton) uIBlock2 : null;
+                    if (uIBlockActionTextButton2 != null) {
+                        uIBlockActionTextButton = uIBlockActionTextButton2;
+                        break;
+                    }
+                }
+            } else if (uIBlock instanceof UIBlockActionTextButton) {
+                uIBlockActionTextButton = (UIBlockActionTextButton) uIBlock;
+            }
+            UIBlockActionTextButton uIBlockActionTextButton3 = uIBlockActionTextButton;
+            if (uIBlockActionTextButton3 == null) {
+                return;
+            }
+            i.e(this.f48928d.f3555a.f3577u, context, uIBlockActionTextButton3, uIBlockActionTextButton3, null, 56);
+        }
+    }
+
+    /* JADX INFO: compiled from: VkCatalogConfiguration.kt */
+    public static final /* synthetic */ class b {
+        public static final /* synthetic */ int[] $EnumSwitchMapping$0;
+        public static final /* synthetic */ int[] $EnumSwitchMapping$1;
+        public static final /* synthetic */ int[] $EnumSwitchMapping$2;
+        public static final /* synthetic */ int[] $EnumSwitchMapping$3;
+        public static final /* synthetic */ int[] $EnumSwitchMapping$4;
+        public static final /* synthetic */ int[] $EnumSwitchMapping$5;
+        public static final /* synthetic */ int[] $EnumSwitchMapping$6;
+        public static final /* synthetic */ int[] $EnumSwitchMapping$7;
+        public static final /* synthetic */ int[] $EnumSwitchMapping$8;
+
+        static {
+            int[] iArr = new int[CatalogViewType.values().length];
+            try {
+                iArr[CatalogViewType.SLIDER_WITH_VERTICAL_VIDEOS.ordinal()] = 1;
+            } catch (NoSuchFieldError unused) {
+            }
+            try {
+                iArr[CatalogViewType.LARGE_SLIDER_WITH_VERTICAL_VIDEOS.ordinal()] = 2;
+            } catch (NoSuchFieldError unused2) {
+            }
+            try {
+                iArr[CatalogViewType.VIDEO_SLIDER.ordinal()] = 3;
+            } catch (NoSuchFieldError unused3) {
+            }
+            try {
+                iArr[CatalogViewType.MUSIC_EXCLUSIVE_SLIDER.ordinal()] = 4;
+            } catch (NoSuchFieldError unused4) {
+            }
+            try {
+                iArr[CatalogViewType.LARGE_SLIDER.ordinal()] = 5;
+            } catch (NoSuchFieldError unused5) {
+            }
+            try {
+                iArr[CatalogViewType.SLIDER.ordinal()] = 6;
+            } catch (NoSuchFieldError unused6) {
+            }
+            try {
+                iArr[CatalogViewType.LARGE_LIST.ordinal()] = 7;
+            } catch (NoSuchFieldError unused7) {
+            }
+            try {
+                iArr[CatalogViewType.LIST.ordinal()] = 8;
+            } catch (NoSuchFieldError unused8) {
+            }
+            try {
+                iArr[CatalogViewType.DOUBLE_STACKED_SLIDER.ordinal()] = 9;
+            } catch (NoSuchFieldError unused9) {
+            }
+            try {
+                iArr[CatalogViewType.LIST_PICKER.ordinal()] = 10;
+            } catch (NoSuchFieldError unused10) {
+            }
+            try {
+                iArr[CatalogViewType.LARGE_LIST_INFINITE.ordinal()] = 11;
+            } catch (NoSuchFieldError unused11) {
+            }
+            try {
+                iArr[CatalogViewType.MUSIC_CHART_LIST.ordinal()] = 12;
+            } catch (NoSuchFieldError unused12) {
+            }
+            try {
+                iArr[CatalogViewType.STACKED_LIST.ordinal()] = 13;
+            } catch (NoSuchFieldError unused13) {
+            }
+            try {
+                iArr[CatalogViewType.DOUBLE_STACKED_LIST.ordinal()] = 14;
+            } catch (NoSuchFieldError unused14) {
+            }
+            try {
+                iArr[CatalogViewType.DOUBLE_STACKED_LIST_MINIMALISTIC_CARD.ordinal()] = 15;
+            } catch (NoSuchFieldError unused15) {
+            }
+            try {
+                iArr[CatalogViewType.ICONS_SLIDER.ordinal()] = 16;
+            } catch (NoSuchFieldError unused16) {
+            }
+            try {
+                iArr[CatalogViewType.RECOMMS_SLIDER.ordinal()] = 17;
+            } catch (NoSuchFieldError unused17) {
+            }
+            try {
+                iArr[CatalogViewType.ARTISTS_SLIDER.ordinal()] = 18;
+            } catch (NoSuchFieldError unused18) {
+            }
+            try {
+                iArr[CatalogViewType.CROP_SLIDER.ordinal()] = 19;
+            } catch (NoSuchFieldError unused19) {
+            }
+            try {
+                iArr[CatalogViewType.SLIDER_EVENT.ordinal()] = 20;
+            } catch (NoSuchFieldError unused20) {
+            }
+            try {
+                iArr[CatalogViewType.SLIDER_CARD.ordinal()] = 21;
+            } catch (NoSuchFieldError unused21) {
+            }
+            try {
+                iArr[CatalogViewType.SLIDER_MINIMALISTIC_CARD.ordinal()] = 22;
+            } catch (NoSuchFieldError unused22) {
+            }
+            try {
+                iArr[CatalogViewType.STICKERS_SLIDER_ONLY_PRICE.ordinal()] = 23;
+            } catch (NoSuchFieldError unused23) {
+            }
+            try {
+                iArr[CatalogViewType.STICKERS_LARGE_SLIDER_ONLY_PRICE.ordinal()] = 24;
+            } catch (NoSuchFieldError unused24) {
+            }
+            try {
+                iArr[CatalogViewType.LIST_STICKERS_PREVIEW.ordinal()] = 25;
+            } catch (NoSuchFieldError unused25) {
+            }
+            try {
+                iArr[CatalogViewType.PROMO_BANNERS_SLIDER.ordinal()] = 26;
+            } catch (NoSuchFieldError unused26) {
+            }
+            try {
+                iArr[CatalogViewType.PODCAST_BANNERS_SLIDER.ordinal()] = 27;
+            } catch (NoSuchFieldError unused27) {
+            }
+            try {
+                iArr[CatalogViewType.PODCAST_EXTENDED_SLIDER.ordinal()] = 28;
+            } catch (NoSuchFieldError unused28) {
+            }
+            try {
+                iArr[CatalogViewType.AUDIO_CONTENT_CARD_EXTENDED_SLIDER.ordinal()] = 29;
+            } catch (NoSuchFieldError unused29) {
+            }
+            try {
+                iArr[CatalogViewType.SMALL_SLIDER.ordinal()] = 30;
+            } catch (NoSuchFieldError unused30) {
+            }
+            try {
+                iArr[CatalogViewType.ARTIST_MERCH_SLIDER.ordinal()] = 31;
+            } catch (NoSuchFieldError unused31) {
+            }
+            try {
+                iArr[CatalogViewType.SHOWCASE_LIST.ordinal()] = 32;
+            } catch (NoSuchFieldError unused32) {
+            }
+            try {
+                iArr[CatalogViewType.MUSIC_CHART_LARGE_SLIDER.ordinal()] = 33;
+            } catch (NoSuchFieldError unused33) {
+            }
+            try {
+                iArr[CatalogViewType.HORIZONTAL_LIST_FRIEND_SUGGESTS.ordinal()] = 34;
+            } catch (NoSuchFieldError unused34) {
+            }
+            try {
+                iArr[CatalogViewType.PROMO_BANNERS_SLIDER_INFINITE.ordinal()] = 35;
+            } catch (NoSuchFieldError unused35) {
+            }
+            try {
+                iArr[CatalogViewType.SLIDER_INFINITE.ordinal()] = 36;
+            } catch (NoSuchFieldError unused36) {
+            }
+            try {
+                iArr[CatalogViewType.PODCAST_BANNERS_SLIDER_INFINITE.ordinal()] = 37;
+            } catch (NoSuchFieldError unused37) {
+            }
+            try {
+                iArr[CatalogViewType.SLIDER_CARD_INFINITE.ordinal()] = 38;
+            } catch (NoSuchFieldError unused38) {
+            }
+            try {
+                iArr[CatalogViewType.LARGE_SLIDER_INFINITE.ordinal()] = 39;
+            } catch (NoSuchFieldError unused39) {
+            }
+            try {
+                iArr[CatalogViewType.TRIPLE_STACKED_SLIDER.ordinal()] = 40;
+            } catch (NoSuchFieldError unused40) {
+            }
+            try {
+                iArr[CatalogViewType.TRIPLE_STACKED_SLIDER_PICKER.ordinal()] = 41;
+            } catch (NoSuchFieldError unused41) {
+            }
+            try {
+                iArr[CatalogViewType.MUSIC_CHART_TRIPLE_STACKED_SLIDER.ordinal()] = 42;
+            } catch (NoSuchFieldError unused42) {
+            }
+            try {
+                iArr[CatalogViewType.SYNTHETIC_STAGGERED_TRIPLE_STACKED_SLIDER.ordinal()] = 43;
+            } catch (NoSuchFieldError unused43) {
+            }
+            try {
+                iArr[CatalogViewType.SYNTHETIC_SPORT_WIDGET_SLIDER.ordinal()] = 44;
+            } catch (NoSuchFieldError unused44) {
+            }
+            try {
+                iArr[CatalogViewType.SYNTHETIC_SPORT_WIDGET_LIST.ordinal()] = 45;
+            } catch (NoSuchFieldError unused45) {
+            }
+            try {
+                iArr[CatalogViewType.SLIDER_VERTICAL_VIDEOS_NO_AUTOPLAY.ordinal()] = 46;
+            } catch (NoSuchFieldError unused46) {
+            }
+            try {
+                iArr[CatalogViewType.DOUBLE_STACKED_SLIDER_MINIMALISTIC_CARD.ordinal()] = 47;
+            } catch (NoSuchFieldError unused47) {
+            }
+            try {
+                iArr[CatalogViewType.SYNTHETIC_VIDEO_SLIDER_INTERACTIVE.ordinal()] = 48;
+            } catch (NoSuchFieldError unused48) {
+            }
+            try {
+                iArr[CatalogViewType.SYNTHETIC_VIDEO_VIDEOS_RATIO_1_1.ordinal()] = 49;
+            } catch (NoSuchFieldError unused49) {
+            }
+            try {
+                iArr[CatalogViewType.SYNTHETIC_VIDEO_VIDEOS_RATIO_4_5.ordinal()] = 50;
+            } catch (NoSuchFieldError unused50) {
+            }
+            try {
+                iArr[CatalogViewType.SYNTHETIC_VIDEO_VIDEOS_RATIO_1_1_NO_AUTOPLAY.ordinal()] = 51;
+            } catch (NoSuchFieldError unused51) {
+            }
+            try {
+                iArr[CatalogViewType.SYNTHETIC_VIDEO_VIDEOS_RATIO_4_5_NO_AUTOPLAY.ordinal()] = 52;
+            } catch (NoSuchFieldError unused52) {
+            }
+            try {
+                iArr[CatalogViewType.SYNTHETIC_VIDEO_VIDEOS_LARGE_LIST_NO_AUTOPLAY.ordinal()] = 53;
+            } catch (NoSuchFieldError unused53) {
+            }
+            try {
+                iArr[CatalogViewType.SYNTHETIC_VIDEO_VIDEOS_HIDE.ordinal()] = 54;
+            } catch (NoSuchFieldError unused54) {
+            }
+            try {
+                iArr[CatalogViewType.SYNTHETIC_VIDEO_VIDEOS_SLIDER_HIDE.ordinal()] = 55;
+            } catch (NoSuchFieldError unused55) {
+            }
+            try {
+                iArr[CatalogViewType.SYNTHETIC_VIDEO_VIDEOS_STACKED_HIDE.ordinal()] = 56;
+            } catch (NoSuchFieldError unused56) {
+            }
+            try {
+                iArr[CatalogViewType.SYNTHETIC_VIDEO_VIDEOS_UPLOAD.ordinal()] = 57;
+            } catch (NoSuchFieldError unused57) {
+            }
+            try {
+                iArr[CatalogViewType.SYNTHETIC_VIDEO_VIDEOS_INTERACTIVE.ordinal()] = 58;
+            } catch (NoSuchFieldError unused58) {
+            }
+            try {
+                iArr[CatalogViewType.SHORT_DOUBLE_STACKED_LIST.ordinal()] = 59;
+            } catch (NoSuchFieldError unused59) {
+            }
+            try {
+                iArr[CatalogViewType.LISTENED_LIST.ordinal()] = 60;
+            } catch (NoSuchFieldError unused60) {
+            }
+            try {
+                iArr[CatalogViewType.MY_SHELF_PLAYABLE_ITEM.ordinal()] = 61;
+            } catch (NoSuchFieldError unused61) {
+            }
+            try {
+                iArr[CatalogViewType.OWNER_CELL.ordinal()] = 62;
+            } catch (NoSuchFieldError unused62) {
+            }
+            try {
+                iArr[CatalogViewType.LIST_WITH_NOTIFICATION_STATE.ordinal()] = 63;
+            } catch (NoSuchFieldError unused63) {
+            }
+            try {
+                iArr[CatalogViewType.LIST_WITH_RETURN_STATE.ordinal()] = 64;
+            } catch (NoSuchFieldError unused64) {
+            }
+            try {
+                iArr[CatalogViewType.BANNER.ordinal()] = 65;
+            } catch (NoSuchFieldError unused65) {
+            }
+            try {
+                iArr[CatalogViewType.TITLE_SUBTITLE_AVATAR.ordinal()] = 66;
+            } catch (NoSuchFieldError unused66) {
+            }
+            try {
+                iArr[CatalogViewType.VIDEO_TABS_ALBUM_LIST.ordinal()] = 67;
+            } catch (NoSuchFieldError unused67) {
+            }
+            try {
+                iArr[CatalogViewType.FIENDS_HORIZONTAL_ACTION.ordinal()] = 68;
+            } catch (NoSuchFieldError unused68) {
+            }
+            try {
+                iArr[CatalogViewType.SUBSECTION_TABS.ordinal()] = 69;
+            } catch (NoSuchFieldError unused69) {
+            }
+            try {
+                iArr[CatalogViewType.BUTTONS_HORIZONTAL.ordinal()] = 70;
+            } catch (NoSuchFieldError unused70) {
+            }
+            try {
+                iArr[CatalogViewType.FILTER_BUTTON.ordinal()] = 71;
+            } catch (NoSuchFieldError unused71) {
+            }
+            try {
+                iArr[CatalogViewType.SUBSECTION_FILTER_BUTTON.ordinal()] = 72;
+            } catch (NoSuchFieldError unused72) {
+            }
+            try {
+                iArr[CatalogViewType.SYNTHETIC_ACTION_UPLOAD_VIDEO.ordinal()] = 73;
+            } catch (NoSuchFieldError unused73) {
+            }
+            try {
+                iArr[CatalogViewType.SYNTHETIC_ACTION_CREATE_ALBUM.ordinal()] = 74;
+            } catch (NoSuchFieldError unused74) {
+            }
+            try {
+                iArr[CatalogViewType.SYNTHETIC_ACTION_START_LIVE_STREAM.ordinal()] = 75;
+            } catch (NoSuchFieldError unused75) {
+            }
+            try {
+                iArr[CatalogViewType.SYNTHETIC_ACTION_PLAY_MIX.ordinal()] = 76;
+            } catch (NoSuchFieldError unused76) {
+            }
+            try {
+                iArr[CatalogViewType.SYNTHETIC_ACTION_ARTIST_MIX.ordinal()] = 77;
+            } catch (NoSuchFieldError unused77) {
+            }
+            try {
+                iArr[CatalogViewType.SYNTHETIC_ACTION_CREATE_PLAYLIST.ordinal()] = 78;
+            } catch (NoSuchFieldError unused78) {
+            }
+            try {
+                iArr[CatalogViewType.SYNTHETIC_ACTION_PLAY_SHUFFLED_AUDIO_FROM_BLOCK.ordinal()] = 79;
+            } catch (NoSuchFieldError unused79) {
+            }
+            try {
+                iArr[CatalogViewType.SYNTHETIC_ACTION_PLAY_AUDIO_FROM_BLOCK.ordinal()] = 80;
+            } catch (NoSuchFieldError unused80) {
+            }
+            try {
+                iArr[CatalogViewType.SYNTHETIC_ACTION_SAVE_AS_PLAYLIST.ordinal()] = 81;
+            } catch (NoSuchFieldError unused81) {
+            }
+            try {
+                iArr[CatalogViewType.SYNTHETIC_ACTION_FOLLOW.ordinal()] = 82;
+            } catch (NoSuchFieldError unused82) {
+            }
+            try {
+                iArr[CatalogViewType.SYNTHETIC_HEADER_CLEAR_RECENTS.ordinal()] = 83;
+            } catch (NoSuchFieldError unused83) {
+            }
+            try {
+                iArr[CatalogViewType.SYNTHETIC_ACTION_SCAN_QR.ordinal()] = 84;
+            } catch (NoSuchFieldError unused84) {
+            }
+            try {
+                iArr[CatalogViewType.SYNTHETIC_ACTION_ADD_FRIEND.ordinal()] = 85;
+            } catch (NoSuchFieldError unused85) {
+            }
+            try {
+                iArr[CatalogViewType.SYNTHETIC_ACTION_ADD_FRIENDS.ordinal()] = 86;
+            } catch (NoSuchFieldError unused86) {
+            }
+            try {
+                iArr[CatalogViewType.SYNTHETIC_ACTION_FRIENDS_CLEANUP.ordinal()] = 87;
+            } catch (NoSuchFieldError unused87) {
+            }
+            try {
+                iArr[CatalogViewType.SYNTHETIC_ACTION_IMPORT_CONTACTS.ordinal()] = 88;
+            } catch (NoSuchFieldError unused88) {
+            }
+            try {
+                iArr[CatalogViewType.SYNTHETIC_ACTION_OPEN_SCREEN.ordinal()] = 89;
+            } catch (NoSuchFieldError unused89) {
+            }
+            try {
+                iArr[CatalogViewType.SYNTHETIC_ACTION_FRIENDS_SORT_MODES.ordinal()] = 90;
+            } catch (NoSuchFieldError unused90) {
+            }
+            try {
+                iArr[CatalogViewType.SYNTHETIC_ACTION_SELECT_SORTING.ordinal()] = 91;
+            } catch (NoSuchFieldError unused91) {
+            }
+            try {
+                iArr[CatalogViewType.SYNTHETIC_ACTION_ADV_URL.ordinal()] = 92;
+            } catch (NoSuchFieldError unused92) {
+            }
+            try {
+                iArr[CatalogViewType.SYNTHETIC_ACTION_OPEN_SECTION.ordinal()] = 93;
+            } catch (NoSuchFieldError unused93) {
+            }
+            try {
+                iArr[CatalogViewType.SYNTHETIC_ACTION_OPEN_SECTION_CHIP.ordinal()] = 94;
+            } catch (NoSuchFieldError unused94) {
+            }
+            try {
+                iArr[CatalogViewType.SYNTHETIC_ACTION_OPEN_TAB.ordinal()] = 95;
+            } catch (NoSuchFieldError unused95) {
+            }
+            try {
+                iArr[CatalogViewType.SYNTHETIC_ACTION_EXPAND_BLOCK.ordinal()] = 96;
+            } catch (NoSuchFieldError unused96) {
+            }
+            try {
+                iArr[CatalogViewType.SYNTHETIC_ACTION_OPEN_SECTION_SLIDER_DEFAULT.ordinal()] = 97;
+            } catch (NoSuchFieldError unused97) {
+            }
+            try {
+                iArr[CatalogViewType.SYNTHETIC_ACTION_OPEN_SECTION_SLIDER_MARKET_ITEMS.ordinal()] = 98;
+            } catch (NoSuchFieldError unused98) {
+            }
+            try {
+                iArr[CatalogViewType.SYNTHETIC_ACTION_OPEN_SECTION_SLIDER_VIDEOS.ordinal()] = 99;
+            } catch (NoSuchFieldError unused99) {
+            }
+            try {
+                iArr[CatalogViewType.SYNTHETIC_ACTION_OPEN_URL_SLIDER.ordinal()] = 100;
+            } catch (NoSuchFieldError unused100) {
+            }
+            try {
+                iArr[CatalogViewType.SYNTHETIC_ACTION_OPEN_URL.ordinal()] = 101;
+            } catch (NoSuchFieldError unused101) {
+            }
+            try {
+                iArr[CatalogViewType.SYNTHETIC_ACTION_MUSIC_FOLLOW_OWNER.ordinal()] = 102;
+            } catch (NoSuchFieldError unused102) {
+            }
+            try {
+                iArr[CatalogViewType.SYNTHETIC_ACTION_TOGGLE_SUBSCRIPTION_CURATOR.ordinal()] = 103;
+            } catch (NoSuchFieldError unused103) {
+            }
+            try {
+                iArr[CatalogViewType.SYNTHETIC_ACTION_OPEN_INFO_POPUP.ordinal()] = 104;
+            } catch (NoSuchFieldError unused104) {
+            }
+            try {
+                iArr[CatalogViewType.SMALL_LIST.ordinal()] = 105;
+            } catch (NoSuchFieldError unused105) {
+            }
+            try {
+                iArr[CatalogViewType.SNIPPETS_BANNER.ordinal()] = 106;
+            } catch (NoSuchFieldError unused106) {
+            }
+            try {
+                iArr[CatalogViewType.CATALOG_BANNER.ordinal()] = 107;
+            } catch (NoSuchFieldError unused107) {
+            }
+            try {
+                iArr[CatalogViewType.PLACEHOLDER_SMALL.ordinal()] = 108;
+            } catch (NoSuchFieldError unused108) {
+            }
+            try {
+                iArr[CatalogViewType.PLACEHOLDER_BIG.ordinal()] = 109;
+            } catch (NoSuchFieldError unused109) {
+            }
+            try {
+                iArr[CatalogViewType.PLACEHOLDER.ordinal()] = 110;
+            } catch (NoSuchFieldError unused110) {
+            }
+            try {
+                iArr[CatalogViewType.PLACEHOLDER_ILLEGAL_QUERY.ordinal()] = 111;
+            } catch (NoSuchFieldError unused111) {
+            }
+            try {
+                iArr[CatalogViewType.PLACEHOLDER_IMAGE_WARNING.ordinal()] = 112;
+            } catch (NoSuchFieldError unused112) {
+            }
+            try {
+                iArr[CatalogViewType.HEADER.ordinal()] = 113;
+            } catch (NoSuchFieldError unused113) {
+            }
+            try {
+                iArr[CatalogViewType.HEADER_COMPACT.ordinal()] = 114;
+            } catch (NoSuchFieldError unused114) {
+            }
+            try {
+                iArr[CatalogViewType.HEADER_EXTENDED.ordinal()] = 115;
+            } catch (NoSuchFieldError unused115) {
+            }
+            try {
+                iArr[CatalogViewType.HEADER_LARGE.ordinal()] = 116;
+            } catch (NoSuchFieldError unused116) {
+            }
+            try {
+                iArr[CatalogViewType.SEPARATOR.ordinal()] = 117;
+            } catch (NoSuchFieldError unused117) {
+            }
+            try {
+                iArr[CatalogViewType.SEPARATOR_COMPACT.ordinal()] = 118;
+            } catch (NoSuchFieldError unused118) {
+            }
+            try {
+                iArr[CatalogViewType.SYNTHETIC_SEPARATOR_TRANSPARENT.ordinal()] = 119;
+            } catch (NoSuchFieldError unused119) {
+            }
+            try {
+                iArr[CatalogViewType.SYNTHETIC_SEPARATOR_THIN.ordinal()] = 120;
+            } catch (NoSuchFieldError unused120) {
+            }
+            try {
+                iArr[CatalogViewType.SYNTHETIC_SEPARATOR_ISLAND.ordinal()] = 121;
+            } catch (NoSuchFieldError unused121) {
+            }
+            try {
+                iArr[CatalogViewType.SYNTHETIC_SEPARATOR_ISLAND_TRANSPARENT.ordinal()] = 122;
+            } catch (NoSuchFieldError unused122) {
+            }
+            try {
+                iArr[CatalogViewType.SYNTHETIC_SEPARATOR_OVERLAP.ordinal()] = 123;
+            } catch (NoSuchFieldError unused123) {
+            }
+            try {
+                iArr[CatalogViewType.SYNTHETIC_HEADER_CLEAR_RECENTS_COMPACT.ordinal()] = 124;
+            } catch (NoSuchFieldError unused124) {
+            }
+            try {
+                iArr[CatalogViewType.SYNTHETIC_HEADER_CLEAR_RECENTS_LARGE.ordinal()] = 125;
+            } catch (NoSuchFieldError unused125) {
+            }
+            try {
+                iArr[CatalogViewType.SYNTHETIC_TABS.ordinal()] = 126;
+            } catch (NoSuchFieldError unused126) {
+            }
+            try {
+                iArr[CatalogViewType.SYNTHETIC_SEARCH_MAP_HEADER.ordinal()] = 127;
+            } catch (NoSuchFieldError unused127) {
+            }
+            try {
+                iArr[CatalogViewType.SYNTHETIC_LEGAL_NOTICE.ordinal()] = 128;
+            } catch (NoSuchFieldError unused128) {
+            }
+            try {
+                iArr[CatalogViewType.FEATURED_LIST.ordinal()] = 129;
+            } catch (NoSuchFieldError unused129) {
+            }
+            try {
+                iArr[CatalogViewType.MUSIC_NEWSFEED_TITLE.ordinal()] = 130;
+            } catch (NoSuchFieldError unused130) {
+            }
+            try {
+                iArr[CatalogViewType.CATEGORIES_LIST.ordinal()] = 131;
+            } catch (NoSuchFieldError unused131) {
+            }
+            try {
+                iArr[CatalogViewType.PLAYLIST_SMALL.ordinal()] = 132;
+            } catch (NoSuchFieldError unused132) {
+            }
+            try {
+                iArr[CatalogViewType.SMALL_BANNER_OFFER.ordinal()] = 133;
+            } catch (NoSuchFieldError unused133) {
+            }
+            try {
+                iArr[CatalogViewType.ENTITY_DOUBLE_GRID.ordinal()] = 134;
+            } catch (NoSuchFieldError unused134) {
+            }
+            try {
+                iArr[CatalogViewType.DOUBLE_LIST.ordinal()] = 135;
+            } catch (NoSuchFieldError unused135) {
+            }
+            try {
+                iArr[CatalogViewType.PODCAST_CATEGORY_GENRE_BUTTONS.ordinal()] = 136;
+            } catch (NoSuchFieldError unused136) {
+            }
+            try {
+                iArr[CatalogViewType.CATEGORIES_GRID.ordinal()] = 137;
+            } catch (NoSuchFieldError unused137) {
+            }
+            try {
+                iArr[CatalogViewType.PODCAST_FAVORITES.ordinal()] = 138;
+            } catch (NoSuchFieldError unused138) {
+            }
+            try {
+                iArr[CatalogViewType.KIDS_COLLECTION.ordinal()] = 139;
+            } catch (NoSuchFieldError unused139) {
+            }
+            try {
+                iArr[CatalogViewType.KIDS_CATALOG.ordinal()] = 140;
+            } catch (NoSuchFieldError unused140) {
+            }
+            try {
+                iArr[CatalogViewType.DYNAMIC_GRID.ordinal()] = 141;
+            } catch (NoSuchFieldError unused141) {
+            }
+            try {
+                iArr[CatalogViewType.TEXT.ordinal()] = 142;
+            } catch (NoSuchFieldError unused142) {
+            }
+            try {
+                iArr[CatalogViewType.VERTICAL_GRID.ordinal()] = 143;
+            } catch (NoSuchFieldError unused143) {
+            }
+            try {
+                iArr[CatalogViewType.SYNTHETIC_SEARCH_LIST.ordinal()] = 144;
+            } catch (NoSuchFieldError unused144) {
+            }
+            try {
+                iArr[CatalogViewType.FRIENDS_UNREAD_REQUEST.ordinal()] = 145;
+            } catch (NoSuchFieldError unused145) {
+            }
+            try {
+                iArr[CatalogViewType.LIST_FRIENDS_REQUESTS.ordinal()] = 146;
+            } catch (NoSuchFieldError unused146) {
+            }
+            try {
+                iArr[CatalogViewType.LIST_FRIENDS_REQUESTS_OUT.ordinal()] = 147;
+            } catch (NoSuchFieldError unused147) {
+            }
+            try {
+                iArr[CatalogViewType.LIST_FRIENDS_SUGGEST.ordinal()] = 148;
+            } catch (NoSuchFieldError unused148) {
+            }
+            try {
+                iArr[CatalogViewType.SYNTHETIC_LIST_FOLLOWERS.ordinal()] = 149;
+            } catch (NoSuchFieldError unused149) {
+            }
+            try {
+                iArr[CatalogViewType.FRIENDS_REQUEST.ordinal()] = 150;
+            } catch (NoSuchFieldError unused150) {
+            }
+            try {
+                iArr[CatalogViewType.SYNTHETIC_SEARCH_GROUP_ITEMS_LIST.ordinal()] = 151;
+            } catch (NoSuchFieldError unused151) {
+            }
+            try {
+                iArr[CatalogViewType.PREVIEW.ordinal()] = 152;
+            } catch (NoSuchFieldError unused152) {
+            }
+            try {
+                iArr[CatalogViewType.BUTTONS_HORIZONTAL_WITH_SCROLL.ordinal()] = 153;
+            } catch (NoSuchFieldError unused153) {
+            }
+            try {
+                iArr[CatalogViewType.SYNTHETIC_GROUP_ITEM_BIG.ordinal()] = 154;
+            } catch (NoSuchFieldError unused154) {
+            }
+            try {
+                iArr[CatalogViewType.MAP_PREVIEW.ordinal()] = 155;
+            } catch (NoSuchFieldError unused155) {
+            }
+            try {
+                iArr[CatalogViewType.AUDIO_STREAM_MIX_INTERACTIVE.ordinal()] = 156;
+            } catch (NoSuchFieldError unused156) {
+            }
+            try {
+                iArr[CatalogViewType.AUDIO_STREAM_MIX.ordinal()] = 157;
+            } catch (NoSuchFieldError unused157) {
+            }
+            try {
+                iArr[CatalogViewType.VIDEO_MUSIC_STREAM_MIX.ordinal()] = 158;
+            } catch (NoSuchFieldError unused158) {
+            }
+            try {
+                iArr[CatalogViewType.HORIZONTAL_BUTTONS_STACK.ordinal()] = 159;
+            } catch (NoSuchFieldError unused159) {
+            }
+            try {
+                iArr[CatalogViewType.SYNTHETIC_MUSIC_TRACK_LIST.ordinal()] = 160;
+            } catch (NoSuchFieldError unused160) {
+            }
+            $EnumSwitchMapping$0 = iArr;
+            int[] iArr2 = new int[CatalogConfiguration$Companion$ContainerType.values().length];
+            try {
+                iArr2[CatalogConfiguration$Companion$ContainerType.VERTICAL.ordinal()] = 1;
+            } catch (NoSuchFieldError unused161) {
+            }
+            try {
+                iArr2[CatalogConfiguration$Companion$ContainerType.HORIZONTAL.ordinal()] = 2;
+            } catch (NoSuchFieldError unused162) {
+            }
+            try {
+                iArr2[CatalogConfiguration$Companion$ContainerType.GRID.ordinal()] = 3;
+            } catch (NoSuchFieldError unused163) {
+            }
+            $EnumSwitchMapping$1 = iArr2;
+            int[] iArr3 = new int[CatalogDataType.values().length];
+            try {
+                iArr3[CatalogDataType.DATA_TYPE_VIDEO_ALBUMS.ordinal()] = 1;
+            } catch (NoSuchFieldError unused164) {
+            }
+            try {
+                iArr3[CatalogDataType.DATA_TYPE_LIVE_CATEGORY.ordinal()] = 2;
+            } catch (NoSuchFieldError unused165) {
+            }
+            try {
+                iArr3[CatalogDataType.DATA_TYPE_VIDEO_VIDEOS.ordinal()] = 3;
+            } catch (NoSuchFieldError unused166) {
+            }
+            try {
+                iArr3[CatalogDataType.DATA_TYPE_VIDEO_CATALOG_VIDEOS.ordinal()] = 4;
+            } catch (NoSuchFieldError unused167) {
+            }
+            try {
+                iArr3[CatalogDataType.DATA_TYPE_LINKS.ordinal()] = 5;
+            } catch (NoSuchFieldError unused168) {
+            }
+            try {
+                iArr3[CatalogDataType.DATA_TYPE_MINIAPPS.ordinal()] = 6;
+            } catch (NoSuchFieldError unused169) {
+            }
+            try {
+                iArr3[CatalogDataType.DATA_TYPE_GAMES.ordinal()] = 7;
+            } catch (NoSuchFieldError unused170) {
+            }
+            try {
+                iArr3[CatalogDataType.DATA_TYPE_MINI_APPS_CONTENT.ordinal()] = 8;
+            } catch (NoSuchFieldError unused171) {
+            }
+            try {
+                iArr3[CatalogDataType.DATA_TYPE_STICKERS.ordinal()] = 9;
+            } catch (NoSuchFieldError unused172) {
+            }
+            try {
+                iArr3[CatalogDataType.DATA_TYPE_STICKER_PACKS.ordinal()] = 10;
+            } catch (NoSuchFieldError unused173) {
+            }
+            try {
+                iArr3[CatalogDataType.DATA_TYPE_STICKERS_BANNERS.ordinal()] = 11;
+            } catch (NoSuchFieldError unused174) {
+            }
+            try {
+                iArr3[CatalogDataType.DATA_TYPE_MUSIC_TRACKS.ordinal()] = 12;
+            } catch (NoSuchFieldError unused175) {
+            }
+            try {
+                iArr3[CatalogDataType.DATA_TYPE_SHORT_VIDEO_AUDIOS.ordinal()] = 13;
+            } catch (NoSuchFieldError unused176) {
+            }
+            try {
+                iArr3[CatalogDataType.DATA_TYPE_MUSIC_PLAYLISTS.ordinal()] = 14;
+            } catch (NoSuchFieldError unused177) {
+            }
+            try {
+                iArr3[CatalogDataType.DATA_TYPE_SEARCH_ENTITY_ITEMS.ordinal()] = 15;
+            } catch (NoSuchFieldError unused178) {
+            }
+            try {
+                iArr3[CatalogDataType.DATA_TYPE_CATALOG_BANNERS.ordinal()] = 16;
+            } catch (NoSuchFieldError unused179) {
+            }
+            try {
+                iArr3[CatalogDataType.DATA_TYPE_CATALOG_BANNERS_ALIGNED_TO_IMAGE.ordinal()] = 17;
+            } catch (NoSuchFieldError unused180) {
+            }
+            try {
+                iArr3[CatalogDataType.DATA_TYPE_CATALOG_BANNERS_TOP_ALIGNED.ordinal()] = 18;
+            } catch (NoSuchFieldError unused181) {
+            }
+            try {
+                iArr3[CatalogDataType.DATA_TYPE_CATALOG_BANNERS_CENTER_ALIGNED.ordinal()] = 19;
+            } catch (NoSuchFieldError unused182) {
+            }
+            try {
+                iArr3[CatalogDataType.DATA_TYPE_GROUP_BANNERS.ordinal()] = 20;
+            } catch (NoSuchFieldError unused183) {
+            }
+            try {
+                iArr3[CatalogDataType.DATA_TYPE_PLACEHOLDER.ordinal()] = 21;
+            } catch (NoSuchFieldError unused184) {
+            }
+            try {
+                iArr3[CatalogDataType.DATA_SYNTHETIC_SHOW_ALL.ordinal()] = 22;
+            } catch (NoSuchFieldError unused185) {
+            }
+            try {
+                iArr3[CatalogDataType.DATA_SYNTHETIC_SECTION.ordinal()] = 23;
+            } catch (NoSuchFieldError unused186) {
+            }
+            try {
+                iArr3[CatalogDataType.DATA_TYPE_ARTIST_VIDEOS.ordinal()] = 24;
+            } catch (NoSuchFieldError unused187) {
+            }
+            try {
+                iArr3[CatalogDataType.DATA_TYPE_FEEDBACKS.ordinal()] = 25;
+            } catch (NoSuchFieldError unused188) {
+            }
+            try {
+                iArr3[CatalogDataType.DATA_TYPE_LONGREADS.ordinal()] = 26;
+            } catch (NoSuchFieldError unused189) {
+            }
+            try {
+                iArr3[CatalogDataType.DATA_TYPE_FRIENDS_LIKE_EPISODE.ordinal()] = 27;
+            } catch (NoSuchFieldError unused190) {
+            }
+            try {
+                iArr3[CatalogDataType.DATA_TYPE_PODCAST_SLIDER_ITEMS.ordinal()] = 28;
+            } catch (NoSuchFieldError unused191) {
+            }
+            try {
+                iArr3[CatalogDataType.DATA_TYPE_PODCAST_EPISODES.ordinal()] = 29;
+            } catch (NoSuchFieldError unused192) {
+            }
+            try {
+                iArr3[CatalogDataType.DATA_TYPE_PODCASTS.ordinal()] = 30;
+            } catch (NoSuchFieldError unused193) {
+            }
+            try {
+                iArr3[CatalogDataType.DATA_TYPE_OFFLINE_PODCASTS.ordinal()] = 31;
+            } catch (NoSuchFieldError unused194) {
+            }
+            try {
+                iArr3[CatalogDataType.DATA_TYPE_MUSIC_RECOMMENDED_PLAYLISTS.ordinal()] = 32;
+            } catch (NoSuchFieldError unused195) {
+            }
+            try {
+                iArr3[CatalogDataType.DATA_TYPE_AUDIO_FOLLOWINGS_UPDATE_INFO.ordinal()] = 33;
+            } catch (NoSuchFieldError unused196) {
+            }
+            try {
+                iArr3[CatalogDataType.DATA_TYPE_AUDIO_FOLLOWINGS_UPDATE_ITEM.ordinal()] = 34;
+            } catch (NoSuchFieldError unused197) {
+            }
+            try {
+                iArr3[CatalogDataType.DATA_TYPE_MUSIC_OWNERS.ordinal()] = 35;
+            } catch (NoSuchFieldError unused198) {
+            }
+            try {
+                iArr3[CatalogDataType.DATA_TYPE_OWNERS.ordinal()] = 36;
+            } catch (NoSuchFieldError unused199) {
+            }
+            try {
+                iArr3[CatalogDataType.DATA_TYPE_SEARCH_AUTHORS.ordinal()] = 37;
+            } catch (NoSuchFieldError unused200) {
+            }
+            try {
+                iArr3[CatalogDataType.DATA_TYPE_DND_ACTION.ordinal()] = 38;
+            } catch (NoSuchFieldError unused201) {
+            }
+            try {
+                iArr3[CatalogDataType.DATA_TYPE_ACTION.ordinal()] = 39;
+            } catch (NoSuchFieldError unused202) {
+            }
+            try {
+                iArr3[CatalogDataType.DATA_TYPE_EXTENDED_PODCASTS.ordinal()] = 40;
+            } catch (NoSuchFieldError unused203) {
+            }
+            try {
+                iArr3[CatalogDataType.DATA_TYPE_NONE.ordinal()] = 41;
+            } catch (NoSuchFieldError unused204) {
+            }
+            try {
+                iArr3[CatalogDataType.DATA_TYPE_AUDIO_CONTENT_CARDS.ordinal()] = 42;
+            } catch (NoSuchFieldError unused205) {
+            }
+            try {
+                iArr3[CatalogDataType.DATA_TYPE_TEXTS.ordinal()] = 43;
+            } catch (NoSuchFieldError unused206) {
+            }
+            try {
+                iArr3[CatalogDataType.DATA_TYPE_CATALOG_MARKET_ITEMS.ordinal()] = 44;
+            } catch (NoSuchFieldError unused207) {
+            }
+            try {
+                iArr3[CatalogDataType.DATA_TYPE_CATALOG_GROUPS_INFO_ITEMS.ordinal()] = 45;
+            } catch (NoSuchFieldError unused208) {
+            }
+            try {
+                iArr3[CatalogDataType.DATA_TYPE_CATALOG_NAVIGATION_TABS.ordinal()] = 46;
+            } catch (NoSuchFieldError unused209) {
+            }
+            try {
+                iArr3[CatalogDataType.DATA_TYPE_STICKERS_INFO.ordinal()] = 47;
+            } catch (NoSuchFieldError unused210) {
+            }
+            try {
+                iArr3[CatalogDataType.DATA_TYPE_CATALOG_USERS.ordinal()] = 48;
+            } catch (NoSuchFieldError unused211) {
+            }
+            try {
+                iArr3[CatalogDataType.DATA_TYPE_GROUPS.ordinal()] = 49;
+            } catch (NoSuchFieldError unused212) {
+            }
+            try {
+                iArr3[CatalogDataType.DATA_TYPE_GROUPS_ITEMS.ordinal()] = 50;
+            } catch (NoSuchFieldError unused213) {
+            }
+            try {
+                iArr3[CatalogDataType.DATA_TYPE_ALL_GROUPS_OR_RECOMMENDATIONS.ordinal()] = 51;
+            } catch (NoSuchFieldError unused214) {
+            }
+            try {
+                iArr3[CatalogDataType.DATA_TYPE_GROUPS_COLLECTION.ordinal()] = 52;
+            } catch (NoSuchFieldError unused215) {
+            }
+            try {
+                iArr3[CatalogDataType.DATA_TYPE_GROUPS_CATEGORY_ITEMS.ordinal()] = 53;
+            } catch (NoSuchFieldError unused216) {
+            }
+            try {
+                iArr3[CatalogDataType.DATA_TYPE_GROUPS_INVITES.ordinal()] = 54;
+            } catch (NoSuchFieldError unused217) {
+            }
+            try {
+                iArr3[CatalogDataType.DATA_TYPE_ARTIST.ordinal()] = 55;
+            } catch (NoSuchFieldError unused218) {
+            }
+            try {
+                iArr3[CatalogDataType.DATA_TYPE_CURATOR.ordinal()] = 56;
+            } catch (NoSuchFieldError unused219) {
+            }
+            try {
+                iArr3[CatalogDataType.DATA_TYPE_MUSIC_SEARCH_SUGGESTION.ordinal()] = 57;
+            } catch (NoSuchFieldError unused220) {
+            }
+            try {
+                iArr3[CatalogDataType.DATA_TYPE_SEARCH_SUGGESTION.ordinal()] = 58;
+            } catch (NoSuchFieldError unused221) {
+            }
+            try {
+                iArr3[CatalogDataType.DATA_TYPE_MUSIC_SPECIAL.ordinal()] = 59;
+            } catch (NoSuchFieldError unused222) {
+            }
+            try {
+                iArr3[CatalogDataType.UNKNOWN.ordinal()] = 60;
+            } catch (NoSuchFieldError unused223) {
+            }
+            try {
+                iArr3[CatalogDataType.DATA_TYPE_MARKET_INFO.ordinal()] = 61;
+            } catch (NoSuchFieldError unused224) {
+            }
+            try {
+                iArr3[CatalogDataType.DATA_TYPE_FAVORITES.ordinal()] = 62;
+            } catch (NoSuchFieldError unused225) {
+            }
+            try {
+                iArr3[CatalogDataType.DATA_SYNTHETIC_CATALOG.ordinal()] = 63;
+            } catch (NoSuchFieldError unused226) {
+            }
+            try {
+                iArr3[CatalogDataType.DATA_TYPE_GROUPS_CHATS.ordinal()] = 64;
+            } catch (NoSuchFieldError unused227) {
+            }
+            try {
+                iArr3[CatalogDataType.DATA_TYPE_FRIENDS_LIKES.ordinal()] = 65;
+            } catch (NoSuchFieldError unused228) {
+            }
+            try {
+                iArr3[CatalogDataType.DATA_TYPE_RECENT_BUSINESSES.ordinal()] = 66;
+            } catch (NoSuchFieldError unused229) {
+            }
+            try {
+                iArr3[CatalogDataType.DATA_TYPE_AUDIO_SIGNAL_COMMON_INFO.ordinal()] = 67;
+            } catch (NoSuchFieldError unused230) {
+            }
+            try {
+                iArr3[CatalogDataType.DATA_TYPE_SEARCH_SPELLCHECKER.ordinal()] = 68;
+            } catch (NoSuchFieldError unused231) {
+            }
+            try {
+                iArr3[CatalogDataType.DATA_TYPE_RADIO_STATIONS.ordinal()] = 69;
+            } catch (NoSuchFieldError unused232) {
+            }
+            try {
+                iArr3[CatalogDataType.DATA_TYPE_AUDIOBOOKS.ordinal()] = 70;
+            } catch (NoSuchFieldError unused233) {
+            }
+            try {
+                iArr3[CatalogDataType.DATA_TYPE_AUDIO_STREAM_MIXES.ordinal()] = 71;
+            } catch (NoSuchFieldError unused234) {
+            }
+            try {
+                iArr3[CatalogDataType.DATA_TYPE_VIDEO_TOPSHELF.ordinal()] = 72;
+            } catch (NoSuchFieldError unused235) {
+            }
+            try {
+                iArr3[CatalogDataType.DATA_TYPE_MUSIC_MIX_VIDEO_TOPSHELF.ordinal()] = 73;
+            } catch (NoSuchFieldError unused236) {
+            }
+            try {
+                iArr3[CatalogDataType.DATA_TYPE_EMPTY.ordinal()] = 74;
+            } catch (NoSuchFieldError unused237) {
+            }
+            try {
+                iArr3[CatalogDataType.DATA_TYPE_SEARCH_FILTERS.ordinal()] = 75;
+            } catch (NoSuchFieldError unused238) {
+            }
+            try {
+                iArr3[CatalogDataType.DATA_TYPE_AD_BLOCKS.ordinal()] = 76;
+            } catch (NoSuchFieldError unused239) {
+            }
+            try {
+                iArr3[CatalogDataType.DATA_TYPE_CATALOG_AD_BLOCKS.ordinal()] = 77;
+            } catch (NoSuchFieldError unused240) {
+            }
+            try {
+                iArr3[CatalogDataType.DATA_TYPE_CHANNELS.ordinal()] = 78;
+            } catch (NoSuchFieldError unused241) {
+            }
+            try {
+                iArr3[CatalogDataType.DATA_TYPE_MOVIES.ordinal()] = 79;
+            } catch (NoSuchFieldError unused242) {
+            }
+            $EnumSwitchMapping$2 = iArr3;
+            int[] iArr4 = new int[VideoCatalogViewStyle.Style.values().length];
+            try {
+                iArr4[VideoCatalogViewStyle.Style.AuthorVideos.ordinal()] = 1;
+            } catch (NoSuchFieldError unused243) {
+            }
+            try {
+                iArr4[VideoCatalogViewStyle.Style.Large.ordinal()] = 2;
+            } catch (NoSuchFieldError unused244) {
+            }
+            try {
+                iArr4[VideoCatalogViewStyle.Style.WithDescription.ordinal()] = 3;
+            } catch (NoSuchFieldError unused245) {
+            }
+            try {
+                iArr4[VideoCatalogViewStyle.Style.LargeWithDescription.ordinal()] = 4;
+            } catch (NoSuchFieldError unused246) {
+            }
+            try {
+                iArr4[VideoCatalogViewStyle.Style.ShowcaseWithDescription.ordinal()] = 5;
+            } catch (NoSuchFieldError unused247) {
+            }
+            try {
+                iArr4[VideoCatalogViewStyle.Style.VideoPage.ordinal()] = 6;
+            } catch (NoSuchFieldError unused248) {
+            }
+            try {
+                iArr4[VideoCatalogViewStyle.Style.Showcase.ordinal()] = 7;
+            } catch (NoSuchFieldError unused249) {
+            }
+            try {
+                iArr4[VideoCatalogViewStyle.Style.AuthorsCircle.ordinal()] = 8;
+            } catch (NoSuchFieldError unused250) {
+            }
+            try {
+                iArr4[VideoCatalogViewStyle.Style.None.ordinal()] = 9;
+            } catch (NoSuchFieldError unused251) {
+            }
+            try {
+                iArr4[VideoCatalogViewStyle.Style.InvisibleAuthor.ordinal()] = 10;
+            } catch (NoSuchFieldError unused252) {
+            }
+            try {
+                iArr4[VideoCatalogViewStyle.Style.VideoLibrary.ordinal()] = 11;
+            } catch (NoSuchFieldError unused253) {
+            }
+            try {
+                iArr4[VideoCatalogViewStyle.Style.VideoLikedLibrary.ordinal()] = 12;
+            } catch (NoSuchFieldError unused254) {
+            }
+            try {
+                iArr4[VideoCatalogViewStyle.Style.VideoFavoritesLibrary.ordinal()] = 13;
+            } catch (NoSuchFieldError unused255) {
+            }
+            try {
+                iArr4[VideoCatalogViewStyle.Style.Horizontal.ordinal()] = 14;
+            } catch (NoSuchFieldError unused256) {
+            }
+            $EnumSwitchMapping$3 = iArr4;
+            int[] iArr5 = new int[SearchSuggestion.Type.values().length];
+            try {
+                iArr5[SearchSuggestion.Type.MovieLink.ordinal()] = 1;
+            } catch (NoSuchFieldError unused257) {
+            }
+            try {
+                iArr5[SearchSuggestion.Type.Recent.ordinal()] = 2;
+            } catch (NoSuchFieldError unused258) {
+            }
+            try {
+                iArr5[SearchSuggestion.Type.RecentWithoutClear.ordinal()] = 3;
+            } catch (NoSuchFieldError unused259) {
+            }
+            try {
+                iArr5[SearchSuggestion.Type.Popular.ordinal()] = 4;
+            } catch (NoSuchFieldError unused260) {
+            }
+            try {
+                iArr5[SearchSuggestion.Type.SectionLink.ordinal()] = 5;
+            } catch (NoSuchFieldError unused261) {
+            }
+            try {
+                iArr5[SearchSuggestion.Type.MetaChannelLink.ordinal()] = 6;
+            } catch (NoSuchFieldError unused262) {
+            }
+            $EnumSwitchMapping$4 = iArr5;
+            int[] iArr6 = new int[CatalogSearchEntityAnswer.EntityType.values().length];
+            try {
+                iArr6[CatalogSearchEntityAnswer.EntityType.Person.ordinal()] = 1;
+            } catch (NoSuchFieldError unused263) {
+            }
+            try {
+                iArr6[CatalogSearchEntityAnswer.EntityType.VideoPlaylist.ordinal()] = 2;
+            } catch (NoSuchFieldError unused264) {
+            }
+            $EnumSwitchMapping$5 = iArr6;
+            int[] iArr7 = new int[LinkListViewStyle.Style.values().length];
+            try {
+                iArr7[LinkListViewStyle.Style.Small.ordinal()] = 1;
+            } catch (NoSuchFieldError unused265) {
+            }
+            try {
+                iArr7[LinkListViewStyle.Style.WithArrowButton.ordinal()] = 2;
+            } catch (NoSuchFieldError unused266) {
+            }
+            $EnumSwitchMapping$6 = iArr7;
+            int[] iArr8 = new int[LinkSliderViewStyle.Style.values().length];
+            try {
+                iArr8[LinkSliderViewStyle.Style.Large.ordinal()] = 1;
+            } catch (NoSuchFieldError unused267) {
+            }
+            $EnumSwitchMapping$7 = iArr8;
+            int[] iArr9 = new int[HorizontalButtonStackViewStyle.Style.values().length];
+            try {
+                iArr9[HorizontalButtonStackViewStyle.Style.Small.ordinal()] = 1;
+            } catch (NoSuchFieldError unused268) {
+            }
+            try {
+                iArr9[HorizontalButtonStackViewStyle.Style.LargeWithIcon.ordinal()] = 2;
+            } catch (NoSuchFieldError unused269) {
+            }
+            $EnumSwitchMapping$8 = iArr9;
+        }
+    }
+
+    /* JADX INFO: compiled from: VkCatalogConfiguration.kt */
+    /* JADX INFO: loaded from: classes5.dex */
+    public static final /* synthetic */ class c extends FunctionReferenceImpl implements Function1<CatalogBlockItemsDto, l> {
+        public c(Object obj) {
+            super(1, obj, f.class, "map", "map(Lcom/vk/api/generated/catalog/dto/CatalogBlockItemsDto;)Lcom/vk/catalog2/common/dto/api/CatalogResponse;", 0);
+        }
+
+        @Override // kotlin.jvm.functions.Function1
+        public final l invoke(CatalogBlockItemsDto catalogBlockItemsDto) {
+            return ((f) this.receiver).a(catalogBlockItemsDto);
+        }
+    }
+
+    /* JADX INFO: compiled from: VkCatalogConfiguration.kt */
+    /* JADX INFO: loaded from: classes5.dex */
+    public static final class d extends xe0.a {
+
+        /* JADX INFO: renamed from: d, reason: collision with root package name */
+        public final /* synthetic */ String f48930d;
+
+        /* JADX WARN: 'super' call moved to the top of the method (can break code semantics) */
+        public d(String str) {
+            super(0);
+            this.f48930d = str;
+        }
+
+        @Override // xe0.a
+        public final q b(String str, String str2, boolean z13, Integer num, String str3) {
+            if (str == null) {
+                str = this.f48930d;
+            }
+            return a.this.z(str, str2, z13);
+        }
+    }
+
+    /* JADX INFO: compiled from: VkCatalogConfiguration.kt */
+    /* JADX INFO: loaded from: classes5.dex */
+    public static final class e implements GridListVh.a {
+        @Override // com.vk.catalog2.common.ui.mvp.holder.container.GridListVh.a
+        public final int a(int i16, UIBlock uIBlock) {
+            if ((uIBlock instanceof UIBlockActionOpenUrl) || (uIBlock instanceof UIBlockActionOpenSection)) {
+                return i16;
+            }
+            return 1;
+        }
+    }
+
+    public a(UserId userId, String str) {
+        this.f48904a = userId;
+        this.f48905b = str;
+        com.vk.libvideo.design.view.fullscreen.i iVar = new com.vk.libvideo.design.view.fullscreen.i(this, 4);
+        LazyThreadSafetyMode lazyThreadSafetyMode = LazyThreadSafetyMode.NONE;
+        this.f48906c = g.b(lazyThreadSafetyMode, iVar);
+        this.f48907d = g.b(lazyThreadSafetyMode, new o(this, 8));
+        this.f48908e = g.b(lazyThreadSafetyMode, new m1(this, 6));
+        this.f48909f = g.a(new q1(this, 5));
+        this.f48910g = g.b(lazyThreadSafetyMode, new com.vk.catalog2.common.ui.mvp.holder.video.m1(this, 7));
+        this.f48911h = BuildInfo.n();
+        this.f48912i = g.b(lazyThreadSafetyMode, new com.vk.core.concurrent.o(5));
+        this.f48913j = g.b(lazyThreadSafetyMode, new p(9));
+        this.f48914k = g.a(new k(8));
+        this.f48915l = g.b(lazyThreadSafetyMode, new a1(11));
+        this.f48916m = g.b(lazyThreadSafetyMode, new z3(7));
+        this.f48917n = g.b(lazyThreadSafetyMode, new u1(8));
+        this.f48918o = g.b(lazyThreadSafetyMode, new e0(5));
+        this.f48919p = g.b(lazyThreadSafetyMode, new al0.a(11));
+        this.f48920q = g.b(lazyThreadSafetyMode, new bs2.b(7));
+        int i16 = 4;
+        this.f48921r = g.b(lazyThreadSafetyMode, new d0(i16));
+        this.f48922s = g.b(lazyThreadSafetyMode, new com.vk.core.concurrent.e0(i16));
+        this.f48923t = g.b(lazyThreadSafetyMode, new z0(7));
+        this.f48924u = g.b(lazyThreadSafetyMode, new f0(5));
+        this.f48925v = g.b(lazyThreadSafetyMode, new g0(4));
+        this.f48926w = g.b(lazyThreadSafetyMode, new u2(this, 2));
+        this.x = g.a(new ad4.p(this, 5));
+        this.y = vs3.b.a.c().b();
+        this.f48927z = g.b(lazyThreadSafetyMode, new r(this, 8));
+        this.A = g.b(lazyThreadSafetyMode, new s(this, 7));
+        this.B = g.b(lazyThreadSafetyMode, new t(this, 8));
+        this.C = g.b(lazyThreadSafetyMode, new u(this, 7));
+        this.D = g.b(lazyThreadSafetyMode, new v(this, 6));
+        int i18 = 5;
+        this.E = g.b(lazyThreadSafetyMode, new as3.e(this, i18));
+        this.F = g.b(lazyThreadSafetyMode, new ce3.c(this, i18));
+        this.G = g.a(new b24.o(this, i18));
+        this.H = g.a(new com.vk.catalog2.common.ui.mvp.holder.video.i(this, 4));
+        this.I = new yy2.c();
+        this.J = new f();
+        this.K = g.b(lazyThreadSafetyMode, new ap3.a(5));
+        this.L = g.b(lazyThreadSafetyMode, new com.vk.video.features.navigation.bottomnavigation.s(3));
+        this.M = g.b(lazyThreadSafetyMode, new e44.d(1));
+        this.N = g.a(new do3.a(2));
+    }
+
+    public static EmptyVh A0(CatalogViewType catalogViewType) {
+        return new EmptyVh(catalogViewType.h());
+    }
+
+    public static AccountToggleDto E0(com.vk.toggle.b.d dVar) {
+        return new AccountToggleDto(dVar.f99309a, dVar.f99310b.toString(), dVar.f99311c.toString(), null, null, 24, null);
+    }
+
+    public static LinkHorizontalListItemVh T(ai0.f fVar, CatalogViewStyle catalogViewStyle) {
+        LinkSliderViewStyle linkSliderViewStyle = catalogViewStyle instanceof LinkSliderViewStyle ? (LinkSliderViewStyle) catalogViewStyle : null;
+        LinkSliderViewStyle.Style style = linkSliderViewStyle != null ? linkSliderViewStyle.f47442a : null;
+        if ((style == null ? -1 : b.$EnumSwitchMapping$7[style.ordinal()]) == 1) {
+            ai0.f.a aVar = fVar.f3555a;
+            return new LinkHorizontalListItemVh(aVar.f3562f, LinkHorizontalListItemVh.Size.Medium, aVar.f3566j, aVar.f3568l, true, 0, false, 8160);
+        }
+        ai0.f.a aVar2 = fVar.f3555a;
+        return new LinkHorizontalListItemVh(aVar2.f3562f, LinkHorizontalListItemVh.Size.Small, aVar2.f3566j, aVar2.f3568l, true, 0, false, 8160);
+    }
+
+    public static LinkCellVh U(ai0.f fVar, CatalogViewStyle catalogViewStyle) {
+        LinkListViewStyle linkListViewStyle = catalogViewStyle instanceof LinkListViewStyle ? (LinkListViewStyle) catalogViewStyle : null;
+        LinkListViewStyle.Style style = linkListViewStyle != null ? linkListViewStyle.f47441a : null;
+        int i16 = style == null ? -1 : b.$EnumSwitchMapping$6[style.ordinal()];
+        if (i16 == 1) {
+            ai0.f.a aVar = fVar.f3555a;
+            return new LinkCellVh(aVar.f3562f, LinkCellVh.ImageSize.Small, aVar.f3566j, aVar.f3568l, new LinkBaseVh.a(false, Integer.valueOf(R.dimen.music_catalog_list_small_corner_radius)), 15856);
+        }
+        if (i16 != 2) {
+            ai0.f.a aVar2 = fVar.f3555a;
+            return new LinkCellVh(aVar2.f3562f, LinkCellVh.ImageSize.Small, aVar2.f3566j, aVar2.f3568l, null, 16368);
+        }
+        ai0.f.a aVar3 = fVar.f3555a;
+        return new LinkCellVh(aVar3.f3562f, LinkCellVh.ImageSize.Medium, aVar3.f3566j, aVar3.f3568l, null, 8176);
+    }
+
+    public static /* synthetic */ CatalogMviTopshelfVh X(a aVar, ai0.f fVar, CatalogBlockVariant catalogBlockVariant) {
+        return aVar.W(fVar, catalogBlockVariant, null);
+    }
+
+    public static AdSearchBannerVh Z(ai0.f fVar, wp.a aVar) {
+        return new AdSearchBannerVh(new com.vk.catalog2.common.ui.holders.ads.a(fVar.f3555a.f3561e, aVar, true));
+    }
+
+    public static AdShowCaseBannerVh a(ai0.f fVar, wp.a aVar) {
+        return new AdShowCaseBannerVh(new com.vk.catalog2.common.ui.holders.ads.a(fVar.f3555a.f3561e, aVar));
+    }
+
+    public static CategoryLinkVh d(ai0.f fVar, CatalogViewStyle catalogViewStyle) {
+        CategoriesListViewStyle categoriesListViewStyle = catalogViewStyle instanceof CategoriesListViewStyle ? (CategoriesListViewStyle) catalogViewStyle : null;
+        return (categoriesListViewStyle != null ? categoriesListViewStyle.getF47435a() : null) == CategoriesListViewStyle.Style.KIDS_MODE ? new CategoryLinkVh(fVar.f3555a.f3562f, R.layout.catalog_music_kids_cell, ((CategoriesListViewStyle) catalogViewStyle).getF47435a(), 8) : new CategoryLinkVh(fVar.f3555a.f3562f, R.layout.catalog_vk_cell_item, null, 56);
+    }
+
+    public static CatalogPaginatedListViewHolder d0(a aVar, UIBlock uIBlock, ai0.f fVar, hk0.r rVar, int i16) {
+        String str;
+        if ((i16 & 4) != 0) {
+            if (uIBlock == null || (str = uIBlock.f47462a) == null) {
+                str = "";
+            }
+            rVar = aVar.e0(uIBlock, str, fVar);
+        }
+        return aVar.c0(uIBlock, fVar, rVar);
+    }
+
+    @Override // com.vk.catalog2.common.ui.mvp.configuration.CatalogConfiguration
+    public boolean A() {
+        return false;
+    }
+
+    @Override // com.vk.catalog2.common.ui.mvp.configuration.CatalogConfiguration
+    public boolean B(UIBlock uIBlock) {
+        return false;
+    }
+
+    public final boolean B0() {
+        return ((Boolean) this.f48914k.getValue()).booleanValue();
+    }
+
+    /* JADX WARN: Type inference failed for: r2v0, types: [java.lang.Object, kotlin.Lazy] */
+    @Override // com.vk.catalog2.common.ui.mvp.configuration.CatalogConfiguration
+    public void C(ai0.f fVar) {
+        ik0.a aVarI = i();
+        if (aVarI != null) {
+            if (aVarI.f132611e == null) {
+                aVarI.f132611e = new ik0.e(this, fVar, (xf0.c) aVarI.f132609c.getValue());
+            }
+            ik0.e eVar = aVarI.f132611e;
+            bz1.e0 e0Var = aVarI.f132612f;
+            if (eVar == null || e0Var == null) {
+                return;
+            }
+            eVar.f132622i = e0Var;
+            aVarI.f132610d.f20143d.e();
+        }
+    }
+
+    /* JADX WARN: Type inference failed for: r0v0, types: [java.lang.Object, kotlin.Lazy] */
+    public final boolean C0() {
+        return ((Boolean) this.L.getValue()).booleanValue();
+    }
+
+    @Override // com.vk.catalog2.common.ui.mvp.configuration.CatalogConfiguration
+    public final int D() {
+        return 5;
+    }
+
+    /* JADX WARN: Type inference failed for: r0v0, types: [java.lang.Object, kotlin.Lazy] */
+    public final boolean D0() {
+        return ((Boolean) this.K.getValue()).booleanValue();
+    }
+
+    /* JADX WARN: Code duplicated, block: B:535:0x0cb8  */
+    /* JADX WARN: Multi-variable type inference failed */
+    /* JADX WARN: Type inference failed for: r11v2, types: [java.lang.Object, kotlin.Lazy] */
+    /* JADX WARN: Type inference failed for: r13v0, types: [java.lang.Object, kotlin.Lazy] */
+    /* JADX WARN: Type inference failed for: r14v0, types: [java.lang.Object, kotlin.Lazy] */
+    /* JADX WARN: Type inference failed for: r1v3, types: [java.lang.Object, kotlin.Lazy] */
+    /* JADX WARN: Type inference failed for: r1v40, types: [java.lang.Object, kotlin.Lazy] */
+    /* JADX WARN: Type inference failed for: r6v1, types: [java.lang.Object, kotlin.Lazy] */
+    /*  JADX ERROR: JadxRuntimeException in pass: IfRegionVisitor
+        jadx.core.utils.exceptions.JadxRuntimeException: Can't remove SSA var: r2v147 java.lang.Object, still in use, count: 2, list:
+          (r2v147 java.lang.Object) from 0x0cb4: PHI (r2 I:??) = (r2v143 java.lang.Object), (r2v147 java.lang.Object) binds: [B:532:0x0cb3, B:1224:0x0cb4] A[DONT_GENERATE, DONT_INLINE]
+          (r2v147 java.lang.Object) from 0x0cac: CHECK_CAST (com.vk.catalog2.common.dto.api.ui.UIBlock) (r2v147 java.lang.Object)
+        	at jadx.core.utils.InsnRemover.removeSsaVar(InsnRemover.java:164)
+        	at jadx.core.utils.InsnRemover.unbindResult(InsnRemover.java:129)
+        	at jadx.core.utils.InsnRemover.unbindInsn(InsnRemover.java:93)
+        	at jadx.core.dex.visitors.regions.TernaryMod.makeTernaryInsn(TernaryMod.java:132)
+        	at jadx.core.dex.visitors.regions.TernaryMod.processRegion(TernaryMod.java:67)
+        	at jadx.core.dex.visitors.regions.TernaryMod.enterRegion(TernaryMod.java:50)
+        	at jadx.core.dex.visitors.regions.DepthRegionTraversal.traverseInternal(DepthRegionTraversal.java:96)
+        	at jadx.core.dex.visitors.regions.DepthRegionTraversal.traverse(DepthRegionTraversal.java:27)
+        	at jadx.core.dex.visitors.regions.TernaryMod.process(TernaryMod.java:36)
+        	at jadx.core.dex.visitors.regions.IfRegionVisitor.process(IfRegionVisitor.java:44)
+        	at jadx.core.dex.visitors.regions.IfRegionVisitor.visit(IfRegionVisitor.java:30)
+        */
+    @Override // com.vk.catalog2.common.ui.mvp.configuration.CatalogConfiguration
+    public com.vk.catalog2.common.ui.holders.api.CatalogViewHolder E(com.vk.catalog2.common.dto.api.CatalogDataType r29, com.vk.catalog2.common.dto.api.CatalogViewType r30, com.vk.catalog2.common.dto.api.style.CatalogViewStyle r31, com.vk.catalog2.common.dto.api.ui.UIBlock r32, ai0.f r33) {
+        /*
+            Method dump skipped, instruction units count: 8354
+            To view this dump add '--comments-level debug' option
+        */
+        throw new UnsupportedOperationException("Method not decompiled: com.vk.catalog2.common.ui.mvp.configuration.a.E(com.vk.catalog2.common.dto.api.CatalogDataType, com.vk.catalog2.common.dto.api.CatalogViewType, com.vk.catalog2.common.dto.api.style.CatalogViewStyle, com.vk.catalog2.common.dto.api.ui.UIBlock, ai0.f):com.vk.catalog2.common.ui.holders.api.CatalogViewHolder");
+    }
+
+    @Override // com.vk.catalog2.common.ui.mvp.configuration.CatalogConfiguration
+    public void F(RecyclerView recyclerView) {
+        recyclerView.setItemViewCacheSize(1);
+        ik0.a aVarI = i();
+        if (aVarI != null) {
+            bz1.e0 e0Var = new bz1.e0(recyclerView, 5);
+            aVarI.f132612f = e0Var;
+            ik0.e eVar = aVarI.f132611e;
+            if (eVar != null) {
+                eVar.f132622i = e0Var;
+                aVarI.f132610d.f20143d.e();
+            }
+        }
+    }
+
+    @Override // com.vk.catalog2.common.ui.mvp.configuration.CatalogConfiguration
+    public RecyclerView.l G(CatalogConfiguration$Companion$ContainerType catalogConfiguration$Companion$ContainerType, ai0.f fVar) {
+        int i16 = b.$EnumSwitchMapping$1[catalogConfiguration$Companion$ContainerType.ordinal()];
+        if (i16 == 1) {
+            return new kk0.d();
+        }
+        if (i16 == 2) {
+            return new kk0.c();
+        }
+        if (i16 == 3) {
+            return new kk0.b();
+        }
+        throw new NoWhenBranchMatchedException();
+    }
+
+    @Override // com.vk.catalog2.common.ui.mvp.configuration.CatalogConfiguration
+    public bh0.b H(ai0.f fVar) {
+        return new bh0.a(new ji0.r(0), fVar.f3556b.f3584d);
+    }
+
+    @Override // com.vk.catalog2.common.ui.mvp.configuration.CatalogConfiguration
+    public j43.b I() {
+        return new j43.d(6);
+    }
+
+    @Override // com.vk.catalog2.common.ui.mvp.configuration.CatalogConfiguration
+    public of3.k J(RecyclerView recyclerView) {
+        return new of3.k(recyclerView, null, 30);
+    }
+
+    @Override // com.vk.catalog2.common.ui.mvp.configuration.CatalogConfiguration
+    public di0.b L(CatalogConfiguration$Companion$ContainerType catalogConfiguration$Companion$ContainerType, ai0.f fVar) {
+        ai0.f.a aVar = fVar.f3555a;
+        ai0.f.a aVar2 = fVar.f3555a;
+        int i16 = b.$EnumSwitchMapping$1[catalogConfiguration$Companion$ContainerType.ordinal()];
+        if (i16 == 1) {
+            ag0.a aVar3 = aVar2.G;
+            if (aVar3 == null) {
+                aVar3 = new ag0.a();
+            }
+            return new di0.b(true, aVar3, aVar.F);
+        }
+        if (i16 != 2 && i16 != 3) {
+            throw new NoWhenBranchMatchedException();
+        }
+        ag0.a aVar4 = aVar2.G;
+        if (aVar4 == null) {
+            aVar4 = new ag0.a();
+        }
+        return new di0.b(false, aVar4, aVar.F);
+    }
+
+    /* JADX WARN: Type inference failed for: r10v4, types: [java.lang.Object, kotlin.Lazy] */
+    public final CatalogViewHolder M(ai0.f fVar, CatalogViewStyle catalogViewStyle) {
+        DoubleListViewStyle doubleListViewStyle = catalogViewStyle instanceof DoubleListViewStyle ? (DoubleListViewStyle) catalogViewStyle : null;
+        if ((doubleListViewStyle != null ? doubleListViewStyle.getF47437a() : null) == DoubleListViewStyle.Style.Small) {
+            return new MusicKidsAgeCategoryVh();
+        }
+        if (((Boolean) this.f48923t.getValue()).booleanValue()) {
+            ai0.f.a aVar = fVar.f3555a;
+            return new CatalogMviVh(aVar.f3562f, aVar.f3561e, aVar.f3568l, CatalogBlockVariant.LinksDoubleList, l0(), null, 224);
+        }
+        ai0.f.a aVar2 = fVar.f3555a;
+        return new PodcastCategoryVh(aVar2.f3562f, aVar2.f3568l);
+    }
+
+    public q<l> N(String str, String str2, String str3) {
+        ArrayList arrayList;
+        ArrayList arrayList2;
+        if (MusicFeatures.AUTOGEN_GET_BLOCK_ITEMS.a()) {
+            String str4 = str == null ? "" : str;
+            CatalogFeatures.INSTANCE.getClass();
+            List listA = CatalogFeatures.Companion.a();
+            if (listA != null) {
+                List list = listA;
+                ArrayList arrayList3 = new ArrayList(kotlin.collections.q.x(list, 10));
+                Iterator it = list.iterator();
+                while (it.hasNext()) {
+                    arrayList3.add(E0((com.vk.toggle.b.d) it.next()));
+                }
+                arrayList2 = arrayList3;
+            } else {
+                arrayList2 = null;
+            }
+            return lt.f.A0(ky2.g.a(yy2.b.c(this.I, str4, str2, null, null, null, arrayList2, str3, 2812)), null, null, 3).K(new aw.g(new c(this.J), 18));
+        }
+        mf0.b bVarS = s();
+        String str5 = str == null ? "" : str;
+        CatalogFeatures.INSTANCE.getClass();
+        List listA2 = CatalogFeatures.Companion.a();
+        if (listA2 != null) {
+            List list2 = listA2;
+            ArrayList arrayList4 = new ArrayList(kotlin.collections.q.x(list2, 10));
+            Iterator it2 = list2.iterator();
+            while (it2.hasNext()) {
+                arrayList4.add(E0((com.vk.toggle.b.d) it2.next()));
+            }
+            arrayList = arrayList4;
+        } else {
+            arrayList = null;
+        }
+        return lt.f.A0(new xe0.g(bVarS, str5, str2, null, str3, arrayList, 24), null, null, 3);
+    }
+
+    public final hi0.e O() {
+        return new hi0.e(this);
+    }
+
+    public xe0.a P(String str) {
+        return new d(str);
+    }
+
+    public final CatalogViewHolder Q(CatalogViewStyle catalogViewStyle) {
+        HorizontalButtonStackViewStyle horizontalButtonStackViewStyle = catalogViewStyle instanceof HorizontalButtonStackViewStyle ? (HorizontalButtonStackViewStyle) catalogViewStyle : null;
+        HorizontalButtonStackViewStyle.Style style = horizontalButtonStackViewStyle != null ? horizontalButtonStackViewStyle.f47440a : null;
+        int i16 = style == null ? -1 : b.$EnumSwitchMapping$8[style.ordinal()];
+        if (i16 != 1) {
+            return i16 != 2 ? new EmptyVh() : new HorizontalButtonLargeWithIconVh(j0());
+        }
+        return new HorizontalButtonSmallVh(j0());
+    }
+
+    public hk0.c R(ai0.f fVar) {
+        return new hk0.c(fVar.f3555a.f3561e, new hi0.e(this), H(fVar), null);
+    }
+
+    public HorizontalListVh S(UIBlock uIBlock, ai0.f fVar, CatalogViewStyle catalogViewStyle) {
+        hk0.c cVarR = R(fVar);
+        return new HorizontalListVh(this, new com.vk.lists.b.h((com.vk.lists.b.m) cVarR), cVarR, fVar, null, null, 240);
+    }
+
+    public final MusicBaseVkMixInteractiveVh V(ai0.f fVar, CatalogViewStyle catalogViewStyle) {
+        VkMixInteractiveViewStyle vkMixInteractiveViewStyle = catalogViewStyle instanceof VkMixInteractiveViewStyle ? (VkMixInteractiveViewStyle) catalogViewStyle : null;
+        if ((vkMixInteractiveViewStyle != null ? vkMixInteractiveViewStyle.f47459a : null) == VkMixInteractiveViewStyle.Style.STATIC) {
+            return new MusicInteractiveSingleVkMixVh(0, fVar.f3555a.f3562f, fVar.f3555a.f3565i, o0());
+        }
+        return new MusicInteractiveTwoVkMixesVh(0, fVar.f3555a.f3562f, fVar.f3555a.f3565i, o0());
+    }
+
+    public final CatalogMviTopshelfVh W(ai0.f fVar, CatalogBlockVariant catalogBlockVariant, cg0.b bVar) {
+        ai0.f.a aVar = fVar.f3555a;
+        return new CatalogMviTopshelfVh(aVar.f3562f, aVar.f3561e, aVar.f3568l, catalogBlockVariant, l0(), bVar);
+    }
+
+    public final y Y(ai0.f fVar) {
+        return new y(s(), fVar.f3555a.f3561e, H(fVar), c());
+    }
+
+    /* JADX WARN: Type inference failed for: r13v2, types: [java.lang.Object, kotlin.Lazy] */
+    /* JADX WARN: Type inference failed for: r1v3, types: [java.lang.Object, kotlin.Lazy] */
+    public final SearchAuthorVh a0(ai0.f fVar, int i16) {
+        ai0.f.a aVar = fVar.f3555a;
+        bg0.a aVar2 = aVar.f3562f;
+        eg0.d dVar = aVar.f3561e;
+        SearchStatInfoProvider searchStatInfoProvider = aVar.f3568l;
+        z zVar = aVar.f3569m;
+        CatalogConfiguration catalogConfiguration = aVar.f3573q;
+        b0 b0VarI = ae.a.a().I();
+        ai0.f.a aVar3 = fVar.f3555a;
+        return new SearchAuthorVh(i16, aVar2, dVar, searchStatInfoProvider, zVar, catalogConfiguration, new SearchAuthorVh.b(aVar3.f3558b, b0VarI), aVar3.H, new SearchAuthorVh.c(((Boolean) this.f48924u.getValue()).booleanValue(), ((Boolean) this.f48925v.getValue()).booleanValue()), r0(), SoLoader.SOLOADER_ENABLE_SYSTEMLOAD_WRAPPER_SOSOURCE);
+    }
+
+    public final MusicVkMixVh b(ai0.f fVar, CatalogViewStyle catalogViewStyle) {
+        boolean zJ;
+        VkMixViewStyle vkMixViewStyle = catalogViewStyle instanceof VkMixViewStyle ? (VkMixViewStyle) catalogViewStyle : null;
+        if ((vkMixViewStyle != null ? vkMixViewStyle.getF47460a() : null) != VkMixViewStyle.Style.Small) {
+            return new SimpleMusicVkMixVh(fVar.f3555a.f3565i, o0());
+        }
+        DevicePerformanceInfo devicePerformanceInfoA = DevicePerformanceInfo.a.a();
+        if (devicePerformanceInfoA != null) {
+            zJ = devicePerformanceInfoA.f63478d.getWeight() < 2;
+        } else {
+            zJ = h0.j();
+        }
+        ai0.f.a aVar = fVar.f3555a;
+        return new SmallVkMixVh(!zJ ? R.layout.catalog_small_vk_mix_animation : R.layout.catalog_small_vk_mix, aVar.f3562f, aVar.f3565i, o0());
+    }
+
+    /* JADX WARN: Type inference failed for: r12v5, types: [java.lang.Object, kotlin.Lazy] */
+    public final CatalogViewHolder b0(ai0.f fVar, CatalogViewType catalogViewType, CatalogViewStyle catalogViewStyle) {
+        SearchEntityCatalogViewStyle.EntityStyle entityStyle;
+        CatalogSearchEntityAnswer.EntityType entityType = null;
+        SearchEntityCatalogViewStyle searchEntityCatalogViewStyle = catalogViewStyle instanceof SearchEntityCatalogViewStyle ? (SearchEntityCatalogViewStyle) catalogViewStyle : null;
+        if (b.$EnumSwitchMapping$0[catalogViewType.ordinal()] != 8) {
+            return new EmptyVh(catalogViewType.h());
+        }
+        if (searchEntityCatalogViewStyle != null && (entityStyle = searchEntityCatalogViewStyle.f47450a) != null) {
+            entityType = entityStyle.getEntityType();
+        }
+        int i16 = entityType == null ? -1 : b.$EnumSwitchMapping$5[entityType.ordinal()];
+        if (i16 == 1) {
+            if (searchEntityCatalogViewStyle.f47450a == SearchEntityCatalogViewStyle.EntityStyle.Flat) {
+                ai0.f.a aVar = fVar.f3555a;
+                return new SearchEntityPersonAnswerVh(aVar.f3562f, aVar.f3561e, aVar.f3560d, aVar.f3568l, aVar.f3569m, aVar.f3565i, R.layout.catalog_search_entity_person_flat_item);
+            }
+            ai0.f.a aVar2 = fVar.f3555a;
+            return new SearchEntityPersonAnswerVh(aVar2.f3562f, aVar2.f3561e, aVar2.f3560d, aVar2.f3568l, aVar2.f3569m, aVar2.f3565i, R.layout.catalog_search_entity_person_card_item);
+        }
+        if (i16 != 2) {
+            return new EmptyVh(catalogViewType.h());
+        }
+        if (!((Boolean) this.f48912i.getValue()).booleanValue()) {
+            return new EmptyVh(catalogViewType.h());
+        }
+        ai0.f.a aVar3 = fVar.f3555a;
+        return new SearchEntityVideoPlaylistAnswerVh(aVar3.f3562f, aVar3.f3560d, aVar3.f3568l, aVar3.f3569m);
+    }
+
+    public y.a c() {
+        return new m();
+    }
+
+    public CatalogPaginatedListViewHolder c0(UIBlock uIBlock, ai0.f fVar, hk0.r rVar) {
+        com.vk.lists.b.h hVar = new com.vk.lists.b.h((com.vk.lists.b.m) rVar);
+        hVar.f81377n = fVar.f3555a.f3564h;
+        return new VerticalListVh(this, hVar, rVar, fVar, null, true, 0, null, 976);
+    }
+
+    @Override // com.vk.catalog2.common.ui.mvp.configuration.CatalogConfiguration
+    public final UserId e() {
+        return this.f48904a;
+    }
+
+    public hk0.r<l> e0(UIBlock uIBlock, String str, ai0.f fVar) {
+        xe0.a aVarP = P(str);
+        UIBlockList uIBlockList = uIBlock instanceof UIBlockList ? (UIBlockList) uIBlock : null;
+        return new n0(aVarP, H(fVar), fVar, new hk0.u(fVar.f3555a.f3561e), uIBlockList == null || uIBlockList.f47574w.size() == 0, uIBlockList, str, uIBlockList == null, Y(fVar), null, null, false, null, 129792);
+    }
+
+    @Override // com.vk.catalog2.common.ui.mvp.configuration.CatalogConfiguration
+    public Bundle f() {
+        Bundle bundle = new Bundle();
+        bundle.putString("ref", this.f48905b);
+        bundle.putParcelable("owner_id", this.f48904a);
+        return bundle;
+    }
+
+    /* JADX WARN: Type inference failed for: r0v0, types: [java.lang.Object, kotlin.Lazy] */
+    public final qp.b f0() {
+        return (qp.b) this.f48907d.getValue();
+    }
+
+    @Override // com.vk.catalog2.common.ui.mvp.configuration.CatalogConfiguration
+    public Boolean g(jk0.b bVar, ik0.b bVar2) {
+        Map<ik0.d, Integer> map;
+        UIBlock uIBlock = bVar2.f132615w;
+        ik0.d dVar = uIBlock != null ? new ik0.d(uIBlock.f47464c, uIBlock.f47465d, uIBlock.f47472k) : null;
+        ik0.a aVarI = i();
+        if (aVarI == null || (map = aVarI.f132607a) == null) {
+            return null;
+        }
+        return Boolean.valueOf(map.containsKey(dVar));
+    }
+
+    /* JADX WARN: Type inference failed for: r0v0, types: [java.lang.Object, kotlin.Lazy] */
+    public final x50.h g0() {
+        return (x50.h) this.f48927z.getValue();
+    }
+
+    @Override // com.vk.catalog2.common.ui.mvp.configuration.CatalogConfiguration
+    public final String getRef() {
+        return this.f48905b;
+    }
+
+    @Override // com.vk.catalog2.common.ui.mvp.configuration.CatalogConfiguration
+    public VideoAutoPlayDelayType getVideoAutoPlayDelayType() {
+        return null;
+    }
+
+    @Override // com.vk.catalog2.common.ui.mvp.configuration.CatalogConfiguration
+    public lk0.a h(jk0.b bVar, CatalogConfiguration$Companion$ContainerType catalogConfiguration$Companion$ContainerType) {
+        int i16 = b.$EnumSwitchMapping$1[catalogConfiguration$Companion$ContainerType.ordinal()];
+        if (i16 == 1) {
+            return new lk0.a(bVar, 3);
+        }
+        if (i16 == 2) {
+            return new lk0.a(bVar, 12);
+        }
+        if (i16 == 3) {
+            return new lk0.a(bVar, 15);
+        }
+        throw new NoWhenBranchMatchedException();
+    }
+
+    /* JADX WARN: Type inference failed for: r0v0, types: [java.lang.Object, kotlin.Lazy] */
+    public final boolean h0() {
+        return ((Boolean) this.f48920q.getValue()).booleanValue();
+    }
+
+    @Override // com.vk.catalog2.common.ui.mvp.configuration.CatalogConfiguration
+    public ik0.a i() {
+        return null;
+    }
+
+    /* JADX WARN: Type inference failed for: r0v0, types: [java.lang.Object, kotlin.Lazy] */
+    public final boolean i0() {
+        return ((Boolean) this.f48922s.getValue()).booleanValue();
+    }
+
+    /* JADX WARN: Type inference failed for: r0v0, types: [java.lang.Object, kotlin.Lazy] */
+    public final x50.b0 j0() {
+        return (x50.b0) this.f48908e.getValue();
+    }
+
+    /* JADX WARN: Type inference failed for: r0v0, types: [java.lang.Object, kotlin.Lazy] */
+    public final boolean k0() {
+        return ((Boolean) this.f48916m.getValue()).booleanValue();
+    }
+
+    @Override // com.vk.catalog2.common.ui.mvp.configuration.CatalogConfiguration
+    public final int l(UIBlock uIBlock) {
+        return 1;
+    }
+
+    public final com.vk.catalog.mvi.legacy.api.a l0() {
+        return (com.vk.catalog.mvi.legacy.api.a) this.G.getValue();
+    }
+
+    @Override // com.vk.catalog2.common.ui.mvp.configuration.CatalogConfiguration
+    public boolean m() {
+        return false;
+    }
+
+    /* JADX WARN: Type inference failed for: r0v0, types: [java.lang.Object, kotlin.Lazy] */
+    public final boolean m0() {
+        return ((Boolean) this.f48918o.getValue()).booleanValue();
+    }
+
+    /* JADX WARN: Can't fix incorrect switch cases order, some code will duplicate */
+    /* JADX WARN: Code duplicated, block: B:4:0x002b  */
+    /* JADX WARN: Code duplicated, block: B:60:0x011e  */
+    @Override // com.vk.catalog2.common.ui.mvp.configuration.CatalogConfiguration
+    public final String n(Context context, int i16, UIBlock uIBlock, n nVar) {
+        int iB;
+        SearchEntityCatalogViewStyle.EntityStyle entityStyle;
+        ImageSize imageSizeE8;
+        String str;
+        ImageSize imageSizeE9;
+        ImageSize imageSizeE10;
+        ImageSize imageSizeE11;
+        CatalogDataType catalogDataType = uIBlock.f47465d;
+        CatalogViewType catalogViewType = uIBlock.f47464c;
+        CatalogViewStyle catalogViewStyle = uIBlock.f47472k;
+        switch (b.$EnumSwitchMapping$2[catalogDataType.ordinal()]) {
+            case 1:
+                int i18 = b.$EnumSwitchMapping$0[catalogViewType.ordinal()];
+                if (i18 == 5 || i18 == 6 || i18 != 9) {
+                    iB = c0.b(R.dimen.video_catalog_album_small_content_item_width, context);
+                }
+                break;
+            case 2:
+                iB = c0.b(R.dimen.video_catalog_album_small_content_item_width, context);
+                break;
+            case 3:
+            case 4:
+                int i19 = b.$EnumSwitchMapping$0[catalogViewType.ordinal()];
+                if (i19 == 5) {
+                    iB = c0.b(R.dimen.video_catalog_large_slider_content_item_width, context);
+                } else if (i19 == 6) {
+                    iB = c0.b(R.dimen.video_catalog_small_slider_content_item_width, context);
+                } else if (i19 == 8) {
+                    iB = c0.b(R.dimen.video_catalog_small_content_item_width, context);
+                } else if (i19 == 9) {
+                    iB = c0.b(R.dimen.video_catalog_small_slider_content_item_width, context);
+                } else {
+                    iB = ImageScreenSize.BIG.getPixelsSize();
+                }
+                break;
+            case 5:
+                int i28 = b.$EnumSwitchMapping$0[catalogViewType.ordinal()];
+                if (i28 == 5 || i28 == 6) {
+                    iB = c0.b(R.dimen.catalog_link_larger_slider_content_item_width, context);
+                } else {
+                    iB = i28 == 7 ? c0.b(R.dimen.music_playlist_image, context) : c0.b(R.dimen.catalog_link_small_content_item_height, context);
+                }
+                break;
+            case 6:
+                int i29 = b.$EnumSwitchMapping$0[catalogViewType.ordinal()];
+                if (i29 == 6) {
+                    iB = c0.b(R.dimen.catalog_app_slider_content_item_width, context);
+                } else if (i29 == 8) {
+                    iB = c0.b(R.dimen.catalog_app_list_content_item_height, context);
+                } else {
+                    iB = c0.b(R.dimen.catalog_app_list_content_item_height, context);
+                }
+                break;
+            case 7:
+                int i32 = b.$EnumSwitchMapping$0[catalogViewType.ordinal()];
+                if (i32 == 5) {
+                    iB = c0.b(R.dimen.catalog_app_slider_content_item_width, context);
+                } else if (i32 == 6) {
+                    iB = c0.b(R.dimen.catalog_game_slider_content_item_width, context);
+                } else if (i32 == 8) {
+                    iB = c0.b(R.dimen.catalog_app_list_content_item_height, context);
+                } else {
+                    iB = c0.b(R.dimen.catalog_app_list_content_item_height, context);
+                }
+                break;
+            case 8:
+            case 9:
+            case 10:
+            case 11:
+            default:
+                iB = 0;
+                break;
+            case 12:
+            case 13:
+                iB = c0.b(R.dimen.music_track_image, context);
+                break;
+            case 14:
+                if (catalogViewType.k()) {
+                    iB = c0.b(R.dimen.music_playlist_image, context);
+                } else if (!catalogViewType.h()) {
+                    iB = 0;
+                } else {
+                    iB = c0.b(R.dimen.music_playlist_slider_image_size, context);
+                }
+                break;
+            case 15:
+                SearchEntityCatalogViewStyle searchEntityCatalogViewStyle = catalogViewStyle instanceof SearchEntityCatalogViewStyle ? (SearchEntityCatalogViewStyle) catalogViewStyle : null;
+                CatalogSearchEntityAnswer.EntityType entityType = (searchEntityCatalogViewStyle == null || (entityStyle = searchEntityCatalogViewStyle.f47450a) == null) ? null : entityStyle.getEntityType();
+                if (entityType != CatalogSearchEntityAnswer.EntityType.VideoPlaylist) {
+                    iB = (entityType != CatalogSearchEntityAnswer.EntityType.Person || searchEntityCatalogViewStyle.f47450a != SearchEntityCatalogViewStyle.EntityStyle.Flat) ? c0.b(R.dimen.catalog_link_small_content_item_width, context) : c0.b(R.dimen.catalog_search_entity_flat_icon_size, context);
+                } else {
+                    iB = c0.b(R.dimen.catalog_search_entity_video_playlist_item_width, context);
+                }
+                break;
+        }
+        if (uIBlock instanceof UIBlockLink) {
+            ImageSize imageSizeE12 = ((UIBlockLink) uIBlock).getF47573w().f47212e.e8(iB, true, false);
+            if (imageSizeE12 != null) {
+                return imageSizeE12.f69032c.f69597c;
+            }
+        } else {
+            if (uIBlock instanceof UIBlockApp) {
+                return ((UIBlockApp) uIBlock).getF47547w().f69397c.h8(iB).f69032c.f69597c;
+            }
+            if (uIBlock instanceof UIBlockAppContent) {
+                return ((UIBlockAppContent) uIBlock).getX().getF47092g();
+            }
+            if (uIBlock instanceof UIBlockVideoAlbum) {
+                ImageSize imageSizeE13 = ((UIBlockVideoAlbum) uIBlock).getF47652w().getF72430g().e8(iB, true, false);
+                if (imageSizeE13 != null) {
+                    return imageSizeE13.f69032c.f69597c;
+                }
+            } else if (uIBlock instanceof UIBlockVideo) {
+                if (i16 != 0) {
+                    return ((UIBlockVideo) uIBlock).f47633z.X0();
+                }
+                Image imageA = ((UIBlockVideo) uIBlock).f47633z.a();
+                if (imageA != null && (imageSizeE11 = imageA.e8(iB, true, false)) != null) {
+                    return imageSizeE11.f69032c.f69597c;
+                }
+            } else {
+                if (uIBlock instanceof UIBlockStickerPack) {
+                    j jVar = xe5.d.f214474a;
+                    return xe5.d.a.a(((UIBlockStickerPack) uIBlock).getF47700w(), iB);
+                }
+                if (uIBlock instanceof UIBlockStickerPackPreview) {
+                    j jVar2 = xe5.d.f214474a;
+                    return xe5.d.a.b(iB, ((UIBlockStickerPackPreview) uIBlock).getF47701w().f96031o, false);
+                }
+                if (uIBlock instanceof UIBlockBanner) {
+                    return NotificationImage.h8(((UIBlockBanner) uIBlock).getF47553w().f47099c, iB);
+                }
+                if (uIBlock instanceof UIBlockPlaceholder) {
+                    Image image = ((UIBlockPlaceholder) uIBlock).f47584z;
+                    if (image != null && (imageSizeE10 = image.e8(iB, true, false)) != null) {
+                        return imageSizeE10.f69032c.f69597c;
+                    }
+                } else if (uIBlock instanceof UIBlockMusicPlaylist) {
+                    Playlist x = ((UIBlockMusicPlaylist) uIBlock).getX();
+                    Thumb thumb = x.f70272l;
+                    if (thumb == null) {
+                        List<Thumb> list = x.f70275o;
+                        thumb = list != null ? list.get(i16) : null;
+                    }
+                    if (thumb != null) {
+                        Serializer.c<Thumb> cVar = Thumb.CREATOR;
+                        Uri uriE8 = thumb.e8(iB);
+                        if (uriE8 != null) {
+                            return uriE8.toString();
+                        }
+                        return null;
+                    }
+                } else if (uIBlock instanceof UIBlockMusicTrack) {
+                    Thumb thumbJ8 = ((UIBlockMusicTrack) uIBlock).getX().j8();
+                    if (thumbJ8 != null) {
+                        Serializer.c<Thumb> cVar2 = Thumb.CREATOR;
+                        Uri uriE9 = thumbJ8.e8(iB);
+                        if (uriE9 != null) {
+                            return uriE9.toString();
+                        }
+                        return null;
+                    }
+                } else if (uIBlock instanceof UIBlockSearchEntityPerson) {
+                    Image f47342d = ((UIBlockSearchEntityPerson) uIBlock).getF51920w().getF47342d();
+                    if (f47342d != null && (imageSizeE9 = f47342d.e8(iB, true, false)) != null) {
+                        return imageSizeE9.f69032c.f69597c;
+                    }
+                } else if (uIBlock instanceof UIBlockSearchEntityVideoPlaylist) {
+                    UIBlockSearchEntityVideoPlaylist uIBlockSearchEntityVideoPlaylist = (UIBlockSearchEntityVideoPlaylist) uIBlock;
+                    Image f47354e = uIBlockSearchEntityVideoPlaylist.getF51922w().getF47354e();
+                    if (f47354e != null && (imageSizeE8 = f47354e.e8(iB, true, false)) != null && (str = imageSizeE8.f69032c.f69597c) != null) {
+                        return str;
+                    }
+                    ImageSize imageSizeE14 = uIBlockSearchEntityVideoPlaylist.getF51923z().getF72430g().e8(iB, true, false);
+                    if (imageSizeE14 != null) {
+                        return imageSizeE14.f69032c.f69597c;
+                    }
+                }
+            }
+        }
+        return null;
+    }
+
+    /* JADX WARN: Type inference failed for: r0v0, types: [java.lang.Object, kotlin.Lazy] */
+    public final boolean n0() {
+        return ((Boolean) this.f48917n.getValue()).booleanValue();
+    }
+
+    @Override // com.vk.catalog2.common.ui.mvp.configuration.CatalogConfiguration
+    public final int o() {
+        return 3;
+    }
+
+    /* JADX WARN: Type inference failed for: r0v0, types: [java.lang.Object, kotlin.Lazy] */
+    public final qs3.a o0() {
+        return (qs3.a) this.F.getValue();
+    }
+
+    @Override // com.vk.catalog2.common.ui.mvp.configuration.CatalogConfiguration
+    public boolean p() {
+        return false;
+    }
+
+    public cg0.b p0() {
+        return null;
+    }
+
+    @Override // com.vk.catalog2.common.ui.mvp.configuration.CatalogConfiguration
+    public hk0.q q(ai0.f fVar) {
+        return new hk0.q(this, fVar, H(fVar), null, null, null, null, null, 32760);
+    }
+
+    /* JADX WARN: Type inference failed for: r0v0, types: [java.lang.Object, kotlin.Lazy] */
+    public final boolean q0() {
+        return ((Boolean) this.f48919p.getValue()).booleanValue();
+    }
+
+    @Override // com.vk.catalog2.common.ui.mvp.configuration.CatalogConfiguration
+    public j43.b r(CatalogConfiguration.AutoPlayEntryPoint autoPlayEntryPoint) {
+        return I();
+    }
+
+    /* JADX WARN: Type inference failed for: r0v0, types: [java.lang.Object, kotlin.Lazy] */
+    public final f14.b r0() {
+        return (f14.b) this.f48906c.getValue();
+    }
+
+    @Override // com.vk.catalog2.common.ui.mvp.configuration.CatalogConfiguration
+    public mf0.b s() {
+        return new mf0.b();
+    }
+
+    /* JADX WARN: Type inference failed for: r0v0, types: [java.lang.Object, kotlin.Lazy] */
+    public final xn2.a s0() {
+        return (xn2.a) this.f48910g.getValue();
+    }
+
+    public ai0.p t0() {
+        return null;
+    }
+
+    @Override // com.vk.catalog2.common.ui.mvp.configuration.CatalogConfiguration
+    public boolean u(UserId userId) {
+        return false;
+    }
+
+    /* JADX WARN: Type inference failed for: r0v0, types: [java.lang.Object, kotlin.Lazy] */
+    public final d23.c u0() {
+        return (d23.c) this.E.getValue();
+    }
+
+    /* JADX WARN: Type inference failed for: r0v0, types: [java.lang.Object, kotlin.Lazy] */
+    public final e23.a v0() {
+        return (e23.a) this.C.getValue();
+    }
+
+    @Override // com.vk.catalog2.common.ui.mvp.configuration.CatalogConfiguration
+    public boolean w() {
+        return true;
+    }
+
+    /* JADX WARN: Type inference failed for: r0v0, types: [java.lang.Object, kotlin.Lazy] */
+    public final com.vk.libvideo.adfree.api.di.a w0() {
+        return (com.vk.libvideo.adfree.api.di.a) this.D.getValue();
+    }
+
+    @Override // com.vk.catalog2.common.ui.mvp.configuration.CatalogConfiguration
+    public q0 x(CatalogViewType catalogViewType) {
+        int i16 = b.$EnumSwitchMapping$0[catalogViewType.ordinal()];
+        if (i16 == 1 || i16 == 2) {
+            return new kf3.a(new DecelerateInterpolator(1.0f), null, null, ApiInvocationException.ErrorCodes.PARAM_SIGNATURE);
+        }
+        if (i16 == 3) {
+            return new kf3.a(new DecelerateInterpolator(1.0f), null, null, ApiInvocationException.ErrorCodes.PARAM_SIGNATURE);
+        }
+        if (i16 != 4) {
+            return null;
+        }
+        return new kf3.a(null, null, null, 111);
+    }
+
+    public final d65.a x0() {
+        return (d65.a) this.x.getValue();
+    }
+
+    @Override // com.vk.catalog2.common.ui.mvp.configuration.CatalogConfiguration
+    public final int y(UIBlock uIBlock) {
+        List<Thumb> list;
+        switch (b.$EnumSwitchMapping$2[uIBlock.f47465d.ordinal()]) {
+            case 1:
+            case 2:
+                return 1;
+            case 3:
+            case 4:
+                return 2;
+            case 5:
+            case 6:
+            case 7:
+            case 8:
+            case 9:
+            case 10:
+            case 11:
+            case 12:
+            case 13:
+                return 1;
+            case 14:
+                UIBlockMusicPlaylist uIBlockMusicPlaylist = uIBlock instanceof UIBlockMusicPlaylist ? (UIBlockMusicPlaylist) uIBlock : null;
+                Playlist x = uIBlockMusicPlaylist != null ? uIBlockMusicPlaylist.getX() : null;
+                if (x == null || (list = x.f70275o) == null) {
+                    return (x != null ? x.f70272l : null) != null ? 1 : 0;
+                }
+                return list.size();
+            case 15:
+            case 16:
+            case 17:
+            case 18:
+            case 19:
+            case 20:
+                return 1;
+            case 21:
+                return uIBlock.f47464c == CatalogViewType.NOTIFICATION ? 1 : 0;
+            default:
+                return 0;
+        }
+    }
+
+    public final CatalogViewHolder y0(ai0.f fVar, CatalogViewType catalogViewType) {
+        ai0.f.a aVar = fVar.f3555a;
+        ai0.f.b bVar = fVar.f3556b;
+        int i16 = b.$EnumSwitchMapping$0[catalogViewType.ordinal()];
+        if (i16 == 7) {
+            ot3.b bVar2 = aVar.f3565i;
+            jg0.g<MusicTrack> gVar = bVar.f3584d;
+            bg0.a aVar2 = aVar.f3562f;
+            SearchStatInfoProvider searchStatInfoProvider = aVar.f3568l;
+            eg0.d dVar = aVar.f3561e;
+            Object obj = aVar.f3558b;
+            return new MusicTrackVh(bVar2, R.layout.catalog_music_track_large_list, gVar, aVar2, searchStatInfoProvider, 0, dVar, obj instanceof et3.e ? (et3.e) obj : null, 1760);
+        }
+        if (i16 == 8) {
+            if (f2.g(fVar, uv1.a.f203886a)) {
+                ot3.b bVar3 = aVar.f3565i;
+                jg0.g<MusicTrack> gVar2 = bVar.f3584d;
+                bg0.a aVar3 = aVar.f3562f;
+                SearchStatInfoProvider searchStatInfoProvider2 = aVar.f3568l;
+                eg0.d dVar2 = aVar.f3561e;
+                Object obj2 = aVar.f3558b;
+                return new ComposeMusicTrackCellVh(bVar3, gVar2, aVar3, searchStatInfoProvider2, dVar2, obj2 instanceof et3.e ? (et3.e) obj2 : null, B0(), 624);
+            }
+            ot3.b bVar4 = aVar.f3565i;
+            jg0.g<MusicTrack> gVar3 = bVar.f3584d;
+            bg0.a aVar4 = aVar.f3562f;
+            SearchStatInfoProvider searchStatInfoProvider3 = aVar.f3568l;
+            eg0.d dVar3 = aVar.f3561e;
+            Object obj3 = aVar.f3558b;
+            return new MusicTrackCellVh(bVar4, R.layout.catalog_music_cell_audio_item, gVar3, aVar4, searchStatInfoProvider3, dVar3, obj3 instanceof et3.e ? (et3.e) obj3 : null, !B0(), 5856);
+        }
+        if (i16 != 9) {
+            if (i16 == 12) {
+                ot3.b bVar5 = aVar.f3565i;
+                jg0.g<MusicTrack> gVar4 = bVar.f3584d;
+                bg0.a aVar5 = aVar.f3562f;
+                SearchStatInfoProvider searchStatInfoProvider4 = aVar.f3568l;
+                eg0.d dVar4 = aVar.f3561e;
+                Object obj4 = aVar.f3558b;
+                return new MusicTrackVh(bVar5, R.layout.music_audio_item_ordered_playlist, gVar4, aVar5, searchStatInfoProvider4, 3, dVar4, obj4 instanceof et3.e ? (et3.e) obj4 : null, 1728);
+            }
+            if (i16 != 40) {
+                if (i16 == 42) {
+                    ot3.b bVar6 = aVar.f3565i;
+                    jg0.g<MusicTrack> gVar5 = bVar.f3584d;
+                    bg0.a aVar6 = aVar.f3562f;
+                    SearchStatInfoProvider searchStatInfoProvider5 = aVar.f3568l;
+                    eg0.d dVar5 = aVar.f3561e;
+                    Object obj5 = aVar.f3558b;
+                    return new MusicTrackVh(bVar6, R.layout.music_audio_item_ordered_playlist_320, gVar5, aVar6, searchStatInfoProvider5, 3, dVar5, obj5 instanceof et3.e ? (et3.e) obj5 : null, 1728);
+                }
+                if (i16 != 160) {
+                    return null;
+                }
+                if (f2.g(fVar, uv1.a.f203886a)) {
+                    ot3.b bVar7 = aVar.f3565i;
+                    jg0.g<MusicTrack> gVar6 = bVar.f3584d;
+                    bg0.a aVar7 = aVar.f3562f;
+                    SearchStatInfoProvider searchStatInfoProvider6 = aVar.f3568l;
+                    eg0.d dVar6 = aVar.f3561e;
+                    Object obj6 = aVar.f3558b;
+                    return new ComposeMusicTrackCellVh(bVar7, gVar6, aVar7, searchStatInfoProvider6, dVar6, obj6 instanceof et3.e ? (et3.e) obj6 : null, B0(), 1552);
+                }
+                ot3.b bVar8 = aVar.f3565i;
+                jg0.g<MusicTrack> gVar7 = bVar.f3584d;
+                bg0.a aVar8 = aVar.f3562f;
+                SearchStatInfoProvider searchStatInfoProvider7 = aVar.f3568l;
+                eg0.d dVar7 = aVar.f3561e;
+                Object obj7 = aVar.f3558b;
+                return new MusicTrackCellVh(bVar8, R.layout.catalog_music_audio_item_slider, gVar7, aVar8, searchStatInfoProvider7, dVar7, obj7 instanceof et3.e ? (et3.e) obj7 : null, !B0(), 12512);
+            }
+        }
+        if (f2.g(fVar, uv1.a.f203886a)) {
+            ot3.b bVar9 = aVar.f3565i;
+            jg0.g<MusicTrack> gVar8 = bVar.f3584d;
+            bg0.a aVar9 = aVar.f3562f;
+            SearchStatInfoProvider searchStatInfoProvider8 = aVar.f3568l;
+            eg0.d dVar8 = aVar.f3561e;
+            Object obj8 = aVar.f3558b;
+            return new ComposeMusicTrackCellVh(bVar9, gVar8, aVar9, searchStatInfoProvider8, dVar8, obj8 instanceof et3.e ? (et3.e) obj8 : null, B0(), 1616);
+        }
+        ot3.b bVar10 = aVar.f3565i;
+        jg0.g<MusicTrack> gVar9 = bVar.f3584d;
+        bg0.a aVar10 = aVar.f3562f;
+        SearchStatInfoProvider searchStatInfoProvider9 = aVar.f3568l;
+        eg0.d dVar9 = aVar.f3561e;
+        Object obj9 = aVar.f3558b;
+        return new MusicTrackCellVh(bVar10, R.layout.catalog_music_audio_item_slider, gVar9, aVar10, searchStatInfoProvider9, dVar9, obj9 instanceof et3.e ? (et3.e) obj9 : null, !B0(), 13536);
+    }
+
+    @Override // com.vk.catalog2.common.ui.mvp.configuration.CatalogConfiguration
+    public q<l> z(String str, String str2, boolean z13) {
+        return lt.f.A0(new xe0.h(s(), str, str2, z13, null, null, null, null, null, 1008), null, null, 3);
+    }
+
+    public final CatalogViewHolder z0(ai0.f fVar, CatalogViewType catalogViewType, CatalogViewStyle catalogViewStyle) {
+        VideoCatalogViewStyle videoCatalogViewStyle = catalogViewStyle instanceof VideoCatalogViewStyle ? (VideoCatalogViewStyle) catalogViewStyle : null;
+        if (videoCatalogViewStyle != null && videoCatalogViewStyle.f47458a == VideoCatalogViewStyle.Style.AuthorVideos) {
+            ai0.f.a aVar = fVar.f3555a;
+            return new AuthorsVideoGroupCardVh(aVar.f3562f, aVar.f3561e, aVar.f3568l);
+        }
+        if (videoCatalogViewStyle == null || videoCatalogViewStyle.f47458a != VideoCatalogViewStyle.Style.AuthorsCircle) {
+            ai0.f.a aVar2 = fVar.f3555a;
+            return new GroupCardWithBottomBtnVh(aVar2.f3562f, aVar2.f3561e, aVar2.f3568l, catalogViewType);
+        }
+        uv1.a aVar3 = uv1.a.f203886a;
+        ai0.f.b bVar = fVar.f3556b;
+        ai0.f.a aVar4 = fVar.f3555a;
+        Context context = bVar.f3586f;
+        aVar3.getClass();
+        if (uv1.a.b(context)) {
+            return new CatalogMviVh(aVar4.f3562f, aVar4.f3561e, aVar4.f3568l, CatalogBlockVariant.AuthorCircleMinimalistic, l0(), null, 224);
+        }
+        return new CircularAuthorViewHolder(aVar4.f3562f, aVar4.f3568l, aVar4.f3561e);
+    }
+}
+
+===== com.vk.catalog2.common.dto.ui.UiBlockAdBanner =====
+package com.vk.catalog2.common.dto.ui;
+
+import androidx.compose.runtime.p2;
+import com.vk.catalog2.common.dto.api.ui.UIBlock;
+import com.vk.core.serialize.Serializer;
+import com.vk.dto.ads.AdBannerStyle;
+import java.util.Objects;
+import kotlin.Metadata;
+import kotlin.jvm.internal.h;
+import ru.ok.android.api.methods.batch.execute.BatchApiRequest;
+import ru.ok.tracer.base.ucum.UcumUtils;
+
+/* JADX INFO: compiled from: UiBlockAdBanner.kt */
+/* JADX INFO: loaded from: classes5.dex */
+@Metadata(d1 = {"\u0000$\n\u0002\u0018\u0002\n\u0002\u0018\u0002\n\u0002\u0018\u0002\n\u0000\n\u0002\u0010\u000e\n\u0000\n\u0002\u0018\u0002\n\u0002\b\u0004\n\u0002\u0018\u0002\n\u0002\b\u0003\u0018\u00002\u00020\u0001B+\b\u0016\u0012\u0006\u0010\u0003\u001a\u00020\u0002\u0012\u0006\u0010\u0005\u001a\u00020\u0004\u0012\b\u0010\u0007\u001a\u0004\u0018\u00010\u0006\u0012\u0006\u0010\b\u001a\u00020\u0004¢\u0006\u0004\b\t\u0010\nB\u0011\b\u0016\u0012\u0006\u0010\f\u001a\u00020\u000b¢\u0006\u0004\b\t\u0010\r¨\u0006\u000e"}, d2 = {"Lcom/vk/catalog2/common/dto/ui/UiBlockAdBanner;", "Lcom/vk/catalog2/common/dto/api/ui/UIBlock;", "Lcom/vk/catalog2/common/dto/api/ui/a;", BatchApiRequest.FIELD_NAME_PARAMS, "", "id", "Lcom/vk/dto/ads/AdBannerStyle;", "bannerStyle", "sdkSource", "<init>", "(Lcom/vk/catalog2/common/dto/api/ui/a;Ljava/lang/String;Lcom/vk/dto/ads/AdBannerStyle;Ljava/lang/String;)V", "Lcom/vk/core/serialize/Serializer;", UcumUtils.UCUM_SECONDS, "(Lcom/vk/core/serialize/Serializer;)V", "dto_release"}, k = 1, mv = {2, 2, 0}, xi = 48)
+public final class UiBlockAdBanner extends UIBlock {
+    public static final Serializer.c<UiBlockAdBanner> CREATOR = new a();
+
+    /* JADX INFO: renamed from: w, reason: collision with root package name */
+    public final String f47657w;
+    public final AdBannerStyle x;
+    public final String y;
+
+    /* JADX INFO: compiled from: Serializer.kt */
+    public static final class a extends Serializer.c<UiBlockAdBanner> {
+        @Override // com.vk.core.serialize.Serializer.c
+        public final UiBlockAdBanner a(Serializer serializer) {
+            return new UiBlockAdBanner(serializer);
+        }
+
+        @Override // android.os.Parcelable.Creator
+        public final Object[] newArray(int i16) {
+            return new UiBlockAdBanner[i16];
+        }
+    }
+
+    public UiBlockAdBanner(com.vk.catalog2.common.dto.api.ui.a aVar, String str, AdBannerStyle adBannerStyle, String str2) {
+        super(aVar);
+        this.f47657w = str;
+        this.x = adBannerStyle;
+        this.y = str2;
+    }
+
+    @Override // com.vk.catalog2.common.dto.api.ui.UIBlock
+    public final UIBlock d8() {
+        return new UiBlockAdBanner(e8(), this.f47657w, this.x, this.y);
+    }
+
+    public final boolean equals(Object obj) {
+        if (!(obj instanceof UiBlockAdBanner) || !UIBlock.a.b(this, (UIBlock) obj)) {
+            return false;
+        }
+        UiBlockAdBanner uiBlockAdBanner = (UiBlockAdBanner) obj;
+        return h.d(this.f47657w, uiBlockAdBanner.f47657w) && this.x == uiBlockAdBanner.x && h.d(this.y, uiBlockAdBanner.y);
+    }
+
+    @Override // com.vk.catalog2.common.dto.api.ui.UIBlock
+    public final int hashCode() {
+        return Objects.hash(Integer.valueOf(Objects.hash(this.f47462a, this.f47463b, this.f47465d, this.f47464c, this.f47466e, this.f47467f, this.f47468g, h8(), this.f47470i, this.f47472k, this.f47473l, this.f47474m, this.f47475n)), this.f47657w);
+    }
+
+    @Override // com.vk.catalog2.common.dto.api.ui.UIBlock
+    /* JADX INFO: renamed from: i8, reason: from getter */
+    public final String getF47657w() {
+        return this.f47657w;
+    }
+
+    @Override // com.vk.catalog2.common.dto.api.ui.UIBlock, com.vk.core.serialize.Serializer.StreamParcelable
+    public final void l3(Serializer serializer) {
+        super.l3(serializer);
+        serializer.p0(this.f47657w);
+        AdBannerStyle adBannerStyle = this.x;
+        serializer.p0(adBannerStyle != null ? adBannerStyle.getServerName() : null);
+        serializer.p0(this.y);
+    }
+
+    @Override // com.vk.catalog2.common.dto.api.ui.UIBlock
+    public final String toString() {
+        StringBuilder sb2 = new StringBuilder("UiBlockAdVideoBanner[id: ");
+        sb2.append(this.f47657w);
+        sb2.append(", bannerStyle: ");
+        sb2.append(this.x);
+        sb2.append(", sdkSource: ");
+        return p2.c(sb2, this.y, ']');
+    }
+
+    public UiBlockAdBanner(Serializer serializer) {
+        super(serializer);
+        String strK = serializer.K();
+        this.f47657w = strK == null ? "" : strK;
+        AdBannerStyle.Companion companion = AdBannerStyle.INSTANCE;
+        String strK2 = serializer.K();
+        companion.getClass();
+        this.x = AdBannerStyle.Companion.a(strK2);
+        String strK3 = serializer.K();
+        this.y = strK3 != null ? strK3 : "";
+    }
+}
+
