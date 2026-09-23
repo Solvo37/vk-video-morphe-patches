@@ -1,0 +1,54 @@
+name: Trace profile promo fast
+
+on:
+  push:
+    branches:
+      - ad-analysis-1.163
+    paths:
+      - '.github/workflows/profile-promo-fast.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  trace:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+        with:
+          ref: ad-analysis-1.163
+      - name: Install tools and download RC
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          sudo apt-get update
+          sudo apt-get install -y aapt unzip
+          rm -rf ppfast
+          mkdir -p ppfast docs
+          gh release download 1.163.5-rc1 --repo "$GITHUB_REPOSITORY" --pattern 'VK-Video-1.163.5-rc1-patched.apk' --dir ppfast
+      - name: Dump resources and DEX strings
+        run: |
+          set -euo pipefail
+          APK='ppfast/VK-Video-1.163.5-rc1-patched.apk'
+          aapt dump resources "$APK" > ppfast/resources.txt || true
+          unzip -q "$APK" 'classes*.dex' -d ppfast/dex
+          {
+            echo '===== RESOURCE MATCHES ====='
+            grep -inE -C 12 'Отключить рекламу|Бесплатно на 14 дней|14 дней|реклам|подпис|trial|subscription|ad.?free|without.?ads|no.?ads' ppfast/resources.txt | head -n 5000 || true
+            echo
+            echo '===== DEX UTF8 MATCHES ====='
+            for f in ppfast/dex/classes*.dex; do
+              echo "--- $f ---"
+              strings -a -n 4 "$f" | grep -iE 'Отключить рекламу|Бесплатно на 14 дней|14 дней|onboardingpromo|ad.?free|without.?ads|no.?ads|subscription|trial|profile.*promo|promo.*profile' | head -n 3000 || true
+            done
+          } > docs/profile-promo-fast-1.163.5-rc1.txt
+      - name: Commit report
+        run: |
+          set -euo pipefail
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add docs/profile-promo-fast-1.163.5-rc1.txt
+          git commit -m 'analysis: trace profile promo strings fast' || exit 0
+          git pull --rebase origin ad-analysis-1.163
+          git push origin HEAD:ad-analysis-1.163
