@@ -1,0 +1,266 @@
+name: Build VK Video 1.163.6 safe promo RC
+
+on:
+  push:
+    branches:
+      - fix/1.163.6-profile-promo-safe
+    paths:
+      - '.github/workflows/build-1.163.6-rc1.yml'
+
+permissions:
+  contents: write
+  packages: read
+
+concurrency:
+  group: rebuild-vk-video-1.163.6-rc1
+  cancel-in-progress: false
+
+env:
+  PROJECT_CERT_SHA256: d41f492f0e2a2e3990ac7f8e75cc5d4b14895f7b46c0b6113b7882c48aa5d40a
+  BASE_APK_SHA256: 404af6d2ddad48cf3e6531223db1c8bc7ae4f36640c6b7dafaebf90269728f54
+  MORPHE_VERSION: v1.16.0
+  MORPHE_SHA256: 82a0df2ff881d83d5ca8b4f9a6ce196bd4ac3b87ff147fe37845c296b436806c
+  RELEASE_TAG: 1.163.6-rc1
+
+jobs:
+  rebuild:
+    if: github.repository == 'Solvo37/vk-video-morphe-patches'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+
+      - name: Setup Java 21
+        uses: actions/setup-java@de7274f081f381c8f8158605e0321c36c376e2e6 # v6
+        with:
+          distribution: temurin
+          java-version: '21'
+
+      - name: Setup Python
+        uses: actions/setup-python@ece7cb06caefa5fff74198d8649806c4678c61a1 # v6
+        with:
+          python-version: '3.12'
+
+      - name: Setup Gradle
+        uses: gradle/actions/setup-gradle@9c971963bec38e04b3d30dcc455b5382be2fdbfb # v6.3.0
+        with:
+          gradle-version: '9.7.1'
+
+      - name: Install Android verification tools
+        run: |
+          set -euo pipefail
+          sudo apt-get update
+          sudo apt-get install -y apksigner aapt zipalign jq unzip
+
+      - name: Refuse to replace existing RC
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          if gh release view "$RELEASE_TAG" --repo "$GITHUB_REPOSITORY" >/dev/null 2>&1; then
+            echo "::error::Release $RELEASE_TAG already exists; refusing to replace immutable assets."
+            exit 1
+          fi
+
+      - name: Build Morphe bundle 0.2.7
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          set -euo pipefail
+          gradle :patches:buildAndroid --no-daemon
+          MPP="$(find patches/build/libs -maxdepth 1 -type f -name '*.mpp' ! -name '*sources*' ! -name '*javadoc*' -print -quit)"
+          test -n "$MPP"
+          cp "$MPP" work.mpp
+          grep -q '^version = 0.2.7$' gradle.properties
+
+      - name: Download and verify stable 1.163.3 base
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          mkdir -p dist
+          gh release download 1.163.3 --repo "$GITHUB_REPOSITORY" --pattern 'VK-Video-1.163.3-patched.apk'
+          echo "$BASE_APK_SHA256  VK-Video-1.163.3-patched.apk" | sha256sum -c -
+
+          VERIFY="$(apksigner verify --verbose --print-certs VK-Video-1.163.3-patched.apk)"
+          printf '%s\n' "$VERIFY"
+          CERT="$(sed -n 's/^Signer #1 certificate SHA-256 digest: //p' <<< "$VERIFY" | head -n1 | tr '[:upper:]' '[:lower:]' | tr -d ':')"
+          [[ "$CERT" == "$PROJECT_CERT_SHA256" ]]
+          grep -q 'Verified using v1 scheme (JAR signing): false' <<< "$VERIFY"
+          grep -q 'Verified using v2 scheme (APK Signature Scheme v2): false' <<< "$VERIFY"
+          grep -q 'Verified using v3 scheme (APK Signature Scheme v3): true' <<< "$VERIFY"
+
+          BADGING="$(aapt dump badging VK-Video-1.163.3-patched.apk | head -n1)"
+          echo "$BADGING"
+          grep -q "name='com.vk.vkvideo'" <<< "$BADGING"
+          grep -q "versionCode='51920'" <<< "$BADGING"
+          grep -q "versionName='1.163'" <<< "$BADGING"
+
+      - name: Download pinned Morphe
+        run: |
+          set -euo pipefail
+          curl -fL --retry 4 -o morphe.jar "https://github.com/MorpheApp/morphe-desktop/releases/download/${MORPHE_VERSION}/morphe-desktop-${MORPHE_VERSION#v}-all.jar"
+          echo "$MORPHE_SHA256  morphe.jar" | sha256sum -c -
+
+      - name: Apply safe home player promo delta
+        run: |
+          set -euo pipefail
+          "$JAVA_HOME/bin/java" -jar morphe.jar patch \
+            -p work.mpp \
+            --force --exclusive \
+            -e "Hide home showcase ads" \
+            -e "Disable video ad repository" \
+            -e "Disable ad-free subscription promo" \
+            --bytecode-mode STRIP_FAST \
+            --unsigned \
+            -r dist/patch-result.json \
+            -o dist/safe-unsigned.apk \
+            VK-Video-1.163.3-patched.apk
+
+          cat dist/patch-result.json
+          jq -e '
+            all(.patchingSteps[]?; .success == true)
+            and ((.failedPatches // []) | length == 0)
+            and any(.appliedPatches[]?; .name == "Hide home showcase ads")
+            and any(.appliedPatches[]?; .name == "Disable video ad repository")
+            and any(.appliedPatches[]?; .name == "Disable ad-free subscription promo")
+            and ((.appliedPatches // []) | length == 3)
+          ' dist/patch-result.json >/dev/null
+
+      - name: Static gate before signing
+        run: |
+          set -euo pipefail
+          unzip -t dist/safe-unsigned.apk >/dev/null
+          zipalign -c -p 4 dist/safe-unsigned.apk
+
+          aapt dump xmltree dist/safe-unsigned.apk AndroidManifest.xml > dist/manifest-xmltree.txt
+          python ci/verify_manifest.py dist/manifest-xmltree.txt
+          python ci/verify_patched_apk.py dist/safe-unsigned.apk --json-out dist/static-gate.json
+
+      - name: Decode project signing key
+        env:
+          KEYSTORE_B64: ${{ secrets.ANDROID_KEYSTORE_B64 }}
+          STORE_PASSWORD: ${{ secrets.ANDROID_KEYSTORE_PASSWORD }}
+          KEY_ALIAS: ${{ secrets.ANDROID_KEY_ALIAS }}
+          KEY_PASSWORD: ${{ secrets.ANDROID_KEY_PASSWORD }}
+        run: |
+          set -euo pipefail
+          test -n "$KEYSTORE_B64"
+          test -n "$STORE_PASSWORD"
+          test -n "$KEY_ALIAS"
+          test -n "$KEY_PASSWORD"
+          printf '%s' "$KEYSTORE_B64" | base64 -d > signing.jks
+          test -s signing.jks
+
+      - name: Sign and verify RC APK
+        env:
+          STORE_PASSWORD: ${{ secrets.ANDROID_KEYSTORE_PASSWORD }}
+          KEY_ALIAS: ${{ secrets.ANDROID_KEY_ALIAS }}
+          KEY_PASSWORD: ${{ secrets.ANDROID_KEY_PASSWORD }}
+        run: |
+          set -euo pipefail
+          cp dist/safe-unsigned.apk dist/safe-aligned.apk
+
+          apksigner sign \
+            --ks signing.jks \
+            --ks-pass env:STORE_PASSWORD \
+            --ks-key-alias "$KEY_ALIAS" \
+            --key-pass env:KEY_PASSWORD \
+            --v1-signing-enabled false \
+            --v2-signing-enabled false \
+            --v3-signing-enabled true \
+            --v4-signing-enabled false \
+            --out dist/VK-Video-1.163.6-rc1-patched.apk \
+            dist/safe-aligned.apk
+
+          VERIFY="$(apksigner verify --verbose --print-certs dist/VK-Video-1.163.6-rc1-patched.apk)"
+          printf '%s\n' "$VERIFY"
+          grep -q 'Verified using v1 scheme (JAR signing): false' <<< "$VERIFY"
+          grep -q 'Verified using v2 scheme (APK Signature Scheme v2): false' <<< "$VERIFY"
+          grep -q 'Verified using v3 scheme (APK Signature Scheme v3): true' <<< "$VERIFY"
+
+          CERT="$(sed -n 's/^Signer #1 certificate SHA-256 digest: //p' <<< "$VERIFY" | head -n1 | tr '[:upper:]' '[:lower:]' | tr -d ':')"
+          [[ "$CERT" == "$PROJECT_CERT_SHA256" ]]
+          zipalign -c -p 4 dist/VK-Video-1.163.6-rc1-patched.apk
+
+          BADGING="$(aapt dump badging dist/VK-Video-1.163.6-rc1-patched.apk | head -n1)"
+          echo "$BADGING"
+          grep -q "name='com.vk.vkvideo'" <<< "$BADGING"
+          grep -q "versionCode='51920'" <<< "$BADGING"
+          grep -q "versionName='1.163'" <<< "$BADGING"
+
+          python ci/verify_patched_apk.py dist/VK-Video-1.163.6-rc1-patched.apk --json-out dist/final-gate.json
+          sha256sum dist/VK-Video-1.163.6-rc1-patched.apk | tee dist/VK-Video-1.163.6-rc1-patched.sha256
+
+      - name: Build metadata
+        run: |
+          set -euo pipefail
+          FINAL_SHA="$(cut -d' ' -f1 dist/VK-Video-1.163.6-rc1-patched.sha256)"
+          jq -n \
+            --arg package "com.vk.vkvideo" \
+            --arg version_name "1.163" \
+            --argjson version_code 51920 \
+            --arg release_tag "$RELEASE_TAG" \
+            --arg base_release_tag "1.163.3" \
+            --arg base_apk_sha256 "$BASE_APK_SHA256" \
+            --arg final_apk_sha256 "$FINAL_SHA" \
+            --arg patch_bundle_version "0.2.7" \
+            --arg project_cert "$PROJECT_CERT_SHA256" \
+            --arg workflow_run "$GITHUB_SERVER_URL/$GITHUB_REPOSITORY/actions/runs/$GITHUB_RUN_ID" \
+            '{
+              package: $package,
+              version_name: $version_name,
+              version_code: $version_code,
+              release_tag: $release_tag,
+              rebuild_type: "safe profile-promo candidate over stable project-signed 1.163.3",
+              base_release_tag: $base_release_tag,
+              base_apk_sha256: $base_apk_sha256,
+              final_apk_sha256: $final_apk_sha256,
+              patch_bundle_version: $patch_bundle_version,
+              applied_delta_patches: ["Hide home showcase ads", "Disable video ad repository", "Disable ad-free subscription promo"],
+              safety_change: "No direct ProfileMenuDataProvider bytecode short-circuit. Uses VK's VIDEO_AD_FREE_SUBSCRIPTION feature gate instead.",
+              signing: {
+                scheme_v1: false,
+                scheme_v2: false,
+                scheme_v3: true,
+                scheme_v4: false,
+                certificate_sha256: $project_cert
+              },
+              workflow_run: $workflow_run
+            }' > dist/delta-build-metadata.json
+
+      - name: Publish prerelease RC
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          cp work.mpp dist/vk-video-morphe-patches-0.2.7.mpp
+
+          cat > dist/release-notes.md <<'EOF'
+          ## 1.163.6-rc1 — safe profile-promo hotfix candidate
+
+          This is a prerelease. Stable remains 1.163.3 until a real-device launch/use test passes.
+
+          Built fresh from stable 1.163.3. Only three delta patches are applied:
+          - Hide home showcase ads
+          - Disable video ad repository
+          - Disable ad-free subscription promo
+
+          The previous direct ProfileMenuDataProvider short-circuit is not present. Instead, VK's own VIDEO_AD_FREE_SUBSCRIPTION feature gate is forced off, so the «Отключить рекламу / бесплатно на 14 дней» item follows the app's normal feature-disabled path.
+
+          1.163.5 is known broken and should not be installed.
+          EOF
+
+          gh release create "$RELEASE_TAG" \
+            dist/VK-Video-1.163.6-rc1-patched.apk \
+            dist/VK-Video-1.163.6-rc1-patched.sha256 \
+            dist/vk-video-morphe-patches-0.2.7.mpp \
+            dist/patch-result.json \
+            dist/static-gate.json \
+            dist/final-gate.json \
+            dist/delta-build-metadata.json \
+            --repo "$GITHUB_REPOSITORY" \
+            --target "$GITHUB_SHA" \
+            --title "VK Video 1.163 safe profile promo hotfix — 1.163.6-rc1" \
+            --notes-file dist/release-notes.md \
+            --prerelease
