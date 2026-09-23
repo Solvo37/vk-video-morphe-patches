@@ -58,7 +58,7 @@ private val runtimeSettingsManifestPatch = resourcePatch {
 private object VkVideoApplicationOnCreateFingerprint : Fingerprint(
     definingClass = "Lcom/vk/video/app/VkVideoApplication;",
     name = "onCreate",
-    accessFlags = listOf(AccessFlags.PUBLIC),
+    accessFlags = listOf(AccessFlags.PUBLIC, AccessFlags.FINAL),
     returnType = "V",
     parameters = emptyList()
 )
