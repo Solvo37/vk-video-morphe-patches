@@ -300,3 +300,13 @@ internal object VideoInstreamSectionsConstructorFingerprint : Fingerprint(
         "Ljava/util/List;"
     )
 )
+
+// Profile menu data provider. This method only appends the "ad-free
+// subscription" promotional item to the "My" screen.
+internal object ProfileAdFreeMenuItemFingerprint : Fingerprint(
+    definingClass = "Lwc6/q;",
+    name = "i",
+    returnType = "V",
+    parameters = listOf("Ljava/util/ArrayList;")
+)
+
