@@ -1,0 +1,904 @@
+===== com.vk.video.ui.discovery.minimizable.adfree.VideoAdFreeButton =====
+package com.vk.video.ui.discovery.minimizable.adfree;
+
+import ai0.i;
+import android.content.Context;
+import android.util.AttributeSet;
+import android.view.LayoutInflater;
+import android.view.ViewGroup;
+import android.widget.FrameLayout;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.TextView;
+import com.vk.toggle.d;
+import com.vk.video.ui.discovery.minimizable.a1;
+import com.vk.vkvideo.R;
+import d23.a;
+import d23.b;
+import g07.g;
+import g07.j;
+import kotlin.Metadata;
+import ph2.c0;
+import tw1.r;
+
+/* JADX INFO: compiled from: VideoAdFreeButton.kt */
+/* JADX INFO: loaded from: classes7.dex */
+@Metadata(d1 = {"\u00008\n\u0002\u0018\u0002\n\u0002\u0018\u0002\n\u0002\u0018\u0002\n\u0002\u0018\u0002\n\u0000\n\u0002\u0018\u0002\n\u0002\b\u0003\n\u0002\u0010\b\n\u0000\n\u0002\u0018\u0002\n\u0002\b\u0002\n\u0002\u0018\u0002\n\u0002\b\u0003\n\u0002\u0010\u000b\n\u0002\b\u0004\b\u0007\u0018\u00002\u00020\u00012\u00020\u0002B\u0017\u0012\u0006\u0010\u0004\u001a\u00020\u0003\u0012\u0006\u0010\u0006\u001a\u00020\u0005¢\u0006\u0004\b\u0007\u0010\bJ\u0017\u0010\f\u001a\u00020\u000b2\u0006\u0010\n\u001a\u00020\tH\u0016¢\u0006\u0004\b\f\u0010\rJ\u0017\u0010\u0010\u001a\u00020\u000b2\u0006\u0010\u000f\u001a\u00020\u000eH\u0016¢\u0006\u0004\b\u0010\u0010\u0011J\u0017\u0010\u0014\u001a\u00020\u000b2\u0006\u0010\u0013\u001a\u00020\u0012H\u0016¢\u0006\u0004\b\u0014\u0010\u0015¨\u0006\u0016"}, d2 = {"Lcom/vk/video/ui/discovery/minimizable/adfree/VideoAdFreeButton;", "Landroid/widget/FrameLayout;", "Ld23/b;", "Landroid/content/Context;", "context", "Landroid/util/AttributeSet;", "attrs", "<init>", "(Landroid/content/Context;Landroid/util/AttributeSet;)V", "", "visibility", "Lg07/t;", "setVisibility", "(I)V", "Ld23/a;", "callback", "setCallback", "(Ld23/a;)V", "", "visible", "setVisible", "(Z)V", "discovery_release"}, k = 1, mv = {2, 2, 0}, xi = 48)
+public final class VideoAdFreeButton extends FrameLayout implements b {
+
+    /* JADX INFO: renamed from: f, reason: collision with root package name */
+    public static final /* synthetic */ int f104895f = 0;
+
+    /* JADX INFO: renamed from: a, reason: collision with root package name */
+    public a f104896a;
+
+    /* JADX INFO: renamed from: b, reason: collision with root package name */
+    public final LinearLayout f104897b;
+
+    /* JADX INFO: renamed from: c, reason: collision with root package name */
+    public final TextView f104898c;
+
+    /* JADX INFO: renamed from: d, reason: collision with root package name */
+    public final ImageView f104899d;
+
+    /* JADX INFO: renamed from: e, reason: collision with root package name */
+    public boolean f104900e;
+
+    public VideoAdFreeButton(Context context, AttributeSet attributeSet) {
+        super(context, attributeSet);
+        this.f104900e = true;
+        j jVarA = g.a(new ad3.b(10));
+        if (((Boolean) jVarA.getValue()).booleanValue()) {
+            LayoutInflater.from(context).inflate(R.layout.video_ad_free_bottom_button, (ViewGroup) this, true);
+        } else {
+            LayoutInflater.from(context).inflate(R.layout.video_growth_bottom_button, (ViewGroup) this, true);
+        }
+        this.f104897b = (LinearLayout) findViewById(((Boolean) jVarA.getValue()).booleanValue() ? R.id.ad_free_float_btn : R.id.watch_in_video_standalone);
+        this.f104898c = (TextView) findViewById(R.id.text_btn);
+        this.f104899d = (ImageView) findViewById(R.id.close_btn);
+        TextView textView = this.f104898c;
+        if (textView != null) {
+            textView.setText(d.i().f99393f);
+        }
+        LinearLayout linearLayout = this.f104897b;
+        if (linearLayout != null) {
+            r.g(linearLayout, new a1(this, 2));
+        }
+        ImageView imageView = this.f104899d;
+        if (imageView != null) {
+            r.g(imageView, new i(this, 4));
+        }
+    }
+
+    public void setCallback(a callback) {
+        this.f104896a = callback;
+    }
+
+    @Override // android.view.View
+    public void setVisibility(int visibility) {
+        if (visibility == 0 && this.f104900e) {
+            a aVar = this.f104896a;
+            if (aVar != null) {
+                aVar.a();
+            }
+            this.f104900e = false;
+        }
+        super.setVisibility(visibility);
+    }
+
+    @Override // d23.b
+    public void setVisible(boolean visible) {
+        c0.k0(this, visible);
+    }
+}
+
+===== com.vk.libvideo.adfree.impl.di.VideoAdFreeSubscriptionComponentImpl =====
+package com.vk.libvideo.adfree.impl.di;
+
+import a45.f0;
+import androidx.room.g0;
+import c17.l;
+import com.vk.asset.manager.api.di.VkAssetManagerComponent;
+import com.vk.bridges.di.LinksBridgeComponent;
+import com.vk.catalog2.common.ui.mvp.holder.video.o1;
+import com.vk.di.component.DiScopedComponent;
+import com.vk.libvideo.adfree.api.di.VideoAdFreeSubscriptionComponent;
+import com.vk.libvideo.adfree.impl.domain.i;
+import com.vk.video.ui.discovery.minimizable.vkvideolive.d;
+import ee1.f;
+import gn5.c0;
+import kotlin.Metadata;
+import kotlin.jvm.internal.PropertyReference1Impl;
+import kotlin.jvm.internal.k;
+import t62.b;
+import w62.c;
+import z62.j;
+
+/* JADX INFO: compiled from: VideoAdFreeSubscriptionComponentImpl.kt */
+/* JADX INFO: loaded from: classes7.dex */
+@Metadata(d1 = {"\u0000\f\n\u0002\u0018\u0002\n\u0002\u0018\u0002\n\u0002\b\u0002\b\u0007\u0018\u00002\u00020\u0001:\u0001\u0002¨\u0006\u0003"}, d2 = {"Lcom/vk/libvideo/adfree/impl/di/VideoAdFreeSubscriptionComponentImpl;", "Lcom/vk/libvideo/adfree/api/di/VideoAdFreeSubscriptionComponent;", "a", "impl_release"}, k = 1, mv = {2, 2, 0}, xi = 48)
+public final class VideoAdFreeSubscriptionComponentImpl implements VideoAdFreeSubscriptionComponent {
+
+    /* JADX INFO: renamed from: k, reason: collision with root package name */
+    public static final /* synthetic */ l<Object>[] f77053k;
+
+    /* JADX INFO: renamed from: a, reason: collision with root package name */
+    public final LinksBridgeComponent f77054a;
+
+    /* JADX INFO: renamed from: b, reason: collision with root package name */
+    public final VkAssetManagerComponent f77055b;
+
+    /* JADX INFO: renamed from: c, reason: collision with root package name */
+    public final c f77056c = new c(new g0(this, 3));
+
+    /* JADX INFO: renamed from: d, reason: collision with root package name */
+    public final c f77057d = new c(new o1(this, 3));
+
+    /* JADX INFO: renamed from: e, reason: collision with root package name */
+    public final c f77058e = new c(new d(this, 17));
+
+    /* JADX INFO: renamed from: f, reason: collision with root package name */
+    public final c f77059f = new c(new dd0.a(this, 11));
+
+    /* JADX INFO: renamed from: g, reason: collision with root package name */
+    public final c f77060g = new c(new f(this, 5));
+
+    /* JADX INFO: renamed from: h, reason: collision with root package name */
+    public final c f77061h = new c(new f46.d(this, 4));
+
+    /* JADX INFO: renamed from: i, reason: collision with root package name */
+    public final c f77062i = new c(new f0(18));
+
+    /* JADX INFO: renamed from: j, reason: collision with root package name */
+    public final c f77063j = new c(new a45.g0(11));
+
+    /* JADX INFO: compiled from: VideoAdFreeSubscriptionComponentImpl.kt */
+    public static final class a implements b<VideoAdFreeSubscriptionComponent, c72.c> {
+        @Override // t62.b
+        public final DiScopedComponent a(j jVar, c72.c cVar) {
+            kotlin.jvm.internal.l lVar = k.f142790a;
+            return new VideoAdFreeSubscriptionComponentImpl((LinksBridgeComponent) jVar.a(lVar.b(LinksBridgeComponent.class)), (VkAssetManagerComponent) jVar.a(lVar.b(VkAssetManagerComponent.class)));
+        }
+    }
+
+    static {
+        PropertyReference1Impl propertyReference1Impl = new PropertyReference1Impl(VideoAdFreeSubscriptionComponentImpl.class, "videoAdFreeSubscriptionInteractor", "getVideoAdFreeSubscriptionInteractor()Lcom/vk/libvideo/adfree/impl/domain/VideoAdFreeSubscriptionInteractorImpl;", 0);
+        kotlin.jvm.internal.l lVar = k.f142790a;
+        f77053k = new l[]{lVar.i(propertyReference1Impl), c0.a(VideoAdFreeSubscriptionComponentImpl.class, "videoAdFreeSubscriptionLauncher", "getVideoAdFreeSubscriptionLauncher()Lcom/vk/libvideo/adfree/impl/di/VideoAdFreeSubscriptionLauncherImpl;", 0, lVar), c0.a(VideoAdFreeSubscriptionComponentImpl.class, "videoAdFreePopupFactory", "getVideoAdFreePopupFactory()Lcom/vk/libvideo/adfree/impl/domain/VideoAdFreePopupFactory;", 0, lVar), c0.a(VideoAdFreeSubscriptionComponentImpl.class, "videoAdFreePopupLauncher", "getVideoAdFreePopupLauncher()Lcom/vk/libvideo/adfree/impl/domain/VideoAdFreePopupLauncher;", 0, lVar), c0.a(VideoAdFreeSubscriptionComponentImpl.class, "videoAdFreeTrapManager", "getVideoAdFreeTrapManager()Lcom/vk/libvideo/adfree/api/domain/VideoAdFreeTrapManager;", 0, lVar), c0.a(VideoAdFreeSubscriptionComponentImpl.class, "videoPremiumUrlIconStorage", "getVideoPremiumUrlIconStorage()Lcom/vk/libvideo/adfree/impl/domain/VideoPremiumUrlIconStorageImpl;", 0, lVar), c0.a(VideoAdFreeSubscriptionComponentImpl.class, "videoAdFreeSubscriptionRepository", "getVideoAdFreeSubscriptionRepository()Lcom/vk/libvideo/adfree/impl/data/VideoAdFreeSubscriptionRepositoryImpl;", 0, lVar), c0.a(VideoAdFreeSubscriptionComponentImpl.class, "videoAdFreeStatsTracker", "getVideoAdFreeStatsTracker()Lcom/vk/libvideo/adfree/api/VideoAdFreeStatsTracker;", 0, lVar)};
+    }
+
+    public VideoAdFreeSubscriptionComponentImpl(LinksBridgeComponent linksBridgeComponent, VkAssetManagerComponent vkAssetManagerComponent) {
+        this.f77054a = linksBridgeComponent;
+        this.f77055b = vkAssetManagerComponent;
+    }
+
+    @Override // com.vk.libvideo.adfree.api.di.VideoAdFreeSubscriptionComponent
+    public final d23.c L1() {
+        l<Object> lVar = f77053k[7];
+        return (d23.c) this.f77063j.c();
+    }
+
+    /* JADX WARN: Multi-variable type inference failed */
+    @Override // com.vk.libvideo.adfree.api.di.VideoAdFreeSubscriptionComponent
+    public final com.vk.libvideo.adfree.api.di.a U0() {
+        l<Object> lVar = f77053k[1];
+        return (g23.a) this.f77057d.c();
+    }
+
+    @Override // com.vk.libvideo.adfree.api.di.VideoAdFreeSubscriptionComponent
+    public final e23.c i3() {
+        l<Object> lVar = f77053k[4];
+        return (e23.c) this.f77060g.c();
+    }
+
+    /* JADX WARN: Multi-variable type inference failed */
+    @Override // com.vk.libvideo.adfree.api.di.VideoAdFreeSubscriptionComponent
+    public final e23.a v9() {
+        l<Object> lVar = f77053k[0];
+        return (i) this.f77056c.c();
+    }
+}
+
+===== com.vk.libvideo.adfree.impl.ui.VideoAdFreeSubscriptionFragment =====
+package com.vk.libvideo.adfree.impl.ui;
+
+import a02.o0;
+import android.content.Context;
+import android.content.Intent;
+import androidx.fragment.app.FragmentActivity;
+import com.vk.superapp.ui.miniapp.VKSuperAppBrowserFragment;
+import com.vk.video.screens.main.MainActivity;
+import e14.r;
+import g07.g;
+import h14.o;
+import kotlin.LazyThreadSafetyMode;
+import kotlin.Metadata;
+import nq5.q;
+import zw1.j;
+
+/* JADX INFO: compiled from: VideoAdFreeSubscriptionFragment.kt */
+/* JADX INFO: loaded from: classes16.dex */
+@Metadata(d1 = {"\u0000\u0010\n\u0002\u0018\u0002\n\u0002\u0018\u0002\n\u0002\u0018\u0002\n\u0002\b\u0004\b\u0007\u0018\u00002\u00020\u00012\u00020\u0002:\u0001\u0005B\u0007¢\u0006\u0004\b\u0003\u0010\u0004¨\u0006\u0006"}, d2 = {"Lcom/vk/libvideo/adfree/impl/ui/VideoAdFreeSubscriptionFragment;", "Lcom/vk/superapp/ui/miniapp/VKSuperAppBrowserFragment;", "Lh14/o;", "<init>", "()V", "a", "impl_release"}, k = 1, mv = {2, 2, 0}, xi = 48)
+public final class VideoAdFreeSubscriptionFragment extends VKSuperAppBrowserFragment implements o {
+
+    /* JADX INFO: renamed from: b0, reason: collision with root package name */
+    public static final /* synthetic */ int f77099b0 = 0;
+
+    /* JADX INFO: renamed from: a0, reason: collision with root package name */
+    public final Object f77100a0 = g.b(LazyThreadSafetyMode.NONE, new a44.b(this, 21));
+
+    /* JADX INFO: compiled from: VideoAdFreeSubscriptionFragment.kt */
+    public static final class a extends hw5.a {
+    }
+
+    @Override // com.vk.superapp.ui.miniapp.VKSuperAppBrowserFragment, com.vk.core.fragments.FragmentImpl
+    public final boolean d() {
+        com.vk.core.fragments.a aVar;
+        j jVarRk = Rk();
+        if ((jVarRk == null || (aVar = jVarRk.f226040g) == null) ? false : aVar.m()) {
+            return true;
+        }
+        Context contextRequireContext = requireContext();
+        c7.j jVar = r.f113836h;
+        r.b.c();
+        Intent intent = new Intent(contextRequireContext, (Class<?>) MainActivity.class);
+        intent.setFlags(268468224);
+        startActivity(intent);
+        FragmentActivity activity = getActivity();
+        if (activity == null) {
+            return true;
+        }
+        activity.finish();
+        return true;
+    }
+
+    @Override // com.vk.core.fragments.FragmentImpl
+    public final void finish() {
+        j jVarRk = Rk();
+        if ((jVarRk != null ? jVarRk.l() : 0) > 1) {
+            super.finish();
+        } else {
+            d();
+        }
+    }
+
+    @Override // com.vk.superapp.ui.miniapp.VKSuperAppBrowserFragment, androidx.fragment.app.n, androidx.fragment.app.Fragment
+    public final void onStart() {
+        super.onStart();
+        q.a("subscriptionActivated", new o0(this, 11));
+    }
+
+    @Override // com.vk.superapp.ui.miniapp.VKSuperAppBrowserFragment, com.vk.core.fragments.FragmentImpl, androidx.fragment.app.n, androidx.fragment.app.Fragment
+    public final void onStop() {
+        super.onStop();
+        q.c("subscriptionActivated");
+    }
+}
+
+===== com.vk.libvideo.adfree.impl.domain.i =====
+package com.vk.libvideo.adfree.impl.domain;
+
+import kotlin.Result;
+import kotlin.coroutines.intrinsics.CoroutineSingletons;
+import kotlin.coroutines.jvm.internal.ContinuationImpl;
+
+/* JADX INFO: compiled from: VideoAdFreeSubscriptionInteractorImpl.kt */
+/* JADX INFO: loaded from: classes7.dex */
+public final class i implements e23.a {
+
+    /* JADX INFO: renamed from: a, reason: collision with root package name */
+    public final j f77077a;
+
+    /* JADX INFO: renamed from: b, reason: collision with root package name */
+    public boolean f77078b;
+
+    /* JADX INFO: renamed from: c, reason: collision with root package name */
+    public e23.b f77079c;
+
+    /* JADX INFO: compiled from: VideoAdFreeSubscriptionInteractorImpl.kt */
+    /* JADX INFO: loaded from: classes16.dex */
+    @m07.c(c = "com.vk.libvideo.adfree.impl.domain.VideoAdFreeSubscriptionInteractorImpl", f = "VideoAdFreeSubscriptionInteractorImpl.kt", l = {24}, m = "getSubscriptionState-IoAF18A")
+    public static final class a extends ContinuationImpl {
+        int label;
+        /* synthetic */ Object result;
+
+        public a(ContinuationImpl continuationImpl) {
+            super(continuationImpl);
+        }
+
+        @Override // kotlin.coroutines.jvm.internal.BaseContinuationImpl
+        public final Object invokeSuspend(Object obj) {
+            this.result = obj;
+            this.label |= Integer.MIN_VALUE;
+            Object objD = i.this.d(this);
+            return objD == CoroutineSingletons.COROUTINE_SUSPENDED ? objD : new Result(objD);
+        }
+    }
+
+    public i(com.vk.libvideo.adfree.impl.data.c cVar) {
+        this.f77077a = cVar;
+    }
+
+    @Override // e23.a
+    public final boolean a() {
+        return this.f77078b;
+    }
+
+    @Override // e23.a
+    public final e23.b b() {
+        return this.f77079c;
+    }
+
+    @Override // e23.a
+    public final void c(e23.b bVar) {
+        this.f77079c = bVar;
+    }
+
+    /* JADX WARN: Code duplicated, block: B:7:0x0013  */
+    @Override // e23.a
+    public final Object d(l07.a<? super Result<? extends f23.a>> aVar) {
+        a aVar2;
+        if (aVar instanceof a) {
+            aVar2 = (a) aVar;
+            int i16 = aVar2.label;
+            if ((i16 & Integer.MIN_VALUE) != 0) {
+                aVar2.label = i16 - Integer.MIN_VALUE;
+            } else {
+                aVar2 = new a((ContinuationImpl) aVar);
+            }
+        } else {
+            aVar2 = new a((ContinuationImpl) aVar);
+        }
+        Object obj = aVar2.result;
+        CoroutineSingletons coroutineSingletons = CoroutineSingletons.COROUTINE_SUSPENDED;
+        int i18 = aVar2.label;
+        if (i18 != 0) {
+            if (i18 != 1) {
+                throw new IllegalStateException("call to 'resume' before 'invoke' with coroutine");
+            }
+            kotlin.a.a(obj);
+            return ((Result) obj).getValue();
+        }
+        kotlin.a.a(obj);
+        aVar2.label = 1;
+        Object objA = this.f77077a.a(aVar2);
+        return objA == coroutineSingletons ? coroutineSingletons : objA;
+    }
+
+    @Override // e23.a
+    public final f23.a e() {
+        return this.f77077a.b();
+    }
+
+    @Override // e23.a
+    public final void f() {
+        this.f77078b = true;
+    }
+}
+
+===== com.vk.libvideo.adfree.impl.domain.k =====
+package com.vk.libvideo.adfree.impl.domain;
+
+import android.content.Context;
+import android.content.SharedPreferences;
+import androidx.compose.material.k1;
+import com.vk.libvideo.adfree.api.VideoAdFreeBottomSheetArguments;
+import com.vk.libvideo.adfree.api.VideoAdFreeTrialInfo;
+import com.vk.libvideo.adfree.api.domain.objects.VideoAdFreeTrapEventTrigger;
+import com.vk.libvideo.adfree.api.domain.objects.VideoAdFreeTrapTrigger;
+import com.vk.toggle.data.VideoAdFreeSubscriptionFeatureConfig;
+import com.vk.toggle.features.VideoFeatures;
+import com.vk.video.ui.discovery.minimizable.adfree.VideoAdFreeButton;
+import g07.t;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.LinkedHashSet;
+import java.util.Set;
+import java.util.concurrent.TimeUnit;
+import kotlin.LazyThreadSafetyMode;
+import kotlin.NoWhenBranchMatchedException;
+import kotlin.Pair;
+import kotlin.collections.EmptySet;
+import kotlin.collections.w;
+import kotlin.coroutines.intrinsics.CoroutineSingletons;
+import kotlin.coroutines.jvm.internal.ContinuationImpl;
+import kotlinx.coroutines.f0;
+import kotlinx.coroutines.s0;
+import kotlinx.coroutines.w1;
+import tx5.u1;
+import tx5.v1;
+
+/* JADX INFO: compiled from: VideoAdFreeTrapManagerImpl.kt */
+/* JADX INFO: loaded from: classes7.dex */
+public final class k implements e23.c {
+
+    /* JADX INFO: renamed from: a, reason: collision with root package name */
+    public final e23.a f77080a;
+
+    /* JADX INFO: renamed from: b, reason: collision with root package name */
+    public final com.vk.libvideo.adfree.api.di.a f77081b;
+
+    /* JADX INFO: renamed from: c, reason: collision with root package name */
+    public final d23.c f77082c;
+
+    /* JADX INFO: renamed from: d, reason: collision with root package name */
+    public final d f77083d;
+
+    /* JADX INFO: renamed from: e, reason: collision with root package name */
+    public final g f77084e;
+
+    /* JADX INFO: renamed from: f, reason: collision with root package name */
+    public boolean f77085f;
+
+    /* JADX INFO: renamed from: g, reason: collision with root package name */
+    public d23.b f77086g;
+
+    /* JADX INFO: renamed from: h, reason: collision with root package name */
+    public volatile String f77087h;
+
+    /* JADX INFO: renamed from: i, reason: collision with root package name */
+    public volatile VideoAdFreeTrialInfo f77088i;
+
+    /* JADX INFO: renamed from: j, reason: collision with root package name */
+    public s37.c f77089j;
+
+    /* JADX INFO: renamed from: k, reason: collision with root package name */
+    public final Object f77090k;
+
+    /* JADX INFO: renamed from: l, reason: collision with root package name */
+    public final Object f77091l;
+
+    /* JADX INFO: renamed from: m, reason: collision with root package name */
+    public final Object f77092m;
+
+    /* JADX INFO: renamed from: n, reason: collision with root package name */
+    public Set<VideoAdFreeSubscriptionFeatureConfig.PopupStrategy> f77093n;
+
+    /* JADX INFO: renamed from: o, reason: collision with root package name */
+    public final Object f77094o;
+
+    /* JADX INFO: renamed from: p, reason: collision with root package name */
+    public final a9.c f77095p;
+
+    /* JADX INFO: compiled from: VideoAdFreeTrapManagerImpl.kt */
+    /* JADX INFO: loaded from: classes16.dex */
+    public static final /* synthetic */ class a {
+        public static final /* synthetic */ int[] $EnumSwitchMapping$0;
+
+        static {
+            int[] iArr = new int[VideoAdFreeTrapEventTrigger.values().length];
+            try {
+                iArr[VideoAdFreeTrapEventTrigger.APP_START.ordinal()] = 1;
+            } catch (NoSuchFieldError unused) {
+            }
+            try {
+                iArr[VideoAdFreeTrapEventTrigger.DISCOVERY_START.ordinal()] = 2;
+            } catch (NoSuchFieldError unused2) {
+            }
+            try {
+                iArr[VideoAdFreeTrapEventTrigger.AD_SKIP.ordinal()] = 3;
+            } catch (NoSuchFieldError unused3) {
+            }
+            try {
+                iArr[VideoAdFreeTrapEventTrigger.AD_START.ordinal()] = 4;
+            } catch (NoSuchFieldError unused4) {
+            }
+            try {
+                iArr[VideoAdFreeTrapEventTrigger.AD_END.ordinal()] = 5;
+            } catch (NoSuchFieldError unused5) {
+            }
+            try {
+                iArr[VideoAdFreeTrapEventTrigger.VIDEO_TAB_START.ordinal()] = 6;
+            } catch (NoSuchFieldError unused6) {
+            }
+            $EnumSwitchMapping$0 = iArr;
+        }
+    }
+
+    public k(i iVar, g23.a aVar, d23.c cVar, d dVar, g gVar) {
+        this.f77080a = iVar;
+        this.f77081b = aVar;
+        this.f77082c = cVar;
+        this.f77083d = dVar;
+        this.f77084e = gVar;
+        au5.b bVar = new au5.b(9);
+        LazyThreadSafetyMode lazyThreadSafetyMode = LazyThreadSafetyMode.NONE;
+        this.f77090k = g07.g.b(lazyThreadSafetyMode, bVar);
+        this.f77091l = g07.g.b(lazyThreadSafetyMode, new k1(8));
+        this.f77092m = g07.g.b(lazyThreadSafetyMode, new ad4.d(11));
+        this.f77093n = new LinkedHashSet();
+        this.f77094o = g07.g.b(lazyThreadSafetyMode, new au5.c(6));
+        this.f77095p = new a9.c(this);
+    }
+
+    /* JADX WARN: Code duplicated, block: B:7:0x001b  */
+    /* JADX WARN: Code restructure failed: missing block: B:33:0x0144, code lost:
+    
+        if (kotlinx.coroutines.h.f(r2, r3, r4) == r5) goto L34;
+     */
+    /*
+        Code decompiled incorrectly, please refer to instructions dump.
+    */
+    public static final Object e(k kVar, Context context, f23.a.b bVar, VideoAdFreeTrapTrigger videoAdFreeTrapTrigger, ContinuationImpl continuationImpl) {
+        m mVar;
+        b bVarB;
+        Context context2;
+        f23.a.b bVar2;
+        Object objA;
+        String strA;
+        VideoAdFreeTrapTrigger videoAdFreeTrapTrigger2 = videoAdFreeTrapTrigger;
+        d dVar = kVar.f77083d;
+        if (continuationImpl instanceof m) {
+            mVar = (m) continuationImpl;
+            int i16 = mVar.label;
+            if ((i16 & Integer.MIN_VALUE) != 0) {
+                mVar.label = i16 - Integer.MIN_VALUE;
+            } else {
+                mVar = new m(kVar, continuationImpl);
+            }
+        } else {
+            mVar = new m(kVar, continuationImpl);
+        }
+        Object obj = mVar.result;
+        CoroutineSingletons coroutineSingletons = CoroutineSingletons.COROUTINE_SUSPENDED;
+        int i18 = mVar.label;
+        int i19 = 2;
+        if (i18 == 0) {
+            kotlin.a.a(obj);
+            VideoAdFreeSubscriptionFeatureConfig videoAdFreeSubscriptionFeatureConfigI = com.vk.toggle.d.i();
+            dVar.getClass();
+            bVarB = d.b(videoAdFreeTrapTrigger2, videoAdFreeSubscriptionFeatureConfigI);
+            context2 = context;
+            mVar.L$0 = context2;
+            bVar2 = bVar;
+            mVar.L$1 = bVar2;
+            mVar.L$2 = videoAdFreeTrapTrigger2;
+            mVar.L$3 = bVarB;
+            mVar.label = 1;
+            objA = dVar.a(videoAdFreeTrapTrigger2, mVar);
+            if (objA != coroutineSingletons) {
+            }
+            return coroutineSingletons;
+        }
+        if (i18 == 1) {
+            b bVar3 = (b) mVar.L$3;
+            VideoAdFreeTrapTrigger videoAdFreeTrapTrigger3 = (VideoAdFreeTrapTrigger) mVar.L$2;
+            f23.a.b bVar4 = (f23.a.b) mVar.L$1;
+            Context context3 = (Context) mVar.L$0;
+            kotlin.a.a(obj);
+            bVarB = bVar3;
+            videoAdFreeTrapTrigger2 = videoAdFreeTrapTrigger3;
+            objA = obj;
+            bVar2 = bVar4;
+            context2 = context3;
+        } else {
+            if (i18 != 2) {
+                throw new IllegalStateException("call to 'resume' before 'invoke' with coroutine");
+            }
+            kotlin.a.a(obj);
+        }
+        return t.f122188a;
+        com.vk.libvideo.adfree.impl.domain.a aVar = (com.vk.libvideo.adfree.impl.domain.a) objA;
+        com.vk.catalog.mvi.block.video.impl.p002short.f fVar = new com.vk.catalog.mvi.block.video.impl.p002short.f(4, videoAdFreeTrapTrigger2, kVar);
+        a40.q qVar = new a40.q(i19, videoAdFreeTrapTrigger2, kVar);
+        String strA2 = bVarB.a();
+        if (bVar2.e()) {
+            u1 u1VarB = com.vk.toggle.d.O.b();
+            if (u1VarB == null) {
+                u1.f200471d.getClass();
+                u1VarB = u1.a.a();
+            }
+            strA = u1VarB.a(bVar2.d());
+        } else {
+            strA = null;
+        }
+        Pair pair = (strA == null || strA.length() == 0) ? new Pair(strA2, Boolean.FALSE) : new Pair(strA, Boolean.TRUE);
+        c cVar = new c(new VideoAdFreeBottomSheetArguments(bVarB.b(), (String) pair.a(), bVarB.c(), String.valueOf(bVar2.b()), bVar2.a(), bVar2.c(), new VideoAdFreeTrialInfo(((Boolean) pair.b()).booleanValue(), bVar2.d()), aVar.b(), aVar.c(), aVar.a()), fVar, qVar);
+        u37.b bVar5 = s0.f143837a;
+        w1 w1Var = s37.o.f192068a;
+        n nVar = new n(kVar, context2, cVar, null);
+        mVar.L$0 = null;
+        mVar.L$1 = null;
+        mVar.L$2 = null;
+        mVar.L$3 = null;
+        mVar.L$4 = null;
+        mVar.L$5 = null;
+        mVar.label = 2;
+    }
+
+    public static long h() {
+        int i16 = com.vk.toggle.d.i().f99397j;
+        return i16 < 0 ? TimeUnit.SECONDS.toMillis(Math.abs(i16)) : TimeUnit.MINUTES.toMillis(i16);
+    }
+
+    public static VideoAdFreeSubscriptionFeatureConfig.PopupStrategy j(VideoAdFreeTrapEventTrigger videoAdFreeTrapEventTrigger) {
+        switch (a.$EnumSwitchMapping$0[videoAdFreeTrapEventTrigger.ordinal()]) {
+            case 1:
+                return VideoAdFreeSubscriptionFeatureConfig.PopupStrategy.APP_START;
+            case 2:
+                return VideoAdFreeSubscriptionFeatureConfig.PopupStrategy.DISCOVERY_START;
+            case 3:
+                return VideoAdFreeSubscriptionFeatureConfig.PopupStrategy.AD_SKIP;
+            case 4:
+                return VideoAdFreeSubscriptionFeatureConfig.PopupStrategy.AD_FIRST;
+            case 5:
+                return VideoAdFreeSubscriptionFeatureConfig.PopupStrategy.AD_END;
+            case 6:
+                return VideoAdFreeSubscriptionFeatureConfig.PopupStrategy.VIDEO_TAB_START;
+            default:
+                throw new NoWhenBranchMatchedException();
+        }
+    }
+
+    @Override // e23.c
+    public final d23.a a() {
+        return this.f77095p;
+    }
+
+    /* JADX WARN: Code duplicated, block: B:19:0x006c  */
+    /* JADX WARN: Code duplicated, block: B:32:0x00b1  */
+    /* JADX WARN: Code duplicated, block: B:42:0x00d1  */
+    /* JADX WARN: Code duplicated, block: B:44:? A[RETURN, SYNTHETIC] */
+    /* JADX WARN: Type inference failed for: r12v1, types: [java.lang.Object, kotlin.Lazy] */
+    @Override // e23.c
+    public final void b(VideoAdFreeTrapTrigger.a aVar, Context context) {
+        boolean zA;
+        boolean z13;
+        boolean z15;
+        s37.c cVar;
+        VideoAdFreeTrapEventTrigger videoAdFreeTrapEventTriggerA = aVar.a();
+        boolean z18 = true;
+        if (((Boolean) this.f77092m.getValue()).booleanValue()) {
+            v1 v1VarB = com.vk.toggle.d.N.b();
+            if (v1VarB == null) {
+                v1.f200487b.getClass();
+                v1VarB = v1.a.a();
+            }
+            zA = v1VarB.a();
+        } else {
+            zA = true;
+        }
+        if (this.f77093n.contains(j(videoAdFreeTrapEventTriggerA))) {
+            long j18 = g().getLong("pref_key_last_ad_free_popup_show", 0L);
+            int i16 = com.vk.toggle.d.i().f99388a;
+            if (f(j18, i16 < 0 ? TimeUnit.SECONDS.toMillis(Math.abs(i16)) : TimeUnit.DAYS.toMillis(i16)) && zA) {
+                z13 = true;
+            } else {
+                z13 = false;
+            }
+        } else {
+            z13 = false;
+        }
+        if (videoAdFreeTrapEventTriggerA != VideoAdFreeTrapEventTrigger.AD_START) {
+            if (videoAdFreeTrapEventTriggerA == VideoAdFreeTrapEventTrigger.AD_END) {
+                if (com.vk.toggle.d.i().f99396i.contains(VideoAdFreeSubscriptionFeatureConfig.ButtonStrategy.DURING_AD)) {
+                    i(false);
+                }
+                z18 = this.f77085f;
+            } else {
+                z15 = false;
+            }
+            cVar = this.f77089j;
+            if (cVar != null) {
+                kotlinx.coroutines.h.c(cVar, null, null, new l(z15, z13, this, videoAdFreeTrapEventTriggerA, context, null), 3);
+            }
+        }
+        if (com.vk.toggle.d.i().f99396i.contains(VideoAdFreeSubscriptionFeatureConfig.ButtonStrategy.DURING_AD)) {
+            long j19 = g().getLong("pref_key_last_ad_free_button_show", 0L);
+            int i18 = com.vk.toggle.d.i().f99389b;
+            if (f(j19, i18 < 0 ? TimeUnit.SECONDS.toMillis(Math.abs(i18)) : TimeUnit.DAYS.toMillis(i18))) {
+                i(true);
+            } else {
+                z18 = this.f77085f;
+            }
+        } else {
+            z18 = this.f77085f;
+        }
+        z15 = z18;
+        cVar = this.f77089j;
+        if (cVar != null) {
+            kotlinx.coroutines.h.c(cVar, null, null, new l(z15, z13, this, videoAdFreeTrapEventTriggerA, context, null), 3);
+        }
+    }
+
+    @Override // e23.c
+    public final void c(boolean z13) {
+        if (z13 && this.f77085f) {
+            d23.b bVar = this.f77086g;
+            if (bVar != null) {
+                bVar.setVisible(true);
+                return;
+            }
+            return;
+        }
+        d23.b bVar2 = this.f77086g;
+        if (bVar2 != null) {
+            bVar2.setVisible(false);
+        }
+    }
+
+    /* JADX WARN: Code duplicated, block: B:14:0x004b  */
+    /* JADX WARN: Code duplicated, block: B:25:0x008d  */
+    @Override // e23.c
+    public final void d(VideoAdFreeButton videoAdFreeButton) {
+        Object objC1;
+        boolean z13;
+        Set<VideoAdFreeSubscriptionFeatureConfig.PopupStrategy> linkedHashSet;
+        this.f77086g = videoAdFreeButton;
+        if (this.f77089j == null) {
+            this.f77089j = f0.a(com.vk.core.concurrent.q.b());
+        }
+        Set<String> stringSet = g().getStringSet("pref_key_initial_popup_strategies", EmptySet.f142704a);
+        if (stringSet != null) {
+            Set<String> set = stringSet;
+            ArrayList arrayList = new ArrayList(kotlin.collections.q.x(set, 10));
+            Iterator<T> it = set.iterator();
+            while (it.hasNext()) {
+                arrayList.add(VideoAdFreeSubscriptionFeatureConfig.PopupStrategy.valueOf((String) it.next()));
+            }
+            objC1 = w.c1(arrayList);
+            if (objC1 == null) {
+                objC1 = EmptySet.f142704a;
+            }
+        } else {
+            objC1 = EmptySet.f142704a;
+        }
+        long jCurrentTimeMillis = System.currentTimeMillis();
+        if (g().getLong("pref_key_last_ad_free_popup_show", 0L) != 0) {
+            long j18 = g().getLong("pref_key_last_ad_free_popup_show", 0L);
+            int i16 = com.vk.toggle.d.i().f99388a;
+            if (jCurrentTimeMillis >= (i16 < 0 ? TimeUnit.SECONDS.toMillis(Math.abs(i16)) : TimeUnit.DAYS.toMillis(i16)) + j18) {
+                z13 = true;
+            } else {
+                z13 = false;
+            }
+        } else {
+            z13 = true;
+        }
+        if (kotlin.jvm.internal.h.d(objC1, com.vk.toggle.d.i().f99395h) && !z13) {
+            Set<String> stringSet2 = g().getStringSet("pref_key_traps_queue", EmptySet.f142704a);
+            if (stringSet2 != null) {
+                Set<String> set2 = stringSet2;
+                ArrayList arrayList2 = new ArrayList(kotlin.collections.q.x(set2, 10));
+                Iterator<T> it2 = set2.iterator();
+                while (it2.hasNext()) {
+                    arrayList2.add(VideoAdFreeSubscriptionFeatureConfig.PopupStrategy.valueOf((String) it2.next()));
+                }
+                linkedHashSet = w.b1(arrayList2);
+            } else {
+                linkedHashSet = new LinkedHashSet<>();
+            }
+            this.f77093n = linkedHashSet;
+            return;
+        }
+        Set<VideoAdFreeSubscriptionFeatureConfig.PopupStrategy> setB1 = w.b1(com.vk.toggle.d.i().f99395h);
+        this.f77093n = setB1;
+        ArrayList arrayList3 = new ArrayList(kotlin.collections.q.x(setB1, 10));
+        Iterator<T> it8 = setB1.iterator();
+        while (it8.hasNext()) {
+            arrayList3.add(((VideoAdFreeSubscriptionFeatureConfig.PopupStrategy) it8.next()).name());
+        }
+        Set<String> setC1 = w.c1(arrayList3);
+        SharedPreferences.Editor editorEdit = g().edit();
+        editorEdit.putStringSet("pref_key_initial_popup_strategies", setC1);
+        editorEdit.apply();
+        SharedPreferences.Editor editorEdit2 = g().edit();
+        editorEdit2.putStringSet("pref_key_traps_queue", setC1);
+        editorEdit2.apply();
+    }
+
+    /* JADX WARN: Type inference failed for: r0v4, types: [java.lang.Object, kotlin.Lazy] */
+    public final boolean f(long j18, long j19) {
+        if (VideoFeatures.VIDEO_AD_FREE_SUBSCRIPTION.a()) {
+            VideoAdFreeSubscriptionFeatureConfig videoAdFreeSubscriptionFeatureConfigI = com.vk.toggle.d.i();
+            VideoAdFreeSubscriptionFeatureConfig.f99386k.getClass();
+            if (!kotlin.jvm.internal.h.d(videoAdFreeSubscriptionFeatureConfigI, VideoAdFreeSubscriptionFeatureConfig.f99387l) && ((com.vk.bridges.a) this.f77090k.getValue()).a()) {
+                long jCurrentTimeMillis = System.currentTimeMillis();
+                boolean z13 = j18 == 0 || jCurrentTimeMillis >= j19 + j18;
+                boolean z15 = h() != 0 && (j18 == 0 || jCurrentTimeMillis >= h() + j18);
+                if (z13 || z15) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    /* JADX WARN: Type inference failed for: r0v0, types: [java.lang.Object, kotlin.Lazy] */
+    public final SharedPreferences g() {
+        return (SharedPreferences) this.f77091l.getValue();
+    }
+
+    public final void i(boolean z13) {
+        if (!z13) {
+            this.f77085f = false;
+            d23.b bVar = this.f77086g;
+            if (bVar != null) {
+                bVar.setVisible(false);
+                return;
+            }
+            return;
+        }
+        d23.b bVar2 = this.f77086g;
+        if (bVar2 != null) {
+            bVar2.setVisible(true);
+        }
+        this.f77085f = true;
+        SharedPreferences.Editor editorEdit = g().edit();
+        editorEdit.putLong("pref_key_last_ad_free_button_show", System.currentTimeMillis());
+        editorEdit.apply();
+    }
+
+    @Override // e23.c
+    public final void release() {
+        this.f77086g = null;
+        s37.c cVar = this.f77089j;
+        if (cVar != null) {
+            f0.b(cVar, null);
+        }
+        this.f77089j = null;
+    }
+}
+
+===== com.vk.libvideo.adfree.impl.domain.c =====
+package com.vk.libvideo.adfree.impl.domain;
+
+import com.vk.libvideo.adfree.api.VideoAdFreeBottomSheetArguments;
+
+/* JADX INFO: compiled from: VideoAdFreePopupModels.kt */
+/* JADX INFO: loaded from: classes16.dex */
+public final class c {
+
+    /* JADX INFO: renamed from: a, reason: collision with root package name */
+    public final VideoAdFreeBottomSheetArguments f77070a;
+
+    /* JADX INFO: renamed from: b, reason: collision with root package name */
+    public final com.vk.catalog.mvi.block.video.impl.p002short.f f77071b;
+
+    /* JADX INFO: renamed from: c, reason: collision with root package name */
+    public final a40.q f77072c;
+
+    public c(VideoAdFreeBottomSheetArguments videoAdFreeBottomSheetArguments, com.vk.catalog.mvi.block.video.impl.p002short.f fVar, a40.q qVar) {
+        this.f77070a = videoAdFreeBottomSheetArguments;
+        this.f77071b = fVar;
+        this.f77072c = qVar;
+    }
+
+    public final boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (!(obj instanceof c)) {
+            return false;
+        }
+        c cVar = (c) obj;
+        return this.f77070a.equals(cVar.f77070a) && this.f77071b.equals(cVar.f77071b) && this.f77072c.equals(cVar.f77072c);
+    }
+
+    public final int hashCode() {
+        return this.f77072c.hashCode() + ((this.f77071b.hashCode() + (this.f77070a.hashCode() * 31)) * 31);
+    }
+
+    public final String toString() {
+        return "PopupSpec(arguments=" + this.f77070a + ", onShown=" + this.f77071b + ", onDismissed=" + this.f77072c + ')';
+    }
+}
+
+===== com.vk.libvideo.adfree.impl.domain.g =====
+package com.vk.libvideo.adfree.impl.domain;
+
+/* JADX INFO: compiled from: VideoAdFreePopupLauncher.kt */
+/* JADX INFO: loaded from: classes16.dex */
+public final class g {
+
+    /* JADX INFO: renamed from: a, reason: collision with root package name */
+    public final d23.c f77075a;
+
+    /* JADX INFO: renamed from: b, reason: collision with root package name */
+    public volatile boolean f77076b;
+
+    public g(d23.c cVar) {
+        this.f77075a = cVar;
+    }
+}
+
