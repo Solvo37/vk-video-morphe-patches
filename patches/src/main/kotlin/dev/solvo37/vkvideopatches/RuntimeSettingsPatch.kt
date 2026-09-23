@@ -77,7 +77,7 @@ val runtimeSettingsFoundationPatch = bytecodePatch(
         VkVideoApplicationOnCreateFingerprint.method.addInstructions(
             0,
             """
-                invoke-static { p0 }, $RUNTIME_SETTINGS_CLASS->initialize(Landroid/content/Context;)V
+                invoke-static/range { p0 .. p0 }, $RUNTIME_SETTINGS_CLASS->initialize(Landroid/content/Context;)V
             """
         )
     }
