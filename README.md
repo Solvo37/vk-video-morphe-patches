@@ -13,7 +13,7 @@
 
 - ✅ Проверенная версия приложения: **VK Видео 1.163 / versionCode 51920**
 - ✅ Готовый APK: [Latest stable release](https://github.com/Solvo37/vk-video-morphe-patches/releases/latest)
-- ✅ Текущий bundle патчей: **v0.2.3**
+- ✅ Текущий bundle патчей: **v0.2.4**
 - ✅ Полный patch profile проверен запуском на реальном ARM64-устройстве с установленным обычным VK; точный release APK дополнительно проходит автоматические 0.2 static gates
 - ✅ Сборка: **Morphe STRIP_FAST → zipalign → APK Signature Scheme v3**
 - ⚠️ Native bypass сейчас рассчитан на **ARM64 / arm64-v8a**
@@ -33,6 +33,8 @@
 | **Block midroll ads** | блокирует runtime MIDROLL до переключения основного видео на instream-рекламу | пользовательский |
 | **Filter Clips SDK ads** | отбрасывает рекламные SDK-видео и StaticAds/MarketAds уже внутри Clips SDK, включая клиентски вставленные объявления с CTA «Установить» | пользовательский |
 | **Block deep midroll ads** | отключает dedicated `request_midroll`, midpoint-конфигурацию и прямой запуск секции `midroll` | пользовательский |
+| **Hide home showcase ads** | удаляет нативную рекламную карточку MyTarget на Главной / «Для вас» до создания AdShowCaseBannerVh | пользовательский |
+| **Disable video ad repository** | заменяет реальный video-ad repository на встроенный no-op STUB VK, чтобы не запускать instream-сессии | пользовательский |
 | **Hide promoted banner content** | выключает показ рекламного баннера в Discover | пользовательский |
 | **Disable ad pixel tracking** | останавливает отдельный рекламный pixel tracker | пользовательский |
 
@@ -85,8 +87,8 @@ https://github.com/Solvo37/vk-video-morphe-patches
 Bundle публикуется отдельным release:
 
 ```text
-patches-v0.2.3
-vk-video-morphe-patches-0.2.3.mpp
+patches-v0.2.4
+vk-video-morphe-patches-0.2.4.mpp
 ```
 
 Для переподписанной сборки **Bypass native signature check** должен оставаться включённым. Без него VK Видео 1.163 завершает процесс на старте после проверки подписи.

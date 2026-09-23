@@ -7,10 +7,12 @@ import app.morphe.patcher.extensions.InstructionExtensions.getInstruction
 import app.morphe.patcher.patch.bytecodePatch
 import app.morphe.patcher.util.smali.ExternalLabel
 import dev.solvo37.vkvideopatches.Constants.VK_VIDEO
+import com.android.tools.smali.dexlib2.iface.instruction.ReferenceInstruction
 
 private const val VIDEO_FEATURES = "Lcom/vk/toggle/features/VideoFeatures;"
 private const val CLIPS_FEATURES = "Lcom/vk/toggle/features/ClipsFeatures;"
 private const val EMPTY_DISPOSABLE = "Lio/reactivex/rxjava3/internal/disposables/EmptyDisposable;"
+private const val VIDEO_ADS_COMPANION = "Lcom/vk/libvideo/api/di/VideoAdvertisementsComponent\$Companion;"
 
 @Suppress("unused")
 val disableInAppUpdatePatch = bytecodePatch(
@@ -444,6 +446,67 @@ val blockDeepMidrollAdsPatch = bytecodePatch(
         }
     }
 }
+@Suppress("unused")
+val hideHomeShowcaseAdsPatch = bytecodePatch(
+    name = "Hide home showcase ads",
+    description = "Replaces the native MyTarget showcase ad card on the home catalog with VK's EmptyVh.",
+    default = true
+) {
+    compatibleWith(VK_VIDEO)
+
+    execute {
+        HomeShowcaseCatalogFactoryFingerprint.method.apply {
+            val adFactoryReference =
+                "Lcom/vk/catalog2/common/ui/mvp/configuration/a;->a(Lai0/f;Lwp/a;)Lcom/vk/catalog2/common/ui/holders/ads/AdShowCaseBannerVh;"
+
+            val adFactoryIndex = implementation!!.instructions.indexOfFirst { instruction ->
+                (instruction as? ReferenceInstruction)?.reference?.toString() == adFactoryReference
+            }
+            check(adFactoryIndex >= 0) {
+                "Home showcase AdShowCaseBannerVh factory call not found"
+            }
+
+            addInstructions(
+                adFactoryIndex,
+                """
+                    invoke-static {p2}, Lcom/vk/catalog2/common/ui/mvp/configuration/a;->A0(Lcom/vk/catalog2/common/dto/api/CatalogViewType;)Lcom/vk/catalog2/common/ui/holders/EmptyVh;
+                    move-result-object v0
+                    return-object v0
+                """
+            )
+        }
+    }
+}
+
+@Suppress("unused")
+val disableVideoAdRepositoryPatch = bytecodePatch(
+    name = "Disable video ad repository",
+    description = "Replaces the real video advertising repository with VK's built-in no-op STUB.",
+    default = true
+) {
+    compatibleWith(VK_VIDEO)
+
+    execute {
+        VideoAdvertisementsRepositoryFingerprint.method.apply {
+            check(implementation!!.registerCount >= 2) {
+                "VideoAdvertisementsComponentImpl.Q6() has no safe local register"
+            }
+
+            addInstructions(
+                0,
+                """
+                    sget-object v0, Lcom/vk/libvideo/api/di/VideoAdvertisementsComponent;->INSTANCE:$VIDEO_ADS_COMPANION
+                    invoke-virtual {v0}, $VIDEO_ADS_COMPANION->getSTUB()Lcom/vk/libvideo/api/di/VideoAdvertisementsComponent;
+                    move-result-object v0
+                    invoke-interface {v0}, Lcom/vk/libvideo/api/di/VideoAdvertisementsComponent;->Q6()Lcom/vk/libvideo/api/ad/VideoAdvertisementsRepository;
+                    move-result-object v0
+                    return-object v0
+                """
+            )
+        }
+    }
+}
+
 @Suppress("unused")
 val hidePromotedBannerPatch = bytecodePatch(
     name = "Hide promoted banner content",

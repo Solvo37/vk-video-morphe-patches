@@ -255,6 +255,29 @@ internal object InstreamNamedSectionStartFingerprint : Fingerprint(
     returnType = "V",
     parameters = listOf("Ljava/lang/String;")
 )
+// Home "For you" native MyTarget showcase card factory.
+internal object HomeShowcaseCatalogFactoryFingerprint : Fingerprint(
+    definingClass = "Lcom/vk/catalog2/common/ui/mvp/configuration/a;",
+    name = "E",
+    returnType = "Lcom/vk/catalog2/common/ui/holders/api/CatalogViewHolder;",
+    parameters = listOf(
+        "Lcom/vk/catalog2/common/dto/api/CatalogDataType;",
+        "Lcom/vk/catalog2/common/dto/api/CatalogViewType;",
+        "Lcom/vk/catalog2/common/dto/api/style/CatalogViewStyle;",
+        "Lcom/vk/catalog2/common/dto/api/ui/UIBlock;",
+        "Lai0/f;"
+    )
+)
+
+// Real video-player advertising repository.
+internal object VideoAdvertisementsRepositoryFingerprint : Fingerprint(
+    definingClass = "Lcom/vk/libvideo/impl/di/VideoAdvertisementsComponentImpl;",
+    name = "Q6",
+    accessFlags = listOf(AccessFlags.PUBLIC, AccessFlags.FINAL),
+    returnType = "Lcom/vk/libvideo/api/ad/VideoAdvertisementsRepository;",
+    parameters = emptyList()
+)
+
 internal object VideoGetAdsResponseConstructorFingerprint : Fingerprint(
     definingClass = "Lcom/vk/api/generated/video/dto/VideoGetAdsResponseDto;",
     name = "<init>",

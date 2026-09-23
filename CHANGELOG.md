@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.2.4 — 2026-09-23
+
+Home/player ad removal after real-account screenshots from 1.163.3:
+
+- added **Hide home showcase ads** for the native MyTarget showcase card on the VK Video home catalog (the AdShowCaseBannerVh / UiBlockAdBanner surface with CTA such as «Перейти»); the catalog factory returns VK's own EmptyVh before the ad holder is created;
+- added **Disable video ad repository**: the real VideoAdvertisementsComponentImpl.Q6() repository is replaced with VK's built-in no-op VideoAdvertisementsComponent.STUB, which returns no ad sessions instead of chasing individual midroll/start paths;
+- production auto-build now requires the lower 0.2.3 Clips/deep-midroll blockers as well as the new 0.2.4 blockers, preventing future automated releases from silently dropping them.
+
 ## 0.2.3 — 2026-09-22
 
 Lower-layer ad blocking for VK Видео 1.163 after real-account testing of 1.163.2:
