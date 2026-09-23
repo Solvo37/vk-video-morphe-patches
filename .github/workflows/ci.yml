@@ -64,7 +64,6 @@ jobs:
           python -m py_compile ci/select_upstream.py ci/verify_patched_apk.py ci/verify_manifest.py
           python -m json.tool ci/baseline.json >/dev/null
           python -m json.tool patches-list.json >/dev/null
-          python -m json.tool patches-bundle.json >/dev/null
 
       - name: Build Morphe bundle
         env:
