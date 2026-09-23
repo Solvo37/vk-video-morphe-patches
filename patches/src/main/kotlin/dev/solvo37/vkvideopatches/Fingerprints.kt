@@ -258,7 +258,20 @@ internal object InstreamNamedSectionStartFingerprint : Fingerprint(
 // Real video-player advertising repository. VK ships a built-in STUB
 // implementation that returns no ads; patching Q6() to that STUB cuts all
 // repository-driven instream sessions instead of chasing individual midrolls.
-internal object VideoAdvertisementsRepositoryFingerprint : Fingerprint(
+internal object HomeShowcaseCatalogFactoryFingerprint : Fingerprint(
+    definingClass = "Lcom/vk/catalog2/common/ui/mvp/configuration/a;",
+    name = "E",
+    returnType = "Lcom/vk/catalog2/common/ui/holders/api/CatalogViewHolder;",
+    parameters = listOf(
+        "Lcom/vk/catalog2/common/dto/api/CatalogDataType;",
+        "Lcom/vk/catalog2/common/dto/api/CatalogViewType;",
+        "Lcom/vk/catalog2/common/dto/api/style/CatalogViewStyle;",
+        "Lcom/vk/catalog2/common/dto/api/ui/UIBlock;",
+        "Lai0/f;"
+    )
+)
+
+// internal object VideoAdvertisementsRepositoryFingerprint : Fingerprint(
     definingClass = "Lcom/vk/libvideo/impl/di/VideoAdvertisementsComponentImpl;",
     name = "Q6",
     accessFlags = listOf(AccessFlags.PUBLIC, AccessFlags.FINAL),
