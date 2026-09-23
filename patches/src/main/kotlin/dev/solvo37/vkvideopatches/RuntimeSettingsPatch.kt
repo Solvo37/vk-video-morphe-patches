@@ -143,7 +143,7 @@ val runtimeSettingsFoundationPatch = bytecodePatch(
                     invoke-direct { v1, v2 }, $DEBUG_LAMBDA-><init>(I)V
 
                     const/4 v2, 0x1
-                    const v3, 0x7f081bd5
+                    const v3, 2131239061
                     const-string v4, "VK Video Patched"
 
                     invoke-direct { v0, v3, v4, v1, v2 }, $PROFILE_MENU_ITEM_DATA-><init>(ILjava/lang/String;Lkotlin/jvm/functions/Function1;Z)V
