@@ -1,5 +1,4 @@
-name: Validate video ad repository stub
-# rerun after Companion escape fix
+name: Validate home and player ad blockers
 
 on:
   push:
@@ -38,14 +37,22 @@ jobs:
           cp "$MPP" work.mpp
           MORPHE_VERSION='v0.1.1'
           curl -fL --retry 4 -o morphe.jar "https://github.com/MorpheApp/morphe-desktop/releases/download/${MORPHE_VERSION}/morphe-desktop-${MORPHE_VERSION#v}-all.jar"
-      - name: Apply repository stub delta
+      - name: Apply home and player ad delta
         run: |
           set -euo pipefail
-          java -jar morphe.jar patch             -i VK-Video-1.163.3-patched.apk             -p work.mpp             -e "Disable video ad repository"             -o out.apk             --report patch-result.json             --purge
+          java -jar morphe.jar patch \
+            -i VK-Video-1.163.3-patched.apk \
+            -p work.mpp \
+            -e "Disable video ad repository" \
+            -e "Hide home showcase ads" \
+            -o out.apk \
+            --report patch-result.json \
+            --purge
           cat patch-result.json
           jq -e '
             all(.patchingSteps[]?; .success == true)
             and ((.failedPatches // []) | length == 0)
             and any(.appliedPatches[]?; .name == "Disable video ad repository")
+            and any(.appliedPatches[]?; .name == "Hide home showcase ads")
           ' patch-result.json >/dev/null
           unzip -t out.apk >/dev/null
