@@ -513,6 +513,22 @@ val disableVideoAdRepositoryPatch = bytecodePatch(
 }
 
 @Suppress("unused")
+val hideProfileAdFreePromoPatch = bytecodePatch(
+    name = "Hide profile ad-free promo",
+    description = "Removes the VK Premium / ad-free trial promotional card from the profile My screen before it enters the adapter list.",
+    default = true
+) {
+    compatibleWith(VK_VIDEO)
+
+    execute {
+        // wc6.q.i(ArrayList) only appends AD_FREE_SUBSCRIPTION to the profile
+        // menu when the feature/config gates are enabled. Returning here keeps
+        // the item out of the list entirely, without touching other profile UI.
+        ProfileAdFreeMenuItemFingerprint.method.addInstruction(0, "return-void")
+    }
+}
+
+@Suppress("unused")
 val hidePromotedBannerPatch = bytecodePatch(
     name = "Hide promoted banner content",
     description = "Forces VideoDiscoverAdsDto.canShowAdBanner to false.",
