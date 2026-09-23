@@ -461,8 +461,8 @@ val disableVideoAdRepositoryPatch = bytecodePatch(
             addInstructions(
                 0,
                 """
-                    sget-object v0, Lcom/vk/libvideo/api/di/VideoAdvertisementsComponent;->INSTANCE:Lcom/vk/libvideo/api/di/VideoAdvertisementsComponent${';
-                    invoke-virtual {v0}, Lcom/vk/libvideo/api/di/VideoAdvertisementsComponent$Companion;->getSTUB()Lcom/vk/libvideo/api/di/VideoAdvertisementsComponent;
+                    sget-object v0, Lcom/vk/libvideo/api/di/VideoAdvertisementsComponent;->INSTANCE:Lcom/vk/libvideo/api/di/VideoAdvertisementsComponent${'$'}Companion;
+                    invoke-virtual {v0}, Lcom/vk/libvideo/api/di/VideoAdvertisementsComponent${'$'}Companion;->getSTUB()Lcom/vk/libvideo/api/di/VideoAdvertisementsComponent;
                     move-result-object v0
                     invoke-interface {v0}, Lcom/vk/libvideo/api/di/VideoAdvertisementsComponent;->Q6()Lcom/vk/libvideo/api/ad/VideoAdvertisementsRepository;
                     move-result-object v0
