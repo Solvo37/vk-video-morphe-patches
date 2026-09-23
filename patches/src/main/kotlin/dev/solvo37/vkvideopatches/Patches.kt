@@ -494,20 +494,7 @@ val disableVideoAdRepositoryPatch = bytecodePatch(
             addInstructions(
                 0,
                 """
-                    sget-object v0, Lcom/vk/libvideo/api/di/VideoAdvertisementsComponent;->INSTANCE:Lcom/vk/libvideo/api/di/VideoAdvertisementsComponent${'$'}Companion;
-                    invoke-virtual {v0}, Lcom/vk/libvideo/api/di/VideoAdvertisementsComponent${'$'}Companion;->getSTUB()Lcom/vk/libvideo/api/di/VideoAdvertisementsComponent;
-                    move-result-object v0
-                    invoke-interface {v0}, Lcom/vk/libvideo/api/di/VideoAdvertisementsComponent;->Q6()Lcom/vk/libvideo/api/ad/VideoAdvertisementsRepository;
-                    move-result-object v0
-                    return-object v0
-                """
-            )
-        }
-    }
-}
-
-@Suppress("unused")
-val hidePromotedBannerPatch = bytecodePatch(
+                    sget-object v0, Lcom/vk/libvideo/api/di/VideoAdvertisementsComponent;->INSTANCE:Lcom/vk/libvideo/api/di/VideoAdvertisementsComponent${' = bytecodePatch(
     name = "Hide promoted banner content",
     description = "Forces VideoDiscoverAdsDto.canShowAdBanner to false.",
     default = true
@@ -544,19 +531,7 @@ val disableAdPixelTrackingPatch = bytecodePatch(
     }
 }
 }Companion;
-                    invoke-virtual {v0}, Lcom/vk/libvideo/api/di/VideoAdvertisementsComponent${';->getSTUB()Lcom/vk/libvideo/api/di/VideoAdvertisementsComponent;
-                    move-result-object v0
-                    invoke-interface {v0}, Lcom/vk/libvideo/api/di/VideoAdvertisementsComponent;->Q6()Lcom/vk/libvideo/api/ad/VideoAdvertisementsRepository;
-                    move-result-object v0
-                    return-object v0
-                """
-            )
-        }
-    }
-}
-
-@Suppress("unused")
-val hidePromotedBannerPatch = bytecodePatch(
+                    invoke-virtual {v0}, Lcom/vk/libvideo/api/di/VideoAdvertisementsComponent${' = bytecodePatch(
     name = "Hide promoted banner content",
     description = "Forces VideoDiscoverAdsDto.canShowAdBanner to false.",
     default = true
