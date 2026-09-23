@@ -98,7 +98,7 @@ jobs:
 
           VERIFY="$("$APKSIGNER_BIN" verify --verbose --print-certs "dist/$BASE_APK")"
           printf '%s\n' "$VERIFY"
-          CERT="$(sed -n 's/^Signer #1 certificate SHA-256 digest: //p' <<< "$VERIFY" | head -n1 | tr '[:upper:]' '[:lower:]' | tr -d ':')"
+          CERT="$(sed -n 's/^.*certificate SHA-256 digest: //p' <<< "$VERIFY" | head -n1 | tr '[:upper:]' '[:lower:]' | tr -d ':')"
           [[ "$CERT" == "$PROJECT_CERT_SHA256" ]]
 
           BADGING="$("$AAPT_BIN" dump badging "dist/$BASE_APK" | head -n1)"
@@ -234,7 +234,7 @@ jobs:
 
           VERIFY="$("$APKSIGNER_BIN" verify --verbose --print-certs "$OUT")"
           printf '%s\n' "$VERIFY"
-          CERT="$(sed -n 's/^Signer #1 certificate SHA-256 digest: //p' <<< "$VERIFY" | head -n1 | tr '[:upper:]' '[:lower:]' | tr -d ':')"
+          CERT="$(sed -n 's/^.*certificate SHA-256 digest: //p' <<< "$VERIFY" | head -n1 | tr '[:upper:]' '[:lower:]' | tr -d ':')"
           [[ "$CERT" == "$PROJECT_CERT_SHA256" ]]
 
           BADGING="$("$AAPT_BIN" dump badging "$OUT" | head -n1)"
