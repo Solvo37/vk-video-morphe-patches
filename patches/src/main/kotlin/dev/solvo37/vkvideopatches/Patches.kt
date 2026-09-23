@@ -461,8 +461,105 @@ val disableVideoAdRepositoryPatch = bytecodePatch(
             addInstructions(
                 0,
                 """
-                    sget-object v0, Lcom/vk/libvideo/api/di/VideoAdvertisementsComponent;->INSTANCE:Lcom/vk/libvideo/api/di/VideoAdvertisementsComponent$Companion;
+                    sget-object v0, Lcom/vk/libvideo/api/di/VideoAdvertisementsComponent;->INSTANCE:Lcom/vk/libvideo/api/di/VideoAdvertisementsComponent${';
                     invoke-virtual {v0}, Lcom/vk/libvideo/api/di/VideoAdvertisementsComponent$Companion;->getSTUB()Lcom/vk/libvideo/api/di/VideoAdvertisementsComponent;
+                    move-result-object v0
+                    invoke-interface {v0}, Lcom/vk/libvideo/api/di/VideoAdvertisementsComponent;->Q6()Lcom/vk/libvideo/api/ad/VideoAdvertisementsRepository;
+                    move-result-object v0
+                    return-object v0
+                """
+            )
+        }
+    }
+}
+
+@Suppress("unused")
+val hidePromotedBannerPatch = bytecodePatch(
+    name = "Hide promoted banner content",
+    description = "Forces VideoDiscoverAdsDto.canShowAdBanner to false.",
+    default = true
+) {
+    compatibleWith(VK_VIDEO)
+
+    execute {
+        DiscoverAdBannerFingerprint.method.addInstructions(
+            0,
+            """
+                sget-object v0, Ljava/lang/Boolean;->FALSE:Ljava/lang/Boolean;
+                return-object v0
+            """
+        )
+    }
+}
+
+@Suppress("unused")
+val disableAdPixelTrackingPatch = bytecodePatch(
+    name = "Disable ad pixel tracking",
+    description = "Stops PixelStatsTrackerImpl from sending individual and batch ad pixels.",
+    default = true
+) {
+    compatibleWith(VK_VIDEO)
+
+    execute {
+        val returnEmptyDisposable = """
+            sget-object v0, $EMPTY_DISPOSABLE->INSTANCE:$EMPTY_DISPOSABLE
+            return-object v0
+        """.trimIndent()
+
+        PixelStatsSingleFingerprint.method.addInstructions(0, returnEmptyDisposable)
+        PixelStatsBatchFingerprint.method.addInstructions(0, returnEmptyDisposable)
+    }
+}
+}Companion;
+                    invoke-virtual {v0}, Lcom/vk/libvideo/api/di/VideoAdvertisementsComponent${';->getSTUB()Lcom/vk/libvideo/api/di/VideoAdvertisementsComponent;
+                    move-result-object v0
+                    invoke-interface {v0}, Lcom/vk/libvideo/api/di/VideoAdvertisementsComponent;->Q6()Lcom/vk/libvideo/api/ad/VideoAdvertisementsRepository;
+                    move-result-object v0
+                    return-object v0
+                """
+            )
+        }
+    }
+}
+
+@Suppress("unused")
+val hidePromotedBannerPatch = bytecodePatch(
+    name = "Hide promoted banner content",
+    description = "Forces VideoDiscoverAdsDto.canShowAdBanner to false.",
+    default = true
+) {
+    compatibleWith(VK_VIDEO)
+
+    execute {
+        DiscoverAdBannerFingerprint.method.addInstructions(
+            0,
+            """
+                sget-object v0, Ljava/lang/Boolean;->FALSE:Ljava/lang/Boolean;
+                return-object v0
+            """
+        )
+    }
+}
+
+@Suppress("unused")
+val disableAdPixelTrackingPatch = bytecodePatch(
+    name = "Disable ad pixel tracking",
+    description = "Stops PixelStatsTrackerImpl from sending individual and batch ad pixels.",
+    default = true
+) {
+    compatibleWith(VK_VIDEO)
+
+    execute {
+        val returnEmptyDisposable = """
+            sget-object v0, $EMPTY_DISPOSABLE->INSTANCE:$EMPTY_DISPOSABLE
+            return-object v0
+        """.trimIndent()
+
+        PixelStatsSingleFingerprint.method.addInstructions(0, returnEmptyDisposable)
+        PixelStatsBatchFingerprint.method.addInstructions(0, returnEmptyDisposable)
+    }
+}
+}Companion;->getSTUB()Lcom/vk/libvideo/api/di/VideoAdvertisementsComponent;
                     move-result-object v0
                     invoke-interface {v0}, Lcom/vk/libvideo/api/di/VideoAdvertisementsComponent;->Q6()Lcom/vk/libvideo/api/ad/VideoAdvertisementsRepository;
                     move-result-object v0
