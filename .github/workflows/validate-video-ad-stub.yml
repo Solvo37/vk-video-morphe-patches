@@ -36,8 +36,9 @@ jobs:
           gh release download 1.163.3 --repo "$GITHUB_REPOSITORY" --pattern 'VK-Video-1.163.3-patched.apk'
           MPP="$(find patches/build/libs -maxdepth 1 -type f -name '*.mpp' ! -name '*sources*' ! -name '*javadoc*' -print -quit)"
           cp "$MPP" work.mpp
-          MORPHE_VERSION='v0.1.1'
+          MORPHE_VERSION='v1.16.0'
           curl -fL --retry 4 -o morphe.jar "https://github.com/MorpheApp/morphe-desktop/releases/download/${MORPHE_VERSION}/morphe-desktop-${MORPHE_VERSION#v}-all.jar"
+          echo "82a0df2ff881d83d5ca8b4f9a6ce196bd4ac3b87ff147fe37845c296b436806c  morphe.jar" | sha256sum -c -
       - name: Apply home and player ad delta
         run: |
           set -euo pipefail
