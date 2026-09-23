@@ -26,6 +26,7 @@ Public **Morphe** patches for the Android **VK Video** app (`com.vk.vkvideo`) wi
 | **Block midroll ads** | blocks the runtime MIDROLL branch before the main video player switches to instream ads |
 | **Filter Clips SDK ads** | drops ad-marked SDK videos and StaticAds/MarketAds inside the Clips SDK, including client-injected install CTAs |
 | **Block deep midroll ads** | disables the dedicated `request_midroll` runnable, midpoint setup, and direct `midroll` section starts |
+| **Hide profile ad-free promo** | removes the “Disable ads / free for 14 days” card from the My screen before holder creation | user-selectable |
 | **Hide promoted banner content** | disables the Discover promoted-banner gate |
 | **Disable ad pixel tracking** | disables the dedicated advertising pixel tracker |
 
