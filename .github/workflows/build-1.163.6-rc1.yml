@@ -218,7 +218,7 @@ jobs:
               final_apk_sha256: $final_apk_sha256,
               patch_bundle_version: $patch_bundle_version,
               applied_delta_patches: ["Hide home showcase ads", "Disable video ad repository", "Disable ad-free subscription promo"],
-              safety_change: "No direct ProfileMenuDataProvider bytecode short-circuit. Uses VK's VIDEO_AD_FREE_SUBSCRIPTION feature gate instead.",
+              safety_change: "No direct ProfileMenuDataProvider bytecode short-circuit. Uses the VK VIDEO_AD_FREE_SUBSCRIPTION feature gate instead.",
               signing: {
                 scheme_v1: false,
                 scheme_v2: false,
